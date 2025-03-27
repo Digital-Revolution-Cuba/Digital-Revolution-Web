@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Digital Revolution Web</title>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		
+		<meta
+		name="description"
+		content="Pagina web oficial de la comunidad de talentos de Cuba"
+		/>
+		
+		<!-- Alguien ponga aca abajo los meta de verdad y no estos de ejemplo -->
+		
+		<meta 
+			property="og:title" 
+			content="Digital Revolution Web" 
+		/>
+		<meta 
+			property="og:description" 
+			content="Pagina web oficial de la comunidad de talentos de Cuba" 
+		/>
+		<meta 
+			property="og:image" 
+			content="https://pbs.twimg.com/profile_images/1555097834431354369/9JiHiD4h_400x400.jpg" 
+		/>
+		<meta 
+			property="og:url" 
+			content="https://digital-revolution-web.vercel.app/" 
+		/>
+		<meta 
+			name="twitter:card" 
+			content="summary_large_image" 
+		/>
+		<meta 
+			name="twitter:creator" 
+			content="@drwebcuba" 
+		/>
+		
+	</head>
+	<body>
+		<Header />
+		<slot />
+		<Footer />
+	</body>
+</html>
+
+<style>
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+	}
+</style>
