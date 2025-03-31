@@ -94,8 +94,8 @@ Este proyecto se distribuye bajo la [Licencia MIT](LICENSE). Consulta el archivo
 ## 📞 Contacto
 
 Si tienes dudas, sugerencias o deseas colaborar, contáctanos:
-- [WhatsApp de la comunidad](#https://chat.whatsapp.com/KnUKS0iM8463oXkeT9OKbt)
-- Redes sociales: [Facebook](#https://www.facebook.com/share/16Kcj558mD/), [Twitter](#https://x.com/Revol2025?t=gCb0C9f3UmUTreOmUMAQOA&s=09), [Instagram](#https://www.instagram.com/revoluciondigital2025?igsh=bHFjMGp4MmdkdGQx)
+- [WhatsApp de la comunidad](https://chat.whatsapp.com/KnUKS0iM8463oXkeT9OKbt)
+- Redes sociales: [Facebook](https://www.facebook.com/share/16Kcj558mD/), [Twitter](https://x.com/Revol2025?t=gCb0C9f3UmUTreOmUMAQOA&s=09), [Instagram](#https://www.instagram.com/revoluciondigital2025?igsh=bHFjMGp4MmdkdGQx)
 
 ---
 
