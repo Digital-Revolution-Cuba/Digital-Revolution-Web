@@ -11,7 +11,12 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "astro": "^5.5.5"
+    "@astrojs/react": "^4.2.3",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.1",
+    "astro": "^5.5.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "prettier": "^3.5.3",
