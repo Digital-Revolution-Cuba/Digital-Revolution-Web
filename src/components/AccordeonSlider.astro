@@ -1,0 +1,43 @@
+---
+
+---
+
+<div class="flex items-center gap-1 acordeon-container">
+  <div
+    class="w-62 h-85 relative acordeon-item transform -translate-y-7 skew-y-[18deg] origin-left hover:rotate-z-0 hover:rotate-y-0 hover:skew-y-0"
+  >
+    <img
+      src="/public/card1.webp"
+      alt="card 1"
+      class="w-full h-full object-cover rounded-tr-2xl rounded-bl-2xl rounded-4xl shadow-2xl border-1 border-white"
+    />
+  </div>
+  <div
+    class="w-50 h-85 relative acordeon-item transform skew-y-[-25deg] origin-right hover:rotate-z-0 hover:rotate-y-0 hover:skew-y-0"
+  >
+    <img
+      src="/public/card2.webp"
+      alt="card 2"
+      class="w-full h-full object-cover rounded-tl-2xl rounded-br-2xl rounded-4xl shadow-2xl border-1 border-white"
+    />
+  </div>
+  <div
+    class="w-55 h-85 relative acordeon-item transform -translate-y-3 skew-y-[18deg] origin-left hover:rotate-z-0 hover:rotate-y-0 hover:skew-y-0"
+  >
+    <img
+      src="/public/card1.webp"
+      alt="card 3"
+      class="w-full h-full object-cover rounded-tr-2xl rounded-bl-2xl rounded-4xl shadow-2xl border-1 border-white"
+    />
+  </div>
+</div>
+
+<style>
+  .acordeon-container {
+    transform-style: preserve-3d;
+  }
+
+  .acordeon-item {
+    transition: transform 0.5s ease;
+  }
+</style>
