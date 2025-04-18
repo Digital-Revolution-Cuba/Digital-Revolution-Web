@@ -1,55 +1,23 @@
 ---
 import '../styles/glass-card.css';
+import Accordeon from '../components/AccordeonSlider.astro';
 ---
 
 <section
-  class="relative w-full h-screen flex items-center justify-center text-left text-black px-4 sm:px-9 lg:-8 overflow-hidden"
+  class="relative w-full bg-gray-950 h-[120vh] flex items-center justify-center text-left text-black px-4 sm:px-9 lg:-8 overflow-hidden"
 >
-  <img
-    src="/linearbg.webp"
-    alt="fondo"
-    class="absolute inset-0 w-full h-full object-fill z-0"
-  />
-  <div class="z-10 flex w-full px-8 gap-8">
+  <div class="z-10 flex w-full -mt-20 px-8 gap-8">
     <div class="w-1/2 flex flex-col justify-center text-white">
-      <h1 class="text-6xl font-saira">Descubre Talentos</h1>
+      <h1 class="text-6xl font">Descubre Talentos</h1>
       <p class="text-3xl text-gray-300 mt-4">
         Encuentra y conecta con personas creativas <br />de diversas disciplinas
       </p>
       <button
-        class="mt-6 bg-indigo-500 text-white px-6 py-3 rounded-lg text-lg"
+        class="mt-6 bg-gray-800 border-1 border-gray-700 text-white px-6 py-3 rounded-lg text-lg"
       >
         Explora Talentos
       </button>
     </div>
-    <div class="w-1/2 flex justify-center items-center gap-4">
-      <div
-        class="glass-card w-40 h-64 rounded-3xl overflow-hidden group bg-pink-900/10 border border-pink-500/30 transition duration-300 ease-in-out hover:border-pink-500 hover:shadow-[0_0_20px_5px_#A60A53] hover:scale-105"
-      >
-        <img
-          src="/he.png"
-          alt="Perfil destacado 1"
-          class="w-full h-full object-cover"
-        />
-      </div>
-      <div
-        class="w-40 h-64 rounded-3xl overflow-hidden glass-card group bg-indigo-900/10 border border-indigo-500/30 hover:border-indigo-500 hover:shadow-[0_0_20px_5px_#512BD9]"
-      >
-        <img
-          src="imagen1.webp"
-          alt="Perfil destacado 2"
-          class="w-full h-full object-cover"
-        />
-      </div>
-      <div
-        class="w-40 h-64 rounded-3xl overflow-hidden glass-card group bg-blue-900/10 border border-blue-500/30 hover:scale-105 hover:border-blue-500 hover:shadow-[0_0_20px_5px_#31188C]"
-      >
-        <img
-          src="imagen1.webp"
-          alt="Perfil destacado 3"
-          class="w-full h-full object-cover"
-        />
-      </div>
-    </div>
+    <Accordeon />
   </div>
 </section>
