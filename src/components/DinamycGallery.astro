@@ -2,4 +2,19 @@
 
 ---
 
-<h1>Hola</h1>
+<section class="h-auto w-auto">
+    <div class="relative w-full  h-150 overflow-hidden">
+        <div class="front absolute inset-0 z-20 flex  bg-yellow-300 text-white text-2xl">
+            <h1 class="text-6xl font-bold"> Galeria <br /> Dinamica </h1>
+        </div>
+        
+        <div class="absolute inset-0 z-10 bg-gray-950"></div>
+    </div>
+    
+</section>
+  
+  <style>
+    .front {
+        clip-path: polygon(0 11%, 100% 0%, 100% 100%, 0 100%);
+    }
+  </style>
