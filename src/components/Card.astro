@@ -1,0 +1,44 @@
+---
+export interface Props {
+  title?: string;
+  ctaText?: string;
+  imageUrl?: string;
+  altText?: string;
+  ctaLink?: string;
+}
+
+const {
+  title = 'Concurso de Fotografía',
+  ctaText = 'Ver Más',
+  imageUrl = '',
+  altText = 'Imagen del concurso de fotografía',
+  ctaLink = '#',
+} = Astro.props;
+---
+
+<section
+  class="max-w-64 overflow-hidden rounded-lg bg-[#0D1433] shadow-md transition-shadow duration-300 hover:-translate-y-1 hover:shadow-lg"
+>
+  <div class="h-48 w-full overflow-hidden">
+    <img
+      src={imageUrl}
+      alt={altText}
+      width="320"
+      height="192"
+      class="h-full w-full object-cover"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="p-4">
+    <h3 class="mb-3 font-semibold text-white">{title}</h3>
+    <div class="flex justify-end mr-2">
+      <a
+        href={ctaLink}
+        class="inline-block rounded-md bg-[#171F55] px-4 py-2 text-yellow-600 transition-colors duration-200 hover:bg-blue-700"
+      >
+        {ctaText}
+      </a>
+    </div>
+  </div>
+</section>
