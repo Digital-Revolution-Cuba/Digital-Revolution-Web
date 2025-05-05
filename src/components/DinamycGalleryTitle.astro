@@ -1,0 +1,43 @@
+---
+
+---
+
+<section>
+  <div class="wrapper">
+    <div class="azul"></div>
+    <div class="amarillo">
+      <div class="text text-6xl font-bold">Galería <br />Dinámica</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  * {
+    color: aliceblue;
+  }
+  .wrapper {
+    background-color: #030712;
+    margin: -1px;
+  }
+  .azul {
+    background-color: #46ecd5;
+    height: 100px;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 90%);
+  }
+  .amarillo {
+    margin-top: -100px;
+    background-color: yellow;
+    height: 400px;
+    clip-path: polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%);
+    position: relative;
+  }
+  .amarillo .text {
+    color: #000000;
+    font-weight: bold;
+    z-index: 10;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 0;
+  }
+</style>

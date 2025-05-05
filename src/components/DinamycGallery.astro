@@ -1,43 +1,161 @@
 ---
-
+// Por favor si luego hace falta usen props en las imagenes:
+// const { images = [...] } = Astro.props;
+const images = [
+  'https://picsum.photos/seed/1/600/400',
+  'https://picsum.photos/seed/2/600/400',
+  'https://picsum.photos/seed/3/600/400',
+  'https://picsum.photos/seed/4/600/400',
+  'https://picsum.photos/seed/5/600/400',
+  'https://picsum.photos/seed/6/600/400',
+  'https://picsum.photos/seed/7/600/400',
+  'https://picsum.photos/seed/8/600/400',
+];
+const totalImages = images.length;
+const visibleImages = 4;
 ---
 
-<section>
-  <div class="wrapper">
-    <div class="azul"></div>
-    <div class="amarillo">
-      <div class="text text-6xl font-bold">Galería <br />Dinámica</div>
+<section
+  class="lg:-8 relative flex h-[100vh] w-full items-center justify-center overflow-hidden bg-gray-950 px-4 text-left text-black sm:px-9"
+>
+  <div
+    class="gallery-container relative mx-auto my-8 overflow-hidden"
+    style="width: 1140px;"
+  >
+    <button
+      id="prevBtn"
+      class="bg-opacity-70 hover:bg-opacity-90 absolute top-1/2 left-2 z-10 -translate-y-1/2 transform rounded-full bg-gray-800 p-3 text-white shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2.5"
+        stroke="currentColor"
+        class="h-6 w-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15.75 19.5 8.25 12l7.5-7.5"></path>
+      </svg>
+    </button>
+    <div class="w-full overflow-hidden">
+      <div
+        id="imageSlider"
+        class="flex transition-transform duration-500 ease-in-out"
+        style="min-width: max-content;"
+      >
+        {
+          images.map((src, index) => (
+            <div
+              class="flex-shrink-0"
+              style="width: 285px; padding-left: 8px; padding-right: 8px;"
+            >
+              <img
+                src={src}
+                alt={`Galería Imagen ${index + 1}`}
+                class="h-[440px] w-[269px] rounded-[25px] object-cover shadow-md transition duration-300 hover:scale-[1.02] hover:shadow-xl"
+                loading="lazy"
+              />
+            </div>
+          ))
+        }
+      </div>
     </div>
+    <button
+      id="nextBtn"
+      class="bg-opacity-70 hover:bg-opacity-90 absolute top-1/2 right-2 z-10 -translate-y-1/2 transform rounded-full bg-gray-800 p-3 text-white shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2.5"
+        stroke="currentColor"
+        class="h-6 w-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
+      </svg>
+    </button>
   </div>
-</section>
 
-<style>
-  * {
-    color: aliceblue;
-  }
-  .wrapper {
-    background-color: #030712;
-    margin: -1px;
-  }
-  .azul {
-    background-color: #46ecd5;
-    height: 100px;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 90%);
-  }
-  .amarillo {
-    margin-top: -100px;
-    background-color: yellow;
-    height: 400px;
-    clip-path: polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%);
-    position: relative;
-  }
-  .amarillo .text {
-    color: #000000;
-    font-weight: bold;
-    z-index: 10;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    padding: 0;
-  }
-</style>
+  <script define:vars={{ totalImages, visibleImages }}>
+    document.addEventListener('DOMContentLoaded', () => {
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const slider = document.getElementById('imageSlider');
+
+      if (!prevBtn || !nextBtn || !slider) return;
+
+      let currentIndex = 0;
+      const imagesPerPage = 4;
+      const itemWidth = 285;
+      const maxIndex = Math.max(0, Math.ceil(totalImages / imagesPerPage) - 1);
+      function updateSlider() {
+        const offset = -currentIndex * imagesPerPage * itemWidth;
+        slider.style.transform = `translateX(${offset}px)`;
+        prevBtn.disabled = currentIndex <= 0;
+        nextBtn.disabled = currentIndex >= maxIndex;
+        prevBtn.style.opacity = currentIndex <= 0 ? '0.5' : '1';
+        nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+      }
+      prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateSlider();
+        }
+      });
+      nextBtn.addEventListener('click', () => {
+        if (currentIndex < maxIndex) {
+          currentIndex++;
+          updateSlider();
+        }
+      });
+      updateSlider();
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' && currentIndex > 0) {
+          currentIndex--;
+          updateSlider();
+        } else if (e.key === 'ArrowRight' && currentIndex < maxIndex) {
+          currentIndex++;
+          updateSlider();
+        }
+      });
+    });
+  </script>
+
+  <style>
+    .gallery-container::before,
+    .gallery-container::after {
+      display: none !important;
+    }
+    .w-full.overflow-x-auto {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .w-full.overflow-x-auto::-webkit-scrollbar {
+      display: none;
+    }
+    .gallery-container {
+      box-sizing: content-box;
+      padding: 0;
+    }
+    #imageSlider {
+      will-change: transform;
+    }
+    #imageSlider img {
+      filter: brightness(0.95);
+      transition:
+        filter 0.3s,
+        transform 0.3s;
+    }
+
+    #imageSlider img:hover {
+      filter: brightness(1.05);
+    }
+  </style>
+</section>
