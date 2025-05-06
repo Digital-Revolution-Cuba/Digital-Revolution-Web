@@ -18,13 +18,18 @@ const visibleImages = 4;
 <section
   class="lg:-8 relative flex h-[100vh] w-full items-center justify-center overflow-hidden bg-gray-950 px-4 text-left text-black sm:px-9"
 >
+  <div class="absolute top-0 left-0 z-20 flex gap-4 p-4 sm:p-8">
+    <button class="category-btn">Arte</button>
+    <button class="category-btn">Música</button>
+    <button class="category-btn">Fotografía</button>
+  </div>
   <div
-    class="gallery-container relative mx-auto my-8 overflow-hidden"
-    style="width: 1140px;"
+    class="relative mx-auto my-8 flex w-[1140px] items-center justify-between"
   >
     <button
       id="prevBtn"
-      class="bg-opacity-70 hover:bg-opacity-90 absolute top-1/2 left-2 z-10 -translate-y-1/2 transform rounded-full bg-gray-800 p-3 text-white shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+      class="nav-btn absolute top-1/2 left-[-50px] z-10 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+      style="margin-right: 8px;"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +37,7 @@ const visibleImages = 4;
         viewBox="0 0 24 24"
         stroke-width="2.5"
         stroke="currentColor"
-        class="h-6 w-6"
+        class="nav-arrow h-6 w-6"
       >
         <path
           stroke-linecap="round"
@@ -40,32 +45,39 @@ const visibleImages = 4;
           d="M15.75 19.5 8.25 12l7.5-7.5"></path>
       </svg>
     </button>
-    <div class="w-full overflow-hidden">
-      <div
-        id="imageSlider"
-        class="flex transition-transform duration-500 ease-in-out"
-        style="min-width: max-content;"
-      >
-        {
-          images.map((src, index) => (
-            <div
-              class="flex-shrink-0"
-              style="width: 285px; padding-left: 8px; padding-right: 8px;"
-            >
-              <img
-                src={src}
-                alt={`Galería Imagen ${index + 1}`}
-                class="h-[440px] w-[269px] rounded-[25px] object-cover shadow-md transition duration-300 hover:scale-[1.02] hover:shadow-xl"
-                loading="lazy"
-              />
-            </div>
-          ))
-        }
+    <div
+      class="gallery-container relative mx-auto overflow-hidden"
+      style="width: 1140px;"
+    >
+      <div class="w-full overflow-hidden">
+        <div
+          id="imageSlider"
+          class="flex transition-transform duration-800 ease-in-out"
+          style="min-width: max-content;"
+        >
+          {
+            images.map((src, index) => (
+              <div
+                class="relative flex-shrink-0 overflow-hidden rounded-[25px]"
+                style="width: 285px; padding-left: 8px; padding-right: 8px;"
+              >
+                <img
+                  src={src}
+                  alt={`Galería Imagen ${index + 1}`}
+                  class="h-[440px] w-[269px] rounded-[25px] object-cover shadow-md transition duration-300"
+                  loading="lazy"
+                />
+                <div class="shine-effect" />
+              </div>
+            ))
+          }
+        </div>
       </div>
     </div>
     <button
       id="nextBtn"
-      class="bg-opacity-70 hover:bg-opacity-90 absolute top-1/2 right-2 z-10 -translate-y-1/2 transform rounded-full bg-gray-800 p-3 text-white shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+      class="nav-btn absolute top-1/2 right-[-50px] z-10 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+      style="margin-left: 8px;"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +85,7 @@ const visibleImages = 4;
         viewBox="0 0 24 24"
         stroke-width="2.5"
         stroke="currentColor"
-        class="h-6 w-6"
+        class="nav-arrow h-6 w-6"
       >
         <path
           stroke-linecap="round"
@@ -147,15 +159,74 @@ const visibleImages = 4;
     #imageSlider {
       will-change: transform;
     }
+
     #imageSlider img {
       filter: brightness(0.95);
-      transition:
-        filter 0.3s,
-        transform 0.3s;
+      transition: filter 0.3s;
     }
 
     #imageSlider img:hover {
-      filter: brightness(1.05);
+      filter: brightness(1);
+    }
+
+    .shine-effect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(244, 150, 36, 0.4),
+        transparent
+      );
+      transform: translateX(-100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .flex-shrink-0:hover .shine-effect {
+      opacity: 1;
+      transform: translateX(100%);
+      transition: transform 0.7s;
+    }
+
+    .category-btn {
+      background: #f4962433;
+      color: #f49624;
+      border: none;
+      border-radius: 15px;
+      padding: 8px 20px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition:
+        background 0.2s,
+        color 0.2s;
+      outline: none;
+    }
+    .category-btn:hover,
+    .category-btn:focus {
+      background: #f49624;
+      color: #041421;
+    }
+    .nav-btn {
+      background: #f4962433;
+      transition: background 0.2s;
+    }
+    .nav-arrow {
+      stroke: #f49624;
+      transition: stroke 0.2s;
+    }
+    .nav-btn:hover,
+    .nav-btn:focus {
+      background: #f49624;
+    }
+    .nav-btn:hover .nav-arrow,
+    .nav-btn:focus .nav-arrow {
+      stroke: #041421;
     }
   </style>
 </section>
