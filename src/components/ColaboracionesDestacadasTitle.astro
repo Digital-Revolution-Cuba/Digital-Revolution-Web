@@ -1,0 +1,52 @@
+---
+
+---
+
+<section>
+  <div class="wrapper-colab">
+    <div class="shape-back-colab"></div>
+    <div class="shape-front-colab">
+      <div class="text-content-colab">
+        Colaboraciones <br />Destacadas
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .wrapper-colab {
+    background-color: #030712;
+    margin: -1px;
+    overflow-x: hidden;
+    overflow: hidden;
+  }
+
+  .shape-back-colab {
+    background-color: #374151;
+    height: 500px;
+    clip-path: polygon(0% 45.25%, 100% 25%, 100% 75%, 0% 75%);
+  }
+
+  .shape-front-colab {
+    margin-top: -500px;
+    background-color: skyblue;
+    width: 100%;
+    height: 550px;
+    clip-path: polygon(0% 25%, 100% 35.75%, 100% 75%, 0% 75%);
+    position: relative;
+  }
+
+  .text-content-colab {
+    color: #000000;
+    font-weight: bold;
+    z-index: 10;
+    position: absolute;
+    bottom: 130px;
+    right: 35px;
+    padding: 0;
+    font-family: Impact, Charcoal, 'Arial Black', sans-serif;
+    font-size: 96px;
+    line-height: 1.1;
+    text-align: right;
+  }
+</style>
