@@ -1,0 +1,29 @@
+name: Astro Build Check (pnpm)
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  astro-verify:
+    name: Verify Astro Project (pnpm)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js and pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        run: npm install -g pnpm@latest
+
+      - name: Install dependencies with pnpm
+        run: pnpm install --frozen-lockfile
+
+      - name: Astro Build Check
+        run: pnpm build
