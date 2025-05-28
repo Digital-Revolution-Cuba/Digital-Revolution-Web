@@ -2,7 +2,7 @@ name: Astro Build Check (pnpm)
 
 on:
   push:
-    branches: ['main']
+    branches: ['main', 'ci/build-check']
   pull_request:
     branches: ['main']
 
