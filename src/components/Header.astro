@@ -1,3 +1,75 @@
 ---
 
 ---
+
+<header>
+  <div class="container-header">
+    <div class="logo">
+      <img src="/src/assets/astro.svg" alt="" />
+    </div>
+    <div class="navegation">
+      <a href="#concursos">Concursos</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#perfiles">Perfiles</a>
+      <a href="#colaboraciones">Colaboraciones</a>
+      <button
+        class="mt-6 rounded-lg border-1 border-gray-700 bg-gray-800 px-6 py-3 text-lg text-white"
+        >Descubre Talentos</button
+      >
+    </div>
+  </div>
+</header>
+
+<style>
+  header {
+    width: 100vw;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    background-color: #030712;
+  }
+
+  .container-header {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 73px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    color: aquamarine;
+    font-size: 20px;
+  }
+
+  a {
+    color: white;
+    margin: 0 20px;
+    transition: all 0.5s;
+  }
+
+  a:hover {
+    color: #d08700;
+  }
+
+  button {
+    color: #d08700;
+    margin: 0;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.5s;
+  }
+
+  button:hover {
+    background-color: #13275e;
+  }
+
+  @media (width-min: 915px) {
+    header {
+      width: 20%;
+      background-color: #d08700;
+    }
+  }
+</style>
