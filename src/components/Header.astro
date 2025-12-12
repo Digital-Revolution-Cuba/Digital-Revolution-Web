@@ -3,73 +3,86 @@
 ---
 
 <header>
-  <div class="container-header">
-    <div class="logo">
-      <img src="/src/assets/astro.svg" alt="" />
-    </div>
-    <div class="navegation">
-      <a href="#concursos">Concursos</a>
-      <a href="#galeria">Galeria</a>
-      <a href="#perfiles">Perfiles</a>
-      <a href="#colaboraciones">Colaboraciones</a>
-      <button
-        class="mt-6 rounded-lg border-1 border-gray-700 bg-gray-800 px-6 py-3 text-lg text-white"
-        >Descubre Talentos</button
-      >
-    </div>
+  <div class="logo">
+    <img src="/src/assets/astro.svg" alt="Logo" />
   </div>
+  <nav class="navegation">
+    <a href="#concursos">Concursos</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#perfiles">Perfiles</a>
+    <a href="#colaboraciones">Colaboraciones</a>
+    <button>Descubre Talentos</button>
+  </nav>
 </header>
 
 <style>
   header {
-    width: 100vw;
-    height: 15%;
-    display: flex;
-    align-items: center;
-    background-color: #030712;
-  }
-
-  .container-header {
+    /* Layout Specs from Figma */
     width: 100%;
-    height: 100%;
+    max-width: 1314px;
+    height: 80px;
+
+    /* Positioning */
+    margin: 33px auto 0;
+
+    /* Visuals */
+    background-color: #011822;
+    border-radius: 40px; /* Icon/Large - Esquinas redondeadas */
+    padding: 7px 43px;
+
+    /* Flexbox Layout */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 73px;
-    flex-wrap: wrap;
+    box-sizing: border-box;
   }
 
-  h1 {
-    color: aquamarine;
-    font-size: 20px;
+  .logo img {
+    height: 40px;
+    width: auto;
+  }
+
+  .navegation {
+    display: flex;
+    align-items: center;
+    gap: 32px;
   }
 
   a {
-    color: white;
-    margin: 0 20px;
-    transition: all 0.5s;
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    transition: color 0.3s ease;
   }
 
   a:hover {
-    color: #d08700;
+    color: #9747ff;
   }
 
   button {
-    color: #d08700;
-    margin: 0;
+    background-color: transparent;
+    color: #f49624; /* Naranja según la foto y paleta */
+    border: 1px solid #002b38;
+    padding: 10px 24px;
+    border-radius: 8px; /* Bordes redondeados del botón */
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.5s;
+    font-size: 16px;
+    transition: all 0.3s ease;
   }
 
   button:hover {
-    background-color: #13275e;
+    background-color: #9747ff;
+    color: white;
+    box-shadow: 0 0 15px rgba(151, 71, 255, 0.4);
   }
 
-  @media (width-min: 915px) {
+  /* Responsive adjustments */
+  @media (max-width: 1350px) {
     header {
-      width: 20%;
-      background-color: #d08700;
+      width: 95%;
+      padding: 7px 20px;
     }
   }
 </style>
