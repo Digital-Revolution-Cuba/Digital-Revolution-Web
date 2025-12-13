@@ -4,20 +4,37 @@ import Accordeon from '../components/AccordeonSlider.astro';
 ---
 
 <section
-  class="lg:-8 relative flex h-[100vh] w-full items-center justify-center overflow-hidden bg-gray-950 px-4 text-left text-black sm:px-9"
+  class="bg-brand-black text-text-primary relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 py-20 text-left sm:px-9 lg:py-0"
 >
-  <div class="z-10 -mt-20 flex w-full gap-8 px-8">
-    <div class="flex w-1/2 flex-col justify-center text-white">
-      <h1 class="font text-6xl">Descubre Talentos</h1>
-      <p class="mt-4 text-3xl text-gray-300">
-        Encuentra y conecta con personas creativas para intercambiar ideas y colaborar en proyectos innovadores. Explora eventos locales, talleres y conferencias donde puedas conocer a individuos con intereses similares. <br />de diversas disciplinas
-      </p>
-      <button 
-        class="mt-6 rounded-lg border-1 border-gray-700 bg-gray-800 px-6 py-3 text-lg text-white"
+  <div
+    class="z-10 flex w-full flex-col items-center gap-8 px-4 lg:flex-row lg:px-8"
+  >
+    <div class="flex w-full flex-col justify-center lg:w-1/2">
+      <h1 class="font-saira text-4xl leading-tight md:text-5xl lg:text-6xl">
+        Descubre Talentos
+      </h1>
+      <p
+        class="font-barlow text-text-secondary mt-4 text-lg md:text-2xl lg:text-3xl"
       >
-        Explora Talentos
-      </button>
+        Encuentra y conecta con personas creativas para intercambiar ideas y
+        colaborar en proyectos innovadores. Explora eventos locales, talleres y
+        conferencias donde puedas conocer a individuos con intereses similares. <br
+          class="hidden lg:block"
+        />
+        de diversas disciplinas
+      </p>
+
+      <div class="mt-8 flex justify-start">
+        <button
+          class="bg-brand-navy text-accent-orange border-accent-purple hover:bg-accent-purple hover:text-text-primary rounded-lg border-2 px-8 py-3 text-lg font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(151,71,255,0.4)] sm:px-6 sm:py-3 sm:text-base"
+        >
+          Explora Talentos
+        </button>
+      </div>
     </div>
-    <Accordeon />
+
+    <div class="flex w-full justify-center lg:w-1/2">
+      <Accordeon />
+    </div>
   </div>
 </section>
