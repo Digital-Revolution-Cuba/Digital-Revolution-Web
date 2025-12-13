@@ -1,19 +1,55 @@
 ---
-
+// No se requieren props por ahora
 ---
 
-<header>
-  <div class="logo">
-    <img src="/src/assets/astro.svg" alt="Logo" />
+<header class="fixed top-8 left-0 right-0 z-50 mx-auto flex h-20 w-[95%] max-w-[1314px] items-center justify-between rounded-[40px] bg-brand-dark px-6 py-2 shadow-lg lg:px-11">
+  <!-- Logo -->
+  <div class="flex items-center">
+    <img src="/src/assets/astro.svg" alt="Logo" class="h-10 w-auto" />
   </div>
-  <nav class="navegation">
-    <a href="#concursos">Concursos</a>
-    <a href="#galeria">Galeria</a>
-    <a href="#perfiles">Perfiles</a>
-    <a href="#colaboraciones">Colaboraciones</a>
-    <button>Descubre Talentos</button>
+
+  <!-- Botón Menú Móvil (Hamburguesa) -->
+  <button id="menu-toggle" class="text-text-secondary hover:text-accent-purple focus:outline-none lg:hidden">
+    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+
+  <!-- Navegación Desktop -->
+  <nav class="hidden items-center gap-8 lg:flex">
+    <a href="#concursos" class="text-text-secondary hover:text-accent-purple text-base font-normal transition-colors duration-300">Concursos</a>
+    <a href="#galeria" class="text-text-secondary hover:text-accent-purple text-base font-normal transition-colors duration-300">Galeria</a>
+    <a href="#perfiles" class="text-text-secondary hover:text-accent-purple text-base font-normal transition-colors duration-300">Perfiles</a>
+    <a href="#colaboraciones" class="text-text-secondary hover:text-accent-purple text-base font-normal transition-colors duration-300">Colaboraciones</a>
+    <button class="border-brand-navy text-accent-orange hover:bg-accent-purple hover:shadow-[0_0_15px_rgba(151,71,255,0.4)] rounded-lg border bg-transparent px-6 py-2.5 text-base font-semibold transition-all duration-300 hover:text-white">
+      Descubre Talentos
+    </button>
   </nav>
+
+  <!-- Menú Móvil (Desplegable) -->
+  <div id="mobile-menu" class="bg-brand-dark absolute left-0 top-24 hidden w-full flex-col items-center gap-6 rounded-2xl p-6 shadow-xl lg:hidden">
+    <a href="#concursos" class="text-text-secondary hover:text-accent-purple text-lg">Concursos</a>
+    <a href="#galeria" class="text-text-secondary hover:text-accent-purple text-lg">Galeria</a>
+    <a href="#perfiles" class="text-text-secondary hover:text-accent-purple text-lg">Perfiles</a>
+    <a href="#colaboraciones" class="text-text-secondary hover:text-accent-purple text-lg">Colaboraciones</a>
+    <button class="border-brand-navy text-accent-orange hover:bg-accent-purple w-full rounded-lg border bg-transparent py-3 text-lg font-semibold hover:text-white">
+      Descubre Talentos
+    </button>
+  </div>
 </header>
+
+<script>
+  // Script simple para manejar el toggle del menú móvil
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+    });
+  }
+</script>
 
 <style>
   header {
