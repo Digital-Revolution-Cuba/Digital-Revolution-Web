@@ -58,7 +58,7 @@ body {
     font-size: 64px;
     line-height: 0.82; /* 82% */
     letter-spacing: 0;
-    color: #041421;
+    color: var(--color-text-dark);
   }
   .descubre-talentos {
     font-family: Impact, 'Impact', 'Arial Black', sans-serif;
