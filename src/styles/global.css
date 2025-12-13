@@ -13,7 +13,7 @@
   /* Fondos Oscuros */
   --color-brand-dark: #011822;      /* Header Background */
   --color-brand-navy: #002B38;      /* Botones oscuros (Crea tu perfil) */
-  --color-brand-black: #000000;     /* Fondo global */
+  --color-brand-background-global: #001018;     /* Fondo global */
 
   /* Acentos */
   --color-accent-orange: #F49624;   /* Colaboraciones, Botones */
@@ -37,6 +37,6 @@
 
 /* Estilos base globales */
 html, body {
-  background-color: var(--color-brand-black);
+  background-color: var(--color-brand-background-global);
   color: var(--color-text-primary);
 }
