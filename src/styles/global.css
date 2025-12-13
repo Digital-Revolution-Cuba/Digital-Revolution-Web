@@ -25,7 +25,7 @@
   /* Textos */
   --color-text-primary: #FFFFFD;    /* Descubre Talentos (casi blanco) */
   --color-text-secondary: #CCCCCC;  /* Descripción */
-  --color-text-dark: #041421;       /* Letras sobre fondos claros */
+  --color-text-dark: #041421;          /* Letras sobre fondos claros */
 
   /* Gradientes (Definidos como background-image) */
   --background-image-gradient-cyan: linear-gradient(to bottom, #4AEDD1, #44E9D4, #34DFDE, #19CEEE, #0BC5F7);
