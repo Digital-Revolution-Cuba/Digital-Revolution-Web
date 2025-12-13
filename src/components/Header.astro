@@ -1,19 +1,29 @@
 ---
-
+import logo from '../assets/LogoRevolucionDigital.svg';
+import RevolucionDigitalText from '../assets/RevolucionDigital.svg';
 ---
 
 <header
-  class="bg-brand-backgroundGlobal fixed top-8 right-0 left-0 z-50 mx-auto flex h-20 w-[95%] max-w-[1314px] items-center justify-between rounded-[40px] px-6 py-2 shadow-lg lg:px-11"
+  id="main-header"
+  class="fixed top-[33px] right-0 left-0 z-50 mx-auto flex h-20 w-[95%] max-w-[1314px] items-center justify-between rounded-[40px] bg-[#011822] px-6 py-[7px] shadow-lg transition-transform duration-500 ease-in-out lg:px-[43px]"
 >
   <!-- Logo -->
   <div class="flex items-center">
-    <img src="/src/assets/astro.svg" alt="Logo" class="h-10 w-auto" />
+    <a href="#" class="flex items-center gap-3">
+      <img src={logo.src} alt="Logo" class="h-[50px] w-auto" />
+      <img
+        src={RevolucionDigitalText.src}
+        alt="Revolución Digital"
+        class="hidden h-[48px] w-[143px] lg:block"
+      />
+    </a>
   </div>
 
   <!-- Botón Menú Móvil (Hamburguesa) -->
   <button
     id="menu-toggle"
     class="text-text-secondary hover:text-accent-purple focus:outline-none lg:hidden"
+    aria-label="Abrir menú"
   >
     <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -47,7 +57,7 @@
       >Colaboraciones</a
     >
     <button
-      class="border-brand-navy text-accent-orange hover:bg-accent-purple rounded-lg border bg-brand-navy px-6 py-2.5 text-base font-semibold transition-all duration-300 hover:text-white hover:shadow-[0_0_15px_rgba(151,71,255,0.4)]"
+      class="border-brand-navy text-accent-orange hover:bg-accent-purple bg-brand-navy rounded-lg border px-6 py-2.5 text-base font-semibold transition-all duration-300 hover:text-white hover:shadow-[0_0_15px_rgba(151,71,255,0.4)]"
     >
       Descubre Talentos
     </button>
@@ -76,7 +86,7 @@
       >Colaboraciones</a
     >
     <button
-      class="border-brand-navy text-accent-orange hover:bg-accent-purple w-full rounded-lg border bg-brand-navy py-3 text-lg font-semibold hover:text-white"
+      class="border-brand-navy text-accent-orange hover:bg-accent-purple bg-brand-navy w-full rounded-lg border py-3 text-lg font-semibold hover:text-white"
     >
       Descubre Talentos
     </button>
@@ -84,86 +94,59 @@
 </header>
 
 <script>
-  // Script simple para manejar el toggle del menú móvil
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
+  const header = document.getElementById('main-header');
+  let lastScrollY = window.scrollY;
 
+  // Toggle Menú Móvil
   if (menuToggle && mobileMenu) {
     menuToggle.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
       mobileMenu.classList.toggle('flex');
     });
   }
+
+  // Lógica de Scroll para ocultar/mostrar header
+  window.addEventListener('scroll', () => {
+    if (!header) return;
+
+    const currentScrollY = window.scrollY;
+    const isScrollingDown = currentScrollY > lastScrollY;
+    const isScrolledPastThreshold = currentScrollY > 50; // Umbral para evitar parpadeo arriba
+
+    if (isScrollingDown && isScrolledPastThreshold) {
+      // Ocultar header (mover hacia arriba más allá de su altura y posición)
+      header.classList.add('-translate-y-[250%]');
+
+      // Cerrar menú móvil si está abierto para evitar que quede flotando
+      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('flex');
+      }
+    } else {
+      // Mostrar header
+      header.classList.remove('-translate-y-[250%]');
+    }
+
+    lastScrollY = currentScrollY;
+  });
 </script>
 
 <style>
-  header {
-    /* Layout Specs from Figma */
-    width: 100%;
-    max-width: 1314px;
-    height: 80px;
+  /* 
+    Nota: La mayoría de los estilos estructurales se han movido a clases de Tailwind 
+    en el HTML para mantener la consistencia y reducir código duplicado.
+  */
 
-    /* Positioning */
-    margin: 33px auto 0;
-
-    /* Visuals */
-    background-color: var(--color-brand-dark);
-    border-radius: 40px; /* Icon/Large - Esquinas redondeadas */
-    padding: 7px 43px;
-
-    /* Flexbox Layout */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-  }
-
-  .logo img {
-    height: 40px;
-    width: auto;
-  }
-
-  .navegation {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
-
+  /* Estilos específicos para enlaces y botones que requieren estados hover complejos */
   a {
-    color: #cccccc;
+    /* color y transition manejados por Tailwind, mantenemos defaults por seguridad */
     text-decoration: none;
-    font-size: 16px;
-    font-weight: 400;
-    transition: color 0.3s ease;
   }
 
-  a:hover {
-    color: #9747ff;
-  }
-
+  /* Aseguramos que el botón mantenga sus estilos base si Tailwind falla o para especificidad */
   button {
-    background-color: var(--color-brand-navy);
-    color: #f49624; /* Naranja según la foto y paleta */
-    border: 1px solid #002b38;
-    padding: 10px 24px;
-    border-radius: 8px; /* Bordes redondeados del botón */
     cursor: pointer;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.3s ease;
-  }
-
-  button:hover {
-    background-color: #9747ff;
-    color: white;
-    box-shadow: 0 0 15px rgba(151, 71, 255, 0.4);
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 1350px) {
-    header {
-      width: 95%;
-      padding: 7px 20px;
-    }
   }
 </style>
