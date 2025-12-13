@@ -1,0 +1,234 @@
+---
+import Card from './Card.astro';
+import cardLogo from '../assets/prueba.jpg';
+
+const cards = [
+  {
+    title: 'Colaboración con Artistas',
+    ctaText: 'Ver Más',
+    imageUrl: cardLogo.src,
+    altText: 'Imagen de colaboración con artistas',
+    ctaLink: '#',
+  },
+  {
+    title: 'Proyecto de Desarrollo Web',
+    ctaText: 'Ver Más',
+    imageUrl: cardLogo.src,
+    altText: 'Imagen de proyecto de desarrollo web',
+    ctaLink: '#',
+  },
+  {
+    title: 'Colaboración Musical',
+    ctaText: 'Ver Más',
+    imageUrl: cardLogo.src,
+    altText: 'Imagen de colaboración musical',
+    ctaLink: '#',
+  },
+  {
+    title: 'Proyecto de Diseño Gráfico',
+    ctaText: 'Ver Más',
+    imageUrl: cardLogo.src,
+    altText: 'Imagen de proyecto de diseño gráfico',
+    ctaLink: '#',
+  },
+  {
+    title: 'Colaboración Fotográfica',
+    ctaText: 'Ver Más',
+    imageUrl: cardLogo.src,
+    altText: 'Imagen de colaboración fotográfica',
+    ctaLink: '#',
+  },
+  {
+    title: 'Proyecto de Marketing Digital',
+    ctaText: 'Ver Más',
+    imageUrl: cardLogo.src,
+    altText: 'Imagen de proyecto de marketing digital',
+    ctaLink: '#',
+  },
+];
+
+const totalCards = cards.length;
+const visibleCards = 3;
+---
+
+<section id="colaboraciones" class="h-auto w-auto bg-gray-950">
+  <div class="relative z-30 h-[600px]">
+    <div class="absolute top-0 right-0 bg-orange-500 h-[600px] second-clip w-[8000px]"></div>
+    <div class="general z-30 bg-teal-300">
+      <div class="flex flex-col items-start justify-between pt-20 pr-10 pl-10">
+        <section class="colab-section">
+          <div class="wrapper-colab">
+            <div class="shape-back-colab"></div>
+            <div class="shape-front-colab">
+              <div class="text-content-colab">
+                Colaboraciones <br />Destacadas
+              </div>
+            </div>
+          </div>
+        </section>
+        <button
+          class="rounded-full bg-blue-500 px-6 py-3 font-bold text-white shadow-lg transition hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          >Sugerir Colaboración</button
+        >
+      </div>
+      <div
+        class="relative mx-auto my-2 flex w-[1140px] items-center justify-between"
+      >
+        <button
+          id="prevBtnColab"
+          class="nav-btn absolute top-1/2 left-[-50px] z-10 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2.5"
+            stroke="currentColor"
+            class="nav-arrow h-6 w-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 19.5 8.25 12l7.5-7.5"></path>
+          </svg>
+        </button>
+        <div
+          class="gallery-container relative mx-auto overflow-hidden"
+          style="width: 1140px;"
+        >
+          <div class="w-full overflow-hidden">
+            <div
+              id="cardSliderColab"
+              class="flex transition-transform duration-800 ease-in-out"
+              style="min-width: max-content;"
+            >
+              {
+                cards.map((card) => (
+                  <div
+                    class="relative flex-shrink-0"
+                    style="width: 380px; padding-left: 8px; padding-right: 8px;"
+                  >
+                    <Card
+                      title={card.title}
+                      ctaText={card.ctaText}
+                      imageUrl={card.imageUrl}
+                      altText={card.altText}
+                      ctaLink={card.ctaLink}
+                    />
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+        <button
+          id="nextBtnColab"
+          class="nav-btn absolute top-1/2 right-[-50px] z-10 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2.5"
+            stroke="currentColor"
+            class="nav-arrow h-6 w-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ totalCards, visibleCards }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const prevBtn = document.getElementById('prevBtnColab');
+    const nextBtn = document.getElementById('nextBtnColab');
+    const slider = document.getElementById('cardSliderColab');
+
+    if (!prevBtn || !nextBtn || !slider) return;
+
+    let currentIndex = 0;
+    const cardsPerPage = 3;
+    const itemWidth = 380;
+    const maxIndex = Math.max(0, Math.ceil(totalCards / cardsPerPage) - 1);
+
+    function updateSlider() {
+      const offset = -currentIndex * cardsPerPage * itemWidth;
+      slider.style.transform = `translateX(${offset}px)`;
+      prevBtn.disabled = currentIndex <= 0;
+      nextBtn.disabled = currentIndex >= maxIndex;
+      prevBtn.style.opacity = currentIndex <= 0 ? '0.5' : '1';
+      nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSlider();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < maxIndex) {
+        currentIndex++;
+        updateSlider();
+      }
+    });
+
+    updateSlider();
+  });
+</script>
+
+<style>
+  .general {
+    clip-path: polygon(
+      0 0%,
+      100% 28%,
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .second-clip {
+    clip-path: polygon(
+      100% 0%,   /* esquina superior derecha */
+      0 100%,    /* esquina inferior izquierda */
+      100% 100%  /* esquina inferior derecha */
+    );
+  }
+
+  .nav-btn {
+    background: #030712;
+    transition: background 0.2s;
+  }
+
+  .nav-arrow {
+    stroke: #46ecd5;
+    transition: stroke 0.2s;
+  }
+
+  .nav-btn:hover,
+  .nav-btn:focus {
+    background: #46ecd5;
+  }
+
+  .nav-btn:hover .nav-arrow,
+  .nav-btn:focus .nav-arrow {
+    stroke: #030712;
+  }
+
+  .text-content-colab {
+    text-align: start;
+    text
+    color: #000000;
+    font-weight: bold;
+    padding: 0;
+    font-family: Impact, Charcoal, 'Arial Black', sans-serif;
+    font-size: 72px;
+  }
+</style>

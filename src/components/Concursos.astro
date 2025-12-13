@@ -22,6 +22,46 @@ import cardLogo from '../assets/prueba.jpg';
   </div>
 </section>
 
+<script define:vars={{ totalCards, visibleCards }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const slider = document.getElementById('cardSlider');
+
+    if (!prevBtn || !nextBtn || !slider) return;
+
+    let currentIndex = 0;
+    const cardsPerPage = 3;
+    const itemWidth = 380;
+    const maxIndex = Math.max(0, Math.ceil(totalCards / cardsPerPage) - 1);
+
+    function updateSlider() {
+      const offset = -currentIndex * cardsPerPage * itemWidth;
+      slider.style.transform = `translateX(${offset}px)`;
+      prevBtn.disabled = currentIndex <= 0;
+      nextBtn.disabled = currentIndex >= maxIndex;
+      prevBtn.style.opacity = currentIndex <= 0 ? '0.5' : '1';
+      nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSlider();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < maxIndex) {
+        currentIndex++;
+        updateSlider();
+      }
+    });
+
+    updateSlider();
+  });
+</script>
+
 <style>
   .general {
     clip-path: polygon(0 11%, 100% 0%, 100% 100%, 0 100%);
