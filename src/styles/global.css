@@ -2,12 +2,41 @@
 @import 'tailwindcss';
 
 @theme {
+  
   --font-saira: 'Saira Stencil One', sans-serif;
   --font-barlow: 'Barlow Semi Condensed', sans-serif;
   --font-rubik: 'Rubik', sans-serif;
-
-  /**
-   * Tailwind defaults
-   */
   --default-font-family: var(--font-rubik);
+
+  
+  
+  /* Fondos Oscuros */
+  --color-brand-dark: #011822;      /* Header Background */
+  --color-brand-navy: #002B38;      /* Botones oscuros (Crea tu perfil) */
+  --color-brand-black: #000000;     /* Fondo global */
+
+  /* Acentos */
+  --color-accent-orange: #F49624;   /* Colaboraciones, Botones */
+  --color-accent-purple: #9747FF;   /* Bordes, Hover */
+  --color-accent-cyan: #34DFDE;     /* Background Concursos */
+  --color-accent-yellow: #FFC943;   /* Background Galería */
+  --color-accent-blue: #19CEEE;     /* Únete a la comunidad */
+  
+  /* Textos */
+  --color-text-primary: #FFFFFD;    /* Descubre Talentos (casi blanco) */
+  --color-text-secondary: #CCCCCC;  /* Descripción */
+  --color-text-dark: #041421;       /* Letras sobre fondos claros */
+
+  /* Gradientes (Definidos como background-image) */
+  --background-image-gradient-cyan: linear-gradient(to bottom, #4AEDD1, #44E9D4, #34DFDE, #19CEEE, #0BC5F7);
+  --background-image-gradient-orange: linear-gradient(to right, #F49624, #0CC6F8);
+  
+  /* Sombras */
+  --shadow-text-sm: 0px 3px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* Estilos base globales */
+html, body {
+  background-color: var(--color-brand-black);
+  color: var(--color-text-primary);
 }
