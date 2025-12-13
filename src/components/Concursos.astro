@@ -1,11 +1,15 @@
 ---
 import Card from './Card.astro';
 import cardLogo from '../assets/prueba.jpg';
+
 ---
 
-<section id="concursos" class="h-auto w-auto bg-brand-backgroundGlobal">
-  <div class="general relative z-30 h-130 bg-teal-300">
-    <h1 class="pt-20 pl-10 text-6xl font-bold text-text-dark drop-shadow-lg">Concursos <br /> Activos</h1>
+<section id="concursos" class="bg-brand-backgroundGlobal h-auto w-auto">
+  <div class="general relative z-30 h-130 bg-accent-cyan">
+    <!-- Usamos la clase global aquí -->
+    <h1 class="heading-impact custom-shadow pt-20 pl-10 drop-shadow-lg">
+      Concursos <br /> Activos
+    </h1> 
     <div class="mx-5 my-2 flex gap-10">
       <Card
         title="Concurso de Fotografía"
@@ -22,4 +26,5 @@ import cardLogo from '../assets/prueba.jpg';
   .general {
     clip-path: polygon(0 11%, 100% 0%, 100% 100%, 0 100%);
   }
+
 </style>
