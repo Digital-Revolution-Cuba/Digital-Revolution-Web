@@ -3,7 +3,7 @@ import '../styles/global.css';
 ---
 
 <section
-  class="join-our-community bg-brand-backgroundGlobal relative grid max-w-dvw grid-cols-2 items-center justify-items-center gap-2 px-2 py-4 sm:grid-cols-3 sm:gap-3 sm:px-4 sm:py-6 md:flex md:items-center md:justify-center md:gap-35 md:py-30"
+  class="join-our-community bg-brand-backgroundGlobal relative grid max-w-dvw grid-cols-2 items-center justify-items-center gap-2 px-2 py-4 sm:grid-cols-3 sm:gap-3 sm:px-4 sm:py-6 md:flex md:items-center md:justify-center md:gap-10 md:py-30"
 >
   <!-- SVG Filter for rounded corners on clip-path -->
   <svg
@@ -32,7 +32,7 @@ import '../styles/global.css';
     class="md:col-span-auto col-span-1 flex flex-col items-start justify-start gap-2 sm:col-span-1 sm:gap-3 md:gap-20"
   >
     <div
-      class="acordeon-item relative h-20 w-14 origin-right skew-y-[-25deg] transform self-start overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-0 sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+      class="acordeon-item relative h-20 w-14 origin-right skew-y-[-25deg] transform self-start overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
     >
       <img
         src="/public/card2.webp"
@@ -56,9 +56,9 @@ import '../styles/global.css';
 
   <!-- Parallelogram center top and bottom -->
   <div
-    class="md:col-span-auto col-span-1 hidden flex-col justify-center gap-2 sm:col-span-1 sm:flex sm:gap-3 md:flex md:gap-90"
+    class="md:col-span-auto col-span-1 flex flex-col justify-center gap-2 sm:col-span-1 sm:gap-3 md:items-center md:gap-8"
   >
-    <div style="filter: url('#goo');">
+    <div style="filter: url('#goo');" class="hidden sm:block">
       <div
         class="clip-path-parallelogram-center-top h-20 w-14 self-start overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
       >
@@ -69,7 +69,22 @@ import '../styles/global.css';
       </div>
     </div>
 
-    <div style="filter: url('#goo');">
+    <!-- Botón y texto en el centro -->
+    <div
+      class="flex max-w-[350px] flex-col gap-2 sm:gap-4 md:items-center md:justify-center md:gap-8"
+    >
+      <button
+        class="bg-brand-navy rounded-full px-2 py-1 text-[10px] whitespace-nowrap text-white sm:px-3 sm:py-1.5 sm:text-xs md:px-4 md:py-2 md:text-base"
+      >
+        Únete a la comunidad
+      </button>
+      <p class="text-[8px] leading-tight sm:text-[10px] md:text-base">
+        Ten la oportunidad de formar parte de proyectos innovadores en una
+        comunidad sana y eficiente
+      </p>
+    </div>
+
+    <div style="filter: url('#goo');" class="hidden sm:block">
       <div
         class="clip-path-parallelogram-center-bottomm h-20 w-14 self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
       >
@@ -81,28 +96,17 @@ import '../styles/global.css';
     </div>
   </div>
 
-  <!-- Button and text - última columna en móvil/sm, absoluto en desktop -->
+  <!-- Button and text with images above and below - última columna en móvil/sm -->
   <div
-    class="md:col-span-auto col-span-2 flex flex-col gap-2 sm:col-span-3 sm:gap-3 md:absolute md:top-120 md:right-110 md:max-w-[350px] md:gap-8"
+    class="md:col-span-auto col-span-2 flex flex-col gap-2 sm:col-span-3 sm:gap-3 md:flex md:flex-col md:items-center md:justify-center md:gap-8"
   >
-    <button
-      class="bg-brand-navy rounded-full px-2 py-1 text-[10px] whitespace-nowrap text-white sm:px-3 sm:py-1.5 sm:text-xs md:px-4 md:py-2 md:text-base"
+    <!-- Parallelogram right top  -->
+    <div
+      style="filter: url('#goo');"
+      class="md:flex md:justify-center md:self-start"
     >
-      Únete a la comunidad
-    </button>
-    <p class="text-[8px] leading-tight sm:text-[10px] md:text-base">
-      Ten la oportunidad de formar parte de proyectos innovadores en una
-      comunidad sana y eficiente
-    </p>
-  </div>
-
-  <div
-    class="md:col-span-auto md:align-end col-span-1 flex flex-col justify-end gap-2 sm:col-span-1 sm:gap-3 md:gap-0"
-  >
-    <!-- Parallelogram right top - this is the same as the left corner but the opposite skew -->
-    <div style="filter: url('#goo');">
       <div
-        class="clip-path-parallelogram-left-corner acordeon-item relative h-28 w-16 origin-right skew-y-[25deg] transform overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-0 sm:h-36 sm:w-20 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-120 md:w-60 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+        class="clip-path-parallelogram-left-corner acordeon-item relative h-28 w-16 origin-right skew-y-[25deg] transform overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 sm:h-36 sm:w-20 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-120 md:w-60 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
       >
         <img
           src="/src/assets/image (4).png"
@@ -111,8 +115,11 @@ import '../styles/global.css';
       </div>
     </div>
 
-    <!-- Parallelogram right bottom -->
-    <div style="filter: url('#goo');">
+    <!-- Parallelogram right bottom - abajo del botón -->
+    <div
+      style="filter: url('#goo');"
+      class="md:flex md:justify-center md:self-end"
+    >
       <div
         class="clip-path-parallelogram-right-bottom acordeon-item relative h-24 w-14 origin-right transform self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-0 sm:h-32 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-90 md:w-40 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
       >
