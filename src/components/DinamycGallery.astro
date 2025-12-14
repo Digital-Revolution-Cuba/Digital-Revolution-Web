@@ -228,7 +228,9 @@ const visibleImages = 4;
     </button>
   </div>
 
-  <script define:vars={{ totalImages, visibleImages }}>
+  <script type="module" define:vars={{ totalImages, visibleImages }}>
+    import { swapButtons } from '/src/utils/galleryAnimations.js';
+
     document.addEventListener('DOMContentLoaded', () => {
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
@@ -276,8 +278,12 @@ const visibleImages = 4;
         currentItems.forEach((item) => item.classList.add('hiding'));
 
         // Iniciar la animación de swap de botones basada en la categoría destino
-        swapButtons(category).then(() => {
+        const buttonsContainer = document.querySelector(
+          '.absolute.top-0.left-0.z-20'
+        );
+        swapButtons(category, buttonsContainer).then(() => {
           // Después de animación visual, cambiar los items visibles
+          // Usamos un tiempo corto en consonancia con la transición de las cards
           setTimeout(() => {
             currentItems.forEach((item) => {
               item.style.display = 'none';
@@ -294,77 +300,11 @@ const visibleImages = 4;
             // Rehabilitar botones
             categoryBtns.forEach((b) => (b.disabled = false));
             isAnimating = false;
-          }, 400);
+          }, 160);
         });
       }
 
-      // swapButtons ahora recibe la categoría destino para evitar depender del
-      // estado que puede estar en transición. Retorna una Promise que se
-      // resuelve cuando la animación visual termina.
-      function swapButtons(targetCategory) {
-        return new Promise((resolve) => {
-          const buttonsContainer = document.querySelector(
-            '.absolute.top-0.left-0.z-20'
-          );
-          if (!buttonsContainer) return resolve();
-
-          // Buscar botones por data attribute (más robusto que texto o índices)
-          const btns = Array.from(
-            buttonsContainer.querySelectorAll('.category-btn')
-          );
-          const arteBtn = btns.find((b) => b.dataset.cat === 'arte');
-          const musicaBtn = btns.find((b) => b.dataset.cat === 'musica');
-
-          if (!arteBtn || !musicaBtn) return resolve();
-
-          // Limpiar clases previas
-          arteBtn.classList.remove('move-left', 'move-right');
-          musicaBtn.classList.remove('move-left', 'move-right');
-
-          // Añadir clases de animación según la categoría destino
-          if (targetCategory === 'musica') {
-            // Queremos que Música quede a la izquierda: animar música a la izquierda
-            musicaBtn.classList.add('move-left');
-            arteBtn.classList.add('move-right');
-          } else {
-            // Arte a la izquierda
-            arteBtn.classList.add('move-left');
-            musicaBtn.classList.add('move-right');
-          }
-
-          // Esperar a que la animación termine (duración en CSS: 300ms)
-          const onAnimEnd = () => {
-            // Reordenar DOM para coincidir con la posición visual final
-            if (targetCategory === 'musica') {
-              buttonsContainer.insertBefore(musicaBtn, arteBtn);
-            } else {
-              buttonsContainer.insertBefore(arteBtn, musicaBtn);
-            }
-
-            // Limpiar clases de animación
-            arteBtn.classList.remove('move-left', 'move-right');
-            musicaBtn.classList.remove('move-left', 'move-right');
-
-            resolve();
-          };
-
-          // Usar setTimeout como fallback si animationend no se dispara
-          const timeoutId = setTimeout(() => {
-            onAnimEnd();
-            clearTimeout(timeoutId);
-          }, 350);
-
-          // In a case the browser fires animationend, resolve earlier
-          const handler = () => {
-            clearTimeout(timeoutId);
-            onAnimEnd();
-          };
-
-          // Attach listeners to both buttons
-          arteBtn.addEventListener('animationend', handler, { once: true });
-          musicaBtn.addEventListener('animationend', handler, { once: true });
-        });
-      }
+      // swapButtons delegated to external module (imported above)
 
       // Event listeners para botones de categoría
       categoryBtns.forEach((btn) => {
@@ -561,18 +501,6 @@ const visibleImages = 4;
       font-weight: 500;
     }
 
-    /* Animación para cambio de categoría */
-    .gallery-item {
-      transition:
-        opacity 0.4s ease,
-        transform 0.4s ease;
-    }
-
-    .gallery-item.hiding {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-
     .category-btn {
       background: #f4962433;
       color: #f49624;
@@ -594,47 +522,13 @@ const visibleImages = 4;
       background: #f49624;
       color: #041421;
     }
-    .category-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
     .category-btn.active {
       background: #f49624;
       color: #041421;
       font-weight: 700;
     }
 
-    /* Animaciones para el swap de botones */
-    @keyframes moveLeft {
-      0% {
-        transform: translateX(0);
-      }
-      50% {
-        transform: translateX(-12px);
-      }
-      100% {
-        transform: translateX(0);
-      }
-    }
-    @keyframes moveRight {
-      0% {
-        transform: translateX(0);
-      }
-      50% {
-        transform: translateX(12px);
-      }
-      100% {
-        transform: translateX(0);
-      }
-    }
-
-    .category-btn.move-left {
-      animation: moveLeft 300ms ease forwards;
-    }
-    .category-btn.move-right {
-      animation: moveRight 300ms ease forwards;
-    }
+    /* Animations moved to `src/styles/animations.css` */
     .nav-btn {
       background: #f4962433;
       transition: background 0.2s;
