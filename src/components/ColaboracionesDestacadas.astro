@@ -53,14 +53,17 @@ const visibleCards = 3;
 
 <section id="colaboraciones" class="h-auto w-auto bg-gray-950">
   <div class="relative z-30 h-[600px]">
-    <div class="absolute top-0 right-0 bg-orange-500 h-[600px] second-clip w-[8000px]"></div>
+    <div
+      class="second-clip absolute top-0 right-0 h-[600px] w-[8000px] bg-orange-500"
+    >
+    </div>
     <div class="general z-30 bg-teal-300">
       <div class="flex flex-col items-start justify-between pt-20 pr-10 pl-10">
         <section class="colab-section">
           <div class="wrapper-colab">
             <div class="shape-back-colab"></div>
             <div class="shape-front-colab">
-              <div class="text-content-colab">
+              <div class="text-content-colab heading-colab">
                 Colaboraciones <br />Destacadas
               </div>
             </div>
@@ -186,19 +189,14 @@ const visibleCards = 3;
 
 <style>
   .general {
-    clip-path: polygon(
-      0 0%,
-      100% 28%,
-      100% 100%,
-      0 100%
-    );
+    clip-path: polygon(0 0%, 100% 28%, 100% 100%, 0 100%);
   }
 
   .second-clip {
     clip-path: polygon(
-      100% 0%,   /* esquina superior derecha */
-      0 100%,    /* esquina inferior izquierda */
-      100% 100%  /* esquina inferior derecha */
+      100% 0%,
+      /* esquina superior derecha */ 0 100%,
+      /* esquina inferior izquierda */ 100% 100% /* esquina inferior derecha */
     );
   }
 
@@ -224,11 +222,6 @@ const visibleCards = 3;
 
   .text-content-colab {
     text-align: start;
-    text
-    color: #000000;
-    font-weight: bold;
     padding: 0;
-    font-family: Impact, Charcoal, 'Arial Black', sans-serif;
-    font-size: 72px;
   }
 </style>
