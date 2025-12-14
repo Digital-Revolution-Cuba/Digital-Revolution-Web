@@ -5,9 +5,79 @@
   --font-saira: 'Saira Stencil One', sans-serif;
   --font-barlow: 'Barlow Semi Condensed', sans-serif;
   --font-rubik: 'Rubik', sans-serif;
-
-  /**
-   * Tailwind defaults
-   */
   --default-font-family: var(--font-rubik);
+
+  /* Fondos Oscuros */
+  --color-brand-dark: #011822; /* Header Background */
+  --color-brand-navy: #002b38; /* Botones oscuros (Crea tu perfil) */
+  --color-brand-background-global: #001018; /* Fondo global */
+
+  /* Acentos */
+  --color-accent-orange: #f49624; /* Colaboraciones, Botones */
+  --color-accent-purple: #9747ff; /* Bordes, Hover */
+  --color-accent-cyan: #34dfde; /* Background Concursos */
+  --color-accent-yellow: #ffc943; /* Background Galería */
+  --color-accent-blue: #19ceee; /* Únete a la comunidad */
+
+  /* Textos */
+  --color-text-primary: #fffffd; /* Descubre Talentos (casi blanco) */
+  --color-text-secondary: #cccccc; /* Descripción */
+  --color-text-dark: #041421; /* Letras sobre fondos claros */
+
+  /* Gradientes (Definidos como background-image) */
+  --background-image-gradient-cyan: linear-gradient(
+    to bottom,
+    #4aedd1,
+    #44e9d4,
+    #34dfde,
+    #19ceee,
+    #0bc5f7
+  );
+  --background-image-gradient-orange: linear-gradient(
+    to right,
+    #f49624,
+    #0cc6f8
+  );
+
+  /* Sombras */
+  --shadow-text-sm: 0px 3px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* Estilos base globales */
+html,
+body {
+  background-color: var(--color-brand-background-global);
+  color: var(--color-text-primary);
+}
+
+@layer components {
+  .heading-impact {
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 64px;
+    line-height: 0.82; /* 82% */
+    letter-spacing: 0;
+    color: var(--color-text-dark);
+  }
+  .descubre-talentos {
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 96px;
+    line-height: 0.82;
+    letter-spacing: 0;
+    color: var(--color-text-primary);
+  }
+  .heading-colab {
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 96px;
+    line-height: 0.82;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: var(--color-text-dark);
+    text-shadow: 3px 3px 0px var(--color-accent-orange);
+  }
 }

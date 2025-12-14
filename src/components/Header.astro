@@ -1,75 +1,145 @@
 ---
-
+import logo from '../assets/LogoRevolucionDigital.svg';
+import RevolucionDigitalText from '../assets/RevolucionDigital.svg';
 ---
 
-<header>
-  <div class="container-header">
-    <div class="logo">
-      <img src="/src/assets/astro.svg" alt="" />
-    </div>
-    <div class="navegation">
-      <a href="#concursos">Concursos</a>
-      <a href="#galeria">Galeria</a>
-      <a href="#perfiles">Perfiles</a>
-      <a href="#colaboraciones">Colaboraciones</a>
-      <button
-        class="mt-6 rounded-lg border-1 border-gray-700 bg-gray-800 px-6 py-3 text-lg text-white"
-        >Descubre Talentos</button
-      >
-    </div>
+<header
+  id="main-header"
+  class="fixed top-[33px] right-0 left-0 z-50 mx-auto flex h-20 w-[95%] max-w-[1450px] items-center justify-between rounded-[40px] bg-brand-dark px-6 py-[7px] shadow-lg transition-transform duration-500 ease-in-out lg:px-[43px]"
+>
+  <!-- Logo -->
+  <div class="flex items-center">
+    <a href="#" class="flex items-center gap-3">
+      <img src={logo.src} alt="Logo" class="h-[50px] w-auto" />
+      <img
+        src={RevolucionDigitalText.src}
+        alt="Revolución Digital"
+        class="hidden h-[48px] w-[143px] lg:block"
+      />
+    </a>
+  </div>
+
+  <!-- Botón Menú Móvil (Hamburguesa) -->
+  <button
+    id="menu-toggle"
+    class="text-text-secondary hover:text-accent-purple focus:outline-none lg:hidden"
+    aria-label="Abrir menú"
+  >
+    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+
+  <!-- Navegación Desktop -->
+  <nav class="hidden items-center gap-8 lg:flex">
+    <a
+      href="#concursos"
+      class="text-text-secondary hover:text-accent-purple text-base font-normal transition-colors duration-300"
+      >Concursos</a
+    >
+    <a
+      href="#galeria"
+      class="text-text-secondary hover:text-accent-purple text-base font-normal transition-colors duration-300"
+      >Galeria</a
+    >
+    <a
+      href="#perfiles"
+      class="text-text-secondary hover:text-accent-purple text-base font-normal transition-colors duration-300"
+      >Perfiles</a
+    >
+    <a
+      href="#colaboraciones"
+      class="text-text-secondary hover:text-accent-purple text-base font-normal transition-colors duration-300"
+      >Colaboraciones</a
+    >
+    <button
+      class="border-brand-navy text-accent-orange hover:bg-accent-purple bg-brand-navy rounded-lg border px-6 py-2.5 text-base font-semibold transition-all duration-300 hover:text-white hover:shadow-[0_0_15px_rgba(151,71,255,0.4)]"
+    >
+      Descubre Talentos
+    </button>
+  </nav>
+
+  <!-- Menú Móvil (Desplegable) -->
+  <div
+    id="mobile-menu"
+    class="bg-brand-dark absolute top-24 left-0 hidden w-full flex-col items-center gap-6 rounded-2xl p-6 shadow-xl lg:hidden"
+  >
+    <a
+      href="#concursos"
+      class="text-text-secondary hover:text-accent-purple text-lg">Concursos</a
+    >
+    <a
+      href="#galeria"
+      class="text-text-secondary hover:text-accent-purple text-lg">Galeria</a
+    >
+    <a
+      href="#perfiles"
+      class="text-text-secondary hover:text-accent-purple text-lg">Perfiles</a
+    >
+    <a
+      href="#colaboraciones"
+      class="text-text-secondary hover:text-accent-purple text-lg"
+      >Colaboraciones</a
+    >
+    <button
+      class="border-brand-navy text-accent-orange hover:bg-accent-purple bg-brand-navy w-full rounded-lg border py-3 text-lg font-semibold hover:text-white"
+    >
+      Descubre Talentos
+    </button>
   </div>
 </header>
 
-<style>
-  header {
-    width: 100vw;
-    height: 15%;
-    display: flex;
-    align-items: center;
-    background-color: #030712;
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const header = document.getElementById('main-header');
+  let lastScrollY = window.scrollY;
+
+  // Toggle Menú Móvil
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+    });
   }
 
-  .container-header {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 73px;
-    flex-wrap: wrap;
-  }
+  // Lógica de Scroll para ocultar/mostrar header
+  window.addEventListener('scroll', () => {
+    if (!header) return;
 
-  h1 {
-    color: aquamarine;
-    font-size: 20px;
-  }
+    const currentScrollY = window.scrollY;
+    const isScrollingDown = currentScrollY > lastScrollY;
+    const isScrolledPastThreshold = currentScrollY > 50; // Umbral para evitar parpadeo arriba
 
-  a {
-    color: white;
-    margin: 0 20px;
-    transition: all 0.5s;
-  }
+    if (isScrollingDown && isScrolledPastThreshold) {
+      // Ocultar header (mover hacia arriba más allá de su altura y posición)
+      header.classList.add('-translate-y-[250%]');
 
-  a:hover {
-    color: #d08700;
-  }
-
-  button {
-    color: #d08700;
-    margin: 0;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.5s;
-  }
-
-  button:hover {
-    background-color: #13275e;
-  }
-
-  @media (width-min: 915px) {
-    header {
-      width: 20%;
-      background-color: #d08700;
+      // Cerrar menú móvil si está abierto para evitar que quede flotando
+      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('flex');
+      }
+    } else {
+      // Mostrar header
+      header.classList.remove('-translate-y-[250%]');
     }
+
+    lastScrollY = currentScrollY;
+  });
+</script>
+
+<style>
+  a {
+    text-decoration: none;
+  }
+
+  /* Aseguramos que el botón mantenga sus estilos base si Tailwind falla o para especificidad */
+  button {
+    cursor: pointer;
   }
 </style>

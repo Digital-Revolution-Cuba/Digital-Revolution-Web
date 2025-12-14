@@ -2,126 +2,25 @@
 import Card from './Card.astro';
 import cardLogo from '../assets/prueba.jpg';
 
-const cards = [
-  {
-    title: 'Concurso de Fotografía',
-    ctaText: 'Ver Más',
-    imageUrl: cardLogo.src,
-    altText: 'Imagen del concurso de fotografía',
-    ctaLink: '#',
-  },
-  {
-    title: 'Concurso de Diseño',
-    ctaText: 'Ver Más',
-    imageUrl: cardLogo.src,
-    altText: 'Imagen del concurso de Diseño',
-    ctaLink: '#',
-  },
-  {
-    title: 'Concurso de Arte',
-    ctaText: 'Ver Más',
-    imageUrl: cardLogo.src,
-    altText: 'Imagen del concurso de Arte',
-    ctaLink: '#',
-  },
-  {
-    title: 'Concurso de Ilustración',
-    ctaText: 'Ver Más',
-    imageUrl: cardLogo.src,
-    altText: 'Imagen del concurso de Ilustración',
-    ctaLink: '#',
-  },
-  {
-    title: 'Concurso de Música',
-    ctaText: 'Ver Más',
-    imageUrl: cardLogo.src,
-    altText: 'Imagen del concurso de Música',
-    ctaLink: '#',
-  },
-  {
-    title: 'Concurso de Programacion',
-    ctaText: 'Ver Más',
-    imageUrl: cardLogo.src,
-    altText: 'Imagen del concurso de Programacion',
-    ctaLink: '#',
-  },
-];
-
-const totalCards = cards.length;
-const visibleCards = 3;
+// Configuración del slider de cards
+const totalCards = 1; // Número total de cards en el slider
+const visibleCards = 3; // Cards visibles a la vez
 ---
 
-<section id="concursos" class="h-auto w-auto bg-gray-950">
-  <div class="general relative z-30 h-130 bg-teal-300">
-    <h1 class="pt-20 pl-10 text-6xl font-bold">Concursos <br /> Activos</h1>
-    <div
-      class="relative mx-auto my-2 flex w-[1140px] items-center justify-between"
-    >
-      <button
-        id="prevBtn"
-        class="nav-btn absolute top-1/2 left-[-50px] z-10 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2.5"
-          stroke="currentColor"
-          class="nav-arrow h-6 w-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"></path>
-        </svg>
-      </button>
-      <div
-        class="gallery-container relative mx-auto overflow-hidden"
-        style="width: 1140px;"
-      >
-        <div class="w-full overflow-hidden">
-          <div
-            id="cardSlider"
-            class="flex transition-transform duration-800 ease-in-out"
-            style="min-width: max-content;"
-          >
-            {
-              cards.map((card) => (
-                <div
-                  class="relative flex-shrink-0"
-                  style="width: 380px; padding-left: 8px; padding-right: 8px;"
-                >
-                  <Card
-                    title={card.title}
-                    ctaText={card.ctaText}
-                    imageUrl={card.imageUrl}
-                    altText={card.altText}
-                    ctaLink={card.ctaLink}
-                  />
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </div>
-      <button
-        id="nextBtn"
-        class="nav-btn absolute top-1/2 right-[-50px] z-10 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2.5"
-          stroke="currentColor"
-          class="nav-arrow h-6 w-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
-        </svg>
-      </button>
+<section id="concursos" class="bg-brand-backgroundGlobal h-auto w-auto">
+  <div class="general bg-accent-cyan relative z-30 h-130">
+    <!-- Usamos la clase global aquí -->
+    <h1 class="heading-impact custom-shadow pt-20 pl-10 drop-shadow-lg">
+      Concursos <br /> Activos
+    </h1>
+    <div class="mx-5 my-2 flex gap-10">
+      <Card
+        title="Concurso de Fotografía"
+        ctaText="Ver Más"
+        imageUrl={cardLogo.src}
+        altText="Imagen del concurso de fotografía"
+        ctaLink="#"
+      />
     </div>
   </div>
 </section>
@@ -169,25 +68,5 @@ const visibleCards = 3;
 <style>
   .general {
     clip-path: polygon(0 11%, 100% 0%, 100% 100%, 0 100%);
-  }
-
-  .nav-btn {
-    background: #030712;
-    transition: background 0.2s;
-  }
-
-  .nav-arrow {
-    stroke: #46ecd5;
-    transition: stroke 0.2s;
-  }
-
-  .nav-btn:hover,
-  .nav-btn:focus {
-    background: #46ecd5;
-  }
-
-  .nav-btn:hover .nav-arrow,
-  .nav-btn:focus .nav-arrow {
-    stroke: #030712;
   }
 </style>
