@@ -1,17 +1,108 @@
 ---
-// Por favor si luego hace falta usen props en las imagenes:
-// const { images = [...] } = Astro.props;
-const images = [
-  'https://picsum.photos/seed/1/600/400',
-  'https://picsum.photos/seed/2/600/400',
-  'https://picsum.photos/seed/3/600/400',
-  'https://picsum.photos/seed/4/600/400',
-  'https://picsum.photos/seed/5/600/400',
-  'https://picsum.photos/seed/6/600/400',
-  'https://picsum.photos/seed/7/600/400',
-  'https://picsum.photos/seed/8/600/400',
+// Estructura de datos para diferentes categorías
+const arteGallery = [
+  {
+    type: 'arte',
+    image: 'https://picsum.photos/seed/1/600/400',
+    title: 'Arte Digital 1',
+  },
+  {
+    type: 'arte',
+    image: 'https://picsum.photos/seed/2/600/400',
+    title: 'Arte Digital 2',
+  },
+  {
+    type: 'arte',
+    image: 'https://picsum.photos/seed/3/600/400',
+    title: 'Arte Digital 3',
+  },
+  {
+    type: 'arte',
+    image: 'https://picsum.photos/seed/4/600/400',
+    title: 'Arte Digital 4',
+  },
+  {
+    type: 'arte',
+    image: 'https://picsum.photos/seed/5/600/400',
+    title: 'Arte Digital 5',
+  },
+  {
+    type: 'arte',
+    image: 'https://picsum.photos/seed/6/600/400',
+    title: 'Arte Digital 6',
+  },
+  {
+    type: 'arte',
+    image: 'https://picsum.photos/seed/7/600/400',
+    title: 'Arte Digital 7',
+  },
+  {
+    type: 'arte',
+    image: 'https://picsum.photos/seed/8/600/400',
+    title: 'Arte Digital 8',
+  },
 ];
-const totalImages = images.length;
+
+const musicaGallery = [
+  {
+    type: 'musica',
+    image: 'https://picsum.photos/seed/music1/400/400',
+    title: "Don't stop me",
+    artist: 'Frank y su tropa',
+    duration: '3:04',
+  },
+  {
+    type: 'musica',
+    image: 'https://picsum.photos/seed/music2/400/400',
+    title: 'Summer Vibes',
+    artist: 'Los Tropicales',
+    duration: '4:21',
+  },
+  {
+    type: 'musica',
+    image: 'https://picsum.photos/seed/music3/400/400',
+    title: 'Electric Dreams',
+    artist: 'Synth Wave',
+    duration: '3:45',
+  },
+  {
+    type: 'musica',
+    image: 'https://picsum.photos/seed/music4/400/400',
+    title: 'Midnight Jazz',
+    artist: 'Blue Notes',
+    duration: '5:12',
+  },
+  {
+    type: 'musica',
+    image: 'https://picsum.photos/seed/music5/400/400',
+    title: 'Rock Anthem',
+    artist: 'The Legends',
+    duration: '4:03',
+  },
+  {
+    type: 'musica',
+    image: 'https://picsum.photos/seed/music6/400/400',
+    title: 'Acoustic Soul',
+    artist: 'Marina del Rey',
+    duration: '3:28',
+  },
+  {
+    type: 'musica',
+    image: 'https://picsum.photos/seed/music7/400/400',
+    title: 'Urban Beats',
+    artist: 'DJ Fusion',
+    duration: '3:56',
+  },
+  {
+    type: 'musica',
+    image: 'https://picsum.photos/seed/music8/400/400',
+    title: 'Classical Mix',
+    artist: 'Orchestra Plus',
+    duration: '6:30',
+  },
+];
+
+const totalImages = arteGallery.length;
 const visibleImages = 4;
 ---
 
@@ -57,17 +148,58 @@ const visibleImages = 4;
           style="min-width: max-content;"
         >
           {
-            images.map((src, index) => (
+            arteGallery.map((item, index) => (
               <div
-                class="relative flex-shrink-0 overflow-hidden rounded-[25px]"
+                class="gallery-item arte-item relative flex-shrink-0 overflow-hidden rounded-[25px]"
                 style="width: 285px; padding-left: 8px; padding-right: 8px;"
+                data-category="arte"
               >
                 <img
-                  src={src}
-                  alt={`Galería Imagen ${index + 1}`}
+                  src={item.image}
+                  alt={item.title}
                   class="h-[440px] w-[269px] rounded-[25px] object-cover shadow-md transition duration-300"
                   loading="lazy"
                 />
+                <div class="shine-effect" />
+              </div>
+            ))
+          }
+          {
+            musicaGallery.map((item, index) => (
+              <div
+                class="gallery-item musica-item relative flex-shrink-0 overflow-hidden rounded-[25px]"
+                style="width: 285px; padding-left: 8px; padding-right: 8px; display: none;"
+                data-category="musica"
+              >
+                <div class="music-card h-[440px] w-[269px] overflow-hidden rounded-[25px] shadow-md">
+                  <div class="music-card-content">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      class="music-album-cover"
+                      loading="lazy"
+                    />
+                    <div class="music-info">
+                      <h3 class="music-title">{item.title}</h3>
+                      <p class="music-artist">{item.artist}</p>
+                    </div>
+                    <div class="music-controls">
+                      <button class="play-button" aria-label="Play">
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle cx="12" cy="12" r="10" fill="#F49624" />
+                          <path d="M10 8L16 12L10 16V8Z" fill="#041421" />
+                        </svg>
+                      </button>
+                      <span class="music-duration">{item.duration}</span>
+                    </div>
+                  </div>
+                </div>
                 <div class="shine-effect" />
               </div>
             ))
@@ -101,13 +233,16 @@ const visibleImages = 4;
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       const slider = document.getElementById('imageSlider');
+      const categoryBtns = document.querySelectorAll('.category-btn');
 
       if (!prevBtn || !nextBtn || !slider) return;
 
       let currentIndex = 0;
+      let currentCategory = 'arte';
       const imagesPerPage = 4;
       const itemWidth = 285;
       const maxIndex = Math.max(0, Math.ceil(totalImages / imagesPerPage) - 1);
+
       function updateSlider() {
         const offset = -currentIndex * imagesPerPage * itemWidth;
         slider.style.transform = `translateX(${offset}px)`;
@@ -116,19 +251,103 @@ const visibleImages = 4;
         prevBtn.style.opacity = currentIndex <= 0 ? '0.5' : '1';
         nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
       }
+
+      function switchCategory(category) {
+        if (category === currentCategory) return;
+
+        const arteItems = document.querySelectorAll('.arte-item');
+        const musicaItems = document.querySelectorAll('.musica-item');
+        const currentItems =
+          currentCategory === 'arte' ? arteItems : musicaItems;
+        const nextItems = category === 'arte' ? arteItems : musicaItems;
+
+        // Ocultar items actuales con animación
+        currentItems.forEach((item) => {
+          item.classList.add('hiding');
+        });
+
+        setTimeout(() => {
+          currentItems.forEach((item) => {
+            item.style.display = 'none';
+            item.classList.remove('hiding');
+          });
+
+          // Mostrar nuevos items
+          nextItems.forEach((item) => {
+            item.style.display = 'block';
+          });
+
+          currentCategory = category;
+          currentIndex = 0;
+          updateSlider();
+        }, 400);
+      }
+
+      function swapButtons() {
+        const buttonsContainer = document.querySelector(
+          '.absolute.top-0.left-0.z-20'
+        );
+        if (!buttonsContainer) return;
+
+        const arteBtn = buttonsContainer.children[0];
+        const musicaBtn = buttonsContainer.children[1];
+
+        if (currentCategory === 'arte') {
+          // Intercambiar posiciones: Música va a la izquierda
+          buttonsContainer.insertBefore(musicaBtn, arteBtn);
+        } else {
+          // Volver a la posición original: Arte a la izquierda
+          buttonsContainer.insertBefore(arteBtn, musicaBtn);
+        }
+      }
+
+      // Event listeners para botones de categoría
+      categoryBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const btnText = btn.textContent.trim();
+
+          if (btnText === 'Arte') {
+            if (currentCategory !== 'arte') {
+              switchCategory('arte');
+              swapButtons();
+              updateActiveButton(btn);
+            }
+          } else if (btnText === 'Música') {
+            if (currentCategory !== 'musica') {
+              switchCategory('musica');
+              swapButtons();
+              updateActiveButton(btn);
+            }
+          }
+        });
+      });
+
+      function updateActiveButton(activeBtn) {
+        categoryBtns.forEach((btn) => btn.classList.remove('active'));
+        activeBtn.classList.add('active');
+      }
+
+      // Establecer Arte como activo inicialmente
+      if (categoryBtns.length > 0) {
+        categoryBtns[0].classList.add('active');
+      }
+
       prevBtn.addEventListener('click', () => {
         if (currentIndex > 0) {
           currentIndex--;
           updateSlider();
         }
       });
+
       nextBtn.addEventListener('click', () => {
         if (currentIndex < maxIndex) {
           currentIndex++;
           updateSlider();
         }
       });
+
       updateSlider();
+
       document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft' && currentIndex > 0) {
           currentIndex--;
@@ -194,6 +413,101 @@ const visibleImages = 4;
       transition: transform 0.7s;
     }
 
+    /* Estilos para las cards de música */
+    .music-card {
+      background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+
+    .music-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(244, 150, 36, 0.3);
+    }
+
+    .music-card-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      gap: 16px;
+    }
+
+    .music-album-cover {
+      width: 100%;
+      height: 229px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .music-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .music-title {
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .music-artist {
+      color: #a0a0a0;
+      font-size: 0.95rem;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .music-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .play-button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+
+    .play-button:hover {
+      transform: scale(1.1);
+    }
+
+    .music-duration {
+      color: #a0a0a0;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Animación para cambio de categoría */
+    .gallery-item {
+      transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+    }
+
+    .gallery-item.hiding {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
     .category-btn {
       background: #f4962433;
       color: #f49624;
@@ -205,13 +519,20 @@ const visibleImages = 4;
       cursor: pointer;
       transition:
         background 0.2s,
-        color 0.2s;
+        color 0.2s,
+        transform 0.5s ease;
       outline: none;
+      position: relative;
     }
     .category-btn:hover,
     .category-btn:focus {
       background: #f49624;
       color: #041421;
+    }
+    .category-btn.active {
+      background: #f49624;
+      color: #041421;
+      font-weight: 700;
     }
     .nav-btn {
       background: #f4962433;
