@@ -111,9 +111,9 @@ const visibleImages = 4;
   class="lg:-8 relative flex h-[80dvh] w-full items-center justify-center overflow-hidden bg-gray-950 px-4 text-left text-black sm:px-9"
 >
   <div class="absolute top-0 left-0 z-20 flex gap-4 p-4 sm:p-8">
-    <button class="category-btn">Arte</button>
-    <button class="category-btn">Música</button>
-    <button class="category-btn">Fotografía</button>
+    <button class="category-btn" data-cat="arte">Arte</button>
+    <button class="category-btn" data-cat="musica">Música</button>
+    <button class="category-btn" data-cat="fotografia">Fotografía</button>
   </div>
   <div
     class="relative mx-auto my-8 flex w-[1140px] items-center justify-between"
@@ -239,6 +239,8 @@ const visibleImages = 4;
 
       let currentIndex = 0;
       let currentCategory = 'arte';
+      // Bandera para evitar clicks rápidos durante la animación
+      let isAnimating = false;
       const imagesPerPage = 4;
       const itemWidth = 285;
       const maxIndex = Math.max(0, Math.ceil(totalImages / imagesPerPage) - 1);
@@ -253,70 +255,130 @@ const visibleImages = 4;
       }
 
       function switchCategory(category) {
-        if (category === currentCategory) return;
+        // Evitar reentradas durante la animación
+        if (category === currentCategory || isAnimating) return;
+
+        isAnimating = true;
+
+        // Deshabilitar botones mientras animan
+        categoryBtns.forEach((b) => (b.disabled = true));
 
         const arteItems = document.querySelectorAll('.arte-item');
         const musicaItems = document.querySelectorAll('.musica-item');
-        const currentItems =
-          currentCategory === 'arte' ? arteItems : musicaItems;
+        const currentItems = currentCategory === 'arte' ? arteItems : musicaItems;
         const nextItems = category === 'arte' ? arteItems : musicaItems;
 
-        // Ocultar items actuales con animación
-        currentItems.forEach((item) => {
-          item.classList.add('hiding');
+        // Establecer la categoría inmediatamente para evitar condiciones de carrera
+        currentCategory = category;
+
+        // Animación de salida
+        currentItems.forEach((item) => item.classList.add('hiding'));
+
+        // Iniciar la animación de swap de botones basada en la categoría destino
+        swapButtons(category).then(() => {
+          // Después de animación visual, cambiar los items visibles
+          setTimeout(() => {
+            currentItems.forEach((item) => {
+              item.style.display = 'none';
+              item.classList.remove('hiding');
+            });
+
+            nextItems.forEach((item) => {
+              item.style.display = 'block';
+            });
+
+            currentIndex = 0;
+            updateSlider();
+
+            // Rehabilitar botones
+            categoryBtns.forEach((b) => (b.disabled = false));
+            isAnimating = false;
+          }, 400);
         });
-
-        setTimeout(() => {
-          currentItems.forEach((item) => {
-            item.style.display = 'none';
-            item.classList.remove('hiding');
-          });
-
-          // Mostrar nuevos items
-          nextItems.forEach((item) => {
-            item.style.display = 'block';
-          });
-
-          currentCategory = category;
-          currentIndex = 0;
-          updateSlider();
-        }, 400);
       }
 
-      function swapButtons() {
-        const buttonsContainer = document.querySelector(
-          '.absolute.top-0.left-0.z-20'
-        );
-        if (!buttonsContainer) return;
+      // swapButtons ahora recibe la categoría destino para evitar depender del
+      // estado que puede estar en transición. Retorna una Promise que se
+      // resuelve cuando la animación visual termina.
+      function swapButtons(targetCategory) {
+        return new Promise((resolve) => {
+          const buttonsContainer = document.querySelector(
+            '.absolute.top-0.left-0.z-20'
+          );
+          if (!buttonsContainer) return resolve();
 
-        const arteBtn = buttonsContainer.children[0];
-        const musicaBtn = buttonsContainer.children[1];
+          // Buscar botones por data attribute (más robusto que texto o índices)
+          const btns = Array.from(buttonsContainer.querySelectorAll('.category-btn'));
+          const arteBtn = btns.find((b) => b.dataset.cat === 'arte');
+          const musicaBtn = btns.find((b) => b.dataset.cat === 'musica');
 
-        if (currentCategory === 'arte') {
-          // Intercambiar posiciones: Música va a la izquierda
-          buttonsContainer.insertBefore(musicaBtn, arteBtn);
-        } else {
-          // Volver a la posición original: Arte a la izquierda
-          buttonsContainer.insertBefore(arteBtn, musicaBtn);
-        }
+          if (!arteBtn || !musicaBtn) return resolve();
+
+          // Limpiar clases previas
+          arteBtn.classList.remove('move-left', 'move-right');
+          musicaBtn.classList.remove('move-left', 'move-right');
+
+          // Añadir clases de animación según la categoría destino
+          if (targetCategory === 'musica') {
+            // Queremos que Música quede a la izquierda: animar música a la izquierda
+            musicaBtn.classList.add('move-left');
+            arteBtn.classList.add('move-right');
+          } else {
+            // Arte a la izquierda
+            arteBtn.classList.add('move-left');
+            musicaBtn.classList.add('move-right');
+          }
+
+          // Esperar a que la animación termine (duración en CSS: 300ms)
+          const onAnimEnd = () => {
+            // Reordenar DOM para coincidir con la posición visual final
+            if (targetCategory === 'musica') {
+              buttonsContainer.insertBefore(musicaBtn, arteBtn);
+            } else {
+              buttonsContainer.insertBefore(arteBtn, musicaBtn);
+            }
+
+            // Limpiar clases de animación
+            arteBtn.classList.remove('move-left', 'move-right');
+            musicaBtn.classList.remove('move-left', 'move-right');
+
+            resolve();
+          };
+
+          // Usar setTimeout como fallback si animationend no se dispara
+          const timeoutId = setTimeout(() => {
+            onAnimEnd();
+            clearTimeout(timeoutId);
+          }, 350);
+
+          // In a case the browser fires animationend, resolve earlier
+          const handler = () => {
+            clearTimeout(timeoutId);
+            onAnimEnd();
+          };
+
+          // Attach listeners to both buttons
+          arteBtn.addEventListener('animationend', handler, { once: true });
+          musicaBtn.addEventListener('animationend', handler, { once: true });
+        });
       }
 
       // Event listeners para botones de categoría
       categoryBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
-          const btnText = btn.textContent.trim();
+          const category = btn.dataset.cat; // 'arte', 'musica', etc.
 
-          if (btnText === 'Arte') {
+          if (!category || isAnimating) return;
+
+          if (category === 'arte') {
             if (currentCategory !== 'arte') {
+              updateActiveButton(btn);
               switchCategory('arte');
-              swapButtons();
-              updateActiveButton(btn);
             }
-          } else if (btnText === 'Música') {
+          } else if (category === 'musica') {
             if (currentCategory !== 'musica') {
-              switchCategory('musica');
-              swapButtons();
               updateActiveButton(btn);
+              switchCategory('musica');
             }
           }
         });
@@ -520,7 +582,7 @@ const visibleImages = 4;
       transition:
         background 0.2s,
         color 0.2s,
-        transform 0.5s ease;
+        transform 0.2s ease;
       outline: none;
       position: relative;
     }
@@ -529,10 +591,34 @@ const visibleImages = 4;
       background: #f49624;
       color: #041421;
     }
+    .category-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
     .category-btn.active {
       background: #f49624;
       color: #041421;
       font-weight: 700;
+    }
+
+    /* Animaciones para el swap de botones */
+    @keyframes moveLeft {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(-12px); }
+      100% { transform: translateX(0); }
+    }
+    @keyframes moveRight {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(12px); }
+      100% { transform: translateX(0); }
+    }
+
+    .category-btn.move-left {
+      animation: moveLeft 300ms ease forwards;
+    }
+    .category-btn.move-right {
+      animation: moveRight 300ms ease forwards;
     }
     .nav-btn {
       background: #f4962433;
