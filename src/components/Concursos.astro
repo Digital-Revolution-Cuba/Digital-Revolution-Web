@@ -2,10 +2,13 @@
 import Card from './Card.astro';
 import cardLogo from '../assets/prueba.jpg';
 
+// Configuración del slider de cards
+const totalCards = 1; // Número total de cards en el slider
+const visibleCards = 3; // Cards visibles a la vez
 ---
 
 <section id="concursos" class="bg-brand-backgroundGlobal h-auto w-auto">
-  <div class="general relative z-30 h-130 bg-accent-cyan">
+  <div class="general bg-accent-cyan relative z-30 h-130">
     <!-- Usamos la clase global aquí -->
     <h1 class="heading-impact custom-shadow pt-20 pl-10 drop-shadow-lg">
       Concursos <br /> Activos
@@ -66,5 +69,4 @@ import cardLogo from '../assets/prueba.jpg';
   .general {
     clip-path: polygon(0 11%, 100% 0%, 100% 100%, 0 100%);
   }
-
 </style>
