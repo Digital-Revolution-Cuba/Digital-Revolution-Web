@@ -265,7 +265,8 @@ const visibleImages = 4;
 
         const arteItems = document.querySelectorAll('.arte-item');
         const musicaItems = document.querySelectorAll('.musica-item');
-        const currentItems = currentCategory === 'arte' ? arteItems : musicaItems;
+        const currentItems =
+          currentCategory === 'arte' ? arteItems : musicaItems;
         const nextItems = category === 'arte' ? arteItems : musicaItems;
 
         // Establecer la categoría inmediatamente para evitar condiciones de carrera
@@ -308,7 +309,9 @@ const visibleImages = 4;
           if (!buttonsContainer) return resolve();
 
           // Buscar botones por data attribute (más robusto que texto o índices)
-          const btns = Array.from(buttonsContainer.querySelectorAll('.category-btn'));
+          const btns = Array.from(
+            buttonsContainer.querySelectorAll('.category-btn')
+          );
           const arteBtn = btns.find((b) => b.dataset.cat === 'arte');
           const musicaBtn = btns.find((b) => b.dataset.cat === 'musica');
 
@@ -604,14 +607,26 @@ const visibleImages = 4;
 
     /* Animaciones para el swap de botones */
     @keyframes moveLeft {
-      0% { transform: translateX(0); }
-      50% { transform: translateX(-12px); }
-      100% { transform: translateX(0); }
+      0% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(-12px);
+      }
+      100% {
+        transform: translateX(0);
+      }
     }
     @keyframes moveRight {
-      0% { transform: translateX(0); }
-      50% { transform: translateX(12px); }
-      100% { transform: translateX(0); }
+      0% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(12px);
+      }
+      100% {
+        transform: translateX(0);
+      }
     }
 
     .category-btn.move-left {
