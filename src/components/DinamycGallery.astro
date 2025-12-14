@@ -229,7 +229,7 @@ const visibleImages = 4;
   </div>
 
   <script type="module" define:vars={{ totalImages, visibleImages }}>
-    import { swapButtons } from '/src/utils/galleryAnimations.js';
+    import { flipSwapButtons } from '/src/utils/galleryAnimations.js';
 
     document.addEventListener('DOMContentLoaded', () => {
       const prevBtn = document.getElementById('prevBtn');
@@ -281,7 +281,8 @@ const visibleImages = 4;
         const buttonsContainer = document.querySelector(
           '.absolute.top-0.left-0.z-20'
         );
-        swapButtons(category, buttonsContainer).then(() => {
+        // Use the FLIP-based swap so the buttons visibly translate to each other's spots
+        flipSwapButtons(category, buttonsContainer).then(() => {
           // Después de animación visual, cambiar los items visibles
           // Usamos un tiempo corto en consonancia con la transición de las cards
           setTimeout(() => {
