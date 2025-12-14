@@ -1,0 +1,49 @@
+/* Centralized animation styles for the gallery */
+
+/* Button swap animations */
+@keyframes moveLeft {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-14px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes moveRight {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(14px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.category-btn.move-left {
+  animation: moveLeft 320ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+}
+.category-btn.move-right {
+  animation: moveRight 320ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+}
+
+.category-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Card transition: very quick and smooth */
+.gallery-item {
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+}
+.gallery-item.hiding {
+  opacity: 0;
+  transform: translateY(6px) scale(0.995);
+}
