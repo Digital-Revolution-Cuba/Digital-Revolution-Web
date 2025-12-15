@@ -1,123 +1,138 @@
-// Utilities for gallery animations (client-side)
-// Exports: swapButtons(targetCategory, buttonsContainer)
+/**
+ * Utilities to animate button swaps and manage will-change dynamically.
+ * - flipSwapButtons(targetCategory, container): animates FLIP between active button and target button.
+ * - withWillChange(elements, willChangeValue, durationMs): sets will-change and removes it after duration.
+ *
+ * Keep it small and single-responsibility (SOLID-friendly).
+ */
 
-// (removed keyframe-based animation helper; FLIP uses transition-based approach)
+import { readCssVarMs } from './transitionUtils.js';
 
-export function waitForTransitionEnd(el, timeout = 500) {
-  return new Promise((resolve) => {
-    if (!el) return resolve();
-    let finished = false;
-    const onEnd = (e) => {
-      if (finished) return;
-      // Only care about transform property
-      if (e && e.propertyName && e.propertyName !== 'transform') return;
-      finished = true;
-      el.removeEventListener('transitionend', onEnd);
-      resolve();
-    };
-    el.addEventListener('transitionend', onEnd, { once: true });
-
-    // Fallback in case transitionend doesn't fire
-    setTimeout(() => {
-      if (!finished) {
-        finished = true;
-        el.removeEventListener('transitionend', onEnd);
-        resolve();
-      }
-    }, timeout);
+/**
+ * Add will-change to elements for durationMs milliseconds and remove afterwards.
+ * elements: Element or array/NodeList of Elements
+ * willChangeValue: string like 'transform' or 'opacity, transform'
+ * durationMs: number milliseconds
+ */
+export function withWillChange(
+  elements,
+  willChangeValue = 'transform',
+  durationMs = 100,
+) {
+  const els =
+    elements instanceof Element ? [elements] : Array.from(elements || []);
+  els.forEach((el) => {
+    if (el && el.style) el.style.willChange = willChangeValue;
   });
+
+  // Clean up after durationMs + small buffer
+  const timer = setTimeout(
+    () => {
+      els.forEach((el) => {
+        if (el && el.style) el.style.willChange = '';
+      });
+      clearTimeout(timer);
+    },
+    Math.max(0, durationMs + 20),
+  );
+
+  // Return a function to cancel early if needed
+  return () => {
+    clearTimeout(timer);
+    els.forEach((el) => {
+      if (el && el.style) el.style.willChange = '';
+    });
+  };
 }
 
-// Removed keyframe-based swapButtons in favor of FLIP `flipSwapButtons`.
+/**
+ * FLIP swap between the currently active button and the button representing targetCategory.
+ * container: DOM node containing category buttons.
+ */
+export function flipSwapButtons(targetCategory, container) {
+  return new Promise((resolve) => {
+    if (!container) return resolve();
 
-// FLIP swap: visually moves buttons to each other's spots using transform
-export async function flipSwapButtons(targetCategory, buttonsContainer) {
-  if (!buttonsContainer) return;
+    const buttons = Array.from(container.querySelectorAll('.category-btn'));
+    const active = buttons.find((b) => b.classList.contains('active'));
+    const target = buttons.find((b) => b.dataset.cat === targetCategory);
 
-  const btns = Array.from(buttonsContainer.querySelectorAll('.category-btn'));
-  const arteBtn = btns.find((b) => b.dataset.cat === 'arte');
-  const musicaBtn = btns.find((b) => b.dataset.cat === 'musica');
-  if (!arteBtn || !musicaBtn) return;
+    if (!target || active === target) {
+      return resolve();
+    }
 
-  // Clone-based FLIP: create fixed-position clones, animate them from first->last,
-  // then reorder DOM and remove clones. This avoids modifying originals' layout
-  // during the animation and ensures a visible translation.
-  const shouldMusicBeFirst = targetCategory === 'musica';
+    const flipMs = readCssVarMs('--flip-swap-duration', 70);
 
-  // Measure first positions (relative to viewport)
-  const firstRect = {
-    arte: arteBtn.getBoundingClientRect(),
-    musica: musicaBtn.getBoundingClientRect(),
-  };
+    // Measure positions before DOM change
+    const rectA = active.getBoundingClientRect();
+    const rectB = target.getBoundingClientRect();
 
-  // Create clones positioned fixed at the original positions
-  const makeClone = (el, rect) => {
-    const clone = el.cloneNode(true);
-    clone.style.position = 'fixed';
-    clone.style.top = `${rect.top}px`;
-    clone.style.left = `${rect.left}px`;
-    clone.style.width = `${rect.width}px`;
-    clone.style.height = `${rect.height}px`;
-    clone.style.margin = '0';
-    clone.style.transform = 'none';
-    clone.style.zIndex = '9999';
-    clone.style.pointerEvents = 'none';
-    return clone;
-  };
+    // Create clones at initial positions
+    const makeCloneAt = (el, rect) => {
+      const clone = el.cloneNode(true);
+      clone.style.position = 'fixed';
+      clone.style.left = `${rect.left}px`;
+      clone.style.top = `${rect.top}px`;
+      clone.style.width = `${rect.width}px`;
+      clone.style.height = `${rect.height}px`;
+      clone.style.margin = '0';
+      clone.style.zIndex = '9999';
+      clone.style.pointerEvents = 'none';
+      clone.style.transition = `transform ${flipMs}ms ease`;
+      document.body.appendChild(clone);
+      return clone;
+    };
 
-  const arteClone = makeClone(arteBtn, firstRect.arte);
-  const musicaClone = makeClone(musicaBtn, firstRect.musica);
+    const cloneA = makeCloneAt(active, rectA);
+    const cloneB = makeCloneAt(target, rectB);
 
-  document.body.appendChild(arteClone);
-  document.body.appendChild(musicaClone);
+    // Hide originals but keep layout
+    active.style.visibility = 'hidden';
+    target.style.visibility = 'hidden';
 
-  // Hide originals visually but keep them in flow for measurement after reorder
-  arteBtn.style.visibility = 'hidden';
-  musicaBtn.style.visibility = 'hidden';
+    // Set will-change to improve performance for the duration
+    withWillChange([cloneA, cloneB, container], 'transform', flipMs);
 
-  // Reorder DOM to final arrangement
-  if (shouldMusicBeFirst) {
-    buttonsContainer.insertBefore(musicaBtn, arteBtn);
-  } else {
-    buttonsContainer.insertBefore(arteBtn, musicaBtn);
-  }
+    // Swap nodes in DOM (robust swap)
+    const swapNodes = (parent, a, b) => {
+      const aNext = a.nextSibling;
+      const bNext = b.nextSibling;
+      // move a to b's position and b to a's position
+      parent.insertBefore(a, bNext);
+      parent.insertBefore(b, aNext);
+    };
 
-  // Measure last positions (after reorder)
-  const lastRect = {
-    arte: arteBtn.getBoundingClientRect(),
-    musica: musicaBtn.getBoundingClientRect(),
-  };
+    swapNodes(container, active, target);
 
-  // Compute translation deltas for clones
-  const dxArte = Math.round(lastRect.arte.left - firstRect.arte.left);
-  const dyArte = Math.round(lastRect.arte.top - firstRect.arte.top);
-  const dxMus = Math.round(lastRect.musica.left - firstRect.musica.left);
-  const dyMus = Math.round(lastRect.musica.top - firstRect.musica.top);
+    // Measure final positions after DOM change
+    const finalA = active.getBoundingClientRect();
+    const finalB = target.getBoundingClientRect();
 
-  // Prepare clones for transition
-  const transition = 'transform 320ms cubic-bezier(.2,.9,.2,1)';
-  arteClone.style.transition = transition;
-  musicaClone.style.transition = transition;
+    // Compute deltas for clones to animate from original -> final
+    const dxA = Math.round(finalA.left - rectA.left);
+    const dyA = Math.round(finalA.top - rectA.top);
+    const dxB = Math.round(finalB.left - rectB.left);
+    const dyB = Math.round(finalB.top - rectB.top);
 
-  // Force reflow
-  // eslint-disable-next-line no-unused-expressions
-  arteClone.getBoundingClientRect();
+    // Trigger the clone animations
+    requestAnimationFrame(() => {
+      cloneA.style.transform = `translate(${dxA}px, ${dyA}px)`;
+      cloneB.style.transform = `translate(${dxB}px, ${dyB}px)`;
+    });
 
-  // Animate clones to their target positions using transform translate
-  requestAnimationFrame(() => {
-    arteClone.style.transform = `translate(${dxArte}px, ${dyArte}px)`;
-    musicaClone.style.transform = `translate(${dxMus}px, ${dyMus}px)`;
+    // Cleanup after animation finishes
+    setTimeout(() => {
+      cloneA.remove();
+      cloneB.remove();
+
+      // Restore originals visibility and update active classes
+      buttons.forEach((b) => b.classList.remove('active'));
+      target.classList.add('active');
+
+      active.style.visibility = '';
+      target.style.visibility = '';
+
+      resolve();
+    }, flipMs + 30);
   });
-
-  // Wait for clones' transitions
-  await Promise.all([
-    waitForTransitionEnd(arteClone, 500),
-    waitForTransitionEnd(musicaClone, 500),
-  ]);
-
-  // Cleanup clones and restore originals
-  arteClone.remove();
-  musicaClone.remove();
-  arteBtn.style.visibility = '';
-  musicaBtn.style.visibility = '';
 }
