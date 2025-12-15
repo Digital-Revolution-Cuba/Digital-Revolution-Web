@@ -236,6 +236,7 @@ const visibleImages = 4;
       const nextBtn = document.getElementById('nextBtn');
       const slider = document.getElementById('imageSlider');
       const categoryBtns = document.querySelectorAll('.category-btn');
+      const playButtons = document.querySelectorAll('.play-button');
 
       if (!prevBtn || !nextBtn || !slider) return;
 
@@ -246,6 +247,26 @@ const visibleImages = 4;
       const imagesPerPage = 4;
       const itemWidth = 285;
       const maxIndex = Math.max(0, Math.ceil(totalImages / imagesPerPage) - 1);
+
+      // Handle play button interactions for accessibility
+      playButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', 'false');
+        button.setAttribute('aria-label', 'Play');
+        button.addEventListener('click', () => {
+          const isPressed = button.getAttribute('aria-pressed') === 'true';
+          button.setAttribute('aria-pressed', !isPressed);
+          button.setAttribute('aria-label', isPressed ? 'Play' : 'Pause');
+          // Toggle icon: replace play with pause or vice versa
+          const svg = button.querySelector('svg');
+          if (isPressed) {
+            // Switch to play icon
+            svg.innerHTML = '<circle cx="12" cy="12" r="10" fill="#F49624" /><path d="M10 8L16 12L10 16V8Z" fill="#041421" />';
+          } else {
+            // Switch to pause icon
+            svg.innerHTML = '<circle cx="12" cy="12" r="10" fill="#F49624" /><rect x="9" y="8" width="2" height="8" fill="#041421" /><rect x="13" y="8" width="2" height="8" fill="#041421" />';
+          }
+        });
+      });
 
       function updateSlider() {
         const offset = -currentIndex * imagesPerPage * itemWidth;
