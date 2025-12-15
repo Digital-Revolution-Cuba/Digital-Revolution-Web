@@ -1,51 +1,70 @@
 ---
-// Por favor si luego hace falta usen props en las imagenes:
-// const { images = [...] } = Astro.props;
-const images = [
-  'https://picsum.photos/seed/1/600/400',
-  'https://picsum.photos/seed/2/600/400',
-  'https://picsum.photos/seed/3/600/400',
-  'https://picsum.photos/seed/4/600/400',
-  'https://picsum.photos/seed/5/600/400',
-  'https://picsum.photos/seed/6/600/400',
-  'https://picsum.photos/seed/7/600/400',
-  'https://picsum.photos/seed/8/600/400',
+/**
+ * DinamycGallery Component
+ * Main gallery component with category switching and slider navigation
+ * Refactored for maintainability and clean architecture
+ */
+
+// Import data
+import { arteGallery, musicaGallery, fotografiaGallery } from '../data';
+import type { CategoryConfig } from '../data/types';
+
+// Import UI components
+import GalleryItem from './gallery/GalleryItem.astro';
+import MusicCard from './gallery/MusicCard.astro';
+import FotografiaCard from './gallery/FotografiaCard.astro';
+import CategoryButton from './gallery/CategoryButton.astro';
+import NavigationButton from './gallery/NavigationButton.astro';
+
+// Import configuration
+import { GALLERY_CONFIG, DATA_ATTRIBUTES } from '../config/galleryConfig';
+
+// Gallery configuration
+const categories: CategoryConfig[] = [
+  { id: 'arte', label: 'Arte', items: arteGallery },
+  { id: 'musica', label: 'Música', items: musicaGallery },
+  { id: 'fotografia', label: 'Fotografía', items: fotografiaGallery },
 ];
-const totalImages = images.length;
-const visibleImages = 4;
+
+const totalImages = arteGallery.length;
+const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
 ---
 
 <section
   id="galeria"
   class="lg:-8 relative flex h-[80dvh] w-full items-center justify-center overflow-hidden bg-gray-950 px-4 text-left text-black sm:px-9"
 >
-  <div class="absolute top-0 left-0 z-20 flex gap-4 p-4 sm:p-8">
-    <button class="category-btn">Arte</button>
-    <button class="category-btn">Música</button>
-    <button class="category-btn">Fotografía</button>
+  <!-- Ensure shared animation variables are loaded so JS can read them -->
+  <link rel="stylesheet" href="/src/styles/animations.css" />
+
+  <!-- Category buttons -->
+  <div
+    class="absolute top-0 left-0 z-20 flex gap-4 p-4 sm:p-8"
+    data-category-buttons
+  >
+    {
+      categories.map((category, index) => (
+        <CategoryButton
+          category={category.id}
+          label={category.label}
+          isActive={index === 0}
+        />
+      ))
+    }
   </div>
+
+  <!-- Gallery container -->
   <div
     class="relative mx-auto my-8 flex w-[1140px] items-center justify-between"
   >
-    <button
+    <!-- Previous button -->
+    <NavigationButton
       id="prevBtn"
-      class="nav-btn absolute top-1/2 left-[-50px] z-10 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-      style="margin-right: 8px;"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="2.5"
-        stroke="currentColor"
-        class="nav-arrow h-6 w-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M15.75 19.5 8.25 12l7.5-7.5"></path>
-      </svg>
-    </button>
+      direction="prev"
+      ariaLabel="Previous gallery page"
+    />
+
+    <!-- Gallery slider -->
     <div
       class="gallery-container relative mx-auto overflow-hidden"
       style="width: 1140px;"
@@ -56,87 +75,78 @@ const visibleImages = 4;
           class="flex transition-transform duration-800 ease-in-out"
           style="min-width: max-content;"
         >
-          {
-            images.map((src, index) => (
-              <div
-                class="relative flex-shrink-0 overflow-hidden rounded-[25px]"
-                style="width: 285px; padding-left: 8px; padding-right: 8px;"
-              >
-                <img
-                  src={src}
-                  alt={`Galería Imagen ${index + 1}`}
-                  class="h-[440px] w-[269px] rounded-[25px] object-cover shadow-md transition duration-300"
-                  loading="lazy"
-                />
-                <div class="shine-effect" />
-              </div>
-            ))
-          }
+          <!-- Arte items -->
+          {arteGallery.map((item) => <GalleryItem item={item} />)}
+
+          <!-- Música items -->
+          {musicaGallery.map((item) => <MusicCard item={item} />)}
+
+          <!-- Fotografía items -->
+          {fotografiaGallery.map((item) => <FotografiaCard item={item} />)}
         </div>
       </div>
     </div>
-    <button
+
+    <!-- Next button -->
+    <NavigationButton
       id="nextBtn"
-      class="nav-btn absolute top-1/2 right-[-50px] z-10 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-      style="margin-left: 8px;"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="2.5"
-        stroke="currentColor"
-        class="nav-arrow h-6 w-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
-      </svg>
-    </button>
+      direction="next"
+      ariaLabel="Next gallery page"
+    />
   </div>
 
-  <script define:vars={{ totalImages, visibleImages }}>
+  <script type="module" define:vars={{ totalImages, visibleImages }}>
+    import { createGallerySlider } from '/src/composables/useGallerySlider.ts';
+    import { createCategorySwitch } from '/src/composables/useCategorySwitch.ts';
+    import { initializeMusicPlayers } from '/src/utils/musicPlayer.ts';
+
     document.addEventListener('DOMContentLoaded', () => {
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       const slider = document.getElementById('imageSlider');
+      const buttonsContainer = document.querySelector(
+        '[data-category-buttons]',
+      );
 
-      if (!prevBtn || !nextBtn || !slider) return;
-
-      let currentIndex = 0;
-      const imagesPerPage = 4;
-      const itemWidth = 285;
-      const maxIndex = Math.max(0, Math.ceil(totalImages / imagesPerPage) - 1);
-      function updateSlider() {
-        const offset = -currentIndex * imagesPerPage * itemWidth;
-        slider.style.transform = `translateX(${offset}px)`;
-        prevBtn.disabled = currentIndex <= 0;
-        nextBtn.disabled = currentIndex >= maxIndex;
-        prevBtn.style.opacity = currentIndex <= 0 ? '0.5' : '1';
-        nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+      if (!prevBtn || !nextBtn || !slider || !buttonsContainer) {
+        console.error('Gallery: Required elements not found');
+        return;
       }
-      prevBtn.addEventListener('click', () => {
-        if (currentIndex > 0) {
-          currentIndex--;
-          updateSlider();
-        }
-      });
-      nextBtn.addEventListener('click', () => {
-        if (currentIndex < maxIndex) {
-          currentIndex++;
-          updateSlider();
-        }
-      });
-      updateSlider();
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' && currentIndex > 0) {
-          currentIndex--;
-          updateSlider();
-        } else if (e.key === 'ArrowRight' && currentIndex < maxIndex) {
-          currentIndex++;
-          updateSlider();
-        }
+
+      // Initialize slider
+      const gallerySlider = createGallerySlider(
+        slider,
+        prevBtn,
+        nextBtn,
+        totalImages,
+      );
+
+      const cleanupSlider = gallerySlider.initialize();
+
+      // Initialize category switching
+      const categorySwitch = createCategorySwitch(
+        buttonsContainer,
+        gallerySlider.resetSlider,
+        {
+          onCategoryChange: (category) => {
+            console.log('Category changed to:', category);
+            // Re-initialize music players when switching to musica
+            if (category === 'musica') {
+              setTimeout(initializeMusicPlayers, 100);
+            }
+          },
+        },
+      );
+
+      const cleanupCategory = categorySwitch.initialize('arte');
+
+      // Initialize music players
+      initializeMusicPlayers();
+
+      // Cleanup on page unload
+      window.addEventListener('beforeunload', () => {
+        cleanupSlider();
+        cleanupCategory();
       });
     });
   </script>
@@ -146,88 +156,23 @@ const visibleImages = 4;
     .gallery-container::after {
       display: none !important;
     }
+
     .w-full.overflow-x-auto {
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
+
     .w-full.overflow-x-auto::-webkit-scrollbar {
       display: none;
     }
+
     .gallery-container {
       box-sizing: content-box;
       padding: 0;
     }
+
     #imageSlider {
-      will-change: transform;
-    }
-
-    #imageSlider img {
-      filter: brightness(0.95);
-      transition: filter 0.3s;
-    }
-
-    #imageSlider img:hover {
-      filter: brightness(1);
-    }
-
-    .shine-effect {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(244, 150, 36, 0.4),
-        transparent
-      );
-      transform: translateX(-100%);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .flex-shrink-0:hover .shine-effect {
-      opacity: 1;
-      transform: translateX(100%);
-      transition: transform 0.7s;
-    }
-
-    .category-btn {
-      background: #f4962433;
-      color: #f49624;
-      border: none;
-      border-radius: 15px;
-      padding: 8px 20px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition:
-        background 0.2s,
-        color 0.2s;
-      outline: none;
-    }
-    .category-btn:hover,
-    .category-btn:focus {
-      background: #f49624;
-      color: #041421;
-    }
-    .nav-btn {
-      background: #f4962433;
-      transition: background 0.2s;
-    }
-    .nav-arrow {
-      stroke: #f49624;
-      transition: stroke 0.2s;
-    }
-    .nav-btn:hover,
-    .nav-btn:focus {
-      background: #f49624;
-    }
-    .nav-btn:hover .nav-arrow,
-    .nav-btn:focus .nav-arrow {
-      stroke: #041421;
+      transition: transform var(--card-transition-duration) ease-in-out;
     }
   </style>
 </section>

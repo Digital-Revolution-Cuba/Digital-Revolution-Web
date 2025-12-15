@@ -14,11 +14,12 @@ const {
 const skewAngle = skew === 'T' ? '-4deg' : '4deg';
 ---
 
-<section style={`background: ${sectionBg}`}>  
-  <div 
+<section style={`background: ${sectionBg}`}>
+  <div
     class="skewed"
     style={`background: ${divBg}; z-index: ${zIndex}; transform: skewY(${skewAngle});`}
-  ></div>
+  >
+  </div>
 </section>
 
 <style>
