@@ -233,7 +233,7 @@ const visibleImages = 4;
   </div>
 
   <script type="module" define:vars={{ totalImages, visibleImages }}>
-    import { flipSwapButtons } from '/src/utils/galleryAnimations.js';
+    import { flipSwapButtons, withWillChange } from '/src/utils/galleryAnimations.js';
     import { readCssVarMs, getTransitionDurationMs } from '/src/utils/transitionUtils.js';
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -249,8 +249,7 @@ const visibleImages = 4;
       let currentCategory = 'arte';
 
       // Keep a single named source of truth for the short post-flip delay that follows the visual swap.
-      // First, try to read the shared CSS variable. If absent, fall back to deriving from .music-card computed transition.
-      const DEFAULT_CARD_TRANSITION_MS = 160; // previous magic number preserved as a safe fallback
+      const DEFAULT_CARD_TRANSITION_MS = 100; // reducido para animaciones más ágiles
       const CSS_VAR_CARD_TRANSITION = '--card-transition-duration';
 
       const CARD_TRANSITION_MS =
@@ -285,6 +284,8 @@ const visibleImages = 4;
 
       function updateSlider() {
         const offset = -currentIndex * imagesPerPage * itemWidth;
+        // apply will-change for the duration of the transform for a smoother animation
+        withWillChange([slider], 'transform', CARD_TRANSITION_MS);
         slider.style.transform = `translateX(${offset}px)`;
         prevBtn.disabled = currentIndex <= 0;
         nextBtn.disabled = currentIndex >= maxIndex;
@@ -293,12 +294,9 @@ const visibleImages = 4;
       }
 
       function switchCategory(category) {
-        // Evitar reentradas durante la animación
         if (isAnimating) return;
 
         isAnimating = true;
-
-        // Deshabilitar botones mientras animan
         categoryBtns.forEach((b) => (b.disabled = true));
 
         const arteItems = document.querySelectorAll('.arte-item');
@@ -307,39 +305,47 @@ const visibleImages = 4;
           currentCategory === 'arte' ? arteItems : musicaItems;
         const nextItems = category === 'arte' ? arteItems : musicaItems;
 
-        // Establecer la categoría inmediatamente para evitar condiciones de carrera
         currentCategory = category;
 
-        // Animación de salida
+        // Ensure browser will optimize transforms & opacity while the animation runs
+        withWillChange(Array.from(currentItems), 'opacity, transform', CARD_TRANSITION_MS);
+
+        // Start hide animation
         currentItems.forEach((item) => item.classList.add('hiding'));
 
-        // Iniciar la animación de swap de botones basada en la categoría destino
         const buttonsContainer = document.querySelector(
           '.absolute.top-0.left-0.z-20 '
         );
-        // Use the FLIP-based swap so the buttons visibly translate to each other's spots
+
         flipSwapButtons(category, buttonsContainer).then(() => {
-          // Después de animación visual, cambiar los items visibles
-          // Use the shared CARD_TRANSITION_MS to keep timing maintainable and in sync with CSS
           setTimeout(() => {
+            // hide old items
             currentItems.forEach((item) => {
               item.style.display = 'none';
               item.classList.remove('hiding');
             });
 
+            // prepare new items: show them hidden first so removing 'hiding' animates their entrance
             nextItems.forEach((item) => {
               item.style.display = 'block';
+              item.classList.add('hiding');
+            });
+
+            // ensure will-change during entrance
+            withWillChange(Array.from(nextItems), 'opacity, transform', CARD_TRANSITION_MS);
+
+            // trigger entrance animation on next frame
+            requestAnimationFrame(() => {
+              nextItems.forEach((item) => item.classList.remove('hiding'));
             });
 
             currentIndex = 0;
             updateSlider();
 
-            // Rehabilitar botones
             categoryBtns.forEach((b) => (b.disabled = false));
             isAnimating = false;
           }, CARD_TRANSITION_MS);
         }).catch((error) => {
-          // Cleanup in case of error
           console.error('Error during flipSwapButtons animation:', error);
           categoryBtns.forEach((b) => (b.disabled = false));
           isAnimating = false;
@@ -357,22 +363,15 @@ const visibleImages = 4;
 
           if (category === 'arte') {
             if (currentCategory !== 'arte') {
-              updateActiveButton(btn);
               switchCategory('arte');
             }
           } else if (category === 'musica') {
             if (currentCategory !== 'musica') {
-              updateActiveButton(btn);
               switchCategory('musica');
             }
           }
         });
       });
-
-      function updateActiveButton(activeBtn) {
-        categoryBtns.forEach((btn) => btn.classList.remove('active'));
-        activeBtn.classList.add('active');
-      }
 
       // Establecer Arte como activo inicialmente
       if (categoryBtns.length > 0) {
@@ -424,7 +423,8 @@ const visibleImages = 4;
       padding: 0;
     }
     #imageSlider {
-      will-change: transform;
+      transition: transform var(--card-transition-duration) ease-in-out;
+      /* will-change removed to avoid persistent hints; JS sets it only while animating */
     }
 
     #imageSlider img {
