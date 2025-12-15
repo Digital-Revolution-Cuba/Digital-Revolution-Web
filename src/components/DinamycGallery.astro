@@ -279,7 +279,7 @@ const visibleImages = 4;
 
       function switchCategory(category) {
         // Evitar reentradas durante la animación
-        if (category === currentCategory || isAnimating) return;
+          '[data-category-buttons]'
 
         isAnimating = true;
 
@@ -300,7 +300,7 @@ const visibleImages = 4;
 
         // Iniciar la animación de swap de botones basada en la categoría destino
         const buttonsContainer = document.querySelector(
-          '.absolute.top-0.left-0.z-20'
+          '.absolute.top-0.left-0.z-20 '
         );
         // Use the FLIP-based swap so the buttons visibly translate to each other's spots
         flipSwapButtons(category, buttonsContainer).then(() => {
