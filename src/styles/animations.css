@@ -1,0 +1,47 @@
+/* Centralized animation styles for the gallery */
+
+/* Button swap animations */
+/* Button swap animations: FLIP used instead of keyframe move classes. */
+
+.category-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Hint the engine we'll animate transforms for smoothness (used by FLIP). */
+.category-btn {
+  backface-visibility: hidden;
+}
+
+/* Animation timing variables shared between CSS and JS.
+   - --flip-swap-duration: duration used for button flip/swap visuals (example: 90ms)
+   - --card-transition-duration: duration used by card transitions (defaulted to the previous JS fallback 160ms)
+   Change these values to update animations globally; JS reads --card-transition-duration to avoid magic numbers.
+*/
+:root {
+  --flip-swap-duration: 70ms;
+  --card-transition-duration: 100ms; /* reducido para animar más rápido */
+}
+
+/* Example usage so those vars are actually applied in CSS */
+.absolute.top-0.left-0.z-20 {
+  transition: transform var(--flip-swap-duration) ease;
+}
+
+.music-card {
+  transition:
+    transform var(--card-transition-duration) ease,
+    box-shadow var(--card-transition-duration) ease;
+}
+
+/* Card transition: use shared timing variable */
+.gallery-item {
+  transition:
+    opacity var(--card-transition-duration) ease,
+    transform var(--card-transition-duration) ease;
+}
+.gallery-item.hiding {
+  opacity: 0;
+  transform: translateY(6px) scale(0.995);
+}
