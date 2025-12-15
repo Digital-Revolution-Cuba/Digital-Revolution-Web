@@ -38,23 +38,27 @@ src/
 ## Key Improvements
 
 ### 1. **Separation of Concerns**
+
 - **Data Layer**: All gallery data separated into `/src/data/` with proper TypeScript types
 - **Business Logic**: Extracted to composables (`useGallerySlider`, `useCategorySwitch`)
 - **UI Components**: Reusable, single-responsibility components in `/src/components/gallery/`
 - **Configuration**: Magic numbers moved to `/src/config/galleryConfig.ts`
 
 ### 2. **TypeScript Types**
+
 - Proper interfaces for all gallery items
 - Type safety throughout the codebase
 - Better IDE autocomplete and error detection
 
 ### 3. **Clean Code Principles**
+
 - **Single Responsibility**: Each module/component has one clear purpose
 - **DRY (Don't Repeat Yourself)**: Reusable components and utilities
 - **SOLID**: Dependency inversion, open/closed principle applied
 - **Meaningful Names**: Clear, descriptive function and variable names
 
 ### 4. **Accessibility Improvements**
+
 - ✅ Proper ARIA attributes (`aria-pressed`, `aria-label`)
 - ✅ Keyboard navigation support
 - ✅ Better alt text for images
@@ -62,6 +66,7 @@ src/
 - ✅ Semantic HTML structure
 
 ### 5. **Fixed GitHub Copilot PR Comments**
+
 - ✅ Added error handling for `flipSwapButtons` promise
 - ✅ Fixed function name in comments (flipSwapButtons vs swapButtons)
 - ✅ Made `flipSwapButtons` work with all categories (arte, musica, fotografia)
@@ -70,6 +75,7 @@ src/
 - ✅ Implemented missing `fotografiaGallery` category
 
 ### 6. **Performance Optimizations**
+
 - Dynamic `will-change` application (only during animations)
 - Proper cleanup functions for event listeners
 - Optimized reflows and repaints
@@ -79,6 +85,7 @@ src/
 ### Adding a New Gallery Category
 
 1. **Create data file** (`src/data/newCategory.ts`):
+
 ```typescript
 import type { BaseGalleryItem } from './types';
 
@@ -93,10 +100,11 @@ export const newCategoryGallery: NewCategoryItem[] = [
 ```
 
 2. **Update types** (`src/data/types.ts`):
+
 ```typescript
-export type GalleryItem = 
-  | ArteGalleryItem 
-  | MusicGalleryItem 
+export type GalleryItem =
+  | ArteGalleryItem
+  | MusicGalleryItem
   | FotografiaGalleryItem
   | NewCategoryItem; // Add new type
 ```
@@ -104,7 +112,8 @@ export type GalleryItem =
 3. **Create component** (`src/components/gallery/NewCategoryCard.astro`)
 
 4. **Update main gallery** (`src/components/DinamycGallery.astro`):
-```astro
+
+```ts
 import NewCategoryCard from './gallery/NewCategoryCard.astro';
 import { newCategoryGallery } from '../data';
 
@@ -117,6 +126,7 @@ const categories: CategoryConfig[] = [
 ### Modifying Configuration
 
 Edit `/src/config/galleryConfig.ts`:
+
 ```typescript
 export const GALLERY_CONFIG = {
   ITEM_WIDTH: 300, // Change item width
@@ -128,20 +138,24 @@ export const GALLERY_CONFIG = {
 ## Benefits
 
 ### Maintainability
+
 - **Before**: 400+ lines in one file, difficult to understand and modify
 - **After**: Modular structure, each file < 150 lines, clear responsibilities
 
 ### Testability
+
 - Business logic separated from UI
 - Composables can be unit tested independently
 - Pure functions with predictable outputs
 
 ### Scalability
+
 - Easy to add new categories
 - Components can be reused in other parts of the app
 - Configuration centralized for easy updates
 
 ### Developer Experience
+
 - TypeScript autocomplete and type checking
 - Clear file organization
 - Self-documenting code structure
@@ -150,6 +164,7 @@ export const GALLERY_CONFIG = {
 ## Migration Notes
 
 All existing functionality is preserved:
+
 - ✅ Category switching with FLIP animation
 - ✅ Slider navigation (prev/next)
 - ✅ Keyboard controls (arrow keys)
@@ -162,6 +177,7 @@ No breaking changes to the user experience.
 ## Future Improvements
 
 Consider adding:
+
 - [ ] Virtual scrolling for large galleries
 - [ ] Lazy loading for images
 - [ ] Image lightbox/modal
