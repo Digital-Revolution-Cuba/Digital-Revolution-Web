@@ -11,19 +11,7 @@
 
 /* Hint the engine we'll animate transforms for smoothness (used by FLIP). */
 .category-btn {
-  will-change: transform;
   backface-visibility: hidden;
-}
-
-/* Card transition: very quick and smooth */
-.gallery-item {
-  transition:
-    opacity 90ms ease,
-    transform 90ms ease;
-}
-.gallery-item.hiding {
-  opacity: 0;
-  transform: translateY(6px) scale(0.995);
 }
 
 /* Animation timing variables shared between CSS and JS.
@@ -32,8 +20,8 @@
    Change these values to update animations globally; JS reads --card-transition-duration to avoid magic numbers.
 */
 :root {
-  --flip-swap-duration: 90ms;
-  --card-transition-duration: 160ms; /* previously hard-coded in JS as 160ms */
+  --flip-swap-duration: 70ms;
+  --card-transition-duration: 100ms; /* reducido para animar más rápido */
 }
 
 /* Example usage so those vars are actually applied in CSS */
@@ -45,4 +33,15 @@
   transition:
     transform var(--card-transition-duration) ease,
     box-shadow var(--card-transition-duration) ease;
+}
+
+/* Card transition: use shared timing variable */
+.gallery-item {
+  transition:
+    opacity var(--card-transition-duration) ease,
+    transform var(--card-transition-duration) ease;
+}
+.gallery-item.hiding {
+  opacity: 0;
+  transform: translateY(6px) scale(0.995);
 }
