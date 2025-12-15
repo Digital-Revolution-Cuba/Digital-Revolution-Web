@@ -1,7 +1,6 @@
 /**
  * Utilities to animate button swaps and manage will-change dynamically.
- * - flipSwapButtons(targetCategory, container): animates FLIP between active button and target button.
- * - withWillChange(elements, willChangeValue, durationMs): sets will-change and removes it after duration.
+ * Exports: flipSwapButtons(targetCategory, container), withWillChange(elements, willChangeValue, durationMs)
  *
  * Keep it small and single-responsibility (SOLID-friendly).
  */
@@ -47,92 +46,101 @@ export function withWillChange(
 
 /**
  * FLIP swap between the currently active button and the button representing targetCategory.
+ * Works with any category (arte, musica, fotografia, etc.)
  * container: DOM node containing category buttons.
  */
 export function flipSwapButtons(targetCategory, container) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     if (!container) return resolve();
 
-    const buttons = Array.from(container.querySelectorAll('.category-btn'));
-    const active = buttons.find((b) => b.classList.contains('active'));
-    const target = buttons.find((b) => b.dataset.cat === targetCategory);
+    try {
+      const buttons = Array.from(container.querySelectorAll('.category-btn'));
+      const active = buttons.find((b) => b.classList.contains('active'));
+      const target = buttons.find((b) => b.dataset.cat === targetCategory);
 
-    if (!target || active === target) {
-      return resolve();
+      if (!target || active === target) {
+        return resolve();
+      }
+
+      const flipMs = readCssVarMs('--flip-swap-duration', 70);
+
+      // Measure positions before DOM change
+      const rectA = active.getBoundingClientRect();
+      const rectB = target.getBoundingClientRect();
+
+      // Create clones at initial positions
+      const makeCloneAt = (el, rect) => {
+        const clone = el.cloneNode(true);
+        clone.style.position = 'fixed';
+        clone.style.left = `${rect.left}px`;
+        clone.style.top = `${rect.top}px`;
+        clone.style.width = `${rect.width}px`;
+        clone.style.height = `${rect.height}px`;
+        clone.style.margin = '0';
+        clone.style.zIndex = '9999';
+        clone.style.pointerEvents = 'none';
+        clone.style.transition = `transform ${flipMs}ms ease`;
+        document.body.appendChild(clone);
+        return clone;
+      };
+
+      const cloneA = makeCloneAt(active, rectA);
+      const cloneB = makeCloneAt(target, rectB);
+
+      // Hide originals but keep layout
+      active.style.visibility = 'hidden';
+      target.style.visibility = 'hidden';
+
+      // Set will-change to improve performance for the duration
+      withWillChange([cloneA, cloneB, container], 'transform', flipMs);
+
+      // Swap nodes in DOM (robust swap)
+      const swapNodes = (parent, a, b) => {
+        const aNext = a.nextSibling;
+        const bNext = b.nextSibling;
+        // move a to b's position and b to a's position
+        parent.insertBefore(a, bNext);
+        parent.insertBefore(b, aNext);
+      };
+
+      swapNodes(container, active, target);
+
+      // Measure final positions after DOM change
+      const finalA = active.getBoundingClientRect();
+      const finalB = target.getBoundingClientRect();
+
+      // Compute deltas for clones to animate from original -> final
+      const dxA = Math.round(finalA.left - rectA.left);
+      const dyA = Math.round(finalA.top - rectA.top);
+      const dxB = Math.round(finalB.left - rectB.left);
+      const dyB = Math.round(finalB.top - rectB.top);
+
+      // Force reflow
+      void cloneA.getBoundingClientRect();
+
+      // Trigger the clone animations
+      requestAnimationFrame(() => {
+        cloneA.style.transform = `translate(${dxA}px, ${dyA}px)`;
+        cloneB.style.transform = `translate(${dxB}px, ${dyB}px)`;
+      });
+
+      // Cleanup after animation finishes
+      setTimeout(() => {
+        cloneA.remove();
+        cloneB.remove();
+
+        // Restore originals visibility and update active classes
+        buttons.forEach((b) => b.classList.remove('active'));
+        target.classList.add('active');
+
+        active.style.visibility = '';
+        target.style.visibility = '';
+
+        resolve();
+      }, flipMs + 30);
+    } catch (error) {
+      console.error('Error in flipSwapButtons:', error);
+      reject(error);
     }
-
-    const flipMs = readCssVarMs('--flip-swap-duration', 70);
-
-    // Measure positions before DOM change
-    const rectA = active.getBoundingClientRect();
-    const rectB = target.getBoundingClientRect();
-
-    // Create clones at initial positions
-    const makeCloneAt = (el, rect) => {
-      const clone = el.cloneNode(true);
-      clone.style.position = 'fixed';
-      clone.style.left = `${rect.left}px`;
-      clone.style.top = `${rect.top}px`;
-      clone.style.width = `${rect.width}px`;
-      clone.style.height = `${rect.height}px`;
-      clone.style.margin = '0';
-      clone.style.zIndex = '9999';
-      clone.style.pointerEvents = 'none';
-      clone.style.transition = `transform ${flipMs}ms ease`;
-      document.body.appendChild(clone);
-      return clone;
-    };
-
-    const cloneA = makeCloneAt(active, rectA);
-    const cloneB = makeCloneAt(target, rectB);
-
-    // Hide originals but keep layout
-    active.style.visibility = 'hidden';
-    target.style.visibility = 'hidden';
-
-    // Set will-change to improve performance for the duration
-    withWillChange([cloneA, cloneB, container], 'transform', flipMs);
-
-    // Swap nodes in DOM (robust swap)
-    const swapNodes = (parent, a, b) => {
-      const aNext = a.nextSibling;
-      const bNext = b.nextSibling;
-      // move a to b's position and b to a's position
-      parent.insertBefore(a, bNext);
-      parent.insertBefore(b, aNext);
-    };
-
-    swapNodes(container, active, target);
-
-    // Measure final positions after DOM change
-    const finalA = active.getBoundingClientRect();
-    const finalB = target.getBoundingClientRect();
-
-    // Compute deltas for clones to animate from original -> final
-    const dxA = Math.round(finalA.left - rectA.left);
-    const dyA = Math.round(finalA.top - rectA.top);
-    const dxB = Math.round(finalB.left - rectB.left);
-    const dyB = Math.round(finalB.top - rectB.top);
-
-    // Trigger the clone animations
-    requestAnimationFrame(() => {
-      cloneA.style.transform = `translate(${dxA}px, ${dyA}px)`;
-      cloneB.style.transform = `translate(${dxB}px, ${dyB}px)`;
-    });
-
-    // Cleanup after animation finishes
-    setTimeout(() => {
-      cloneA.remove();
-      cloneB.remove();
-
-      // Restore originals visibility and update active classes
-      buttons.forEach((b) => b.classList.remove('active'));
-      target.classList.add('active');
-
-      active.style.visibility = '';
-      target.style.visibility = '';
-
-      resolve();
-    }, flipMs + 30);
   });
 }
