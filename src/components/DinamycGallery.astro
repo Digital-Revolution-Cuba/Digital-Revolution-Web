@@ -106,10 +106,14 @@ const totalImages = arteGallery.length;
 const visibleImages = 4;
 ---
 
+
 <section
   id="galeria"
   class="lg:-8 relative flex h-[80dvh] w-full items-center justify-center overflow-hidden bg-gray-950 px-4 text-left text-black sm:px-9"
 >
+  <!-- Ensure shared animation variables are loaded so JS can read them -->
+  <link rel="stylesheet" href="/src/styles/animations.css" />
+
   <div class="absolute top-0 left-0 z-20 flex gap-4 p-4 sm:p-8">
     <button class="category-btn" data-cat="arte">Arte</button>
     <button class="category-btn" data-cat="musica">Música</button>
@@ -230,6 +234,7 @@ const visibleImages = 4;
 
   <script type="module" define:vars={{ totalImages, visibleImages }}>
     import { flipSwapButtons } from '/src/utils/galleryAnimations.js';
+    import { readCssVarMs, getTransitionDurationMs } from '/src/utils/transitionUtils.js';
 
     document.addEventListener('DOMContentLoaded', () => {
       const prevBtn = document.getElementById('prevBtn');
@@ -242,6 +247,16 @@ const visibleImages = 4;
 
       let currentIndex = 0;
       let currentCategory = 'arte';
+
+      // Keep a single named source of truth for the short post-flip delay that follows the visual swap.
+      // First, try to read the shared CSS variable. If absent, fall back to deriving from .music-card computed transition.
+      const DEFAULT_CARD_TRANSITION_MS = 160; // previous magic number preserved as a safe fallback
+      const CSS_VAR_CARD_TRANSITION = '--card-transition-duration';
+
+      const CARD_TRANSITION_MS =
+        readCssVarMs(CSS_VAR_CARD_TRANSITION, null) ??
+        getTransitionDurationMs('.music-card', DEFAULT_CARD_TRANSITION_MS);
+
       // Bandera para evitar clicks rápidos durante la animación
       let isAnimating = false;
       const imagesPerPage = 4;
@@ -279,7 +294,7 @@ const visibleImages = 4;
 
       function switchCategory(category) {
         // Evitar reentradas durante la animación
-          '[data-category-buttons]'
+        if (isAnimating) return;
 
         isAnimating = true;
 
@@ -305,7 +320,7 @@ const visibleImages = 4;
         // Use the FLIP-based swap so the buttons visibly translate to each other's spots
         flipSwapButtons(category, buttonsContainer).then(() => {
           // Después de animación visual, cambiar los items visibles
-          // Usamos un tiempo corto en consonancia con la transición de las cards
+          // Use the shared CARD_TRANSITION_MS to keep timing maintainable and in sync with CSS
           setTimeout(() => {
             currentItems.forEach((item) => {
               item.style.display = 'none';
@@ -322,7 +337,7 @@ const visibleImages = 4;
             // Rehabilitar botones
             categoryBtns.forEach((b) => (b.disabled = false));
             isAnimating = false;
-          }, 160);
+          }, CARD_TRANSITION_MS);
         }).catch((error) => {
           // Cleanup in case of error
           console.error('Error during flipSwapButtons animation:', error);
