@@ -302,6 +302,11 @@ const visibleImages = 4;
             categoryBtns.forEach((b) => (b.disabled = false));
             isAnimating = false;
           }, 160);
+        }).catch((error) => {
+          // Cleanup in case of error
+          console.error('Error during flipSwapButtons animation:', error);
+          categoryBtns.forEach((b) => (b.disabled = false));
+          isAnimating = false;
         });
       }
 
