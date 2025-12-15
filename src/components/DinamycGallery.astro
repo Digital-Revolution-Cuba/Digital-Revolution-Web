@@ -1,111 +1,34 @@
 ---
-// Estructura de datos para diferentes categorías
-const arteGallery = [
-  {
-    type: 'arte',
-    image: 'https://picsum.photos/seed/1/600/400',
-    title: 'Arte Digital 1',
-  },
-  {
-    type: 'arte',
-    image: 'https://picsum.photos/seed/2/600/400',
-    title: 'Arte Digital 2',
-  },
-  {
-    type: 'arte',
-    image: 'https://picsum.photos/seed/3/600/400',
-    title: 'Arte Digital 3',
-  },
-  {
-    type: 'arte',
-    image: 'https://picsum.photos/seed/4/600/400',
-    title: 'Arte Digital 4',
-  },
-  {
-    type: 'arte',
-    image: 'https://picsum.photos/seed/5/600/400',
-    title: 'Arte Digital 5',
-  },
-  {
-    type: 'arte',
-    image: 'https://picsum.photos/seed/6/600/400',
-    title: 'Arte Digital 6',
-  },
-  {
-    type: 'arte',
-    image: 'https://picsum.photos/seed/7/600/400',
-    title: 'Arte Digital 7',
-  },
-  {
-    type: 'arte',
-    image: 'https://picsum.photos/seed/8/600/400',
-    title: 'Arte Digital 8',
-  },
-];
+/**
+ * DinamycGallery Component
+ * Main gallery component with category switching and slider navigation
+ * Refactored for maintainability and clean architecture
+ */
 
-const musicaGallery = [
-  {
-    type: 'musica',
-    image: 'https://picsum.photos/seed/music1/400/400',
-    title: "Don't stop me",
-    artist: 'Frank y su tropa',
-    duration: '3:04',
-  },
-  {
-    type: 'musica',
-    image: 'https://picsum.photos/seed/music2/400/400',
-    title: 'Summer Vibes',
-    artist: 'Los Tropicales',
-    duration: '4:21',
-  },
-  {
-    type: 'musica',
-    image: 'https://picsum.photos/seed/music3/400/400',
-    title: 'Electric Dreams',
-    artist: 'Synth Wave',
-    duration: '3:45',
-  },
-  {
-    type: 'musica',
-    image: 'https://picsum.photos/seed/music4/400/400',
-    title: 'Midnight Jazz',
-    artist: 'Blue Notes',
-    duration: '5:12',
-  },
-  {
-    type: 'musica',
-    image: 'https://picsum.photos/seed/music5/400/400',
-    title: 'Rock Anthem',
-    artist: 'The Legends',
-    duration: '4:03',
-  },
-  {
-    type: 'musica',
-    image: 'https://picsum.photos/seed/music6/400/400',
-    title: 'Acoustic Soul',
-    artist: 'Marina del Rey',
-    duration: '3:28',
-  },
-  {
-    type: 'musica',
-    image: 'https://picsum.photos/seed/music7/400/400',
-    title: 'Urban Beats',
-    artist: 'DJ Fusion',
-    duration: '3:56',
-  },
-  {
-    type: 'musica',
-    image: 'https://picsum.photos/seed/music8/400/400',
-    title: 'Classical Mix',
-    artist: 'Orchestra Plus',
-    duration: '6:30',
-  },
+// Import data
+import { arteGallery, musicaGallery, fotografiaGallery } from '../data';
+import type { CategoryConfig } from '../data/types';
+
+// Import UI components
+import GalleryItem from './gallery/GalleryItem.astro';
+import MusicCard from './gallery/MusicCard.astro';
+import FotografiaCard from './gallery/FotografiaCard.astro';
+import CategoryButton from './gallery/CategoryButton.astro';
+import NavigationButton from './gallery/NavigationButton.astro';
+
+// Import configuration
+import { GALLERY_CONFIG, DATA_ATTRIBUTES } from '../config/galleryConfig';
+
+// Gallery configuration
+const categories: CategoryConfig[] = [
+  { id: 'arte', label: 'Arte', items: arteGallery },
+  { id: 'musica', label: 'Música', items: musicaGallery },
+  { id: 'fotografia', label: 'Fotografía', items: fotografiaGallery },
 ];
 
 const totalImages = arteGallery.length;
-const visibleImages = 4;
+const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
 ---
-
 
 <section
   id="galeria"
@@ -114,33 +37,34 @@ const visibleImages = 4;
   <!-- Ensure shared animation variables are loaded so JS can read them -->
   <link rel="stylesheet" href="/src/styles/animations.css" />
 
-  <div class="absolute top-0 left-0 z-20 flex gap-4 p-4 sm:p-8">
-    <button class="category-btn" data-cat="arte">Arte</button>
-    <button class="category-btn" data-cat="musica">Música</button>
-    <button class="category-btn" data-cat="fotografia">Fotografía</button>
+  <!-- Category buttons -->
+  <div
+    class="absolute top-0 left-0 z-20 flex gap-4 p-4 sm:p-8"
+    data-category-buttons
+  >
+    {
+      categories.map((category, index) => (
+        <CategoryButton
+          category={category.id}
+          label={category.label}
+          isActive={index === 0}
+        />
+      ))
+    }
   </div>
+
+  <!-- Gallery container -->
   <div
     class="relative mx-auto my-8 flex w-[1140px] items-center justify-between"
   >
-    <button
+    <!-- Previous button -->
+    <NavigationButton
       id="prevBtn"
-      class="nav-btn absolute top-1/2 left-[-50px] z-10 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-      style="margin-right: 8px;"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="2.5"
-        stroke="currentColor"
-        class="nav-arrow h-6 w-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M15.75 19.5 8.25 12l7.5-7.5"></path>
-      </svg>
-    </button>
+      direction="prev"
+      ariaLabel="Previous gallery page"
+    />
+
+    <!-- Gallery slider -->
     <div
       class="gallery-container relative mx-auto overflow-hidden"
       style="width: 1140px;"
@@ -151,257 +75,78 @@ const visibleImages = 4;
           class="flex transition-transform duration-800 ease-in-out"
           style="min-width: max-content;"
         >
-          {
-            arteGallery.map((item, index) => (
-              <div
-                class="gallery-item arte-item relative flex-shrink-0 overflow-hidden rounded-[25px]"
-                style="width: 285px; padding-left: 8px; padding-right: 8px;"
-                data-category="arte"
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  class="h-[440px] w-[269px] rounded-[25px] object-cover shadow-md transition duration-300"
-                  loading="lazy"
-                />
-                <div class="shine-effect" />
-              </div>
-            ))
-          }
-          {
-            musicaGallery.map((item, index) => (
-              <div
-                class="gallery-item musica-item relative flex-shrink-0 overflow-hidden rounded-[25px]"
-                style="width: 285px; padding-left: 8px; padding-right: 8px; display: none;"
-                data-category="musica"
-              >
-                <div class="music-card h-[440px] w-[269px] overflow-hidden rounded-[25px] shadow-md">
-                  <div class="music-card-content">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      class="music-album-cover"
-                      loading="lazy"
-                    />
-                    <div class="music-info">
-                      <h3 class="music-title">{item.title}</h3>
-                      <p class="music-artist">{item.artist}</p>
-                    </div>
-                    <div class="music-controls">
-                      <button class="play-button" aria-label="Play">
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <circle cx="12" cy="12" r="10" fill="#F49624" />
-                          <path d="M10 8L16 12L10 16V8Z" fill="#041421" />
-                        </svg>
-                      </button>
-                      <span class="music-duration">{item.duration}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="shine-effect" />
-              </div>
-            ))
-          }
+          <!-- Arte items -->
+          {arteGallery.map((item) => <GalleryItem item={item} />)}
+
+          <!-- Música items -->
+          {musicaGallery.map((item) => <MusicCard item={item} />)}
+
+          <!-- Fotografía items -->
+          {fotografiaGallery.map((item) => <FotografiaCard item={item} />)}
         </div>
       </div>
     </div>
-    <button
+
+    <!-- Next button -->
+    <NavigationButton
       id="nextBtn"
-      class="nav-btn absolute top-1/2 right-[-50px] z-10 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-      style="margin-left: 8px;"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="2.5"
-        stroke="currentColor"
-        class="nav-arrow h-6 w-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
-      </svg>
-    </button>
+      direction="next"
+      ariaLabel="Next gallery page"
+    />
   </div>
 
   <script type="module" define:vars={{ totalImages, visibleImages }}>
-    import { flipSwapButtons, withWillChange } from '/src/utils/galleryAnimations.js';
-    import { readCssVarMs, getTransitionDurationMs } from '/src/utils/transitionUtils.js';
+    import { createGallerySlider } from '/src/composables/useGallerySlider.ts';
+    import { createCategorySwitch } from '/src/composables/useCategorySwitch.ts';
+    import { initializeMusicPlayers } from '/src/utils/musicPlayer.ts';
 
     document.addEventListener('DOMContentLoaded', () => {
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       const slider = document.getElementById('imageSlider');
-      const categoryBtns = document.querySelectorAll('.category-btn');
-      const playButtons = document.querySelectorAll('.play-button');
+      const buttonsContainer = document.querySelector(
+        '[data-category-buttons]',
+      );
 
-      if (!prevBtn || !nextBtn || !slider) return;
-
-      let currentIndex = 0;
-      let currentCategory = 'arte';
-
-      // Keep a single named source of truth for the short post-flip delay that follows the visual swap.
-      const DEFAULT_CARD_TRANSITION_MS = 100; // reducido para animaciones más ágiles
-      const CSS_VAR_CARD_TRANSITION = '--card-transition-duration';
-
-      const CARD_TRANSITION_MS =
-        readCssVarMs(CSS_VAR_CARD_TRANSITION, null) ??
-        getTransitionDurationMs('.music-card', DEFAULT_CARD_TRANSITION_MS);
-
-      // Bandera para evitar clicks rápidos durante la animación
-      let isAnimating = false;
-      const imagesPerPage = 4;
-      const itemWidth = 285;
-      const maxIndex = Math.max(0, Math.ceil(totalImages / imagesPerPage) - 1);
-
-      // Handle play button interactions for accessibility
-      playButtons.forEach((button) => {
-        button.setAttribute('aria-pressed', 'false');
-        button.setAttribute('aria-label', 'Play');
-        button.addEventListener('click', () => {
-          const isPressed = button.getAttribute('aria-pressed') === 'true';
-          button.setAttribute('aria-pressed', !isPressed);
-          button.setAttribute('aria-label', isPressed ? 'Play' : 'Pause');
-          // Toggle icon: replace play with pause or vice versa
-          const svg = button.querySelector('svg');
-          if (isPressed) {
-            // Switch to play icon
-            svg.innerHTML = '<circle cx="12" cy="12" r="10" fill="#F49624" /><path d="M10 8L16 12L10 16V8Z" fill="#041421" />';
-          } else {
-            // Switch to pause icon
-            svg.innerHTML = '<circle cx="12" cy="12" r="10" fill="#F49624" /><rect x="9" y="8" width="2" height="8" fill="#041421" /><rect x="13" y="8" width="2" height="8" fill="#041421" />';
-          }
-        });
-      });
-
-      function updateSlider() {
-        const offset = -currentIndex * imagesPerPage * itemWidth;
-        // apply will-change for the duration of the transform for a smoother animation
-        withWillChange([slider], 'transform', CARD_TRANSITION_MS);
-        slider.style.transform = `translateX(${offset}px)`;
-        prevBtn.disabled = currentIndex <= 0;
-        nextBtn.disabled = currentIndex >= maxIndex;
-        prevBtn.style.opacity = currentIndex <= 0 ? '0.5' : '1';
-        nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+      if (!prevBtn || !nextBtn || !slider || !buttonsContainer) {
+        console.error('Gallery: Required elements not found');
+        return;
       }
 
-      function switchCategory(category) {
-        if (isAnimating) return;
+      // Initialize slider
+      const gallerySlider = createGallerySlider(
+        slider,
+        prevBtn,
+        nextBtn,
+        totalImages,
+      );
 
-        isAnimating = true;
-        categoryBtns.forEach((b) => (b.disabled = true));
+      const cleanupSlider = gallerySlider.initialize();
 
-        const arteItems = document.querySelectorAll('.arte-item');
-        const musicaItems = document.querySelectorAll('.musica-item');
-        const currentItems =
-          currentCategory === 'arte' ? arteItems : musicaItems;
-        const nextItems = category === 'arte' ? arteItems : musicaItems;
-
-        currentCategory = category;
-
-        // Ensure browser will optimize transforms & opacity while the animation runs
-        withWillChange(Array.from(currentItems), 'opacity, transform', CARD_TRANSITION_MS);
-
-        // Start hide animation
-        currentItems.forEach((item) => item.classList.add('hiding'));
-
-        const buttonsContainer = document.querySelector(
-          '.absolute.top-0.left-0.z-20 '
-        );
-
-        flipSwapButtons(category, buttonsContainer).then(() => {
-          setTimeout(() => {
-            // hide old items
-            currentItems.forEach((item) => {
-              item.style.display = 'none';
-              item.classList.remove('hiding');
-            });
-
-            // prepare new items: show them hidden first so removing 'hiding' animates their entrance
-            nextItems.forEach((item) => {
-              item.style.display = 'block';
-              item.classList.add('hiding');
-            });
-
-            // ensure will-change during entrance
-            withWillChange(Array.from(nextItems), 'opacity, transform', CARD_TRANSITION_MS);
-
-            // trigger entrance animation on next frame
-            requestAnimationFrame(() => {
-              nextItems.forEach((item) => item.classList.remove('hiding'));
-            });
-
-            currentIndex = 0;
-            updateSlider();
-
-            categoryBtns.forEach((b) => (b.disabled = false));
-            isAnimating = false;
-          }, CARD_TRANSITION_MS);
-        }).catch((error) => {
-          console.error('Error during flipSwapButtons animation:', error);
-          categoryBtns.forEach((b) => (b.disabled = false));
-          isAnimating = false;
-        });
-      }
-
-      // swapButtons delegated to external module (imported above)
-
-      // Event listeners para botones de categoría
-      categoryBtns.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const category = btn.dataset.cat; // 'arte', 'musica', etc.
-
-          if (!category || isAnimating) return;
-
-          if (category === 'arte') {
-            if (currentCategory !== 'arte') {
-              switchCategory('arte');
+      // Initialize category switching
+      const categorySwitch = createCategorySwitch(
+        buttonsContainer,
+        gallerySlider.resetSlider,
+        {
+          onCategoryChange: (category) => {
+            console.log('Category changed to:', category);
+            // Re-initialize music players when switching to musica
+            if (category === 'musica') {
+              setTimeout(initializeMusicPlayers, 100);
             }
-          } else if (category === 'musica') {
-            if (currentCategory !== 'musica') {
-              switchCategory('musica');
-            }
-          }
-        });
-      });
+          },
+        },
+      );
 
-      // Establecer Arte como activo inicialmente
-      if (categoryBtns.length > 0) {
-        categoryBtns[0].classList.add('active');
-      }
+      const cleanupCategory = categorySwitch.initialize('arte');
 
-      prevBtn.addEventListener('click', () => {
-        if (currentIndex > 0) {
-          currentIndex--;
-          updateSlider();
-        }
-      });
+      // Initialize music players
+      initializeMusicPlayers();
 
-      nextBtn.addEventListener('click', () => {
-        if (currentIndex < maxIndex) {
-          currentIndex++;
-          updateSlider();
-        }
-      });
-
-      updateSlider();
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' && currentIndex > 0) {
-          currentIndex--;
-          updateSlider();
-        } else if (e.key === 'ArrowRight' && currentIndex < maxIndex) {
-          currentIndex++;
-          updateSlider();
-        }
+      // Cleanup on page unload
+      window.addEventListener('beforeunload', () => {
+        cleanupSlider();
+        cleanupCategory();
       });
     });
   </script>
@@ -411,181 +156,23 @@ const visibleImages = 4;
     .gallery-container::after {
       display: none !important;
     }
+
     .w-full.overflow-x-auto {
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
+
     .w-full.overflow-x-auto::-webkit-scrollbar {
       display: none;
     }
+
     .gallery-container {
       box-sizing: content-box;
       padding: 0;
     }
+
     #imageSlider {
       transition: transform var(--card-transition-duration) ease-in-out;
-      /* will-change removed to avoid persistent hints; JS sets it only while animating */
-    }
-
-    #imageSlider img {
-      filter: brightness(0.95);
-      transition: filter 0.3s;
-    }
-
-    #imageSlider img:hover {
-      filter: brightness(1);
-    }
-
-    .shine-effect {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(244, 150, 36, 0.4),
-        transparent
-      );
-      transform: translateX(-100%);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .flex-shrink-0:hover .shine-effect {
-      opacity: 1;
-      transform: translateX(100%);
-      transition: transform 0.7s;
-    }
-
-    /* Estilos para las cards de música */
-    .music-card {
-      background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
-      transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-    }
-
-    .music-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(244, 150, 36, 0.3);
-    }
-
-    .music-card-content {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      gap: 16px;
-    }
-
-    .music-album-cover {
-      width: 100%;
-      height: 229px;
-      object-fit: cover;
-      border-radius: 15px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    .music-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .music-title {
-      color: #ffffff;
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin: 0;
-      line-height: 1.3;
-    }
-
-    .music-artist {
-      color: #a0a0a0;
-      font-size: 0.95rem;
-      margin: 0;
-      font-weight: 400;
-    }
-
-    .music-controls {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .play-button {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s ease;
-    }
-
-    .play-button:hover {
-      transform: scale(1.1);
-    }
-
-    .music-duration {
-      color: #a0a0a0;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .category-btn {
-      background: #f4962433;
-      color: #f49624;
-      border: none;
-      border-radius: 15px;
-      padding: 8px 20px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition:
-        background 0.2s,
-        color 0.2s,
-        transform 0.2s ease;
-      outline: none;
-      position: relative;
-    }
-    .category-btn:hover,
-    .category-btn:focus {
-      background: #f49624;
-      color: #041421;
-    }
-    .category-btn.active {
-      background: #f49624;
-      color: #041421;
-      font-weight: 700;
-    }
-
-    /* Animations moved to `src/styles/animations.css` */
-    .nav-btn {
-      background: #f4962433;
-      transition: background 0.2s;
-    }
-    .nav-arrow {
-      stroke: #f49624;
-      transition: stroke 0.2s;
-    }
-    .nav-btn:hover,
-    .nav-btn:focus {
-      background: #f49624;
-    }
-    .nav-btn:hover .nav-arrow,
-    .nav-btn:focus .nav-arrow {
-      stroke: #041421;
     }
   </style>
 </section>
