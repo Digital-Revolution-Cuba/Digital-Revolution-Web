@@ -1,0 +1,169 @@
+---
+import type { MusicGalleryItem } from '../../data/types';
+
+interface Props {
+  item: MusicGalleryItem;
+}
+
+const { item } = Astro.props;
+---
+
+<div
+  class="gallery-item musica-item relative flex-shrink-0 overflow-hidden rounded-[25px]"
+  style="width: 285px; padding-left: 8px; padding-right: 8px; display: none;"
+  data-category="musica"
+>
+  <div
+    class="music-card h-[440px] w-[269px] overflow-hidden rounded-[25px] shadow-md"
+  >
+    <div class="music-card-content">
+      <img
+        src={item.image}
+        alt={`Album cover for ${item.title} by ${item.artist}`}
+        class="music-album-cover"
+        loading="lazy"
+      />
+      <div class="music-info">
+        <h3 class="music-title">{item.title}</h3>
+        <p class="music-artist">{item.artist}</p>
+      </div>
+      <div class="music-controls">
+        <button
+          class="play-button"
+          aria-label={`Play ${item.title}`}
+          aria-pressed="false"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10" fill="#F49624"></circle>
+            <path d="M10 8L16 12L10 16V8Z" fill="#041421"></path>
+          </svg>
+        </button>
+        <span class="music-duration" aria-label={`Duration ${item.duration}`}
+          >{item.duration}</span
+        >
+      </div>
+    </div>
+  </div>
+  <div class="shine-effect"></div>
+</div>
+
+<style>
+  .music-card {
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .music-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(244, 150, 36, 0.3);
+  }
+
+  .music-card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 16px;
+  }
+
+  .music-album-cover {
+    width: 100%;
+    height: 229px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .music-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .music-title {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .music-artist {
+    color: #a0a0a0;
+    font-size: 0.95rem;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .music-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .play-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+
+  .play-button:hover {
+    transform: scale(1.1);
+  }
+
+  .play-button:focus {
+    outline: 2px solid #f49624;
+    outline-offset: 2px;
+    border-radius: 50%;
+  }
+
+  .music-duration {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .shine-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(244, 150, 36, 0.4),
+      transparent
+    );
+    transform: translateX(-100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .gallery-item:hover .shine-effect {
+    opacity: 1;
+    transform: translateX(100%);
+    transition: transform 0.7s;
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import type { ArteGalleryItem } from '../../data/types';
+
+interface Props {
+  item: ArteGalleryItem;
+}
+
+const { item } = Astro.props;
+---
+
+<div
+  class="gallery-item arte-item relative flex-shrink-0 overflow-hidden rounded-[25px]"
+  style="width: 285px; padding-left: 8px; padding-right: 8px;"
+  data-category="arte"
+>
+  <img
+    src={item.image}
+    alt={item.title}
+    class="h-[440px] w-[269px] rounded-[25px] object-cover shadow-md transition duration-300"
+    loading="lazy"
+  />
+  <div class="shine-effect"></div>
+</div>
+
+<style>
+  .shine-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(244, 150, 36, 0.4),
+      transparent
+    );
+    transform: translateX(-100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .gallery-item:hover .shine-effect {
+    opacity: 1;
+    transform: translateX(100%);
+    transition: transform 0.7s;
+  }
+
+  .gallery-item img {
+    filter: brightness(0.95);
+    transition: filter 0.3s;
+  }
+
+  .gallery-item:hover img {
+    filter: brightness(1);
+  }
+</style>
