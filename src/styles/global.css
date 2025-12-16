@@ -13,65 +13,73 @@
   --default-font-family: var(--font-rubik);
 
   /* ---------------------------
-     Brand / Background colors
+     Palette (base colors + RGB)
      --------------------------- */
-  --color-brand-dark: #011822; /* Header background */
-  --color-brand-navy: #002b38; /* Dark buttons */
-  --color-brand-background-global: #001018; /* Page background */
+  --palette-brand-dark: #011822;
+  --palette-brand-dark-rgb: 1, 24, 34;
+
+  --palette-brand-navy: #002b38;
+  --palette-brand-navy-rgb: 0, 43, 56;
+
+  --palette-background: #001018;
+  --palette-background-rgb: 0, 16, 24;
+
+  --palette-accent-orange: #f49624;
+  --palette-accent-orange-rgb: 244, 150, 36;
+
+  --palette-accent-purple: #9747ff;
+  --palette-accent-purple-rgb: 151, 71, 255;
+
+  --palette-accent-cyan: #34dfde;
+  --palette-accent-cyan-rgb: 52, 223, 222;
+
+  --palette-accent-yellow: #ffc943;
+  --palette-accent-yellow-rgb: 255, 201, 67;
+
+  --palette-accent-blue: #19ceee;
+  --palette-accent-blue-rgb: 25, 206, 238;
 
   /* ---------------------------
-     Accent colors (single source)
+     Opacity helpers (reuse in rgba())
      --------------------------- */
-  --color-accent-orange: #f49624;
-  --color-accent-purple: #9747ff;
-  --color-accent-cyan: #34dfde;
-  --color-accent-yellow: #ffc943;
-  --color-accent-blue: #19ceee;
-
-  /* Provide RGB tuple for rgba() uses */
-  --color-accent-blue-rgb: 25, 206, 238;
-
-  /* 8-digit hex variants (alpha baked in) - useful where rgba() isn't ideal */
-  --color-accent-blue-40: #19ceee66; /* ~40% alpha */
+  --alpha-10: 0.1;
+  --alpha-20: 0.2;
+  --alpha-30: 0.3;
+  --alpha-40: 0.4;
+  --alpha-50: 0.5;
+  --alpha-60: 0.6;
 
   /* ---------------------------
-     Gradients (background-image)
+     Semantic tokens (map to palette)
      --------------------------- */
-  --shine-gradient: linear-gradient(
-    90deg,
-    transparent,
-    rgba(var(--color-accent-blue-rgb), 0.4) 50%,
-    transparent
-  );
+  --color-brand-dark: var(--palette-brand-dark);
+  --color-brand-navy: var(--palette-brand-navy);
+  --color-brand-background-global: var(--palette-background);
 
-  --background-image-gradient-cyan: linear-gradient(
-    to bottom,
-    #4aedd1,
-    #44e9d4,
-    #34dfde,
-    #19ceee,
-    #0bc5f7
-  );
+  --color-accent-orange: var(--palette-accent-orange);
+  --color-accent-orange-rgb: var(--palette-accent-orange-rgb);
 
-  --background-image-gradient-orange: linear-gradient(
-    to right,
-    #f49624,
-    #0cc6f8
-  );
+  --color-accent-purple: var(--palette-accent-purple);
+  --color-accent-cyan: var(--palette-accent-cyan);
+  --color-accent-yellow: var(--palette-accent-yellow);
+
+  --color-accent-blue: var(--palette-accent-blue);
+  --color-accent-blue-rgb: var(--palette-accent-blue-rgb);
+  --color-accent-blue-40: rgba(var(--color-accent-blue-rgb), var(--alpha-40));
 
   /* ---------------------------
-     Shadows (reusable tokens)
+     Reusable shadows using RGB + alpha helpers
      --------------------------- */
-  --shadow-text-sm: 0px 3px 0px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4);
-  --shadow-accent-blue: 0 12px 30px var(--color-accent-blue-40);
+  --shadow-text-sm: 0px 3px 0px rgba(0, 0, 0, var(--alpha-25, 0.25));
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, var(--alpha-40));
+  --shadow-accent-blue: 0 12px 30px
+    rgba(var(--color-accent-blue-rgb), var(--alpha-40));
 
   /* ---------------------------
-     Text colors / semantics
+     Usage examples (short)
      --------------------------- */
-  --color-text-primary: #fffffd;
-  --color-text-secondary: #cccccc;
-  --color-text-dark: #041421;
+  /* background: linear-gradient(to right, var(--palette-accent-orange), var(--palette-accent-blue));
+     box-shadow: 0 8px 20px rgba(var(--palette-accent-blue-rgb), var(--alpha-40)); */
 }
 
 /* ===========================
