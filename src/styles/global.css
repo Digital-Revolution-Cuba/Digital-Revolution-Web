@@ -40,7 +40,7 @@
   --palette-accent-blue-rgb: 25, 206, 238;
 
   /* ---------------------------
-     Opacity helpers (reuse in rgba())
+     Opacity helpers 
      --------------------------- */
   --alpha-10: 0.1;
   --alpha-20: 0.2;
@@ -75,7 +75,7 @@
   --shadow-accent-blue: 0 12px 30px
     rgba(var(--color-accent-blue-rgb), var(--alpha-40));
   --shadow-accent-orange: 0 8px 24px
-    rgba(var(--palette-accent-orange-rgb), var(--alpha-40)); /* nuevo token */
+    rgba(var(--palette-accent-orange-rgb), var(--alpha-40));
 
   /* ---------------------------
      Gradient helpers (reusable "shine" gradients)
@@ -200,7 +200,7 @@ body {
 
   /* Play button focus: usar token semántico global */
   .gallery-item .play-button:focus {
-    outline: 2px solid var(--color-accent-orange);
+    outline: 2px solid var(--color-accent-cyan);
     outline-offset: 2px;
     border-radius: 50%;
   }
