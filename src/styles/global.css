@@ -2,24 +2,41 @@
 @import 'tailwindcss';
 @import './animations.css';
 
+/* ===========================
+   Design tokens (theme)
+   =========================== */
 @theme {
+  /* Fonts */
   --font-saira: 'Saira Stencil One', sans-serif;
   --font-barlow: 'Barlow Semi Condensed', sans-serif;
   --font-rubik: 'Rubik', sans-serif;
   --default-font-family: var(--font-rubik);
 
-  /* Fondos Oscuros */
-  --color-brand-dark: #011822; /* Header Background */
-  --color-brand-navy: #002b38; /* Botones oscuros (Crea tu perfil) */
-  --color-brand-background-global: #001018; /* Fondo global */
+  /* ---------------------------
+     Brand / Background colors
+     --------------------------- */
+  --color-brand-dark: #011822; /* Header background */
+  --color-brand-navy: #002b38; /* Dark buttons */
+  --color-brand-background-global: #001018; /* Page background */
 
-  /* Acentos */
-  --color-accent-orange: #f49624; /* Colaboraciones, Botones */
-  --color-accent-purple: #9747ff; /* Bordes, Hover */
-  --color-accent-cyan: #34dfde; /* Background Concursos */
-  --color-accent-yellow: #ffc943; /* Background Galería */
-  --color-accent-blue: #19ceee; /* Únete a la comunidad */
-  --color-accent-blue-rgb: 25, 206, 238; /* para rgba(...) */
+  /* ---------------------------
+     Accent colors (single source)
+     --------------------------- */
+  --color-accent-orange: #f49624;
+  --color-accent-purple: #9747ff;
+  --color-accent-cyan: #34dfde;
+  --color-accent-yellow: #ffc943;
+  --color-accent-blue: #19ceee;
+
+  /* Provide RGB tuple for rgba() uses */
+  --color-accent-blue-rgb: 25, 206, 238;
+
+  /* 8-digit hex variants (alpha baked in) - useful where rgba() isn't ideal */
+  --color-accent-blue-40: #19ceee66; /* ~40% alpha */
+
+  /* ---------------------------
+     Gradients (background-image)
+     --------------------------- */
   --shine-gradient: linear-gradient(
     90deg,
     transparent,
@@ -27,12 +44,6 @@
     transparent
   );
 
-  /* Textos */
-  --color-text-primary: #fffffd; /* Descubre Talentos (casi blanco) */
-  --color-text-secondary: #cccccc; /* Descripción */
-  --color-text-dark: #041421; /* Letras sobre fondos claros */
-
-  /* Gradientes (Definidos como background-image) */
   --background-image-gradient-cyan: linear-gradient(
     to bottom,
     #4aedd1,
@@ -41,33 +52,52 @@
     #19ceee,
     #0bc5f7
   );
+
   --background-image-gradient-orange: linear-gradient(
     to right,
     #f49624,
     #0cc6f8
   );
 
-  /* Sombras */
+  /* ---------------------------
+     Shadows (reusable tokens)
+     --------------------------- */
   --shadow-text-sm: 0px 3px 0px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4);
+  --shadow-accent-blue: 0 12px 30px var(--color-accent-blue-40);
+
+  /* ---------------------------
+     Text colors / semantics
+     --------------------------- */
+  --color-text-primary: #fffffd;
+  --color-text-secondary: #cccccc;
+  --color-text-dark: #041421;
 }
 
-/* Estilos base globales */
+/* ===========================
+   Global base styles
+   =========================== */
 html,
 body {
   background-color: var(--color-brand-background-global);
   color: var(--color-text-primary);
+  font-family: var(--default-font-family);
 }
 
+/* ===========================
+   Component utilities / layer
+   =========================== */
 @layer components {
   .heading-impact {
     font-family: Impact, 'Impact', 'Arial Black', sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 64px;
-    line-height: 0.82; /* 82% */
+    line-height: 0.82;
     letter-spacing: 0;
     color: var(--color-text-dark);
   }
+
   .descubre-talentos {
     font-family: Impact, 'Impact', 'Arial Black', sans-serif;
     font-weight: 400;
@@ -77,6 +107,7 @@ body {
     letter-spacing: 0;
     color: var(--color-text-primary);
   }
+
   .heading-colab {
     font-family: Impact, 'Impact', 'Arial Black', sans-serif;
     font-weight: 400;
