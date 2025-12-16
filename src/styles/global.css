@@ -76,6 +76,30 @@
     rgba(var(--color-accent-blue-rgb), var(--alpha-40));
 
   /* ---------------------------
+     Gradient helpers (reusable "shine" gradients)
+     --------------------------- */
+  --gradient-shine-cyan: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--palette-accent-cyan-rgb), var(--alpha-40)),
+    transparent
+  );
+
+  --gradient-shine-orange: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--palette-accent-orange-rgb), var(--alpha-40)),
+    transparent
+  );
+
+  --gradient-shine-blue: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--palette-accent-blue-rgb), var(--alpha-40)),
+    transparent
+  );
+
+  /* ---------------------------
      Usage examples (short)
      --------------------------- */
   /* background: linear-gradient(to right, var(--palette-accent-orange), var(--palette-accent-blue));
