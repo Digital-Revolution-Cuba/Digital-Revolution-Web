@@ -19,6 +19,13 @@
   --color-accent-cyan: #34dfde; /* Background Concursos */
   --color-accent-yellow: #ffc943; /* Background Galería */
   --color-accent-blue: #19ceee; /* Únete a la comunidad */
+  --color-accent-blue-rgb: 25, 206, 238; /* para rgba(...) */
+  --shine-gradient: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--color-accent-blue-rgb), 0.4) 50%,
+    transparent
+  );
 
   /* Textos */
   --color-text-primary: #fffffd; /* Descubre Talentos (casi blanco) */
