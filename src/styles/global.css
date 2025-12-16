@@ -74,6 +74,8 @@
   --shadow-md: 0 8px 16px rgba(0, 0, 0, var(--alpha-40));
   --shadow-accent-blue: 0 12px 30px
     rgba(var(--color-accent-blue-rgb), var(--alpha-40));
+  --shadow-accent-orange: 0 8px 24px
+    rgba(var(--palette-accent-orange-rgb), var(--alpha-40)); /* nuevo token */
 
   /* ---------------------------
      Gradient helpers (reusable "shine" gradients)
@@ -150,5 +152,65 @@ body {
     text-transform: uppercase;
     color: var(--color-text-dark);
     text-shadow: 3px 3px 0px var(--color-accent-orange);
+  }
+
+  /* Centralized shine effect (aplicable a cualquier tarjeta .gallery-item) */
+  .shine-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(-100%);
+    pointer-events: none;
+    z-index: 2;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transition:
+      transform 0.7s ease,
+      opacity 0.3s ease;
+    /* default gradient (puede sobrescribirse por categoría) */
+    background: var(--gradient-shine-cyan);
+  }
+
+  /* Per-category gradient mapping (sobrescribe gradient local en componentes) */
+  .gallery-item.arte-item .shine-effect {
+    background: var(--gradient-shine-cyan);
+  }
+
+  .gallery-item.fotografia-item .shine-effect {
+    background: var(--gradient-shine-orange);
+  }
+
+  .gallery-item.musica-item .shine-effect {
+    background: var(--gradient-shine-orange);
+  }
+
+  /* Hover behavior shared */
+  .gallery-item:hover .shine-effect {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+
+  /* Música: usar token de sombra semántica en hover (sin editar MusicCard.astro) */
+  .musica-item .music-card:hover {
+    box-shadow: var(--shadow-accent-orange);
+  }
+
+  /* Play button focus: usar token semántico global */
+  .gallery-item .play-button:focus {
+    outline: 2px solid var(--color-accent-orange);
+    outline-offset: 2px;
+    border-radius: 50%;
+  }
+
+  /* Fotografía: overlay basado en color de marca (más fácil de mantener) */
+  .fotografia-item .photo-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(var(--palette-brand-dark-rgb), 0.95),
+      transparent
+    );
   }
 }
