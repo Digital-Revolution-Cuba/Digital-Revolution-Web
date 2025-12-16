@@ -19,6 +19,12 @@ const { item } = Astro.props;
     class="h-[440px] w-[269px] rounded-[25px] object-cover shadow-md transition duration-300"
     loading="lazy"
   />
+  <div class="artist-overlay">
+    <div class="artist-info">
+      <h3 class="artist-name">{item.artistName}</h3>
+      <p class="artist-role">{item.artistRole}</p>
+    </div>
+  </div>
   <div class="image-overlay" aria-hidden="true"></div>
   <div class="shine-effect" aria-hidden="true"></div>
 </div>
@@ -65,6 +71,57 @@ const { item } = Astro.props;
 
   .gallery-item:hover .image-overlay {
     opacity: 0; /* al hover la imagen "sube" a brightness 1 */
+  }
+
+  /* Overlay amarillo con información del artista */
+  .artist-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(
+      255,
+      201,
+      67,
+      0.95
+    ); /* var(--palette-accent-yellow) con alta opacidad */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 3;
+    transition: opacity 0.3s ease;
+    border-radius: 25px;
+  }
+
+  .gallery-item:hover .artist-overlay {
+    opacity: 1;
+  }
+
+  .artist-info {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .artist-name {
+    font-family: var(--font-barlow);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--palette-brand-dark);
+    margin: 0 0 8px 0;
+    line-height: 1;
+    text-transform: capitalize;
+  }
+
+  .artist-role {
+    font-family: var(--font-rubik);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--palette-brand-dark);
+    margin: 0;
+    line-height: 1.3;
   }
 
   /* restaurado: zoom sutil en hover (transform = GPU-friendly) */
