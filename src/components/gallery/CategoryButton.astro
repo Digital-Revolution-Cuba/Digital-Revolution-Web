@@ -21,8 +21,8 @@ const { category, label, isActive = false } = Astro.props;
 
 <style>
   .category-btn {
-    background: #f4962433;
-    color: #f49624;
+    background: #F4962433;
+    color: #F49624;
     border: none;
     border-radius: 15px;
     padding: 8px 20px;
@@ -39,18 +39,18 @@ const { category, label, isActive = false } = Astro.props;
 
   .category-btn:hover,
   .category-btn:focus-visible {
-    background: #f49624;
-    color: #041421;
+    background: var(--palette-accent-orange);
+    color: var(--palette-brand-dark);
   }
 
   .category-btn:focus-visible {
-    outline: 2px solid #f49624;
+    outline: 2px solid var(--palette-accent-orange);
     outline-offset: 2px;
   }
 
   .category-btn.active {
-    background: #f49624;
-    color: #041421;
+    background: var(--palette-accent-orange) ;
+    color: var(--palette-brand-dark);
     font-weight: 700;
   }
 
