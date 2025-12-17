@@ -73,15 +73,21 @@ import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
 
   /* Logos scale proportionally to footer height using % */
   .footer-logo {
-    height: clamp(12vw, 12vw, 12vw);
+    height: 12vw;
     width: auto;
     max-width: 138px;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
     transition: transform 0.3s ease;
   }
 
+  .footer-logo {
+    opacity: 0.92;
+    transition: transform 0.3s ease, opacity 0.15s ease;
+  }
+
   .footer-logo:hover {
     opacity: 1;
+    transform: scale(1.05);
   }
 
   .footer-text {
