@@ -10,6 +10,8 @@ export interface BaseGalleryItem {
 
 export interface ArteGalleryItem extends BaseGalleryItem {
   type: 'arte';
+  artistName: string;
+  artistRole: string;
 }
 
 export interface MusicGalleryItem extends BaseGalleryItem {
