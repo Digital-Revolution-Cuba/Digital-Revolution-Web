@@ -29,16 +29,24 @@ import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
 
   .footer-bar {
     width: 100%;
-    height: clamp(120px, 20vw, 300px);
+    /* Maintain aspect ratio from original design: 1512:431 ≈ 3.506:1 */
+    aspect-ratio: 3.506 / 1;
+    /* Ensure minimum height so footer never disappears on small screens */
+    min-height: max(100px, 18vw);
+    max-height: 300px;
+
     background: linear-gradient(90deg, #4aedd1 0%, #0cc6f8 100%);
+
+    /* Fixed diagonal angle: 35% of height creates consistent visual slope
+       Using percentage maintains proportional relationship across all sizes */
     clip-path: polygon(0 0, 100% 35%, 100% 100%, 0 100%);
+
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 -6px 24px rgba(11, 197, 247, 0.18);
   }
 
-  /* Subtle texture overlay */
   .footer-bar::before {
     content: '';
     position: absolute;
@@ -60,12 +68,12 @@ import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
     align-items: center;
     justify-content: center;
     z-index: 1;
-    padding-top: clamp(0.5rem, 1.5vw, 1rem);
+    padding-top: clamp(0.5rem, 2%, 1rem);
   }
 
-  /* Logos scale aggressively with viewport */
+  /* Logos scale proportionally to footer height using % */
   .footer-logo {
-    height: clamp(36px, 8vw, 100px);
+    height: clamp(36px, 12vw, 100px);
     width: auto;
     max-width: 138px;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
@@ -73,7 +81,7 @@ import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
   }
 
   .footer-logo:hover {
-    transform: scale(1.05);
+    opacity: 1;
   }
 
   .footer-text {
@@ -84,56 +92,34 @@ import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
     opacity: 0.98;
   }
 
-  /* Tablet */
-  @media (max-width: 1024px) {
-    .footer-bar {
-      height: clamp(100px, 18vw, 260px);
-      clip-path: polygon(0 0, 100% 32%, 100% 100%, 0 100%);
-    }
-
-    .footer-logo {
-      height: clamp(32px, 7vw, 85px);
-    }
-
-    .footer-text {
-      height: clamp(24px, 5.5vw, 65px);
-    }
+  .footer-text:hover {
+    opacity: 1;
   }
 
-  /* Mobile */
+  /* Mobile adjustments - only for extreme cases */
   @media (max-width: 640px) {
     .footer-bar {
-      height: clamp(85px, 22vw, 160px);
-      clip-path: polygon(0 0, 100% 24%, 100% 100%, 0 100%);
+      /* Increase min-height to ensure visibility on small screens */
+      min-height: max(90px, 22vw);
     }
 
     .footer-content {
       gap: 0.5rem;
       padding: 0.5rem 1rem;
     }
-
-    .footer-logo {
-      height: clamp(28px, 6vw, 60px);
-    }
-
-    .footer-text {
-      height: clamp(22px, 4.5vw, 48px);
-    }
   }
 
-  /* Extra small */
   @media (max-width: 375px) {
     .footer-bar {
-      height: clamp(75px, 24vw, 130px);
-      clip-path: polygon(0 0, 100% 20%, 100% 100%, 0 100%);
+      min-height: max(85px, 24vw);
     }
 
     .footer-logo {
-      height: clamp(24px, 5.5vw, 50px);
+      height: clamp(28px, 28%, 90px);
     }
 
     .footer-text {
-      height: clamp(20px, 4vw, 42px);
+      height: clamp(22px, 22%, 65px);
     }
   }
 </style>
