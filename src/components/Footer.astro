@@ -1,3 +1,172 @@
 ---
-
+import LogoRevolucionDigital from '../assets/LogoFooter.svg';
+import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
 ---
+
+<!-- Footer: Cyan bar with diagonal top edge sloping down from left to right -->
+<footer class="footer" role="contentinfo" aria-label="Footer">
+  <div class="footer-bar">
+    <div class="footer-content">
+      <img
+        src={LogoRevolucionDigital.src}
+        alt="Revolución Digital"
+        class="footer-logo"
+      />
+      <img
+        src={RevolucionDigitalText.src}
+        alt="Revolución Digital"
+        class="footer-text"
+      />
+    </div>
+  </div>
+</footer><style>
+    
+  /* =================================================================
+     FOOTER COMPONENT - Responsive diagonal design
+     Specification: 1512x431px reference with diagonal top edge
+     ================================================================= */
+
+  .footer {
+    width: 100%;
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Main footer bar with diagonal top edge */
+  .footer-bar {
+    width: 100%;
+    position: relative;
+
+    /* Responsive height maintaining ~28.5% ratio (431/1512) with limits */
+    height: clamp(140px, 28.5vw, 431px);
+
+    /* Cyan gradient background as specified */
+    background: linear-gradient(90deg, #4aedd1 0%, #0cc6f8 100%);
+
+    /* Create diagonal cut: HIGH on left (0%), LOW on right (~12% down)
+       This makes the bar "rise" on the left and "fall" on the right */
+    clip-path: polygon(
+      0 0,
+      /* Top-left corner at very top */ 100% 12%,
+      /* Top-right corner 12% down (creates the slope) */ 100% 100%,
+      /* Bottom-right corner */ 0 100% /* Bottom-left corner */
+    );
+    -webkit-clip-path: polygon(0 0, 100% 12%, 100% 100%, 0 100%);
+
+    /* Flexbox centering for logo content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Subtle shadow for depth */
+    box-shadow: 0 -6px 24px rgba(11, 197, 247, 0.18);
+  }
+
+  /* Optional: Add subtle texture overlay */
+  .footer-bar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px
+    );
+    background-size: 16px 16px;
+    opacity: 0.4;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  /* Content wrapper for logos */
+  .footer-content {
+    display: flex;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    /* Add some top padding to compensate for diagonal cut */
+    padding-top: clamp(0.5rem, 1.5vw, 1rem);
+  }
+
+  /* Logo sizing - scales with footer height */
+  .footer-logo {
+    width: auto;
+    height: clamp(48px, 18%, 90px);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
+    transition: transform 0.3s ease;
+  }
+
+  .footer-logo:hover {
+    transform: scale(1.05);
+  }
+
+  .footer-text {
+    width: auto;
+    height: clamp(40px, 16%, 85px);
+    object-fit: contain;
+    opacity: 0.98;
+  }
+
+  /* ========================================
+     RESPONSIVE BREAKPOINTS
+     ======================================== */
+
+  /* Tablet landscape / small laptop (≤1024px) */
+  @media (max-width: 1024px) {
+    .footer-bar {
+      height: clamp(120px, 26vw, 360px);
+      /* Slightly reduce diagonal angle on smaller screens */
+      clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 100%);
+    }
+  }
+
+  /* Tablet portrait / large mobile (≤768px) */
+  @media (max-width: 768px) {
+    .footer-bar {
+      height: clamp(100px, 28vw, 280px);
+      clip-path: polygon(0 0, 100% 8%, 100% 100%, 0 100%);
+    }
+
+    .footer-content {
+      gap: clamp(0.5rem, 1.5vw, 1rem);
+    }
+  }
+
+  /* Mobile (≤640px) */
+  @media (max-width: 640px) {
+    .footer-bar {
+      height: clamp(90px, 32vw, 200px);
+      clip-path: polygon(0 0, 100% 6%, 100% 100%, 0 100%);
+    }
+
+    .footer-content {
+      gap: 0.5rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .footer-logo {
+      height: clamp(32px, 20%, 60px);
+    }
+
+    .footer-text {
+      height: clamp(28px, 18%, 55px);
+    }
+  }
+
+  /* Extra small mobile (≤375px) */
+  @media (max-width: 375px) {
+    .footer-bar {
+      height: clamp(80px, 35vw, 160px);
+    }
+
+    .footer-logo {
+      height: clamp(28px, 22%, 48px);
+    }
+
+    .footer-text {
+      height: clamp(24px, 20%, 45px);
+    }
+  }
+</style>
