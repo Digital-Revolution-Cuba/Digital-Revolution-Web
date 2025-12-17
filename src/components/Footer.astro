@@ -3,7 +3,6 @@ import LogoRevolucionDigital from '../assets/LogoFooter.svg';
 import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
 ---
 
-<!-- Footer: Cyan bar with diagonal top edge sloping down from left to right -->
 <footer class="footer" role="contentinfo" aria-label="Footer">
   <div class="footer-bar">
     <div class="footer-content">
@@ -19,55 +18,33 @@ import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
       />
     </div>
   </div>
-</footer><style>
-  /* =================================================================
-     FOOTER COMPONENT - Responsive diagonal design
-     Specification: 1512x431px reference with diagonal top edge
-     ================================================================= */
+</footer>
 
+<style>
   .footer {
     width: 100%;
     position: relative;
     isolation: isolate;
   }
 
-  /* Main footer bar with diagonal top edge */
   .footer-bar {
     width: 100%;
-    position: relative;
-
-    /* Reduced height to leave space for dark background above */
     height: clamp(120px, 20vw, 300px);
-
-    /* Cyan gradient background as specified */
     background: linear-gradient(90deg, #4aedd1 0%, #0cc6f8 100%);
-
-    /* Create diagonal cut: Starts at top-left (0,0) and descends to right
-       The diagonal drop is ~35% of height to match original design */
-    clip-path: polygon(
-      0 0,
-      /* Top-left corner - START of diagonal */ 100% 35%,
-      /* Top-right corner - 35% down (diagonal slope) */ 100% 100%,
-      /* Bottom-right corner */ 0 100% /* Bottom-left corner */
-    );
-    -webkit-clip-path: polygon(0 0, 100% 37%, 100% 100%, 0 100%);
-
-    /* Flexbox centering for logo content */
+    clip-path: polygon(0 0, 100% 35%, 100% 100%, 0 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-
-    /* Subtle shadow for depth */
     box-shadow: 0 -6px 24px rgba(11, 197, 247, 0.18);
   }
 
-  /* Optional: Add subtle texture overlay */
+  /* Subtle texture overlay */
   .footer-bar::before {
     content: '';
     position: absolute;
     inset: 0;
     background-image: radial-gradient(
-      circle at center,
+      circle,
       rgba(255, 255, 255, 0.03) 1px,
       transparent 1px
     );
@@ -77,21 +54,19 @@ import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
     mix-blend-mode: overlay;
   }
 
-  /* Content wrapper for logos */
   .footer-content {
     display: flex;
-    gap: clamp(0.75rem, 2vw, 1.5rem);
+    gap: clamp(0.5rem, 1.5vw, 1.5rem);
     align-items: center;
     justify-content: center;
     z-index: 1;
-    /* Add some top padding to compensate for diagonal cut */
     padding-top: clamp(0.5rem, 1.5vw, 1rem);
   }
 
-  /* Logo sizing - scales with footer height using percentage of parent */
+  /* Logos scale aggressively with viewport */
   .footer-logo {
+    height: clamp(36px, 8vw, 100px);
     width: auto;
-    height: clamp(50px, 35%, 138px);
     max-width: 138px;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
     transition: transform 0.3s ease;
@@ -102,79 +77,63 @@ import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
   }
 
   .footer-text {
+    height: clamp(28px, 6.5vw, 75px);
     width: auto;
-    height: clamp(36px, 28%, 75px);
     max-width: 222px;
     object-fit: contain;
     opacity: 0.98;
   }
 
-  /* ========================================
-     RESPONSIVE BREAKPOINTS
-  /* Tablet landscape / small laptop (≤1024px) */
+  /* Tablet */
   @media (max-width: 1024px) {
     .footer-bar {
-      height: clamp(110px, 18vw, 260px);
-      /* Maintain diagonal proportion */
+      height: clamp(100px, 18vw, 260px);
       clip-path: polygon(0 0, 100% 32%, 100% 100%, 0 100%);
-    }
-  }
-
-  /* Tablet portrait / large mobile (≤768px) */
-  @media (max-width: 768px) {
-    .footer-bar {
-      height: clamp(100px, 20vw, 220px);
-      clip-path: polygon(0 0, 100% 28%, 100% 100%, 0 100%);
-    }
-
-    .footer-content {
-      gap: clamp(0.5rem, 1.5vw, 1rem);
     }
 
     .footer-logo {
-      height: clamp(40px, 32%, 90px);
+      height: clamp(32px, 7vw, 85px);
     }
 
     .footer-text {
-      height: clamp(30px, 26%, 65px);
+      height: clamp(24px, 5.5vw, 65px);
     }
   }
 
-  /* Mobile (≤640px) */
+  /* Mobile */
   @media (max-width: 640px) {
     .footer-bar {
-      height: clamp(90px, 24vw, 160px);
+      height: clamp(85px, 22vw, 160px);
       clip-path: polygon(0 0, 100% 24%, 100% 100%, 0 100%);
     }
 
     .footer-content {
       gap: 0.5rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding: 0.5rem 1rem;
     }
 
     .footer-logo {
-      height: clamp(35px, 30%, 70px);
+      height: clamp(28px, 6vw, 60px);
     }
 
     .footer-text {
-      height: clamp(26px, 24%, 55px);
+      height: clamp(22px, 4.5vw, 48px);
     }
   }
 
-  /* Extra small mobile (≤375px) */
+  /* Extra small */
   @media (max-width: 375px) {
     .footer-bar {
-      height: clamp(80px, 28vw, 140px);
+      height: clamp(75px, 24vw, 130px);
       clip-path: polygon(0 0, 100% 20%, 100% 100%, 0 100%);
     }
 
     .footer-logo {
-      height: clamp(32px, 28%, 60px);
+      height: clamp(24px, 5.5vw, 50px);
     }
 
     .footer-text {
-      height: clamp(24px, 22%, 48px);
+      height: clamp(20px, 4vw, 42px);
     }
   }
 </style>
