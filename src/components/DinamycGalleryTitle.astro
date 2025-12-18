@@ -44,5 +44,42 @@
     padding: 0;
     font-family: Impact, Charcoal, 'Arial Black', sans-serif;
     font-size: 128px;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .azul {
+      height: 80px;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 85%);
+    }
+    .amarillo {
+      margin-top: -80px;
+      height: 350px;
+      clip-path: polygon(0% 30%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    .amarillo .text {
+      font-size: clamp(3.5rem, 8vw, 5rem);
+      bottom: 15px;
+      right: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .azul {
+      height: 60px;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 80%);
+    }
+    .amarillo {
+      margin-top: -60px;
+      height: 280px;
+      clip-path: polygon(0% 25%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    .amarillo .text {
+      font-size: clamp(2.5rem, 10vw, 3.5rem);
+      bottom: 10px;
+      right: 10px;
+    }
   }
 </style>
