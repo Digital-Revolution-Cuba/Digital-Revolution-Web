@@ -1,0 +1,162 @@
+---
+/**
+ * ColaboracionCard Component
+ * Tarjeta para mostrar colaboraciones destacadas con descripción
+ */
+
+export interface Props {
+  title: string;
+  description: string;
+  imageUrl: string;
+  altText: string;
+  ctaLink: string;
+  ctaText: string;
+}
+
+const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
+---
+
+<article class="colaboracion-card">
+  <div class="colaboracion-image-wrapper">
+    <img
+      src={imageUrl}
+      alt={altText}
+      class="colaboracion-image"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="colaboracion-content">
+    <h3 class="colaboracion-title">{title}</h3>
+    <p class="colaboracion-description">{description}</p>
+    <div class="colaboracion-footer">
+      <a href={ctaLink} class="colaboracion-cta">
+        {ctaText}
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .colaboracion-card {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    background: var(--palette-brand-dark, #011822);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .colaboracion-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .colaboracion-image-wrapper {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .colaboracion-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .colaboracion-card:hover .colaboracion-image {
+    transform: scale(1.05);
+  }
+
+  .colaboracion-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .colaboracion-title {
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    color: var(--palette-accent-orange, #f49624);
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .colaboracion-description {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .colaboracion-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+  }
+
+  .colaboracion-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.25rem;
+    background: transparent;
+    border: 2px solid var(--palette-accent-cyan, #34dfde);
+    border-radius: 0.5rem;
+    color: var(--palette-accent-cyan, #34dfde);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .colaboracion-cta:hover {
+    background: var(--palette-accent-cyan, #34dfde);
+    color: var(--palette-brand-dark, #011822);
+  }
+
+  /* Responsive sizing */
+  @media (max-width: 640px) {
+    .colaboracion-card {
+      width: calc(100vw - 80px);
+      max-width: 280px;
+    }
+    .colaboracion-image-wrapper {
+      height: 160px;
+    }
+    .colaboracion-title {
+      font-size: 1.125rem;
+    }
+    .colaboracion-description {
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+    .colaboracion-card {
+      width: calc((100vw - 100px) / 2);
+      max-width: 300px;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1023px) {
+    .colaboracion-card {
+      width: calc((100vw - 120px) / 3);
+      max-width: 320px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .colaboracion-card {
+      width: 320px;
+    }
+  }
+</style>
