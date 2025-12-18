@@ -12,12 +12,12 @@ const svgPath =
     ? 'M15.75 19.5 8.25 12l7.5-7.5'
     : 'm8.25 4.5 7.5 7.5-7.5 7.5';
 
-const position = direction === 'prev' ? 'left-[-50px]' : 'right-[-50px]';
+const position = direction === 'prev' ? 'nav-btn-prev' : 'nav-btn-next';
 ---
 
 <button
   id={id}
-  class={`nav-btn absolute top-1/2 ${position} z-10 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50`}
+  class={`nav-btn ${position} absolute top-1/2 z-30 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50`}
   aria-label={ariaLabel}
   type="button"
 >
@@ -58,5 +58,29 @@ const position = direction === 'prev' ? 'left-[-50px]' : 'right-[-50px]';
   .nav-btn:focus-visible {
     outline: 2px solid #f49624;
     outline-offset: 2px;
+  }
+
+  /* Mobile and tablets: arrows inside, next to gallery */
+  .nav-btn-prev {
+    position: relative;
+    left: 0;
+  }
+
+  .nav-btn-next {
+    position: relative;
+    right: 0;
+  }
+
+  /* Desktop: arrows outside container (original design) */
+  @media (min-width: 1024px) {
+    .nav-btn-prev {
+      position: absolute;
+      left: -50px;
+    }
+
+    .nav-btn-next {
+      position: absolute;
+      right: -50px;
+    }
   }
 </style>
