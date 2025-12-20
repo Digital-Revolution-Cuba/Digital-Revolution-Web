@@ -58,7 +58,9 @@ const visibleCards = 3;
     >
     </div>
     <div class="general z-30 bg-teal-300">
-      <div class="flex flex-col items-start justify-between pt-20 pr-10 pl-10">
+      <div
+        class="flex flex-col items-start justify-between gap-8 pt-32 pr-10 pl-10"
+      >
         <section class="colab-section">
           <div class="wrapper-colab">
             <div class="shape-back-colab"></div>
@@ -70,7 +72,7 @@ const visibleCards = 3;
           </div>
         </section>
         <button
-          class="rounded-full bg-blue-500 px-6 py-3 font-bold text-white shadow-lg transition hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          class="mt-4 rounded-full bg-blue-500 px-6 py-3 font-bold text-white shadow-lg transition hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none"
           >Sugerir Colaboración</button
         >
       </div>
@@ -108,7 +110,7 @@ const visibleCards = 3;
               {
                 cards.map((card) => (
                   <div
-                    class="relative flex-shrink-0"
+                    class="relative shrink-0"
                     style="width: 380px; padding-left: 8px; padding-right: 8px;"
                   >
                     <Card
