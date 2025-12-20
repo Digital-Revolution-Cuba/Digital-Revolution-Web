@@ -1,3 +1,165 @@
 ---
-
+import LogoRevolucionDigital from '../assets/LogoFooter.svg';
+import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
 ---
+
+<footer class="footer" role="contentinfo" aria-label="Footer">
+  <div class="footer-bar">
+    <div class="footer-content">
+      <img
+        src={LogoRevolucionDigital.src}
+        alt="Revolución Digital logo"
+        class="footer-logo"
+      />
+      <img src={RevolucionDigitalText.src} alt="" class="footer-text" />
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    width: 100%;
+    position: relative;
+    isolation: isolate;
+  }
+
+  .footer-bar {
+    width: 100%;
+    /* Original design aspect ratio: 1512:431 ≈ 3.506:1 */
+    aspect-ratio: 3.506 / 1;
+    min-height: max(100px, 18vw);
+    max-height: 431px;
+
+    background: linear-gradient(90deg, #4aedd1 0%, #0cc6f8 100%);
+
+    /* Match Figma design: diagonal starts at 28.5% of height
+       Calculated from visual slope in original 1512x431 design */
+    clip-path: polygon(0 0, 100% 28.5%, 100% 100%, 0 100%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 -6px 24px rgba(11, 197, 247, 0.18);
+  }
+
+  .footer-bar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px
+    );
+    background-size: 16px 16px;
+    opacity: 0.4;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.25rem, 1vw, 0.75rem);
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    /* Adjust padding to account for diagonal */
+    padding-top: clamp(1rem, 3%, 1.5rem);
+  }
+
+  /* Logos scale proportionally to footer height using % */
+  .footer-logo {
+    height: 12vw;
+    width: auto;
+    max-height: 138px;
+    max-width: 138px;
+    min-height: 60px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
+    opacity: 0.92;
+    transition:
+      transform 0.3s ease,
+      opacity 0.15s ease;
+  }
+
+  .footer-logo:hover {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .footer-text {
+    height: clamp(24px, 5vw, 75px);
+    width: auto;
+    max-height: 75px;
+    max-width: 222px;
+    min-height: 20px;
+    object-fit: contain;
+    opacity: 0.98;
+  }
+
+  .footer-text:hover {
+    opacity: 1;
+  }
+
+  /* Mobile adjustments - only for extreme cases */
+  @media (max-width: 640px) {
+    .footer-bar {
+      min-height: max(100px, 24vw);
+      /* Adjust diagonal slightly for mobile to maintain visual balance */
+      clip-path: polygon(0 0, 100% 25%, 100% 100%, 0 100%);
+    }
+
+    .footer-content {
+      gap: clamp(0.25rem, 0.8vw, 0.5rem);
+      padding: 0.75rem 1rem;
+      padding-top: clamp(1rem, 3.5%, 1.5rem);
+    }
+
+    .footer-logo {
+      height: clamp(50px, 10vw, 80px);
+    }
+
+    .footer-text {
+      height: clamp(20px, 4.5vw, 50px);
+    }
+  }
+
+  @media (max-width: 375px) {
+    .footer-bar {
+      min-height: 110px;
+      clip-path: polygon(0 0, 100% 22%, 100% 100%, 0 100%);
+    }
+
+    .footer-content {
+      gap: 0.25rem;
+      padding-top: 1.25rem;
+    }
+
+    .footer-logo {
+      height: 50px;
+      min-height: 50px;
+    }
+
+    .footer-text {
+      height: 22px;
+      min-height: 20px;
+    }
+  }
+
+  @media (max-width: 320px) {
+    .footer-bar {
+      min-height: 100px;
+      clip-path: polygon(0 0, 100% 20%, 100% 100%, 0 100%);
+    }
+
+    .footer-logo {
+      height: 45px;
+      min-height: 45px;
+    }
+
+    .footer-text {
+      height: 20px;
+      min-height: 18px;
+    }
+  }
+</style>

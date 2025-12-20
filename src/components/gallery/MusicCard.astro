@@ -1,0 +1,178 @@
+---
+import type { MusicGalleryItem } from '../../data/types';
+
+interface Props {
+  item: MusicGalleryItem;
+}
+
+const { item } = Astro.props;
+---
+
+<div
+  class="gallery-item musica-item relative flex-shrink-0 overflow-hidden rounded-[25px]"
+  style="width: 285px; padding-left: 8px; padding-right: 8px; display: none;"
+  data-category="musica"
+>
+  <div class="music-card h-[440px] w-[269px] overflow-hidden rounded-[25px]">
+    <div class="music-card-content">
+      <img
+        src={item.image}
+        alt={`Album cover for ${item.title} by ${item.artist}`}
+        class="music-album-cover"
+        loading="lazy"
+      />
+      <div class="music-info">
+        <button
+          class="play-button"
+          aria-label={`Play ${item.title}`}
+          aria-pressed="false"
+        >
+          <svg
+            width="36"
+            height="36"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10" fill="#FFC943"></circle>
+            <path d="M10 8L16 12L10 16V8Z" fill="#041421"></path>
+          </svg>
+        </button>
+        <div class="music-text">
+          <h3 class="music-title">{item.title}</h3>
+          <p class="music-artist">{item.artist}</p>
+        </div>
+        <span class="music-duration" aria-label={`Duration ${item.duration}`}
+          >{item.duration}</span
+        >
+      </div>
+    </div>
+  </div>
+  <div class="shine-effect"></div>
+</div>
+
+<style>
+  .music-card {
+    background: var(--palette-brand-dark);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border: 3px solid var(--palette-accent-yellow);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .music-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-accent-orange);
+    border-color: var(--palette-accent-orange);
+  }
+
+  .music-card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .music-album-cover {
+    width: 100%;
+    height: 263px;
+    object-fit: cover;
+    border-radius: 22px 22px 0 0;
+  }
+
+  .music-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 16px;
+    background: var(--palette-brand-dark);
+  }
+
+  .music-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .music-title {
+    color: #ffffff;
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .music-artist {
+    color: #a0a0a0;
+    font-size: 0.875rem;
+    margin: 0;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .play-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .play-button:hover {
+    transform: scale(1.15);
+  }
+
+  .play-button:focus {
+    outline: 2px solid var(--palette-accent-cyan);
+    outline-offset: 2px;
+    border-radius: 50%;
+  }
+
+  .music-duration {
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .shine-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(var(--palette-accent-cyan-rgb), 0.4) 50%,
+      transparent
+    );
+    transform: translateX(-100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .gallery-item:hover .shine-effect {
+    opacity: 1;
+    transform: translateX(100%);
+    transition: transform 0.7s;
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+import type { CategoryType } from '../../data/types';
+
+interface Props {
+  category: CategoryType;
+  label: string;
+  isActive?: boolean;
+}
+
+const { category, label, isActive = false } = Astro.props;
+---
+
+<button
+  class={`category-btn ${isActive ? 'active' : ''}`}
+  data-cat={category}
+  aria-label={`Switch to ${label} category`}
+  type="button"
+>
+  {label}
+</button>
+
+<style>
+  .category-btn {
+    background: #f4962433;
+    color: #f49624;
+    border: none;
+    border-radius: 15px;
+    padding: 8px 20px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      color 0.2s,
+      transform 0.2s ease;
+    outline: none;
+    position: relative;
+  }
+
+  .category-btn:hover,
+  .category-btn:focus-visible {
+    background: var(--palette-accent-orange);
+    color: var(--palette-brand-dark);
+  }
+
+  .category-btn:focus-visible {
+    outline: 2px solid var(--palette-accent-orange);
+    outline-offset: 2px;
+  }
+
+  .category-btn.active {
+    background: var(--palette-accent-orange);
+    color: var(--palette-brand-dark);
+    font-weight: 700;
+  }
+
+  .category-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+</style>

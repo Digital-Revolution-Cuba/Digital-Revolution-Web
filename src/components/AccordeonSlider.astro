@@ -1,43 +1,105 @@
 ---
-
+import prueba from '../assets/prueba.jpg';
 ---
 
-<div class="flex items-center gap-1 acordeon-container">
+<div class="acordeon-container flex items-center gap-1">
+  <!-- Card 1: Gira a la derecha -->
   <div
-    class="w-62 h-85 relative acordeon-item transform -translate-y-7 skew-y-[18deg] origin-left hover:rotate-z-0 hover:rotate-y-0 hover:skew-y-0"
+    class="acordeon-item group relative h-85 w-62 origin-left -translate-y-7 skew-y-[18deg] transform transition-all duration-500 hover:z-50 hover:translate-y-14 hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-[-18deg]"
   >
-    <img
-      src="/public/card1.webp"
-      alt="card 1"
-      class="w-full h-full object-cover rounded-tr-2xl rounded-bl-2xl rounded-4xl shadow-2xl border-1 border-white"
-    />
+    <div
+      class="flip-inner relative h-full w-full transition-transform duration-700 group-hover:-rotate-y-180"
+    >
+      <!-- Cara Frontal -->
+      <div class="flip-front absolute inset-0 h-full w-full backface-hidden">
+        <img
+          src={prueba.src}
+          alt="card 1"
+          class="h-full w-full rounded-4xl rounded-tr-2xl rounded-bl-2xl border-1 border-white object-cover shadow-2xl"
+        />
+      </div>
+      <!-- Cara Trasera -->
+      <div
+        class="flip-back absolute inset-0 flex h-full w-full rotate-y-180 items-center justify-center rounded-4xl rounded-tr-2xl rounded-bl-2xl border-1 border-white bg-[#002b38] shadow-2xl backface-hidden"
+      >
+        <span class="text-xl font-bold text-white">Card 1</span>
+      </div>
+    </div>
   </div>
+
+  <!-- Card 2: Gira a la izquierda -->
   <div
-    class="w-50 h-85 relative acordeon-item transform skew-y-[-25deg] origin-right hover:rotate-z-0 hover:rotate-y-0 hover:skew-y-0"
+    class="acordeon-item group relative h-85 w-50 origin-right skew-y-[-25deg] transform transition-all duration-500 hover:z-50 hover:translate-y-24 hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-[25deg]"
   >
-    <img
-      src="/public/card2.webp"
-      alt="card 2"
-      class="w-full h-full object-cover rounded-tl-2xl rounded-br-2xl rounded-4xl shadow-2xl border-1 border-white"
-    />
+    <div
+      class="flip-inner relative h-full w-full transition-transform duration-700 group-hover:rotate-y-180"
+    >
+      <!-- Cara Frontal -->
+      <div class="flip-front absolute inset-0 h-full w-full backface-hidden">
+        <img
+          src={prueba.src}
+          alt="card 2"
+          class="h-full w-full rounded-4xl rounded-tl-2xl rounded-br-2xl border-1 border-white object-cover shadow-2xl"
+        />
+      </div>
+      <!-- Cara Trasera -->
+      <div
+        class="flip-back absolute inset-0 flex h-full w-full rotate-y-180 items-center justify-center rounded-4xl rounded-tl-2xl rounded-br-2xl border-1 border-white bg-[#002b38] shadow-2xl backface-hidden"
+      >
+        <span class="text-xl font-bold text-white">Card 2</span>
+      </div>
+    </div>
   </div>
+
+  <!-- Card 3: Gira a la derecha -->
   <div
-    class="w-55 h-85 relative acordeon-item transform -translate-y-3 skew-y-[18deg] origin-left hover:rotate-z-0 hover:rotate-y-0 hover:skew-y-0"
+    class="acordeon-item group relative h-85 w-55 origin-left -translate-y-3 skew-y-[18deg] transform transition-all duration-500 hover:z-50 hover:translate-y-16 hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-[-18deg]"
   >
-    <img
-      src="/public/card1.webp"
-      alt="card 3"
-      class="w-full h-full object-cover rounded-tr-2xl rounded-bl-2xl rounded-4xl shadow-2xl border-1 border-white"
-    />
+    <div
+      class="flip-inner relative h-full w-full transition-transform duration-700 group-hover:-rotate-y-180"
+    >
+      <!-- Cara Frontal -->
+      <div class="flip-front absolute inset-0 h-full w-full backface-hidden">
+        <img
+          src={prueba.src}
+          alt="card 3"
+          class="h-full w-full rounded-4xl rounded-tr-2xl rounded-bl-2xl border-1 border-white object-cover shadow-2xl"
+        />
+      </div>
+      <!-- Cara Trasera -->
+      <div
+        class="flip-back absolute inset-0 flex h-full w-full rotate-y-180 items-center justify-center rounded-4xl rounded-tr-2xl rounded-bl-2xl border-1 border-white bg-[#002b38] shadow-2xl backface-hidden"
+      >
+        <span class="text-xl font-bold text-white">Card 3</span>
+      </div>
+    </div>
   </div>
 </div>
 
 <style>
   .acordeon-container {
-    transform-style: preserve-3d;
+    perspective: 1000px;
   }
 
   .acordeon-item {
-    transition: transform 0.5s ease;
+    transform-style: preserve-3d;
+  }
+
+  .flip-inner {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  /* Definición explícita de rotaciones 3D */
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  /* Clases para el hover del grupo */
+  .group:hover .group-hover\:rotate-y-180 {
+    transform: rotateY(180deg);
   }
 </style>

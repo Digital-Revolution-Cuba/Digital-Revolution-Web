@@ -1,0 +1,122 @@
+---
+import type { FotografiaGalleryItem } from '../../data/types';
+
+interface Props {
+  item: FotografiaGalleryItem;
+}
+
+const { item } = Astro.props;
+---
+
+<div
+  class="gallery-item fotografia-item relative flex-shrink-0 overflow-hidden rounded-[25px]"
+  style="width: 285px; padding-left: 8px; padding-right: 8px; display: none;"
+  data-category="fotografia"
+>
+  <div class="photo-card h-[440px] w-[269px] rounded-[25px]">
+    <img
+      src={item.image}
+      alt={`${item.title}${item.photographer ? ` by ${item.photographer}` : ''}`}
+      class="photo-image h-full w-full rounded-[25px] object-cover shadow-md transition duration-300"
+      loading="lazy"
+    />
+    <div class="photo-overlay">
+      <div class="photo-info">
+        <h3 class="photo-title">{item.title}</h3>
+        {
+          item.photographer && (
+            <p class="photo-photographer">{item.photographer}</p>
+          )
+        }
+        {item.date && <p class="photo-date">{item.date}</p>}
+      </div>
+    </div>
+  </div>
+  <div class="shine-effect"></div>
+</div>
+
+<style>
+  .photo-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .photo-image {
+    filter: brightness(0.95);
+    transition:
+      filter 0.3s,
+      transform 0.3s;
+  }
+
+  .photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(4, 20, 33, 0.95), transparent);
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover .photo-overlay {
+    transform: translateY(0);
+  }
+
+  .gallery-item:hover .photo-image {
+    filter: brightness(1);
+    transform: scale(1.05);
+  }
+
+  .photo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .photo-title {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .photo-photographer {
+    color: #f49624;
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .photo-date {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .shine-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(var(--palette-accent-cyan-rgb), 0.4) 50%,
+      transparent
+    );
+    transform: translateX(-100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .gallery-item:hover .shine-effect {
+    opacity: 1;
+    transform: translateX(100%);
+    transition: transform 0.7s;
+  }
+</style>

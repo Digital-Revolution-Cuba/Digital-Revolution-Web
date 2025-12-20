@@ -12,12 +12,12 @@ interface Props {
 const {
   title = 'Digital Revolution Web | Comunidad de Talentos',
   description = 'La plataforma oficial de la comunidad de talentos de Cuba. Descubre y conecta con creadores en arte, música, desarrollo y escritura.',
-  image = 'https://pbs.twimg.com/profile_images/1555097834431354369/9JiHiD4h_400x400.jpg',
+  image = '/favicon.svg',
 } = Astro.props;
 
 const canonicalURL = new URL(
   Astro.url.pathname,
-  Astro.site || 'https://digital-revolution-web.vercel.app/'
+  Astro.site || 'https://digital-revolution-web.vercel.app/',
 );
 ---
 
@@ -54,7 +54,6 @@ const canonicalURL = new URL(
   <body>
     <Header />
     <slot />
-    <Footer />
   </body>
 </html>
 
