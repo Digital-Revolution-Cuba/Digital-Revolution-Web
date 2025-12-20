@@ -223,7 +223,7 @@ body {
   clip-path: polygon(0 25%, 100% 11%, 100% 100%, 0 100%);
 }
 
-.clip-path-parallelogram-center-bottomm {
+.clip-path-parallelogram-center-bottom {
   clip-path: polygon(0 0, 100%, 100% 100%, 0 75%);
 }
 
