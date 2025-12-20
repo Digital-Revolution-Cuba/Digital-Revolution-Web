@@ -1,0 +1,129 @@
+---
+import '../styles/global.css';
+---
+
+<section
+  class="join-our-community bg-brand-backgroundGlobal relative flex flex-col items-center justify-center gap-4 px-4 py-6 sm:grid sm:grid-cols-3 sm:items-center sm:justify-items-center sm:gap-3 sm:px-4 sm:py-6 md:flex md:flex-row md:items-center md:justify-center md:gap-5 md:py-30"
+>
+  <!-- SVG Filter for rounded corners on clip-path -->
+  <svg
+    style="visibility: hidden; position: absolute;"
+    width="0"
+    height="0"
+    xmlns="http://www.w3.org/2000/svg"
+    version="1.1"
+  >
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"
+        ></feGaussianBlur>
+        <feColorMatrix
+          in="blur"
+          mode="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+          result="goo"></feColorMatrix>
+        <feComposite in="SourceGraphic" in2="goo" operator="atop"></feComposite>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Parallelogram top left - the other is literally the same but the opposite skew -->
+  <div
+    class="md:col-span-auto flex flex-col items-center justify-center gap-3 sm:col-span-1 sm:items-start sm:gap-3 md:gap-10"
+  >
+    <div
+      class="acordeon-item relative h-32 w-20 origin-right skew-y-[-25deg] transform self-start overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+    >
+      <img
+        src="/src/assets/image (4).png"
+        alt="join our community"
+        class="h-full w-full rounded-lg rounded-tl-md rounded-br-md border-1 object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+      />
+    </div>
+
+    <!-- Parallelogram top bottom -->
+    <div style="filter: url('#goo');">
+      <div
+        class="clip-path-parallelogram-left-corner acordeon-item relative h-28 w-16 origin-right transform self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-0 sm:h-32 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-90 md:w-55 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+      >
+        <img
+          src="/src/assets/image (4).png"
+          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Parallelogram center top and bottom -->
+  <div
+    class="md:col-span-auto flex flex-col items-center justify-center gap-3 sm:col-span-1 sm:gap-3 md:items-center md:gap-4"
+  >
+    <div style="filter: url('#goo');" class="hidden sm:block">
+      <div
+        class="clip-path-parallelogram-center-top h-20 w-14 self-start overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+      >
+        <img
+          src="/src/assets/image (4).png"
+          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+        />
+      </div>
+    </div>
+
+    <!-- Botón y texto en el centro -->
+    <div
+      class="flex w-full max-w-[280px] flex-col-reverse items-center gap-3 text-center sm:max-w-[350px] sm:gap-4 md:gap-4"
+    >
+      <button
+        class="bg-brand-navy rounded-full px-4 py-2 text-xs whitespace-nowrap text-white sm:px-3 sm:py-1.5 sm:text-xs md:px-4 md:py-2 md:text-base"
+      >
+        Crea tu perfil ahora
+      </button>
+      <h4 class="text-xs leading-relaxed sm:text-[10px] md:text-base">
+        Únete a nuestra comunidad
+      </h4>
+    </div>
+
+    <div style="filter: url('#goo');" class="hidden sm:block">
+      <div
+        class="clip-path-parallelogram-center-bottom h-20 w-14 self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+      >
+        <img
+          src="/src/assets/image (4).png"
+          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Button and text with images above and below - última columna en móvil/sm -->
+  <div
+    class="md:col-span-auto flex flex-col items-center justify-center gap-3 sm:col-span-3 sm:gap-3 md:gap-0"
+  >
+    <!-- Parallelogram right top  -->
+    <div style="filter: url('#goo');" class="md:flex md:justify-center">
+      <div
+        class="clip-path-parallelogram-left-corner acordeon-item relative h-32 w-18 origin-right skew-y-[25deg] transform overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 sm:h-36 sm:w-20 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-120 md:w-60 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+      >
+        <img
+          src="/src/assets/image (4).png"
+          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+        />
+      </div>
+    </div>
+
+    <!-- Parallelogram right bottom - abajo del botón -->
+    <div
+      style="filter: url('#goo');"
+      class="md:-mt-40 md:flex md:justify-center"
+    >
+      <div
+        class="clip-path-parallelogram-right-bottom acordeon-item relative h-28 w-16 origin-right transform self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-0 sm:h-32 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-90 md:w-40 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+      >
+        <img
+          src="/src/assets/image (4).png"
+          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+        />
+      </div>
+    </div>
+  </div>
+</section>
