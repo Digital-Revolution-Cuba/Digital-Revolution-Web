@@ -100,46 +100,54 @@ const visibleCards = 3; // Cards visibles a la vez en desktop
 </section>
 
 <script define:vars={{ totalCards, visibleCards }}>
-  document.addEventListener('DOMContentLoaded', () => {
+  function initConcursosSlider() {
     const prevBtn = document.getElementById('prevBtnConcursos');
     const nextBtn = document.getElementById('nextBtnConcursos');
     const slider = document.getElementById('cardSliderConcursos');
+    const viewport = document.querySelector('.cards-viewport-concursos');
     const pagination = document.getElementById('paginationConcursos');
 
-    if (!prevBtn || !nextBtn || !slider || !pagination) return;
+    if (!prevBtn || !nextBtn || !slider || !pagination || !viewport) return;
 
     let currentIndex = 0;
     let cardsPerPage = 3;
-    let itemWidth = 320;
-    let gap = 24;
+    let itemWidth = 0;
+    let gap = 0;
 
-    // Calculate layout based on viewport
     function calculateLayout() {
+      const firstItem = slider.querySelector('.card-item-concursos');
+      if (!firstItem) return;
+
       const viewportWidth = window.innerWidth;
 
       if (viewportWidth < 640) {
         cardsPerPage = 1;
-        itemWidth = Math.min(viewportWidth - 80, 280);
-        gap = 16;
       } else if (viewportWidth < 1024) {
         cardsPerPage = 2;
-        itemWidth = 300;
-        gap = 20;
       } else {
         cardsPerPage = 3;
-        itemWidth = 320;
-        gap = 24;
       }
+
+      // Medir el ancho real del item renderizado
+      itemWidth = firstItem.offsetWidth;
+
+      // Obtener el gap real del CSS
+      const computedStyle = window.getComputedStyle(slider);
+      gap = parseFloat(computedStyle.gap) || 0;
+
+      // Ajustar el ancho del viewport para que quepan exactamente las tarjetas indicadas
+      const requiredViewportWidth =
+        itemWidth * cardsPerPage + gap * (cardsPerPage - 1);
+      viewport.style.maxWidth = `${requiredViewportWidth}px`;
     }
 
-    calculateLayout();
+    function getMaxIndex() {
+      return Math.max(0, Math.ceil(totalCards / cardsPerPage) - 1);
+    }
 
-    const maxIndex = Math.max(0, Math.ceil(totalCards / cardsPerPage) - 1);
-
-    // Generate pagination dots
     function generateDots() {
       pagination.innerHTML = '';
-      const numPages = maxIndex + 1;
+      const numPages = getMaxIndex() + 1;
       for (let i = 0; i < numPages; i++) {
         const dot = document.createElement('button');
         dot.className = `pagination-dot ${i === currentIndex ? 'active' : ''}`;
@@ -153,6 +161,9 @@ const visibleCards = 3; // Cards visibles a la vez en desktop
     }
 
     function updateSlider() {
+      const maxIndex = getMaxIndex();
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+
       const offset = -currentIndex * cardsPerPage * (itemWidth + gap);
       slider.style.transform = `translateX(${offset}px)`;
 
@@ -177,6 +188,7 @@ const visibleCards = 3; // Cards visibles a la vez en desktop
     });
 
     nextBtn.addEventListener('click', () => {
+      const maxIndex = getMaxIndex();
       if (currentIndex < maxIndex) {
         currentIndex++;
         updateSlider();
@@ -195,9 +207,15 @@ const visibleCards = 3; // Cards visibles a la vez en desktop
       }, 150);
     });
 
-    generateDots();
-    updateSlider();
-  });
+    // Esperar a que las fuentes y estilos se apliquen
+    setTimeout(() => {
+      calculateLayout();
+      generateDots();
+      updateSlider();
+    }, 100);
+  }
+
+  document.addEventListener('DOMContentLoaded', initConcursosSlider);
 </script>
 
 <style>

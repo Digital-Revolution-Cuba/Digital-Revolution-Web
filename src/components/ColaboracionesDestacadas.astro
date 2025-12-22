@@ -113,43 +113,50 @@ const visibleCards = 3;
 <script define:vars={{ totalCards, visibleCards }}>
   /**
    * Colaboraciones Slider con responsive cards
-   * Optimizado con requestAnimationFrame
+   * Optimizado con mediciones dinámicas
    */
   function initColaboracionesSlider() {
     const prevBtn = document.getElementById('prevBtnColab');
     const nextBtn = document.getElementById('nextBtnColab');
     const slider = document.getElementById('cardSliderColab');
+    const viewport = document.querySelector('.cards-viewport');
 
-    if (!prevBtn || !nextBtn || !slider) {
+    if (!prevBtn || !nextBtn || !slider || !viewport) {
       console.error('Colaboraciones: Required elements not found');
       return;
     }
 
     let currentIndex = 0;
-    let cardsPerPage = 3; // Default
-    let itemWidth = 320; // Updated to match new card size
-    let gap = 24;
+    let cardsPerPage = 3;
+    let itemWidth = 0;
+    let gap = 0;
 
-    // Calcular cardsPerPage y itemWidth según el ancho del viewport
     function calculateLayout() {
+      const firstItem = slider.querySelector('.card-item');
+      if (!firstItem) return;
+
       const viewportWidth = window.innerWidth;
 
       if (viewportWidth < 640) {
         cardsPerPage = 1;
-        itemWidth = Math.min(viewportWidth - 80, 280);
-        gap = 16;
       } else if (viewportWidth < 1024) {
         cardsPerPage = 2;
-        itemWidth = 300;
-        gap = 20;
       } else {
         cardsPerPage = 3;
-        itemWidth = 320;
-        gap = 24;
       }
-    }
 
-    calculateLayout();
+      // Medir el ancho real del item renderizado
+      itemWidth = firstItem.offsetWidth;
+
+      // Obtener el gap real del CSS
+      const computedStyle = window.getComputedStyle(slider);
+      gap = parseFloat(computedStyle.gap) || 0;
+
+      // Ajustar el ancho del viewport para que quepan exactamente las tarjetas indicadas
+      const requiredViewportWidth =
+        itemWidth * cardsPerPage + gap * (cardsPerPage - 1);
+      viewport.style.maxWidth = `${requiredViewportWidth}px`;
+    }
 
     function getMaxIndex() {
       return Math.max(0, Math.ceil(totalCards / cardsPerPage) - 1);
@@ -157,21 +164,23 @@ const visibleCards = 3;
 
     function updateSlider() {
       const maxIndex = getMaxIndex();
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+
       const offset = -currentIndex * cardsPerPage * (itemWidth + gap);
       slider.style.transform = `translateX(${offset}px)`;
 
       // Update button states
-      prevBtn.disabled = currentIndex <= 0;
-      nextBtn.disabled = currentIndex >= maxIndex;
-      prevBtn.style.opacity = currentIndex <= 0 ? '0.4' : '1';
-      nextBtn.style.opacity = currentIndex >= maxIndex ? '0.4' : '1';
+      const isFirst = currentIndex <= 0;
+      const isLast = currentIndex >= maxIndex;
+
+      prevBtn.disabled = isFirst;
+      nextBtn.disabled = isLast;
+      prevBtn.style.opacity = isFirst ? '0.4' : '1';
+      nextBtn.style.opacity = isLast ? '0.4' : '1';
 
       // ARIA states
-      prevBtn.setAttribute('aria-disabled', (currentIndex <= 0).toString());
-      nextBtn.setAttribute(
-        'aria-disabled',
-        (currentIndex >= maxIndex).toString()
-      );
+      prevBtn.setAttribute('aria-disabled', isFirst.toString());
+      nextBtn.setAttribute('aria-disabled', isLast.toString());
     }
 
     prevBtn.addEventListener('click', () => {
@@ -210,12 +219,16 @@ const visibleCards = 3;
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
         calculateLayout();
-        currentIndex = 0; // Reset al cambiar layout
+        currentIndex = 0;
         updateSlider();
       }, 150);
     });
 
-    updateSlider();
+    // Esperar a que las fuentes y estilos se apliquen
+    setTimeout(() => {
+      calculateLayout();
+      updateSlider();
+    }, 100);
   }
 
   // Inicializar cuando el DOM esté listo

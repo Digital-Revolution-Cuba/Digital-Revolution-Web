@@ -123,8 +123,8 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
     color: var(--palette-brand-dark, #011822);
   }
 
-  /* Responsive sizing */
-  @media (max-width: 640px) {
+  /* Responsive sizing - Sincronizado con slider logic */
+  @media (max-width: 639px) {
     .colaboracion-card {
       width: calc(100vw - 80px);
       max-width: 280px;
@@ -140,17 +140,10 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
     }
   }
 
-  @media (min-width: 641px) and (max-width: 768px) {
+  @media (min-width: 640px) and (max-width: 1023px) {
     .colaboracion-card {
       width: calc((100vw - 100px) / 2);
       max-width: 300px;
-    }
-  }
-
-  @media (min-width: 769px) and (max-width: 1023px) {
-    .colaboracion-card {
-      width: calc((100vw - 120px) / 3);
-      max-width: 320px;
     }
   }
 
