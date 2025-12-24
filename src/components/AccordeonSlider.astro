@@ -72,38 +72,93 @@ const totalSlides = accordeonCards.length;
     const dots = dotsContainer.querySelectorAll('.acordeon-dot');
     const cards = sliderContainer.querySelectorAll('.acordeon-item');
     let currentIndex = 0;
+    let isAnimating = false;
 
-    function updateActiveState(index) {
-      // Update dots
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-      });
+    function animateTransition(fromIndex, toIndex) {
+      if (isAnimating) return;
+      isAnimating = true;
 
-      // Add highlight animation to the focused card
+      // Efecto Stagger: Desfasar la salida de las cards
       cards.forEach((card, i) => {
-        if (i === index) {
-          card.classList.add('highlighted');
-        } else {
-          card.classList.remove('highlighted');
-        }
+        // Añadir delay progresivo a cada card para la animación de salida
+        // Usamos variables CSS para que los keyframes las respeten si es necesario,
+        // o simplemente aplicamos el delay directo al estilo.
+        card.style.animationDelay = `${i * 100}ms`;
+        card.classList.add('slide-out-left');
       });
 
-      currentIndex = index;
+      // Actualizar dots inmediatamente
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === toIndex);
+      });
+
+      // Calculamos el tiempo total de salida: duración de anim (400ms) + max delay (200ms)
+      const exitDuration = 600; 
+
+      setTimeout(() => {
+        cards.forEach((card, i) => {
+          card.classList.remove('slide-out-left', 'highlighted');
+          card.style.animationDelay = '0ms'; // Reset delay para la entrada
+          
+          // Stagger también para la entrada
+          card.style.animationDelay = `${i * 75}ms`;
+          card.classList.add('slide-in-right');
+          
+          if (i === toIndex) {
+            card.classList.add('highlighted');
+          }
+        });
+
+        // Limpiar clases y delays después de que termine la entrada
+        setTimeout(() => {
+          cards.forEach((card) => {
+            card.classList.remove('slide-in-right');
+            card.style.animationDelay = '0ms';
+          });
+          isAnimating = false;
+        }, 600);
+      }, exitDuration - 100);
+
+      currentIndex = toIndex;
+    }
+
+    function updateActiveState(index, animate = true) {
+      if (animate && index !== currentIndex) {
+        animateTransition(currentIndex, index);
+      } else {
+        // Sin animación (estado inicial)
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+        cards.forEach((card, i) => {
+          card.style.animationDelay = '0ms';
+          if (i === index) {
+            card.classList.add('highlighted');
+          } else {
+            card.classList.remove('highlighted');
+          }
+        });
+        currentIndex = index;
+      }
     }
 
     // Click handlers for dots
     dots.forEach((dot) => {
       dot.addEventListener('click', (e) => {
         const index = parseInt(e.target.dataset.index, 10);
-        updateActiveState(index);
+        if (!isAnimating) {
+          updateActiveState(index, true);
+        }
       });
     });
 
-    // Auto-rotate every 4 seconds
+    // Auto-rotate every 6 seconds (Professional timing)
     let autoRotate = setInterval(() => {
-      const nextIndex = (currentIndex + 1) % totalSlides;
-      updateActiveState(nextIndex);
-    }, 4000);
+      if (!isAnimating) {
+        const nextIndex = (currentIndex + 1) % totalSlides;
+        updateActiveState(nextIndex, true);
+      }
+    }, 6000);
 
     // Pause auto-rotate on hover
     sliderContainer.addEventListener('mouseenter', () => {
@@ -112,10 +167,15 @@ const totalSlides = accordeonCards.length;
 
     sliderContainer.addEventListener('mouseleave', () => {
       autoRotate = setInterval(() => {
-        const nextIndex = (currentIndex + 1) % totalSlides;
-        updateActiveState(nextIndex);
-      }, 4000);
+        if (!isAnimating) {
+          const nextIndex = (currentIndex + 1) % totalSlides;
+          updateActiveState(nextIndex, true);
+        }
+      }, 6000);
     });
+
+    // Estado inicial sin animación
+    updateActiveState(0, false);
   });
 </script>
 
@@ -201,6 +261,62 @@ const totalSlides = accordeonCards.length;
     }
     100% {
       box-shadow: 0 0 0 0 rgba(244, 150, 36, 0);
+    }
+  }
+
+  /* Animación de salida Premium con Efecto Glitch y RGB Split */
+  .acordeon-item.slide-out-left {
+    /* cubic-bezier(0.22, 1, 0.36, 1) - Quintic easing para máxima fluidez */
+    animation: slideOutLeftGlitch 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes slideOutLeftGlitch {
+    0% {
+      transform: rotate(0) scale(1) translateX(0);
+      opacity: 1;
+      filter: none;
+    }
+    15% {
+      /* Pico sutil de glitch con aberración cromática */
+      transform: translateX(-10px) skewX(2deg);
+      text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9;
+      box-shadow: 5px 0 15px rgba(255, 0, 193, 0.3), -5px 0 15px rgba(0, 255, 249, 0.3);
+      clip-path: inset(10% 0 15% 0);
+    }
+    30% {
+      transform: translateX(-20px) skewX(-2deg);
+      text-shadow: -2px 0 #ff00c1, 2px 0 #00fff9;
+      clip-path: inset(40% 0 20% 0);
+      opacity: 0.9;
+    }
+    45% {
+      transform: translateX(-15px) skewX(0);
+      box-shadow: none;
+      clip-path: none;
+      filter: blur(2px);
+    }
+    100% {
+      transform: translateX(-100px) scale(0.9);
+      opacity: 0;
+      filter: blur(4px);
+    }
+  }
+
+  /* Animación de entrada Profesional con desvanecimiento suave */
+  .acordeon-item.slide-in-right {
+    animation: slideInRightProfessional 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes slideInRightProfessional {
+    0% {
+      transform: translateX(100px) scale(0.85) rotate(2deg);
+      opacity: 0;
+      filter: blur(8px);
+    }
+    100% {
+      transform: translateX(0) scale(1) rotate(0);
+      opacity: 1;
+      filter: blur(0);
     }
   }
 
