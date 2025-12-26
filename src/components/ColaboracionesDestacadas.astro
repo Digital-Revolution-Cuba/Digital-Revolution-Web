@@ -6,13 +6,17 @@ const totalCards = colaboracionesData.length;
 const visibleCards = 3;
 ---
 
-<section id="colaboraciones" class="colaboraciones-section">
-  <div class="colaboraciones-background">
-    <div class="background-clip-orange"></div>
-    <div class="background-clip-teal">
-      <!-- Header -->
-      <div class="colaboraciones-header">
-        <section class="colab-title-section">
+<section id="colaboraciones" class="h-auto w-auto bg-gray-950">
+  <div class="relative z-30 h-[600px]">
+    <div
+      class="second-clip absolute top-0 right-0 h-[600px] w-[8000px] bg-orange-500"
+    >
+    </div>
+    <div class="general z-30 bg-teal-300">
+      <div
+        class="flex flex-col items-start justify-between gap-8 pt-32 pr-10 pl-10"
+      >
+        <section class="colab-section">
           <div class="wrapper-colab">
             <div class="shape-back-colab"></div>
             <div class="shape-front-colab">
@@ -23,9 +27,8 @@ const visibleCards = 3;
           </div>
         </section>
         <button
-          type="button"
-          class="btn-suggest"
-          aria-label="Proponer una colaboración"
+          class="mt-4 rounded-full bg-blue-500 px-6 py-3 font-bold text-white shadow-lg transition hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          >Sugerir Colaboración</button
         >
           Proponer una colaboración
         </button>
@@ -66,15 +69,17 @@ const visibleCards = 3;
               aria-label="Lista de colaboraciones destacadas"
             >
               {
-                colaboracionesData.map((colab) => (
-                  <div class="card-item" role="listitem">
-                    <ColaboracionCard
-                      title={colab.title}
-                      description={colab.description}
-                      imageUrl={colab.imageUrl}
-                      altText={colab.altText}
-                      ctaLink={colab.ctaLink}
-                      ctaText={colab.ctaText}
+                cards.map((card) => (
+                  <div
+                    class="relative shrink-0"
+                    style="width: 380px; padding-left: 8px; padding-right: 8px;"
+                  >
+                    <Card
+                      title={card.title}
+                      ctaText={card.ctaText}
+                      imageUrl={card.imageUrl}
+                      altText={card.altText}
+                      ctaLink={card.ctaLink}
                     />
                   </div>
                 ))

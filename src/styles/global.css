@@ -261,3 +261,19 @@ body {
     );
   }
 }
+/* Parallelogram 2 - the larger one */
+.clip-path-parallelogram-left-corner {
+  clip-path: polygon(20% 24%, 100% 0%, 82% 83%, 6% 94%);
+}
+
+.clip-path-parallelogram-center-top {
+  clip-path: polygon(0 25%, 100% 11%, 100% 100%, 0 100%);
+}
+
+.clip-path-parallelogram-center-bottom {
+  clip-path: polygon(0 0, 100%, 100% 100%, 0 75%);
+}
+
+.clip-path-parallelogram-right-bottom {
+  clip-path: polygon(0 21%, 100% 43%, 100% 87%, 0 100%);
+}
