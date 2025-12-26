@@ -67,21 +67,20 @@ const visibleCards = 3;
               aria-label="Lista de colaboraciones destacadas"
             >
               {
-                cards.map((card) => (
-                  <div
-                    class="relative shrink-0"
-                    style="width: 380px; padding-left: 8px; padding-right: 8px;"
-                  >
-                    <Card
-                      title={card.title}
-                      ctaText={card.ctaText}
-                      imageUrl={card.imageUrl}
-                      altText={card.altText}
-                      ctaLink={card.ctaLink}
+                colaboracionesData.map((colab) => (
+                  <div class="card-item" role="listitem">
+                    <ColaboracionCard
+                      title={colab.title}
+                      description={colab.description}
+                      imageUrl={colab.imageUrl}
+                      altText={colab.altText}
+                      ctaLink={colab.ctaLink}
+                      ctaText={colab.ctaText}
                     />
                   </div>
                 ))
               }
+            
             </div>
           </div>
 
