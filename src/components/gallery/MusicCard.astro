@@ -9,11 +9,11 @@ const { item } = Astro.props;
 ---
 
 <div
-  class="gallery-item musica-item relative flex-shrink-0 overflow-hidden rounded-[25px]"
+  class="gallery-item musica-item relative shrink-0 overflow-hidden rounded-[25px]"
   style="width: 285px; padding-left: 8px; padding-right: 8px; display: none;"
   data-category="musica"
 >
-  <div class="music-card h-[440px] w-[269px] overflow-hidden rounded-[25px]">
+  <div class="music-card h-110 w-full overflow-hidden rounded-[25px]">
     <div class="music-card-content">
       <img
         src={item.image}
@@ -49,49 +49,62 @@ const { item } = Astro.props;
       </div>
     </div>
   </div>
-  <div class="shine-effect"></div>
 </div>
 
 <style>
+  /* Ensure sizing includes borders/padding */
+  .gallery-item {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
   .music-card {
     background: var(--palette-brand-dark);
     position: relative;
     display: flex;
     flex-direction: column;
     padding: 0;
+    box-sizing: border-box; /* include border in sizing to avoid content cropping */
     border: 3px solid var(--palette-accent-yellow);
     transition:
       transform 0.3s ease,
       box-shadow 0.3s ease,
       border-color 0.3s ease;
+    min-height: 440px; /* ensure content area always has enough room */
   }
 
   .music-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(1px);
     box-shadow: var(--shadow-accent-orange);
     border-color: var(--palette-accent-orange);
+    z-index: 6; /* make sure hover state is above siblings */
   }
 
   .music-card-content {
     display: flex;
     flex-direction: column;
     height: 100%;
+    box-sizing: border-box;
   }
 
   .music-album-cover {
     width: 100%;
-    height: 263px;
+    height: 250px;
     object-fit: cover;
     border-radius: 22px 22px 0 0;
+    flex-shrink: 0;
   }
 
   .music-info {
     flex: 1;
     display: flex;
-    align-items: center;
+    align-items: center; /* center content vertically so items are visible when not hovered */
     gap: 12px;
-    padding: 20px 16px;
+    padding: 16px 14px;
     background: var(--palette-brand-dark);
+    min-height: 100px;
+    overflow: visible; /* allow wrapped text to show */
   }
 
   .music-text {
@@ -100,6 +113,7 @@ const { item } = Astro.props;
     flex-direction: column;
     gap: 4px;
     min-width: 0;
+    overflow: visible;
   }
 
   .music-title {
@@ -109,8 +123,10 @@ const { item } = Astro.props;
     margin: 0;
     line-height: 1.2;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    /* allow up to 2 lines for long titles */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   .music-artist {
@@ -118,9 +134,13 @@ const { item } = Astro.props;
     font-size: 0.875rem;
     margin: 0;
     font-weight: 400;
+    /* allow artist to wrap onto multiple lines so it doesn't get cut off */
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   .play-button {
@@ -150,29 +170,59 @@ const { item } = Astro.props;
     font-size: 0.875rem;
     font-weight: 600;
     flex-shrink: 0;
+    margin-left: 8px;
   }
 
-  .shine-effect {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(var(--palette-accent-cyan-rgb), 0.4) 50%,
-      transparent
-    );
-    transform: translateX(-100%);
-    pointer-events: none;
-    z-index: 2;
+  /* Responsive sizing - solo ajustar contenedor */
+  @media (max-width: 640px) {
+    .gallery-item {
+      width: calc(100vw - 80px) !important;
+      max-width: 285px !important;
+    }
+    .music-album-cover {
+      height: 180px;
+    }
+    .music-info {
+      padding: 14px 12px;
+      gap: 10px;
+    }
+    .music-title {
+      font-size: 0.975rem;
+    }
+    .music-artist {
+      font-size: 0.8rem;
+    }
   }
 
-  .gallery-item:hover .shine-effect {
-    opacity: 1;
-    transform: translateX(100%);
-    transition: transform 0.7s;
+  @media (min-width: 641px) and (max-width: 768px) {
+    .gallery-item {
+      width: calc((100vw - 100px) / 2) !important;
+      max-width: 285px !important;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1023px) {
+    .gallery-item {
+      width: calc((100vw - 120px) / 3) !important;
+      max-width: 285px !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-item {
+      width: 285px !important;
+    }
+  }
+
+  /* allow hover lift/outlines to be visible and not clipped by overflow */
+  /* Ensure cards don't clip their own outlines/content even when not hovered */
+  .gallery-item.musica-item,
+  .gallery-item.fotografia-item {
+    overflow: visible !important;
+  }
+
+  /* Lift hovered card above siblings to avoid overlap/clipping */
+  .gallery-item:hover {
+    z-index: 40;
   }
 </style>
