@@ -3,10 +3,10 @@
 ---
 
 <section>
-  <div class="wrapper">
-    <div class="azul"></div>
-    <div class="amarillo">
-      <div class="text dynamic-gallery-title text-6xl font-bold">
+  <div class="dynamic-gallery-container">
+    <div class="dynamic-gallery-angled-top"></div>
+    <div class="dynamic-gallery-main">
+      <div class="dynamic-gallery-title">
         Galería <br />Dinámica
       </div>
     </div>
@@ -17,16 +17,16 @@
   * {
     color: aliceblue;
   }
-  .wrapper {
+  .dynamic-gallery-container {
     background-color: #030712;
     margin: -1px;
   }
-  .azul {
+  .dynamic-gallery-angled-top {
     background-color: #46ecd5;
     height: 100px;
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 90%);
   }
-  .amarillo {
+  .dynamic-gallery-main {
     margin-top: -100px;
     background-color: var(--color-accent-yellow);
     width: 100%;
@@ -34,10 +34,10 @@
     clip-path: polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%);
     position: relative;
   }
-  .amarillo .text {
+  .dynamic-gallery-title {
     color: #041421;
-    font-weight: 400;
     z-index: 10;
+    font-weight: 700;
     position: absolute;
     bottom: 20px;
     right: 20px;
