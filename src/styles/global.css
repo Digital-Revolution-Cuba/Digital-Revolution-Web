@@ -58,6 +58,7 @@
   --color-brand-dark: var(--palette-brand-dark);
   --color-brand-navy: var(--palette-brand-navy);
   --color-brand-background-global: var(--palette-background);
+  --color-text-dark: #041421;
 
   --color-accent-orange: var(--palette-accent-orange);
   --color-accent-orange-rgb: var(--palette-accent-orange-rgb);
