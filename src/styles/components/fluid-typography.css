@@ -1,0 +1,151 @@
+/**
+ * Fluid Typography System
+ * Sistema de tipografía escalable con clamp() para responsive design
+ * Base: 320px (mobile) → 1920px (desktop)
+ * WCAG 2.2 compliant con line-height óptimo y text-wrap
+ */
+
+@layer components {
+  /* ===================================
+     Display Headings (Extra Large)
+     =================================== */
+  .heading-display {
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+
+    /* Escala fluida: 48px → 128px */
+    font-size: clamp(3rem, 2rem + 5vw, 8rem);
+
+    /* Mejora legibilidad */
+    text-wrap: balance;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ===================================
+     XL Headings (Large Hero)
+     =================================== */
+  .heading-xl {
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+
+    /* Escala fluida: 36px → 96px */
+    font-size: clamp(2.25rem, 1.5rem + 3.75vw, 6rem);
+    text-wrap: balance;
+  }
+
+  /* ===================================
+     Large Headings (Section Headers)
+     =================================== */
+  .heading-lg {
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+
+    /* Escala fluida: 28px → 64px */
+    font-size: clamp(1.75rem, 1rem + 3vw, 4rem);
+    text-wrap: balance;
+  }
+
+  /* ===================================
+     Medium Headings
+     =================================== */
+  .heading-md {
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-weight: 400;
+    line-height: 1.1;
+
+    /* Escala fluida: 24px → 48px */
+    font-size: clamp(1.5rem, 0.875rem + 2.5vw, 3rem);
+  }
+
+  /* ===================================
+     Body Text con escala fluida
+     =================================== */
+  .text-fluid-xl {
+    font-size: var(--text-xl);
+    line-height: 1.6;
+    max-width: 75ch; /* Óptimo para lectura */
+  }
+
+  .text-fluid-lg {
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    max-width: 70ch;
+  }
+
+  .text-fluid-base {
+    font-size: var(--text-base);
+    line-height: 1.5;
+    max-width: 65ch;
+  }
+
+  .text-fluid-sm {
+    font-size: var(--text-sm);
+    line-height: 1.5;
+  }
+
+  /* ===================================
+     Variantes de color
+     =================================== */
+  .heading-primary {
+    color: var(--color-text-primary);
+  }
+
+  .heading-dark {
+    color: var(--color-text-dark);
+  }
+
+  .heading-accent {
+    color: var(--color-accent-cyan);
+  }
+
+  /* ===================================
+     Efectos especiales
+     =================================== */
+  .heading-shadow-orange {
+    text-shadow: 3px 3px 0px var(--color-accent-orange);
+  }
+
+  .heading-uppercase {
+    text-transform: uppercase;
+  }
+
+  /* ===================================
+     Container Query: Ajustar line-height
+     =================================== */
+  @container (min-width: 600px) {
+    .heading-display,
+    .heading-xl {
+      line-height: 0.85; /* Más compacto en pantallas grandes */
+    }
+  }
+
+  /* ===================================
+     Optimización para pantallas ultra-wide
+     =================================== */
+  @container (min-width: 1600px) {
+    .heading-display {
+      /* Limitar crecimiento en pantallas muy grandes */
+      font-size: min(8rem, 12vw);
+    }
+  }
+
+  /* ===================================
+     Reduced Motion Preference
+     =================================== */
+  @media (prefers-reduced-motion: reduce) {
+    .heading-display,
+    .heading-xl,
+    .heading-lg,
+    .heading-md {
+      text-wrap: auto; /* Balance puede causar reflows */
+    }
+  }
+}

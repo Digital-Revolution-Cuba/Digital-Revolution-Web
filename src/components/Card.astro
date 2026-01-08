@@ -16,20 +16,22 @@ const {
 } = Astro.props;
 ---
 
-<section class="max-w-64 overflow-hidden rounded-2xl bg-[#0D1433] shadow-md">
-  <div class="h-48 w-full overflow-hidden">
+<article
+  class="card-container overflow-hidden rounded-2xl bg-[#0D1433] shadow-md"
+>
+  <div class="card-image-wrapper overflow-hidden">
     <img
       src={imageUrl}
       alt={altText}
       width="320"
       height="192"
-      class="h-full w-full object-cover"
+      class="card-image h-full w-full object-cover transition-transform duration-300"
       loading="lazy"
     />
   </div>
 
   <div class="p-4">
-    <h3 class="mb-3 font-semibold text-white">{title}</h3>
+    <h3 class="card-title mb-3 font-semibold text-white">{title}</h3>
     <div class="mr-2 flex justify-end">
       <a
         href={ctaLink}
@@ -39,4 +41,76 @@ const {
       </a>
     </div>
   </div>
-</section>
+</article>
+
+<style>
+  /* Base card styles */
+  .card-container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 380px;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .card-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+  }
+
+  .card-container:hover .card-image {
+    transform: scale(1.05);
+  }
+
+  .card-image-wrapper {
+    height: 12rem; /* 192px - h-48 */
+    width: 100%;
+  }
+
+  .card-title {
+    font-size: 1rem;
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* Responsive sizing - matching gallery cards logic */
+  @media (max-width: 640px) {
+    .card-container {
+      width: calc(100vw - 80px) !important;
+      max-width: 320px !important;
+    }
+    .card-image-wrapper {
+      height: 10rem;
+    }
+    .card-title {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+    .card-container {
+      width: calc((100vw - 100px) / 2) !important;
+      max-width: 340px !important;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1023px) {
+    .card-container {
+      width: calc((100vw - 120px) / 3) !important;
+      max-width: 360px !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .card-container {
+      width: 380px !important;
+    }
+  }
+</style>

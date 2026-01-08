@@ -1,5 +1,6 @@
 ---
-
+import { Image } from 'astro:assets';
+import galleryImage from '../assets/ImagenPruebaGaleria.avif';
 ---
 
 <section>
@@ -8,6 +9,13 @@
     <div class="amarillo">
       <div class="text dynamic-gallery-title text-6xl font-bold">
         Galería <br />Dinámica
+      </div>
+      <div class="image-container">
+        <Image
+          src={galleryImage}
+          alt="Chica de la galería dinámica"
+          class="gallery-image"
+        />
       </div>
     </div>
   </div>
@@ -20,9 +28,16 @@
   .wrapper {
     background-color: #030712;
     margin: -1px;
+    position: relative;
+    height: 500px;
   }
   .azul {
-    background-color: #46ecd5;
+    background-color: var(--color-accent-cyan);
+    background-image: url('../assets/concursosBackgraund.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     height: 100px;
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 90%);
   }
@@ -33,6 +48,7 @@
     height: 500px;
     clip-path: polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%);
     position: relative;
+    overflow: hidden;
   }
   .amarillo .text {
     color: #041421;
@@ -44,5 +60,79 @@
     padding: 0;
     font-family: Impact, Charcoal, 'Arial Black', sans-serif;
     font-size: 128px;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .image-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .gallery-image {
+    height: 250%;
+    width: auto;
+    object-fit: contain;
+    margin-left: -50px;
+    transform: translateY(40%);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .azul {
+      height: 80px;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 85%);
+    }
+    .amarillo {
+      margin-top: -80px;
+      height: 350px;
+      clip-path: polygon(0% 30%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    .amarillo .text {
+      font-size: clamp(3.5rem, 8vw, 5rem);
+      bottom: 15px;
+      right: 15px;
+    }
+    .image-container {
+      height: 100%;
+      left: 0;
+      width: 100%;
+    }
+    .wrapper {
+      height: 350px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .image-container {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .azul {
+      height: 60px;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 80%);
+    }
+    .amarillo {
+      margin-top: -60px;
+      height: 280px;
+      clip-path: polygon(0% 25%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    .amarillo .text {
+      font-size: clamp(2.5rem, 10vw, 3.5rem);
+      bottom: 10px;
+      right: 10px;
+    }
+    .wrapper {
+      height: 280px;
+    }
   }
 </style>

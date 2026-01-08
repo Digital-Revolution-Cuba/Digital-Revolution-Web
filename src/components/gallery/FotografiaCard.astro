@@ -9,11 +9,11 @@ const { item } = Astro.props;
 ---
 
 <div
-  class="gallery-item fotografia-item relative flex-shrink-0 overflow-hidden rounded-[25px]"
+  class="gallery-item fotografia-item relative shrink-0 overflow-hidden rounded-[25px]"
   style="width: 285px; padding-left: 8px; padding-right: 8px; display: none;"
   data-category="fotografia"
 >
-  <div class="photo-card h-[440px] w-[269px] rounded-[25px]">
+  <div class="photo-card h-110 w-full rounded-[25px]">
     <img
       src={item.image}
       alt={`${item.title}${item.photographer ? ` by ${item.photographer}` : ''}`}
@@ -32,13 +32,20 @@ const { item } = Astro.props;
       </div>
     </div>
   </div>
-  <div class="shine-effect"></div>
 </div>
 
 <style>
+  /* Ensure sizing includes borders/padding */
+  .gallery-item {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
   .photo-card {
     position: relative;
     overflow: hidden;
+    box-sizing: border-box;
   }
 
   .photo-image {
@@ -53,14 +60,31 @@ const { item } = Astro.props;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(4, 20, 33, 0.95), transparent);
-    padding: 20px;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
+    background: linear-gradient(
+      to top,
+      rgba(4, 20, 33, 0.95) 0%,
+      rgba(4, 20, 33, 0.8) 70%,
+      transparent 100%
+    );
+    padding: 14px 16px;
+    min-height: 72px;
+    display: flex;
+    /* position content slightly above the very bottom so names are visible */
+    align-items: flex-start;
+    justify-content: flex-end;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.28s ease,
+      transform 0.28s ease;
+    pointer-events: none;
   }
 
   .gallery-item:hover .photo-overlay {
+    opacity: 1;
     transform: translateY(0);
+    pointer-events: auto;
   }
 
   .gallery-item:hover .photo-image {
@@ -72,51 +96,82 @@ const { item } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: 4px;
+    /* keep text compact and visible inside overlay */
+    align-items: flex-start;
+    width: 100%;
   }
 
   .photo-title {
     color: #ffffff;
-    font-size: 1.1rem;
+    font-size: 1.125rem;
     font-weight: 700;
-    margin: 0;
+    margin: 0 0 6px 0;
     line-height: 1.3;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   .photo-photographer {
     color: #f49624;
-    font-size: 0.9rem;
-    margin: 0;
+    font-size: 0.95rem;
+    margin: 0 0 4px 0;
     font-weight: 500;
   }
 
   .photo-date {
     color: #a0a0a0;
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     margin: 0;
     font-weight: 400;
   }
 
-  .shine-effect {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(var(--palette-accent-cyan-rgb), 0.4) 50%,
-      transparent
-    );
-    transform: translateX(-100%);
-    pointer-events: none;
-    z-index: 2;
+  /* Responsive sizing - solo ajustar contenedor */
+  @media (max-width: 640px) {
+    .gallery-item {
+      width: calc(100vw - 80px) !important;
+      max-width: 285px !important;
+    }
+    .photo-card {
+      height: 380px;
+    }
+    .photo-title {
+      font-size: 1rem;
+    }
+    .photo-photographer {
+      font-size: 0.85rem;
+    }
   }
 
-  .gallery-item:hover .shine-effect {
-    opacity: 1;
-    transform: translateX(100%);
-    transition: transform 0.7s;
+  @media (min-width: 641px) and (max-width: 768px) {
+    .gallery-item {
+      width: calc((100vw - 100px) / 2) !important;
+      max-width: 285px !important;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1023px) {
+    .gallery-item {
+      width: calc((100vw - 120px) / 3) !important;
+      max-width: 285px !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-item {
+      width: 285px !important;
+    }
+  }
+
+  /* Ensure cards don't clip their own outlines/content even when not hovered */
+  .gallery-item.fotografia-item,
+  .gallery-item.musica-item {
+    overflow: visible !important;
+  }
+
+  /* Lift hovered card above siblings to avoid overlap/clipping */
+  .gallery-item:hover {
+    z-index: 40;
   }
 </style>

@@ -1,0 +1,165 @@
+/**
+ * Adaptive Gallery Grid
+ * Auto-adjusts columns based on container width
+ * Supports ultra-wide displays up to 8K
+ */
+
+.gallery-wrapper {
+  container-type: inline-size;
+  container-name: gallery;
+  width: 100%;
+}
+
+.adaptive-gallery {
+  --gallery-gap: var(--space-sm);
+  --item-min-width: 280px;
+  --item-max-width: 1fr;
+
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(var(--item-min-width), 100%), var(--item-max-width))
+  );
+  gap: var(--gallery-gap);
+  padding: var(--space-md);
+
+  /* Prevent content reflow during transitions */
+  contain: layout style;
+}
+
+.gallery-item {
+  --item-radius: clamp(0.5rem, 0.375rem + 0.625vw, 1rem);
+
+  position: relative;
+  border-radius: var(--item-radius);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+
+  /* GPU acceleration for smooth animations */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.gallery-item__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(var(--palette-brand-dark-rgb), 0.9) 0%,
+    transparent 50%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-sm);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item__title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: white;
+  margin: 0;
+}
+
+.gallery-item__category {
+  font-size: var(--text-sm);
+  color: var(--color-accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Small containers: Stack layout */
+@container gallery (max-width: 400px) {
+  .adaptive-gallery {
+    --item-min-width: 100%;
+    --gallery-gap: var(--space-xs);
+  }
+
+  .gallery-item {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* Medium containers: 2 columns */
+@container gallery (min-width: 500px) and (max-width: 799px) {
+  .adaptive-gallery {
+    --item-min-width: 220px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Large containers: 3 columns */
+@container gallery (min-width: 800px) and (max-width: 1199px) {
+  .adaptive-gallery {
+    --item-min-width: 280px;
+    grid-template-columns: repeat(3, 1fr);
+    --gallery-gap: var(--space-md);
+  }
+}
+
+/* Extra large: 4+ columns */
+@container gallery (min-width: 1200px) {
+  .adaptive-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    --gallery-gap: var(--space-lg);
+  }
+}
+
+/* Ultra-wide / 4K+ displays */
+@container gallery (min-width: 2000px) {
+  .adaptive-gallery {
+    max-width: 2400px;
+    margin-inline: auto;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+}
+
+/* 8K support */
+@container gallery (min-width: 4000px) {
+  .adaptive-gallery {
+    max-width: 3840px;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    --gallery-gap: var(--space-xl);
+  }
+}
+
+/* Hover states - only for devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item:hover .gallery-item__image {
+    transform: scale(1.08);
+  }
+
+  .gallery-item:hover .gallery-item__overlay {
+    opacity: 1;
+  }
+}
+
+/* Touch devices - always show overlay */
+@media (pointer: coarse) {
+  .gallery-item__overlay {
+    opacity: 1;
+  }
+}
+
+/* Focus states for keyboard navigation */
+.gallery-item:focus-visible {
+  outline: 2px solid var(--color-accent-cyan);
+  outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-item__image,
+  .gallery-item__overlay {
+    transition: none;
+  }
+}
