@@ -9,7 +9,7 @@ import RevolucionDigitalText from '../assets/RevolucionDigital.svg';
 >
   <!-- Logo -->
   <div class="flex items-center">
-    <a href="#" class="flex items-center gap-3">
+    <a href="/" class="flex items-center gap-3">
       <img src={logo.src} alt="Logo" class="h-[50px] w-auto" />
       <img
         src={RevolucionDigitalText.src}
@@ -37,26 +37,27 @@ import RevolucionDigitalText from '../assets/RevolucionDigital.svg';
   <!-- Navegación Desktop -->
   <nav class="hidden items-center gap-8 lg:flex">
     <a
-      href="#concursos"
+      href="/concursos"
       class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
       >Concursos</a
     >
     <a
-      href="#galeria"
+      href="/galeria"
       class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
       >Galeria</a
     >
     <a
-      href="#perfiles"
+      href="/perfiles"
       class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
       >Perfiles</a
     >
     <a
-      href="#colaboraciones"
+      href="/colaboraciones"
       class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
       >Colaboraciones</a
     >
     <button
+      onclick="window.location.href = '/talentos'"
       class="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark rounded-lg border px-6 py-2.5 text-base font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)]"
     >
       Descubre Talentos
@@ -69,23 +70,24 @@ import RevolucionDigitalText from '../assets/RevolucionDigital.svg';
     class="bg-brand-dark absolute top-24 left-0 hidden w-full flex-col items-center gap-6 rounded-2xl p-6 shadow-xl lg:hidden"
   >
     <a
-      href="#concursos"
+      href="/concursos"
       class="text-text-secondary hover:text-accent-cyan text-lg">Concursos</a
     >
     <a
-      href="#galeria"
+      href="/galeria"
       class="text-text-secondary hover:text-accent-cyan text-lg">Galeria</a
     >
     <a
-      href="#perfiles"
+      href="/perfiles"
       class="text-text-secondary hover:text-accent-cyan text-lg">Perfiles</a
     >
     <a
-      href="#colaboraciones"
+      href="/colaboraciones"
       class="text-text-secondary hover:text-accent-cyan text-lg"
       >Colaboraciones</a
     >
     <button
+      onclick="window.location.href = '/otra-pagina'"
       class="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark w-full rounded-lg border py-3 text-lg font-semibold"
     >
       Descubre Talentos
