@@ -1,0 +1,41 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  href?: string;
+  logo?: string;
+}
+
+const { title, description, href = '#', logo } = Astro.props;
+---
+
+<article
+  class="group hover:border-accent-orange/40 relative rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_40px_-10px_rgba(99,102,241,0.4)]"
+>
+  <div class="flex items-center gap-4">
+    <div
+      class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-400"
+    >
+      {
+        logo ? (
+          <img src={logo} alt={`Logo`} class="h-6 w-auto" loading="lazy" />
+        ) : (
+          <span class="text-xs opacity-60">Logo</span>
+        )
+      }
+    </div>
+    <h3 class="text-lg font-semibold text-white">{title}</h3>
+  </div>
+
+  <p class="mt-4 text-sm leading-relaxed text-slate-300">
+    {description}
+  </p>
+
+  <a
+    href={href}
+    class="text-accent-orange group-hover:text-accent-orange/80 mt-6 inline-flex items-center gap-2 text-sm font-medium transition-all group-hover:gap-3"
+  >
+    Ver proyecto
+    <span aria-hidden="true">→</span>
+  </a>
+</article>

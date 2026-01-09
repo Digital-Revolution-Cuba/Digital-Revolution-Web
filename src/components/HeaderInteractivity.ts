@@ -37,7 +37,40 @@ export function initializeHeader(): () => void {
       'aria-expanded',
       (!shouldClose).toString(),
     );
+
     elements.mobileMenu!.setAttribute('aria-hidden', shouldClose.toString());
+
+    if (!shouldClose) {
+      // ABRIR
+      elements.mobileMenu!.classList.remove(
+        'opacity-0',
+        'invisible',
+        '-translate-y-4',
+        'pointer-events-none',
+      );
+      elements.mobileMenu!.classList.add(
+        'opacity-100',
+        'visible',
+        'translate-y-0',
+        'pointer-events-auto',
+      );
+      document.body.style.overflow = 'hidden';
+    } else {
+      // CERRAR
+      elements.mobileMenu!.classList.remove(
+        'opacity-100',
+        'visible',
+        'translate-y-0',
+        'pointer-events-auto',
+      );
+      elements.mobileMenu!.classList.add(
+        'opacity-0',
+        'invisible',
+        '-translate-y-4',
+        'pointer-events-none',
+      );
+      document.body.style.overflow = '';
+    }
 
     // Prevenir scroll cuando el menú está abierto
     document.body.style.overflow = shouldClose ? '' : 'hidden';
@@ -124,8 +157,8 @@ export function initializeHeader(): () => void {
 }
 
 // Auto-inicializar si el DOM está listo
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeHeader);
-} else {
-  initializeHeader();
-}
+// if (document.readyState === 'loading') {
+//   document.addEventListener('DOMContentLoaded', initializeHeader);
+// } else {
+//   initializeHeader();
+// }
