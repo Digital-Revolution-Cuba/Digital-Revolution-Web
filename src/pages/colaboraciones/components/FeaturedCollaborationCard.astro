@@ -10,7 +10,7 @@ const { title, description, href = '#', logo } = Astro.props;
 ---
 
 <article
-  class="group relative rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/40 hover:shadow-[0_0_40px_-10px_rgba(99,102,241,0.4)]"
+  class="group hover:border-accent-orange/40 relative rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_40px_-10px_rgba(99,102,241,0.4)]"
 >
   <div class="flex items-center gap-4">
     <div
@@ -33,7 +33,7 @@ const { title, description, href = '#', logo } = Astro.props;
 
   <a
     href={href}
-    class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-indigo-400 transition-all group-hover:gap-3 group-hover:text-indigo-300"
+    class="text-accent-orange group-hover:text-accent-orange/80 mt-6 inline-flex items-center gap-2 text-sm font-medium transition-all group-hover:gap-3"
   >
     Ver proyecto
     <span aria-hidden="true">→</span>
