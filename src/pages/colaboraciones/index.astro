@@ -1,7 +1,42 @@
 ---
-import Layout from "../../layouts/Layout.astro"
+import { Swiper, SwiperSlide } from 'astro-swiper';
+import Layout from '../../layouts/Layout.astro';
+import 'swiper/css'; // Importa los estilos básicos de Swiper
+import 'swiper/css/navigation'; // Opcional: para flechas
+import 'swiper/css/pagination';
+import { collaborations } from './data/colaboraciones';
+import FeaturedCollaborationCard from './components/FeaturedCollaborationCard.astro';
 ---
 
 <Layout>
-    <h1 style="text-align: center; margin-top: 200px; font-size: 30px;">Pagina de Colaboraciones</h1>
+  <section class="relative py-30">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="mb-14 max-w-xl">
+        <h1
+          class="mb-8 text-3xl font-black text-white drop-shadow-lg md:text-4xl"
+        >
+          COLABORACIONES<br />DESTACADAS
+        </h1>
+        <p class="mt-4 text-gray-300">
+          Proyectos y equipos con los que hemos trabajado creando soluciones
+          digitales sólidas y escalables.
+        </p>
+      </div>
+
+      <!-- Grid -->
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          collaborations.map((collab) => (
+            <FeaturedCollaborationCard
+              title={collab.name}
+              description={collab.description}
+              href={collab.url}
+              logo={collab.logo}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
 </Layout>
