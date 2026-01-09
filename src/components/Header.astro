@@ -10,11 +10,14 @@ const navLinks = [
 ];
 ---
 
-<header id="main-header" class="header-wrapper" role="banner">
-  <div class="header-container">
-    <!-- Logo -->
-    <a href="/" class="header-logo" aria-label="Ir al inicio">
-      <img src={logo.src} alt="" class="logo-icon" aria-hidden="true" />
+<header
+  id="main-header"
+  class="bg-brand-dark fixed top-[33px] right-0 left-0 z-50 mx-auto flex h-20 w-[95%] max-w-[1450px] items-center justify-between rounded-[40px] px-6 py-[7px] shadow-lg transition-transform duration-500 ease-in-out lg:px-[43px]"
+>
+  <!-- Logo -->
+  <div class="flex items-center">
+    <a href="/" class="flex items-center gap-3">
+      <img src={logo.src} alt="Logo" class="h-[50px] w-auto" />
       <img
         src={RevolucionDigitalText.src}
         alt="Revolución Digital"
@@ -22,13 +25,76 @@ const navLinks = [
       />
     </a>
 
-    <!-- Mobile Menu Toggle -->
+  <!-- Botón Menú Móvil (Hamburguesa) -->
+  <button
+    id="menu-toggle"
+    class="text-text-secondary hover:text-accent-cyan focus:outline-none lg:hidden"
+    aria-label="Abrir menú"
+  >
+    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+
+  <!-- Navegación Desktop -->
+  <nav class="hidden items-center gap-8 lg:flex">
+    <a
+      href="/concursos"
+      class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+      >Concursos</a
+    >
+    <a
+      href="/galeria"
+      class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+      >Galeria</a
+    >
+    <a
+      href="/perfiles"
+      class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+      >Perfiles</a
+    >
+    <a
+      href="/colaboraciones"
+      class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+      >Colaboraciones</a
+    >
     <button
-      id="menu-toggle"
-      class="menu-toggle"
-      aria-label="Abrir menú de navegación"
-      aria-expanded="false"
-      aria-controls="mobile-menu"
+      onclick="window.location.href = '/talentos'"
+      class="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark rounded-lg border px-6 py-2.5 text-base font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)]"
+    >
+      Descubre Talentos
+    </button>
+  </nav>
+
+  <!-- Menú Móvil (Desplegable) -->
+  <div
+    id="mobile-menu"
+    class="bg-brand-dark absolute top-24 left-0 hidden w-full flex-col items-center gap-6 rounded-2xl p-6 shadow-xl lg:hidden"
+  >
+    <a
+      href="/concursos"
+      class="text-text-secondary hover:text-accent-cyan text-lg">Concursos</a
+    >
+    <a
+      href="/galeria"
+      class="text-text-secondary hover:text-accent-cyan text-lg">Galeria</a
+    >
+    <a
+      href="/perfiles"
+      class="text-text-secondary hover:text-accent-cyan text-lg">Perfiles</a
+    >
+    <a
+      href="/colaboraciones"
+      class="text-text-secondary hover:text-accent-cyan text-lg"
+      >Colaboraciones</a
+    >
+    <button
+      onclick="window.location.href = '/otra-pagina'"
+      class="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark w-full rounded-lg border py-3 text-lg font-semibold"
     >
       <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
         <path

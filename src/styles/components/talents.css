@@ -1,0 +1,475 @@
+    /* ===== CSS Variables ===== */
+:root {
+  --background: hsl(195, 35%, 8%);
+  --foreground: hsl(0, 0%, 98%);
+  --card: hsl(195, 30%, 12%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --primary: hsl(175, 72%, 46%);
+  --primary-foreground: hsl(195, 35%, 8%);
+  --secondary: hsl(195, 25%, 18%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --muted: hsl(195, 20%, 20%);
+  --muted-foreground: hsl(195, 10%, 60%);
+  --accent: hsl(32, 100%, 55%);
+  --accent-foreground: hsl(195, 35%, 8%);
+  --border: hsl(195, 20%, 20%);
+  --radius: 0.75rem;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+.button-cta {
+    background: var(--palette-brand-navy, #002b38);
+    color: var(--palette-accent-orange, #f49624);
+    border: 2px solid var(--palette-accent-cyan, #34dfde);
+    border-radius: 0.5rem;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .button-cta:hover {
+    background: var(--palette-accent-cyan, #34dfde);
+    color: var(--palette-brand-dark, #011822);
+    box-shadow: 0 0 20px rgba(52, 223, 222, 0.4);
+  }
+
+
+
+/* ===== Utilities ===== */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary), hsl(185, 70%, 55%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, var(--primary), hsl(185, 70%, 55%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+
+
+
+/* ===== Section Styles ===== */
+.section-title {
+  font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-style: italic;
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-title {
+    font-size: 3.75rem;
+  }
+}
+
+.section-title-light {
+  color: var(--foreground);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .section-header {
+    margin-bottom: 4rem;
+  }
+}
+
+.section-description {
+  color: var(--muted-foreground);
+  font-size: 1.125rem;
+  max-width: 42rem;
+  margin: 1rem auto 0;
+}
+
+/* ===== Talents Section ===== */
+.talents-section {
+  padding: 5rem 0;
+}
+
+@media (min-width: 768px) {
+  .talents-section {
+    padding: 8rem 0;
+  }
+}
+
+.talents-search-bar {
+  position: relative;
+  max-width: 48rem;
+  margin: 0 auto 2rem;
+}
+
+.talents-search-bar .search-icon {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+}
+
+.talents-search-input {
+  width: 100%;
+  padding: 1rem 3.5rem;
+  border-radius: 1rem;
+  background: var(--secondary);
+  border: 2px solid transparent;
+  color: var(--foreground);
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.talents-search-input::placeholder {
+  color: var(--muted-foreground);
+}
+
+.talents-search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 30px rgba(20, 184, 166, 0.3);
+}
+
+.filter-btn {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.5rem;
+  border-radius: 5px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  transition: all 0.3s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+.filter-pill {
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  border: 2px solid;
+  transition: all 0.3s;
+}
+
+.filter-pill-active {
+  background: var(--accent);
+  color: var(--accent-foreground);
+  border-color: var(--accent);
+}
+
+.filter-pill-inactive {
+  background: transparent;
+  color: var(--accent);
+  border-color: rgba(249, 115, 22, 0.5);
+}
+
+.filter-pill-inactive:hover {
+  border-color: var(--accent);
+}
+
+.talents-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.results-count {
+  color: var(--muted-foreground);
+}
+
+.results-count span {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.sort-dropdown {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .sort-dropdown {
+    display: flex;
+  }
+}
+
+.sort-dropdown select {
+  background: var(--secondary);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.sort-dropdown select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.talents-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .talents-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .talents-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .talents-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== Talent Card ===== */
+.talent-card {
+  background: var(--card);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.talent-card:hover {
+  transform: scale(1.05);
+}
+
+.talent-card-image {
+  position: relative;
+  aspect-ratio: 4/5;
+  height: 400px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.talent-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s;
+}
+
+.talent-card:hover .talent-card-image img {
+  transform: scale(1.1);
+}
+
+.talent-card-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--background), rgba(0,0,0,0.2), transparent);
+}
+
+.featured-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(249, 115, 22, 0.9);
+  color: var(--accent-foreground);
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  z-index: 5;
+}
+
+.talent-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 5;
+}
+
+.talent-card:hover .talent-actions {
+  opacity: 1;
+}
+
+.action-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--background);
+  transition: all 0.3s;
+}
+
+.action-btn:hover {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.talent-card-content {
+  padding: 1.25rem;
+}
+
+.talent-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.talent-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+}
+
+.talent-role {
+  color: var(--primary);
+  font-size: 0.875rem;
+}
+
+.talent-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #fbbf24;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.talent-location {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.talent-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.skill-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(20, 184, 166, 0.2);
+  color: var(--primary);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+.talent-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.talent-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.view-profile-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: rgba(20, 184, 166, 0.1);
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.view-profile-btn:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.load-more {
+  text-align: center;
+  margin-top: 3rem;
+}
