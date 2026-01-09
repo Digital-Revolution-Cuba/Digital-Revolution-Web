@@ -10,14 +10,12 @@ const navLinks = [
 ];
 ---
 
-<header
-  id="main-header"
-  class="bg-brand-dark fixed top-[33px] right-0 left-0 z-50 mx-auto flex h-20 w-[95%] max-w-[1450px] items-center justify-between rounded-[40px] px-6 py-[7px] shadow-lg transition-transform duration-500 ease-in-out lg:px-[43px]"
->
-  <!-- Logo -->
-  <div class="flex items-center">
-    <a href="/" class="flex items-center gap-3">
-      <img src={logo.src} alt="Logo" class="h-[50px] w-auto" />
+<header id="main-header" class="header-wrapper" role="banner">
+  <div class="header-container">
+    <!-- Logo -->
+
+    <a href="/" class="header-logo" aria-label="Ir al inicio">
+      <img src={logo.src} alt="" class="logo-icon" aria-hidden="true" />
       <img
         src={RevolucionDigitalText.src}
         alt="Revolución Digital"
@@ -25,124 +23,100 @@ const navLinks = [
       />
     </a>
 
-  <!-- Botón Menú Móvil (Hamburguesa) -->
-  <button
-    id="menu-toggle"
-    class="text-text-secondary hover:text-accent-cyan focus:outline-none lg:hidden"
-    aria-label="Abrir menú"
-  >
-    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M4 6h16M4 12h16M4 18h16"></path>
-    </svg>
-  </button>
-
-  <!-- Navegación Desktop -->
-  <nav class="hidden items-center gap-8 lg:flex">
-    <a
-      href="/concursos"
-      class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
-      >Concursos</a
-    >
-    <a
-      href="/galeria"
-      class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
-      >Galeria</a
-    >
-    <a
-      href="/perfiles"
-      class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
-      >Perfiles</a
-    >
-    <a
-      href="/colaboraciones"
-      class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
-      >Colaboraciones</a
-    >
+    <!-- Botón Menú Móvil (Hamburguesa) -->
     <button
-      onclick="window.location.href = '/talentos'"
-      class="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark rounded-lg border px-6 py-2.5 text-base font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)]"
+      id="menu-toggle"
+      class="text-text-secondary hover:text-accent-cyan focus:outline-none lg:hidden"
+      aria-label="Abrir menú"
     >
-      Descubre Talentos
-    </button>
-  </nav>
-
-  <!-- Menú Móvil (Desplegable) -->
-  <div
-    id="mobile-menu"
-    class="bg-brand-dark absolute top-24 left-0 hidden w-full flex-col items-center gap-6 rounded-2xl p-6 shadow-xl lg:hidden"
-  >
-    <a
-      href="/concursos"
-      class="text-text-secondary hover:text-accent-cyan text-lg">Concursos</a
-    >
-    <a
-      href="/galeria"
-      class="text-text-secondary hover:text-accent-cyan text-lg">Galeria</a
-    >
-    <a
-      href="/perfiles"
-      class="text-text-secondary hover:text-accent-cyan text-lg">Perfiles</a
-    >
-    <a
-      href="/colaboraciones"
-      class="text-text-secondary hover:text-accent-cyan text-lg"
-      >Colaboraciones</a
-    >
-    <button
-      onclick="window.location.href = '/otra-pagina'"
-      class="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark w-full rounded-lg border py-3 text-lg font-semibold"
-    >
-      <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <svg
+        class="h-8 w-8"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
         <path
-          class="menu-icon-open"
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="2"
           d="M4 6h16M4 12h16M4 18h16"></path>
-        <path
-          class="menu-icon-close"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M6 18L18 6M6 6l12 12"></path>
       </svg>
     </button>
 
-    <!-- Navigation Desktop -->
-    <nav id="main-nav" class="header-nav" aria-label="Navegación principal">
-      <ul class="nav-list" role="list">
-        {
-          navLinks.map(({ href, label }) => (
-            <li>
-              <a href={href} class="nav-link">
-                {label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-      <button class="nav-cta"> Descubre Talentos </button>
+    <!-- Navegación Desktop -->
+    <nav class="hidden items-center gap-8 lg:flex">
+      <a
+        href="/concursos"
+        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+        >Concursos</a
+      >
+      <a
+        href="/galeria"
+        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+        >Galeria</a
+      >
+      <a
+        href="/perfiles"
+        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+        >Perfiles</a
+      >
+      <a
+        href="/colaboraciones"
+        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+        >Colaboraciones</a
+      >
+      <button
+        onclick="window.location.href = '/talentos'"
+        class="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark rounded-lg border px-6 py-2.5 text-base font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)]"
+      >
+        Descubre Talentos
+      </button>
     </nav>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <!-- Menú Móvil (Desplegable) -->
+    <div
+      id="mobile-menu"
+      class="bg-brand-dark pointer-events-none invisible absolute top-full right-0 left-0 mt-4 w-full -translate-y-4 rounded-2xl p-6 opacity-0 shadow-2xl transition-all duration-300 ease-out lg:hidden"
+      aria-hidden="true"
+    >
+      <!-- Tus links y botón aquí -->
       <nav aria-label="Navegación móvil">
-        <ul class="mobile-nav-list" role="list">
-          {
-            navLinks.map(({ href, label }) => (
-              <li>
-                <a href={href} class="mobile-nav-link">
-                  {label}
-                </a>
-              </li>
-            ))
-          }
+        <ul class="flex flex-col items-center gap-6">
+          <li>
+            <a
+              href="#concursos"
+              class="text-text-secondary hover:text-accent-cyan text-lg"
+              >Concursos</a
+            >
+          </li>
+          <li>
+            <a
+              href="#galeria"
+              class="text-text-secondary hover:text-accent-cyan text-lg"
+              >Galeria</a
+            >
+          </li>
+          <li>
+            <a
+              href="#perfiles"
+              class="text-text-secondary hover:text-accent-cyan text-lg"
+              >Perfiles</a
+            >
+          </li>
+          <li>
+            <a
+              href="#colaboraciones"
+              class="text-text-secondary hover:text-accent-cyan text-lg"
+              >Colaboraciones</a
+            >
+          </li>
         </ul>
-        <button class="mobile-nav-cta"> Descubre Talentos </button>
+        <button
+          onclick="window.location.href = '#talentos'"
+          class="bg-brand-navy text-accent-orange hover:bg-accent-cyan hover:text-brand-dark mt-8 w-full max-w-xs rounded-lg px-8 py-4 text-lg font-semibold transition-all"
+        >
+          Descubre Talentos
+        </button>
       </nav>
     </div>
   </div>
@@ -429,6 +403,30 @@ const navLinks = [
 </style>
 
 <script>
+  import { initializeHeader } from './HeaderInteractivity';
+
+  let cleanup = () => {};
+
+  const initHeader = () => {
+    cleanup(); // Limpia listeners de navegación anterior (importante con View Transitions)
+    cleanup = initializeHeader();
+  };
+
+  // Ejecuta al cargar la página por primera vez
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeader);
+  } else {
+    initHeader();
+  }
+
+  // Re-ejecuta en cada navegación con View Transitions (Astro's SPA mode)
+  document.addEventListener('astro:page-load', initHeader);
+
+  // Cleanup global al salir de la página (opcional pero buena práctica)
+  document.addEventListener('astro:before-swap', () => cleanup());
+</script>
+
+<!-- <script>
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const header = document.getElementById('main-header');
@@ -490,4 +488,4 @@ const navLinks = [
     },
     { passive: true }
   );
-</script>
+</script> -->
