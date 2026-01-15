@@ -110,7 +110,7 @@ export function InputSearchGallery({ images, searchAuthor, setSearchAuthor, filt
             }
           }
           .section-title {
-          font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+          font-family: Impact, 'Arial Black', sans-serif;
           font-weight: 700;
           font-style: italic;
           }
