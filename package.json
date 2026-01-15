@@ -20,9 +20,13 @@
     "lucide-react": "^0.562.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "react-measure": "^2.5.2",
+    "react-responsive-masonry": "^2.7.1",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
+    "@types/react-measure": "^2.0.12",
+    "@types/react-responsive-masonry": "^2.7.0",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.14"
