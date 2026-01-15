@@ -91,7 +91,7 @@ Plataforma web de la comunidad **Revolución Digital Cuba** que conecta y muestr
 - **Performance:** Core Web Vitals optimizados (LCP < 2.5s, CLS < 0.1)
 - **Accesibilidad:** WCAG 2.2 AA compliance
 - **SEO:** Meta tags OpenGraph + Twitter Cards
-- **Escalabilidad:** Arquitectura preparada para headless CMS (WordPress)
+- **Escalabilidad:** Arquitectura preparada para headless CMS / backend (futuro)
 
 ### URLs del Proyecto
 
@@ -135,9 +135,9 @@ Plataforma web de la comunidad **Revolución Digital Cuba** que conecta y muestr
 ├─────────────────────────────────────────────────────────────────────┤
 │                       FUTURE: BACKEND INTEGRATION                    │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐     │
-│  │  WordPress  │  │   REST API  │  │       Database          │     │
-│  │  (Headless) │  │   GraphQL   │  │      (PostgreSQL)       │     │
-│  │   TODO      │  │    TODO     │  │         TODO            │     │
+│  │ Headless CMS│  │   REST API  │  │       Database          │     │
+│  │ / Backend   │  │   GraphQL   │  │      (PostgreSQL)       │     │
+│  │  (Futuro)   │  │    TODO     │  │         TODO            │     │
 │  └─────────────┘  └─────────────┘  └─────────────────────────┘     │
 │                                                                      │
 └─────────────────────────────────────────────────────────────────────┘
@@ -620,14 +620,14 @@ Actualmente el proyecto usa **datos estáticos** definidos en `/src/data/`.
 #   - GET /api/colaboraciones
 ```
 
-### Integración WordPress Headless (Futuro)
+### Integración Headless (Futuro)
 
 ```typescript
-// TODO: Implementar fetching de WordPress
-// src/lib/wordpress.ts
+// Ejemplo genérico de integración con backend
+// src/lib/backend.ts
 
 export async function getGalleryItems() {
-  const response = await fetch(`${WP_API_URL}/wp-json/wp/v2/gallery`);
+  const response = await fetch(`${API_URL}/api/gallery`);
   return response.json();
 }
 ```
@@ -643,11 +643,11 @@ export async function getGalleryItems() {
 - [x] CI/CD con GitHub Actions
 - [x] Deploy en Vercel
 
-### Fase 2: Headless CMS
+### Fase 2: Headless CMS / Backend (por definir)
 
-- [ ] Integrar WordPress como CMS
+- [ ] Integrar headless CMS o backend propio
 - [ ] Configurar regeneración ISR/SSR
-- [ ] Crear custom post types
+- [ ] Crear custom post types (si aplica)
 
 ### Fase 3: API Propia
 
@@ -748,7 +748,7 @@ pnpm astro sync
 ### Integraciones
 
 ```markdown
-<!-- TODO: Integrar WordPress headless CMS -->
+<!-- TODO: Integrar headless CMS / backend -->
 <!-- TODO: Configurar Sentry para error tracking -->
 <!-- TODO: Añadir analytics (Plausible/Umami) -->
 ```
