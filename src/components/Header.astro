@@ -1,6 +1,13 @@
 ---
 import logo from '../assets/LogoRevolucionDigital.svg';
 import RevolucionDigitalText from '../assets/RevolucionDigital.svg';
+
+const navLinks = [
+  { href: '#concursos', label: 'Concursos' },
+  { href: '#galeria', label: 'Galeria' },
+  { href: '#perfiles', label: 'Perfiles' },
+  { href: '#colaboraciones', label: 'Colaboraciones' },
+];
 ---
 
 <header
@@ -14,10 +21,9 @@ import RevolucionDigitalText from '../assets/RevolucionDigital.svg';
       <img
         src={RevolucionDigitalText.src}
         alt="Revolución Digital"
-        class="hidden h-[48px] w-[143px] lg:block"
+        class="logo-text"
       />
     </a>
-  </div>
 
   <!-- Botón Menú Móvil (Hamburguesa) -->
   <button
@@ -90,58 +96,398 @@ import RevolucionDigitalText from '../assets/RevolucionDigital.svg';
       onclick="window.location.href = '/otra-pagina'"
       class="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark w-full rounded-lg border py-3 text-lg font-semibold"
     >
-      Descubre Talentos
+      <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          class="menu-icon-open"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+        <path
+          class="menu-icon-close"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
     </button>
+
+    <!-- Navigation Desktop -->
+    <nav id="main-nav" class="header-nav" aria-label="Navegación principal">
+      <ul class="nav-list" role="list">
+        {
+          navLinks.map(({ href, label }) => (
+            <li>
+              <a href={href} class="nav-link">
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <button class="nav-cta"> Descubre Talentos </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+      <nav aria-label="Navegación móvil">
+        <ul class="mobile-nav-list" role="list">
+          {
+            navLinks.map(({ href, label }) => (
+              <li>
+                <a href={href} class="mobile-nav-link">
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <button class="mobile-nav-cta"> Descubre Talentos </button>
+      </nav>
+    </div>
   </div>
 </header>
+
+<style>
+  .header-wrapper {
+    --header-height: clamp(60px, 8vw, 80px);
+    --header-padding-x: clamp(1rem, 3vw, 2.5rem);
+    --header-radius: clamp(1.5rem, 3vw, 2.5rem);
+    --header-top: clamp(1rem, 2vw, 2rem);
+
+    position: fixed;
+    top: var(--header-top);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    width: min(95%, 1450px);
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+    padding-inline: var(--header-padding-x);
+    background: var(--color-brand-dark);
+    border-radius: var(--header-radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Logo */
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 1.5vw, 0.75rem);
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    height: clamp(36px, 6vw, 50px);
+    width: auto;
+  }
+
+  .logo-text {
+    height: clamp(32px, 5vw, 48px);
+    width: auto;
+    display: none;
+  }
+
+  /* Menu Toggle */
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-accent-cyan);
+    transition: color 0.3s ease;
+  }
+
+  .menu-toggle:focus-visible {
+    outline: 2px solid var(--color-accent-cyan);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+
+  .menu-icon {
+    width: 28px;
+    height: 28px;
+    stroke: currentColor;
+    fill: none;
+  }
+
+  .menu-icon-close {
+    display: none;
+  }
+
+  .menu-toggle[aria-expanded='true'] .menu-icon-open {
+    display: none;
+  }
+
+  .menu-toggle[aria-expanded='true'] .menu-icon-close {
+    display: block;
+  }
+
+  /* Desktop Navigation - Hidden on mobile */
+  .header-nav {
+    display: none;
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    right: 0;
+    background: var(--color-brand-dark);
+    border-radius: 1.5rem;
+    padding: var(--space-md);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .mobile-menu[aria-hidden='false'] {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mobile-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    padding: var(--space-sm);
+    font-size: var(--text-lg);
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border-radius: 0.75rem;
+    min-height: var(--touch-target-comfortable);
+    transition:
+      color 0.3s ease,
+      background 0.3s ease;
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link:focus {
+    color: var(--color-accent-cyan);
+    background: rgba(52, 223, 222, 0.1);
+  }
+
+  .mobile-nav-cta {
+    width: 100%;
+    margin-top: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    min-height: var(--touch-target-comfortable);
+    background: var(--color-brand-navy);
+    border: 2px solid var(--color-accent-cyan);
+    border-radius: 0.75rem;
+    color: var(--color-accent-orange);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-nav-cta:hover,
+  .mobile-nav-cta:focus {
+    background: var(--color-accent-cyan);
+    color: var(--color-brand-dark);
+  }
+
+  /* ===========================
+     Tablet Breakpoint (768px+)
+     =========================== */
+  @media (min-width: 768px) {
+    .logo-text {
+      display: block;
+    }
+  }
+
+  /* ===========================
+     Desktop Breakpoint (1024px+)
+     =========================== */
+  @media (min-width: 1024px) {
+    .menu-toggle {
+      display: none;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .nav-list {
+      display: flex;
+      align-items: center;
+      gap: clamp(1rem, 2vw, 2rem);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 0.5rem 0;
+      font-size: var(--text-base);
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--color-accent-cyan);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus {
+      color: var(--color-accent-cyan);
+    }
+
+    .nav-link:hover::after,
+    .nav-link:focus::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: clamp(0.5rem, 1vw, 0.625rem) clamp(1rem, 2vw, 1.5rem);
+      background: var(--color-brand-navy);
+      border: 1px solid var(--color-brand-navy);
+      border-radius: 0.5rem;
+      color: var(--color-accent-orange);
+      font-size: var(--text-base);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover,
+    .nav-cta:focus {
+      background: var(--color-accent-cyan);
+      color: var(--color-brand-dark);
+      box-shadow: 0 0 15px rgba(52, 223, 222, 0.4);
+    }
+  }
+
+  /* ===========================
+     Large Desktop (1280px+)
+     =========================== */
+  @media (min-width: 1280px) {
+    .header-nav {
+      gap: 2.5rem;
+    }
+
+    .nav-list {
+      gap: 2rem;
+    }
+  }
+
+  /* ===========================
+     Reduced Motion
+     =========================== */
+  @media (prefers-reduced-motion: reduce) {
+    .header-wrapper,
+    .mobile-menu,
+    .nav-link::after,
+    .mobile-nav-link,
+    .nav-cta,
+    .mobile-nav-cta {
+      transition: none;
+    }
+  }
+</style>
 
 <script>
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const header = document.getElementById('main-header');
-  let lastScrollY = window.scrollY;
 
-  // Toggle Menú Móvil
   if (menuToggle && mobileMenu) {
     menuToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      mobileMenu.classList.toggle('flex');
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', (!isExpanded).toString());
+      mobileMenu.setAttribute('aria-hidden', isExpanded.toString());
+    });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (
+        e.key === 'Escape' &&
+        menuToggle.getAttribute('aria-expanded') === 'true'
+      ) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        menuToggle.focus();
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!header?.contains(e.target as Node)) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+      }
     });
   }
 
-  // Lógica de Scroll para ocultar/mostrar header
-  window.addEventListener('scroll', () => {
-    if (!header) return;
+  // Hide header on scroll down, show on scroll up
+  let lastScrollY = window.scrollY;
+  let ticking = false;
 
+  function updateHeader() {
     const currentScrollY = window.scrollY;
-    const isScrollingDown = currentScrollY > lastScrollY;
-    const isScrolledPastThreshold = currentScrollY > 50; // Umbral para evitar parpadeo arriba
 
-    if (isScrollingDown && isScrolledPastThreshold) {
-      // Ocultar header (mover hacia arriba más allá de su altura y posición)
-      header.classList.add('-translate-y-[250%]');
-
-      // Cerrar menú móvil si está abierto para evitar que quede flotando
-      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-        mobileMenu.classList.add('hidden');
-        mobileMenu.classList.remove('flex');
+    if (header) {
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        header.style.transform = 'translateX(-50%) translateY(-150%)';
+      } else {
+        header.style.transform = 'translateX(-50%) translateY(0)';
       }
-    } else {
-      // Mostrar header
-      header.classList.remove('-translate-y-[250%]');
     }
 
     lastScrollY = currentScrollY;
-  });
+    ticking = false;
+  }
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
 </script>
-
-<style>
-  a {
-    text-decoration: none;
-  }
-
-  /* Aseguramos que el botón mantenga sus estilos base si Tailwind falla o para especificidad */
-  button {
-    cursor: pointer;
-  }
-</style>

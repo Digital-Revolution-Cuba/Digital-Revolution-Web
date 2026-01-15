@@ -9,14 +9,14 @@ const { item } = Astro.props;
 ---
 
 <div
-  class="gallery-item arte-item relative flex-shrink-0 overflow-hidden rounded-[25px]"
+  class="gallery-item arte-item relative shrink-0 overflow-hidden rounded-[25px]"
   style="width: 285px; padding-left: 8px; padding-right: 8px;"
   data-category="arte"
 >
   <img
     src={item.image}
     alt={item.title}
-    class="h-[440px] w-[269px] rounded-[25px] object-cover shadow-md transition duration-300"
+    class="min-h-110 w-full rounded-[25px] object-cover shadow-md transition duration-300"
     loading="lazy"
   />
   <div class="artist-overlay">
@@ -26,7 +26,7 @@ const { item } = Astro.props;
     </div>
   </div>
   <div class="image-overlay" aria-hidden="true"></div>
-  <div class="shine-effect" aria-hidden="true"></div>
+  <div aria-hidden="true"></div>
 </div>
 
 <style>
@@ -37,12 +37,11 @@ const { item } = Astro.props;
     width: 100%;
     height: 100%;
     opacity: 0;
-    background: var(--gradient-shine-cyan); /* usar token desde global.css */
+    background: var(--gradient-shine-cyan);
     transform: translate3d(-100%, 0, 0);
     pointer-events: none;
     z-index: 2;
 
-    /* performance*/
     will-change: transform, opacity;
     backface-visibility: hidden;
     transition:
@@ -55,7 +54,11 @@ const { item } = Astro.props;
     transform: translate3d(100%, 0, 0);
   }
 
-  /* overlay simula el filter (más barato) - ajusté opacidad para coincidir con el diseño original */
+  /* Allow arte cards to show bottoms and shadows (fix clipping) */
+  .gallery-item.arte-item {
+    overflow: visible !important;
+  }
+
   .image-overlay {
     position: absolute;
     top: 0;
@@ -70,22 +73,32 @@ const { item } = Astro.props;
   }
 
   .gallery-item:hover .image-overlay {
-    opacity: 0; /* al hover la imagen "sube" a brightness 1 */
+    opacity: 0;
   }
 
-  /* Overlay amarillo con información del artista */
+  /* ensure sizing includes borders/padding and images fill the card cleanly */
+  .gallery-item {
+    box-sizing: border-box;
+    /* Make container height match the image's rendered height */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gallery-item img {
+    display: block;
+    width: 100%;
+    height: calc(
+
+    ); /* Let image determine its own height based on aspect ratio */
+    min-height: 440px; /* Maintain minimum height */
+    object-fit: cover;
+  }
+
   .artist-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(
-      255,
-      201,
-      67,
-      0.95
-    ); /* var(--palette-accent-yellow) con alta opacidad */
+    /* Use inset to cover the exact area of the parent container */
+    inset: 0;
+    background: rgba(255, 201, 67, 0.95);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,6 +107,7 @@ const { item } = Astro.props;
     z-index: 3;
     transition: opacity 0.3s ease;
     border-radius: 25px;
+    padding: 30px 20px;
   }
 
   .gallery-item:hover .artist-overlay {
@@ -102,7 +116,8 @@ const { item } = Astro.props;
 
   .artist-info {
     text-align: center;
-    padding: 20px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .artist-name {
@@ -124,7 +139,6 @@ const { item } = Astro.props;
     line-height: 1.3;
   }
 
-  /* restaurado: zoom sutil en hover (transform = GPU-friendly) */
   .gallery-item img {
     filter: brightness(0.95);
     transition: filter 0.3s;
@@ -132,6 +146,52 @@ const { item } = Astro.props;
 
   .gallery-item:hover img {
     filter: brightness(1);
-    transform: scale(1.03);
+    transform: scale(1);
+  }
+
+  /* Responsive sizing - mantener proporciones */
+  @media (max-width: 640px) {
+    .gallery-item {
+      width: calc(100vw - 80px) !important;
+      max-width: 285px !important;
+    }
+    .gallery-item img {
+      min-height: 380px; /* Use min-height instead of height to allow growth */
+    }
+    .artist-name {
+      font-size: 1.75rem;
+    }
+    .artist-role {
+      font-size: 0.875rem;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+    .gallery-item {
+      width: calc((100vw - 100px) / 2) !important;
+      max-width: 285px !important;
+    }
+    .artist-name {
+      font-size: 2rem;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1023px) {
+    .gallery-item {
+      width: calc((100vw - 120px) / 3) !important;
+      max-width: 285px !important;
+    }
+    .artist-name {
+      font-size: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-item {
+      width: 285px !important;
+    }
+    .artist-name {
+      font-size: 3rem;
+    }
   }
 </style>
