@@ -23,6 +23,6 @@ const images = await fetchImages()
 ---
 
 <Layout>
-    <HeroSection client:only/>
+    <HeroSection client:only="react" />
     <GalleryGrid client:only="react" images={images}></GalleryGrid>
 </Layout>
