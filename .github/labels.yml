@@ -1,0 +1,81 @@
+# Label mappings for issue-orchestrator agent
+# Format: key: label-name
+
+severity:
+  critical: severity:critical
+  high: severity:high
+  medium: severity:medium
+  low: severity:low
+  trivial: severity:trivial
+
+types:
+  bug: bug
+  enhancement: enhancement
+  security: security
+  performance: performance
+  refactor: refactor
+  docs: documentation
+  infra: infrastructure
+  ci: ci
+
+defaults:
+  - needs-triage
+
+# Full label definitions (for reference)
+# These should match labels configured in GitHub repository settings
+labels:
+  - name: severity:critical
+    description: Critical issue requiring immediate attention
+    color: "b60205"
+  
+  - name: severity:high
+    description: High priority issue
+    color: "d93f0b"
+  
+  - name: severity:medium
+    description: Medium priority issue
+    color: "fbca04"
+  
+  - name: severity:low
+    description: Low priority issue
+    color: "0e8a16"
+  
+  - name: severity:trivial
+    description: Trivial issue with minimal impact
+    color: "c2e0c6"
+  
+  - name: bug
+    description: Something isn't working correctly
+    color: "d73a4a"
+  
+  - name: enhancement
+    description: New feature or request
+    color: "a2eeef"
+  
+  - name: security
+    description: Security vulnerability or concern
+    color: "b60205"
+  
+  - name: performance
+    description: Performance optimization needed
+    color: "fbca04"
+  
+  - name: refactor
+    description: Code refactoring without changing behavior
+    color: "fef2c0"
+  
+  - name: documentation
+    description: Documentation improvements needed
+    color: "0075ca"
+  
+  - name: infrastructure
+    description: Infrastructure or deployment related
+    color: "5319e7"
+  
+  - name: ci
+    description: Continuous Integration related
+    color: "bfdadc"
+  
+  - name: needs-triage
+    description: Needs initial review and prioritization
+    color: "d4c5f9"
