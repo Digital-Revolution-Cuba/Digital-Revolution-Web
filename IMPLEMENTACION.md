@@ -379,6 +379,7 @@ Se implementó exitosamente un **sistema de diseño responsive empresarial** sig
 ## 🤖 Issue Agent Workflow
 
 ### Propósito
+
 Sistema de gestión de issues que **NO ejecuta automáticamente** comandos. El agente solo genera scripts para revisión y ejecución manual.
 
 ### Flujo de Trabajo
