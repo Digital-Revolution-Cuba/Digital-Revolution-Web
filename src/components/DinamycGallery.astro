@@ -92,7 +92,7 @@ const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
         const nextBtn = document.getElementById('nextBtn');
         const slider = document.getElementById('imageSlider');
         const buttonsContainer = document.querySelector(
-          '[data-category-buttons]'
+          '[data-category-buttons]',
         );
 
         if (!prevBtn || !nextBtn || !slider || !buttonsContainer) {
@@ -105,7 +105,7 @@ const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
           slider,
           prevBtn,
           nextBtn,
-          totalImages
+          totalImages,
         );
 
         const cleanupSlider = gallerySlider.initialize();
@@ -122,7 +122,7 @@ const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
                 setTimeout(initializeMusicPlayers, 100);
               }
             },
-          }
+          },
         );
 
         const cleanupCategory = categorySwitch.initialize('arte');
