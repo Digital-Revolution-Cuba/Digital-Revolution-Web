@@ -1,20 +1,24 @@
 import { Search, X } from 'lucide-react';
 import { useMemo } from 'react';
 
-export function InputSearchGallery({ images, searchAuthor, setSearchAuthor, filteredImages, handleClearSearch }: {
-    images: Array<any>;
-    searchAuthor: string;
-    setSearchAuthor: (author: string) => void;
-    filteredImages: Array<any>;
-    handleClearSearch: () => void;
+export function InputSearchGallery({
+  images,
+  searchAuthor,
+  setSearchAuthor,
+  filteredImages,
+  handleClearSearch,
+}: {
+  images: Array<any>;
+  searchAuthor: string;
+  setSearchAuthor: (author: string) => void;
+  filteredImages: Array<any>;
+  handleClearSearch: () => void;
 }) {
+  const uniqueAuthors = useMemo(() => {
+    return Array.from(new Set(images.map((img) => img.author)));
+  }, [images]);
 
-  
-    const uniqueAuthors = useMemo(() => {
-        return Array.from(new Set(images.map((img) => img.author)));
-    }, [images]);
-
-    return (
+  return (
     <>
       <div className="mb-16 text-center">
         <h1 className="font-impact section-title mb-6 text-5xl font-black italic md:text-6xl lg:text-7xl">
@@ -52,7 +56,7 @@ export function InputSearchGallery({ images, searchAuthor, setSearchAuthor, filt
                 <button
                   key={author}
                   onClick={() => setSearchAuthor(author)}
-                  className="border-opacity-50 hover:border-opacity-100 rounded-full border-2 border-orange-500 bg-transparent px-5 py-2.5 font-medium text-orange-500 transition-all duration-300 hover:border-orange-500 hover:bg-orange-500/20 hover:text-orange-100 cursor-pointer"
+                  className="border-opacity-50 hover:border-opacity-100 cursor-pointer rounded-full border-2 border-orange-500 bg-transparent px-5 py-2.5 font-medium text-orange-500 transition-all duration-300 hover:border-orange-500 hover:bg-orange-500/20 hover:text-orange-100"
                   style={{
                     animation: `fadeInUp 0.5s ease-out forwards`,
                     animationDelay: `${index * 0.05}s`,
@@ -117,6 +121,6 @@ export function InputSearchGallery({ images, searchAuthor, setSearchAuthor, filt
 
         `}</style>
       </div>
-      </>
-    )
+    </>
+  );
 }

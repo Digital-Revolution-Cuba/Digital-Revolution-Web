@@ -18,7 +18,9 @@ interface SelectedImage {
 
 export function GalleryGrid({ images }: Gallery) {
   const [searchAuthor, setSearchAuthor] = useState('');
-  const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(null);
+  const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(
+    null,
+  );
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Get unique authors for filter suggestions
@@ -82,7 +84,7 @@ export function GalleryGrid({ images }: Gallery) {
                     className="group w-full cursor-pointer overflow-hidden rounded-lg"
                     onClick={() => openModal(img)}
                   >
-                    <div className="relative overflow-hidden group">
+                    <div className="group relative overflow-hidden">
                       <img
                         src={img.download_url}
                         alt={img.author}
@@ -132,23 +134,24 @@ export function GalleryGrid({ images }: Gallery) {
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            
-            <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-[var(--color-brand-background-global)] px-6 py-4 backdrop-blur-sm">
-              <h2 className="text-white text-lg font-semibold">{selectedImage.author}</h2>
+            <div className="absolute top-0 right-0 left-0 z-10 flex items-center justify-between bg-[var(--color-brand-background-global)] px-6 py-4 backdrop-blur-sm">
+              <h2 className="text-lg font-semibold text-white">
+                {selectedImage.author}
+              </h2>
               <button
                 onClick={closeModal}
-                className="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white/10 hover:bg-white/20 transition-colors duration-200"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-colors duration-200 hover:bg-white/20"
               >
                 <X className="h-6 w-6 text-white" />
               </button>
             </div>
 
             {/* Image Container */}
-            <div className="h-full w-full pt-16 pb-4 px-4 flex items-center justify-center bg-[var(--color-brand-background-global)]">
+            <div className="flex h-full w-full items-center justify-center bg-[var(--color-brand-background-global)] px-4 pt-16 pb-4">
               <img
                 src={selectedImage.download_url}
                 alt={selectedImage.author}
-                className="h-full w-full object-contain rounded-lg"
+                className="h-full w-full rounded-lg object-contain"
               />
             </div>
           </div>

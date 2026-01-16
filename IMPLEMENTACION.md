@@ -376,4 +376,70 @@ Se implementó exitosamente un **sistema de diseño responsive empresarial** sig
 
 ---
 
+## 🤖 Issue Agent Workflow
+
+### Propósito
+
+Sistema de gestión de issues que **NO ejecuta automáticamente** comandos. El agente solo genera scripts para revisión y ejecución manual.
+
+### Flujo de Trabajo
+
+```mermaid
+graph LR
+    A[deficiences.md] --> B[Invocación Manual]
+    B --> C[issue-orchestrator.agent.md]
+    C --> D[output.md]
+    D --> E[Revisión Humana]
+    E --> F[Ejecución Manual]
+    F --> G[Issues Creados]
+```
+
+### Archivos Clave
+
+1. **Input**: [.github/auto-issue/deficiences.md](.github/auto-issue/deficiences.md)
+   - Archivo fuente con deficiencias detectadas
+   - Formato estructurado: descripción, argumentos, solución
+
+2. **Agent**: [.github/agents/issue-orchestrator.agent.md](.github/agents/issue-orchestrator.agent.md)
+   - Se ejecuta **solo cuando el usuario invoca** "crea las issues"
+   - Lee deficiences.md y genera comandos `gh issue create`
+   - **NO ejecuta** ningún comando del sistema
+
+3. **Output**: [.github/auto-issue/output.md](.github/auto-issue/output.md)
+   - Comandos listos para ejecutar
+   - Requiere revisión humana antes de ejecución
+
+4. **Labels**: [.github/labels.yml](.github/labels.yml)
+   - Mapping de severidad → labels
+   - Lista de labels permitidos
+
+5. **Template**: [.github/ISSUE_TEMPLATE/bug-report.md](.github/ISSUE_TEMPLATE/bug-report.md)
+   - Plantilla unificada para bugs y enhancements
+
+### Restricciones
+
+- ❌ **NO hay workflows automáticos** que creen issues
+- ❌ **NO hay scripts que se ejecuten en CI/CD**
+- ❌ **NO hay auto-triggers** de ningún tipo
+- ✅ **Solo invocación manual** desde Copilot/Chat
+- ✅ **Máximo 20 issues** por ejecución
+
+### Uso
+
+1. Usuario invoca desde Copilot/Chat: **"crea las issues"**
+2. Agente lee `.github/auto-issue/deficiences.md`
+3. Agente genera `.github/auto-issue/output.md`
+4. Usuario revisa y edita `output.md` si es necesario
+5. Usuario ejecuta manualmente: `bash .github/auto-issue/output.md`
+6. Usuario verifica issues creados en GitHub UI
+
+### Archivos Deshabilitados
+
+Los siguientes archivos fueron movidos a [.github/disabled/](.github/disabled/) para evitar ejecución automática:
+
+- `.github/workflows/auto-issues.yml` - Workflow que creaba issues automáticamente
+- `.github/auto-issue/create-issues.sh` - Script de creación automática
+
+---
+
 _Implementado el 17 de diciembre de 2025_

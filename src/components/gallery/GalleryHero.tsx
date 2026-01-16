@@ -31,9 +31,7 @@ export function HeroSection() {
         <div className="hero__layout">
           {/* Left */}
           <div className="hero__left">
-            <h1 className="hero__title hero__title-primary">
-              GALERÍA
-            </h1>
+            <h1 className="hero__title hero__title-primary">GALERÍA</h1>
 
             <p className="hero__description">
               Descubre obras únicas de creativos excepcionales. Conecta con
