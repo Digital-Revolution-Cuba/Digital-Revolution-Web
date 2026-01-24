@@ -40,7 +40,17 @@ const imageSrc = typeof src === 'string' ? src : src.src;
 // Check if using Astro's image optimization (local images)
 const isOptimizedImage = typeof src !== 'string';
 
-// Generate srcset for different widths (for external images or custom handling)
+// Use actual image dimensions if available from metadata
+const imageWidth = typeof src !== 'string' && src.width ? src.width : 800;
+const imageHeight = typeof src !== 'string' && src.height ? src.height : 0;
+
+// Calculate dimensions for width/height attributes (helps CLS)
+const aspectParts = aspectRatio.split('/').map(Number);
+const aspectValue = aspectParts[0] / aspectParts[1];
+const defaultWidth = imageWidth;
+const defaultHeight = imageHeight || Math.round(defaultWidth / aspectValue);
+
+// Generate srcset for different widths
 function generateSrcset(baseUrl: string, format: string): string {
   return widths
     .map(function (w) {
@@ -55,28 +65,30 @@ function generateSrcset(baseUrl: string, format: string): string {
 const avifSrcset = generateSrcset(imageSrc, 'avif');
 const webpSrcset = generateSrcset(imageSrc, 'webp');
 const fallbackSrcset = generateSrcset(imageSrc, 'jpg');
-
-// Calculate dimensions for width/height attributes (helps CLS)
-const aspectParts = aspectRatio.split('/').map(Number);
-const aspectValue = aspectParts[0] / aspectParts[1];
-const defaultWidth = 800;
-const defaultHeight = Math.round(defaultWidth / aspectValue);
 ---
 
 <picture class:list={['optimized-image-wrapper', className]}>
   {
     isOptimizedImage ? (
-      <img
-        src={imageSrc}
-        alt={alt}
-        loading={loading}
-        decoding={decoding}
-        fetchpriority={fetchpriority}
-        width={defaultWidth}
-        height={defaultHeight}
-        style={`aspect-ratio: ${aspectRatio}; object-fit: ${objectFit};`}
-        class="optimized-image"
-      />
+      <Fragment>
+        <source type="image/avif" srcset={avifSrcset} sizes={sizes} />
+
+        <source type="image/webp" srcset={webpSrcset} sizes={sizes} />
+
+        <img
+          src={imageSrc}
+          srcset={fallbackSrcset}
+          sizes={sizes}
+          alt={alt}
+          loading={loading}
+          decoding={decoding}
+          fetchpriority={fetchpriority}
+          width={defaultWidth}
+          height={defaultHeight}
+          style={`aspect-ratio: ${aspectRatio}; object-fit: ${objectFit};`}
+          class="optimized-image"
+        />
+      </Fragment>
     ) : (
       <Fragment>
         <source type="image/avif" srcset={avifSrcset} sizes={sizes} />
@@ -232,12 +244,5 @@ const defaultHeight = Math.round(defaultWidth / aspectValue);
           img.addEventListener('load', handleLoad, { once: true });
         }
       });
-  }
-
-  // Inicializar cuando el DOM esté listo
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initImageLoading);
-  } else {
-    initImageLoading();
   }
 </script>
