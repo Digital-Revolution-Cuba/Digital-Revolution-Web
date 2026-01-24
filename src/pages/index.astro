@@ -4,11 +4,20 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Concursos from '../components/Concursos.astro';
 import DinamycGalleryTitle from '../components/DinamycGalleryTitle.astro';
-import DinamicGallery from '../components/DinamycGallery.astro';
+import Gallery from '../components/features/gallery/Gallery.astro';
+import { arteGallery, musicaGallery, fotografiaGallery } from '../data';
+import type { CategoryConfig } from '../types/gallery.types';
 import ColaboracionesDestacadasTitle from '../components/ColaboracionesDestacadasTitle.astro';
 import ColaboracionesDestacadas from '../components/ColaboracionesDestacadas.astro';
 import JoinOurCommunity from '../components/JoinOurCommunity.astro';
 import Footer from '../components/Footer.astro';
+
+// Gallery configuration
+const galleryCategories: CategoryConfig[] = [
+  { id: 'arte', label: 'Arte', items: arteGallery },
+  { id: 'musica', label: 'Música', items: musicaGallery },
+  { id: 'fotografia', label: 'Fotografía', items: fotografiaGallery },
+];
 ---
 
 <Layout
@@ -19,9 +28,14 @@ import Footer from '../components/Footer.astro';
   <Hero />
   <Concursos />
   <DinamycGalleryTitle />
-  <DinamicGallery />
+  <Gallery categories={galleryCategories} />
   <ColaboracionesDestacadasTitle />
   <ColaboracionesDestacadas />
   <JoinOurCommunity />
   <Footer />
+  <script type="module" src="/src/client/initializers/colaboraciones.ts"
+  ></script>
+  <script type="module" src="/src/client/initializers/galeria.ts"></script>
+  <script type="module" src="/src/client/initializers/concursos.ts"></script>
+  <script type="module" src="/src/client/initializers/accordeon.ts"></script>
 </Layout>
