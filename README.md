@@ -31,8 +31,6 @@ Bienvenido al repositorio de **Revolucion-Digital-Web**, la interfaz digital que
   Utility-first CSS con design tokens en `@theme`.
 - **[TypeScript (Strict)](https://www.typescriptlang.org/)**  
   Type-safety completo con 90% coverage.
-- **WordPress (Headless CMS):**  
-  Para gestionar el contenido de forma simple y centralizada, permitiendo la regeneración del sitio con los datos actualizados.
 - **Integración de APIs:**  
   Consumo de datos dinámicos durante el proceso de build, combinando lo mejor de un sitio estático con contenido fresco.
 
