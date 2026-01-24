@@ -268,7 +268,20 @@ body {
 }
 
 .clip-path-parallelogram-center-top {
-  clip-path: polygon(0 25%, 100% 11%, 100% 100%, 0 100%);
+  /* Mobile-first shape from Figma */
+  -webkit-clip-path: polygon(11% 40%, 87% 30%, 87% 100%, 11% 100%);
+  clip-path: polygon(11% 40%, 87% 30%, 87% 100%, 11% 100%);
+}
+
+/* Improve rendering for clipped elements: avoid forcing a composite layer and hint that clip-path may change */
+.clip-path-parallelogram-left-corner,
+.clip-path-parallelogram-center-top,
+.clip-path-parallelogram-center-bottom,
+.clip-path-parallelogram-right-bottom {
+  overflow: hidden;
+  will-change: clip-path;
+  transform: none;
+  backface-visibility: hidden;
 }
 
 .clip-path-parallelogram-center-bottom {
