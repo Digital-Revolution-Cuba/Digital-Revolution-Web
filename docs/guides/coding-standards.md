@@ -29,6 +29,7 @@ pnpm format:check
 ```
 
 Configuration (`.prettierrc`):
+
 ```json
 {
   "semi": true,
@@ -36,86 +37,62 @@ Configuration (`.prettierrc`):
   "tabWidth": 2,
   "trailingComma": "es5",
   "printWidth": 80,
-  "plugins": [
-    "prettier-plugin-astro",
-    "prettier-plugin-tailwindcss"
-  ]
+  "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"]
 }
 ```
 
 ### Naming Conventions
 
-#### Files
+```astro
+---
+// Example simplified Astro component structure
+// Keep the component focused on markup, props and styles
+interface Props {
+  title: string;
+  description?: string;
+}
 
-```
-# Astro components: PascalCase
-Header.astro
-HeroSection.astro
-TalentCard.astro
+const { title, description } = Astro.props;
+---
 
-# React components: PascalCase
-SearchBar.tsx
-TalentsCards.tsx
-
-# Utilities: camelCase
-galleryAnimations.js
-musicPlayer.ts
-
-# Data files: camelCase
-concursosData.ts
-arteGallery.ts
-
-# Types: camelCase with .types suffix (optional)
-types.ts
-gallery.types.ts
+<article class="card">
+  <h2>{title}</h2>
+  {description && <p>{description}</p>}
+  <slot />
+</article>
 ```
 
-#### Variables & Functions
+### Presentational Components & Client Initializers (Recommended)
 
-```typescript
-// Variables: camelCase
-const userName = 'John';
-const isActive = true;
-const userProfile = { name: 'John', age: 30 };
+Keep Astro components focused on markup and style. Move DOM wiring and event listeners
+to `src/client/initializers/` and pure logic to `src/composables/`. This keeps components
+small and testable.
 
-// Constants: UPPER_SNAKE_CASE
-const API_URL = 'https://api.example.com';
-const MAX_ITEMS = 100;
-const DEFAULT_TIMEOUT = 5000;
+Example:
 
-// Functions: camelCase, verb-first
-function fetchUserData() { }
-function calculateTotal() { }
-function handleClick() { }
+1. `src/components/MyGallery.astro` — markup + styles only
+1. `src/composables/useGallerySlider.ts` — slider logic
+1. `src/client/initializers/gallery.ts` — finds DOM nodes and calls the composable
 
-// Boolean functions: is/has/should prefix
-function isValid() { }
-function hasPermission() { }
-function shouldRender() { }
+Include the initializer in the page or `Layout` via:
 
-// Event handlers: handle prefix
-function handleSubmit() { }
-function handleChange() { }
-function handleKeyPress() { }
+```astro
+<script type="module" src="/src/client/initializers/gallery.ts"></script>
 ```
 
-#### Types & Interfaces
-
-```typescript
-// Interfaces: PascalCase, Props suffix for component props
 interface User {
-  id: number;
-  name: string;
+id: number;
+name: string;
 }
 
 interface CardProps {
-  title: string;
-  description: string;
+title: string;
+description: string;
 }
 
 interface TalentSearchProps {
-  placeholder?: string;
-  onSearch?: (query: string) => void;
+placeholder?: string;
+onSearch?: (query: string) => void;
 }
 
 // Type aliases: PascalCase
@@ -124,11 +101,12 @@ type Size = 'sm' | 'md' | 'lg';
 
 // Enums: PascalCase for name, UPPER_CASE for values
 enum UserRole {
-  ADMIN = 'ADMIN',
-  EDITOR = 'EDITOR',
-  VIEWER = 'VIEWER'
+ADMIN = 'ADMIN',
+EDITOR = 'EDITOR',
+VIEWER = 'VIEWER',
 }
-```
+
+````
 
 #### CSS Classes
 
@@ -147,7 +125,7 @@ enum UserRole {
 .card__title
 .card__description
 .card--featured
-```
+````
 
 ---
 
@@ -181,6 +159,8 @@ function processData(data: any) {
 interface DataItem {
   name: string;
   id: number;
+### Naming Conventions
+
 }
 
 function processData(data: DataItem[]): string[] {
@@ -204,12 +184,7 @@ interface CardProps {
 }
 
 // Destructure with defaults
-const { 
-  title, 
-  description, 
-  imageUrl, 
-  variant = 'default' 
-} = Astro.props;
+const { title, description, imageUrl, variant = 'default' } = Astro.props;
 ```
 
 ### Type Guards
@@ -235,7 +210,7 @@ function processValue(value: unknown) {
 
 ### Astro Component Structure
 
-```astro
+````astro
 ---
 /**
  * Component documentation here
@@ -268,7 +243,7 @@ function formatText(text: string): string {
 <article class="card">
   <h2>{processedTitle}</h2>
   {hasDescription && <p>{description}</p>}
-  
+
   <slot />
 </article>
 
@@ -283,7 +258,18 @@ function formatText(text: string): string {
 <script>
   // Client-side JavaScript
 </script>
-```
+
+### Presentational Components & Client Initializers (Recommended) Keep Astro
+components focused on markup and style. Move DOM wiring and event listeners to
+`src/client/initializers/` and pure logic to `src/composables/`. This keeps
+components small and testable. Example: 1. `src/components/MyGallery.astro` —
+markup + styles only 2. `src/composables/useGallerySlider.ts` — slider logic 3.
+`src/client/initializers/gallery.ts` — finds DOM nodes and calls the composable
+Include the initializer in the page or `Layout` via: ```astro
+<script type="module" src="/src/client/initializers/gallery.ts"></script>
+````
+
+````
 
 ### React Component Structure
 
@@ -308,28 +294,28 @@ export default function SearchBar({
   // 4. State
   const [query, setQuery] = useState(initialValue);
   const [isActive, setIsActive] = useState(false);
-  
+
   // 5. Computed values
   const hasQuery = useMemo(() => query.length > 0, [query]);
-  
+
   // 6. Effects
   useEffect(() => {
     if (hasQuery) {
       onSearch?.(query);
     }
   }, [query, hasQuery, onSearch]);
-  
+
   // 7. Event handlers
   const handleClear = () => {
     setQuery('');
     setIsActive(false);
   };
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch?.(query);
   };
-  
+
   // 8. Render
   return (
     <form onSubmit={handleSubmit} className="relative">
@@ -356,7 +342,7 @@ export default function SearchBar({
     </form>
   );
 }
-```
+````
 
 ---
 
@@ -395,14 +381,14 @@ import heroImage from '../assets/hero.jpg';
 
 ```typescript
 // ✅ Prefer named exports for utilities
-export function formatDate(date: Date): string { }
-export function calculateTotal(items: number[]): number { }
+export function formatDate(date: Date): string {}
+export function calculateTotal(items: number[]): number {}
 
 // ✅ Use default exports for components
-export default function SearchBar() { }
+export default function SearchBar() {}
 
 // ✅ Named exports for types
-export interface User { }
+export interface User {}
 export type Status = 'active' | 'inactive';
 ```
 
@@ -442,15 +428,15 @@ const discount = calculateDiscount(user.tier, totalAmount);
 
 ### Documentation Comments
 
-```typescript
+````typescript
 /**
  * Formats a date according to the specified locale and options.
- * 
+ *
  * @param date - The date to format
  * @param locale - The locale to use (default: 'es-ES')
  * @param options - Intl.DateTimeFormat options
  * @returns Formatted date string
- * 
+ *
  * @example
  * ```typescript
  * formatDate(new Date(), 'es-ES', { dateStyle: 'long' })
@@ -460,11 +446,11 @@ const discount = calculateDiscount(user.tier, totalAmount);
 export function formatDate(
   date: Date,
   locale: string = 'es-ES',
-  options: Intl.DateTimeFormatOptions = {}
+  options: Intl.DateTimeFormatOptions = {},
 ): string {
   return new Intl.DateTimeFormat(locale, options).format(date);
 }
-```
+````
 
 ---
 
@@ -474,29 +460,23 @@ export function formatDate(
 
 ```astro
 <!-- ✅ Good: Tailwind utilities -->
-<button class="px-6 py-3 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors">
+<button
+  class="rounded-lg bg-cyan-500 px-6 py-3 text-white transition-colors hover:bg-cyan-600"
+>
   Click Me
 </button>
 
 <!-- ❌ Avoid: Inline styles -->
-<button style="background: #34dfde; padding: 12px 24px;">
-  Click Me
-</button>
+<button style="background: #34dfde; padding: 12px 24px;"> Click Me </button>
 ```
 
 ### Responsive Design
 
 ```astro
 <!-- Mobile-first approach -->
-<div class="
-  grid 
-  grid-cols-1 
-  gap-4
-  md:grid-cols-2 
-  md:gap-6
-  lg:grid-cols-3 
-  lg:gap-8
-">
+<div
+  class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8"
+>
   <!-- Items -->
 </div>
 ```
@@ -507,13 +487,13 @@ export function formatDate(
 /* Define reusable patterns in global.css */
 @layer components {
   .btn-primary {
-    @apply px-6 py-3 bg-cyan-500 text-white rounded-lg font-semibold;
-    @apply hover:bg-cyan-600 active:bg-cyan-700 transition-colors;
-    @apply focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2;
+    @apply rounded-lg bg-cyan-500 px-6 py-3 font-semibold text-white;
+    @apply transition-colors hover:bg-cyan-600 active:bg-cyan-700;
+    @apply focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:outline-none;
   }
-  
+
   .card-gradient {
-    @apply bg-gradient-to-br from-brand-navy to-brand-dark;
+    @apply from-brand-navy to-brand-dark bg-gradient-to-br;
     @apply rounded-xl p-6 shadow-xl;
   }
 }
@@ -595,7 +575,13 @@ function processUser(user: User): string {
 ```tsx
 // ❌ Bad: No loading state
 function DataDisplay({ data }) {
-  return <div>{data.map(item => <Item {...item} />)}</div>;
+  return (
+    <div>
+      {data.map((item) => (
+        <Item {...item} />
+      ))}
+    </div>
+  );
 }
 
 // ✅ Good: Handle loading and error states
@@ -603,8 +589,14 @@ function DataDisplay({ data, isLoading, error }) {
   if (isLoading) return <Spinner />;
   if (error) return <ErrorMessage error={error} />;
   if (!data?.length) return <EmptyState />;
-  
-  return <div>{data.map(item => <Item key={item.id} {...item} />)}</div>;
+
+  return (
+    <div>
+      {data.map((item) => (
+        <Item key={item.id} {...item} />
+      ))}
+    </div>
+  );
 }
 ```
 
