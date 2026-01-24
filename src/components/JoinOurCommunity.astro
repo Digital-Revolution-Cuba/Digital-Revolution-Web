@@ -1,127 +1,104 @@
----
+﻿---
 import '../styles/global.css';
 ---
 
 <section
-  class="join-our-community bg-brand-backgroundGlobal relative flex flex-col items-center justify-center gap-4 px-4 py-6 sm:grid sm:grid-cols-3 sm:items-center sm:justify-items-center sm:gap-3 sm:px-4 sm:py-6 md:flex md:flex-row md:items-center md:justify-center md:gap-5 md:py-30"
+  class="join-our-community bg-brand-backgroundGlobal relative grid grid-cols-3 items-center justify-items-center gap-3 px-3 py-6 sm:gap-x-3 sm:gap-y-4 md:grid-cols-3 md:py-30"
+  aria-label="Sección para unirse a la comunidad de artistas"
 >
-  <!-- SVG Filter for rounded corners on clip-path -->
-  <svg
-    style="visibility: hidden; position: absolute;"
-    width="0"
-    height="0"
-    xmlns="http://www.w3.org/2000/svg"
-    version="1.1"
-  >
-    <defs>
-      <filter id="goo">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"
-        ></feGaussianBlur>
-        <feColorMatrix
-          in="blur"
-          mode="matrix"
-          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
-          result="goo"></feColorMatrix>
-        <feComposite in="SourceGraphic" in2="goo" operator="atop"></feComposite>
-      </filter>
-    </defs>
-  </svg>
+  <!-- Decorative CTA: images removed and replaced with accessible CTA design -->
 
-  <!-- Parallelogram top left - the other is literally the same but the opposite skew -->
-  <div
-    class="md:col-span-auto flex flex-col items-center justify-center gap-3 sm:col-span-1 sm:items-start sm:gap-3 md:gap-10"
-  >
-    <div
-      class="acordeon-item relative h-32 w-20 origin-right skew-y-[-25deg] transform self-start overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-    >
-      <img
-        src="/src/assets/image (4).png"
-        alt="join our community"
-        class="h-full w-full rounded-lg rounded-tl-md rounded-br-md border-1 object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-      />
-    </div>
-
-    <!-- Parallelogram top bottom -->
-    <div style="filter: none;" aria-hidden="true">
-      <div
-        class="clip-path-parallelogram-left-corner acordeon-item relative h-28 w-16 origin-right transform self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-0 sm:h-32 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-90 md:w-55 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-      >
-        <img
-          src="/src/assets/image (4).png"
-          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-        />
-      </div>
-    </div>
+  <!-- Left column: decorative shapes (images removed) -->
+  <div class="md:col-span-auto flex shrink flex-col items-center justify-center gap-4 sm:col-span-1 sm:items-start sm:gap-3 md:gap-10">
+    <div class="decorative-blob decorative-blob--top" aria-hidden="true"></div>
+    <div class="decorative-blob decorative-blob--bottom" aria-hidden="true"></div>
   </div>
 
-  <!-- Parallelogram center top and bottom -->
+  <!-- Parallelogram center top and bottom (images removed) -->
   <div
-    class="md:col-span-auto flex flex-col items-center justify-center gap-3 sm:col-span-1 sm:gap-3 md:items-center md:gap-4"
+    class="md:col-span-auto flex shrink flex-col items-center justify-center gap-2 sm:col-span-1 sm:gap-3 md:items-center md:gap-4"
   >
-    <div style="filter: none;" class="hidden sm:block" aria-hidden="true">
-      <div
-        class="clip-path-parallelogram-center-top h-20 w-14 self-start overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-      >
-        <img
-          src="/src/assets/image (4).png"
-          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-        />
+    <div class="community-cta" role="region" aria-labelledby="community-title">
+      <div class="cta-decor" aria-hidden="true"></div>
+      <h2 id="community-title" class="community-title text-sm md:text-xl lg:text-2xl">
+        <span class="text-accent-cyan">Únete</span>
+        <span class="text-white"> a </span>
+        <span class="text-accent-orange">nuestra</span>
+        <span class="text-white"> </span>
+        <span class="text-accent-purple">comunidad</span>
+      </h2>
+      <p class="community-subtitle text-xs sm:text-sm text-muted max-w-[18rem] text-center">Conecta con artistas, comparte tu trabajo y participa en proyectos colaborativos.</p>
+      <button class="cta-btn" aria-label="Crear perfil de artista en Digital Revolution">Crea tu perfil ahora</button>
+      <div class="cta-ornaments" aria-hidden="true">
+        <span class="ring ring-1"></span>
+        <span class="ring ring-2"></span>
       </div>
     </div>
 
     <!-- Botón y texto en el centro -->
     <div
-      class="flex w-full max-w-[280px] flex-col-reverse items-center gap-3 text-center sm:max-w-[350px] sm:gap-4 md:gap-4"
+      class="flex w-full max-w-64 flex-col-reverse items-center gap-2 text-center sm:max-w-80 sm:gap-4 md:gap-4"
     >
       <button
-        class="bg-brand-navy hover:bg-accent-cyan hover:text-brand-dark text-accent-orange border-brand-navy rounded-lg border px-4 py-2 text-xs font-semibold whitespace-nowrap transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)] sm:px-3 sm:py-1.5 sm:text-xs md:px-4 md:py-2 md:text-base"
+        class="bg-brand-navy hover:bg-accent-cyan hover:text-brand-dark text-accent-orange border-brand-navy focus-visible:outline-accent-cyan rounded-lg border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)] focus-visible:outline-2 focus-visible:outline-offset-2 sm:px-3 sm:py-1.5 sm:text-xs md:px-4 md:py-2 md:text-base"
+        aria-label="Crear perfil de artista en Digital Revolution"
       >
         Crea tu perfil ahora
       </button>
-      <h4 class="text-xs leading-relaxed sm:text-[10px] md:text-base">
-        Únete a nuestra comunidad
-      </h4>
+      <h2
+        class="community-title text-xs leading-tight font-bold tracking-wide uppercase sm:text-sm md:text-xl lg:text-2xl"
+      >
+        <span class="text-accent-cyan">Únete</span>
+        <span class="text-white"> a </span>
+        <span class="text-accent-orange">nuestra</span>
+        <span class="text-white"> </span>
+        <span class="text-accent-purple">comunidad</span>
+      </h2>
     </div>
 
-    <div style="filter: none;" class="hidden sm:block" aria-hidden="true">
-      <div
-        class="clip-path-parallelogram-center-bottom h-20 w-14 self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-      >
-        <img
-          src="/src/assets/image (4).png"
-          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-        />
-      </div>
-    </div>
+    <!-- center bottom intentionally empty (decorations handled by CSS) -->
   </div>
 
-  <!-- Button and text with images above and below - última columna en móvil/sm -->
+  <!-- Right column with images -->
   <div
-    class="md:col-span-auto flex flex-col items-center justify-center gap-3 sm:col-span-3 sm:gap-3 md:gap-0"
+    class="md:col-span-auto flex shrink flex-col items-center justify-center gap-2 sm:col-span-1 sm:gap-3 md:gap-4"
   >
-    <!-- Parallelogram right top  -->
+    <!-- Parallelogram right top -->
     <div style="filter: none;" class="md:flex md:justify-center" aria-hidden="true">
       <div
-        class="clip-path-parallelogram-left-corner acordeon-item relative h-32 w-18 origin-right skew-y-[25deg] transform overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 sm:h-36 sm:w-20 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-120 md:w-60 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+        class="clip-path-parallelogram-left-corner community-card relative h-32 w-20 origin-right skew-y-25 transform overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-48 sm:w-28 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-140 md:w-72 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl lg:h-160 lg:w-80"
       >
-        <img
-          src="/src/assets/image (4).png"
+        <Image
+          src={communityImage}
+          alt=""
+          widths={[80, 192, 288, 400, 560]}
+          sizes="(max-width: 640px) 80px, (max-width: 768px) 192px, (max-width: 1024px) 288px, 400px"
+          format="webp"
+          quality={85}
+          loading="lazy"
+          decoding="async"
           class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
         />
       </div>
     </div>
 
-    <!-- Parallelogram right bottom - abajo del botón -->
+    <!-- Parallelogram right bottom -->
     <div
-      style="filter: none;"
-      class="md:-mt-40 md:flex md:justify-center"
-      aria-hidden="true"
+      style="filter: none;" aria-hidden="true"
+      class="md:-mt-32 md:flex md:justify-center"
     >
       <div
-        class="clip-path-parallelogram-right-bottom acordeon-item relative h-28 w-16 origin-right transform self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-0 sm:h-32 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-90 md:w-40 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
+        class="clip-path-parallelogram-right-bottom community-card relative h-28 w-18 origin-right transform self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-36 sm:w-22 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-100 md:w-48 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl lg:h-110 lg:w-52"
       >
-        <img
-          src="/src/assets/image (4).png"
+        <Image
+          src={communityImage}
+          alt=""
+          widths={[72, 144, 192, 272]}
+          sizes="(max-width: 640px) 72px, (max-width: 768px) 144px, (max-width: 1024px) 192px, 272px"
+          format="webp"
+          quality={85}
+          loading="lazy"
+          decoding="async"
           class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
         />
       </div>
