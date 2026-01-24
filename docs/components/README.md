@@ -21,6 +21,7 @@ Guidelines for creating and maintaining components in Digital Revolution Web.
 ### 1. Astro Components (`.astro`)
 
 **When to use**:
+
 - Static content (text, images, layout)
 - No client-side interactivity needed
 - Server-side rendering is sufficient
@@ -40,32 +41,36 @@ interface Props {
 const { title, description, imageUrl, href } = Astro.props;
 ---
 
-<article class="rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
-  {imageUrl && (
-    <img 
-      src={imageUrl} 
-      alt={title}
-      class="w-full h-48 object-cover rounded-md mb-4"
-    />
-  )}
-  
-  <h3 class="text-xl font-bold mb-2">{title}</h3>
-  <p class="text-gray-600 mb-4">{description}</p>
-  
-  {href && (
-    <a 
-      href={href} 
-      class="text-cyan-500 hover:text-cyan-600 font-medium"
-    >
-      Learn More →
-    </a>
-  )}
+<article
+  class="rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-lg"
+>
+  {
+    imageUrl && (
+      <img
+        src={imageUrl}
+        alt={title}
+        class="mb-4 h-48 w-full rounded-md object-cover"
+      />
+    )
+  }
+
+  <h3 class="mb-2 text-xl font-bold">{title}</h3>
+  <p class="mb-4 text-gray-600">{description}</p>
+
+  {
+    href && (
+      <a href={href} class="font-medium text-cyan-500 hover:text-cyan-600">
+        Learn More →
+      </a>
+    )
+  }
 </article>
 ```
 
 ### 2. React Islands (`.tsx`)
 
 **When to use**:
+
 - Client-side interactivity (clicks, form inputs, state)
 - Real-time updates
 - Complex user interactions
@@ -82,26 +87,29 @@ interface SearchBarProps {
   onSearch?: (query: string) => void;
 }
 
-export default function SearchBar({ 
-  placeholder = 'Search...', 
-  onSearch 
+export default function SearchBar({
+  placeholder = 'Search...',
+  onSearch,
 }: SearchBarProps) {
   const [query, setQuery] = useState('');
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch?.(query);
   };
-  
+
   return (
     <form onSubmit={handleSubmit} className="relative">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+      <Search
+        className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
+        size={20}
+      />
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder={placeholder}
-        className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-cyan-500"
+        className="w-full rounded-lg border py-2 pr-4 pl-10 focus:ring-2 focus:ring-cyan-500"
       />
     </form>
   );
@@ -128,7 +136,7 @@ import SearchBar from '../components/interactive/SearchBar';
 
 ### Recommended File Organization
 
-```
+````text
 src/components/
 ├── layout/              # Layout components
 │   ├── Header.astro
@@ -155,16 +163,62 @@ src/components/
     ├── gallery/
     ├── talents/
     └── concursos/
+
+### 3. Presentational-only components (new guideline)
+
+To keep components readable and maintainable, Astro components should only contain markup, styling, and typed props. Any behaviour (DOM wiring, event listeners, stateful logic) should be implemented in:
+
+- `src/composables/` — small, testable logic modules (e.g., `useGallerySlider.ts`).
+- `src/client/initializers/` — page-level initializers which import composables and wire DOM elements (e.g., `colaboraciones.ts`).
+
+Why?
+- Reduces file size and cognitive load for developers inspecting components.
+- Keeps behaviour testable and reusable across pages/components.
+- Enables centralized initialization and easier debugging.
+
+Pattern example:
+
+1. Component (presentational only):
+
+```astro
+<!-- src/components/ColaboracionesDestacadas.astro -->
+<div id="cardSliderColab" class="cards-track" data-total={totalCards}></div>
+<!-- No scripts here — only markup and styles -->
+````
+
+1. Composable (pure logic):
+
+```ts
+// src/composables/useGallerySlider.ts
+export function createGallerySlider(slider, prevBtn, nextBtn, total, opts) {
+  /* ... */
+}
 ```
 
----
+1. Initializer (wires DOM -> composable):
+
+```ts
+// src/client/initializers/colaboraciones.ts
+import { createGallerySlider } from '/src/composables/useGallerySlider.ts';
+// find DOM nodes and call createGallerySlider(...) on DOMContentLoaded
+```
+
+1. Page imports initializer:
+
+```astro
+<script type="module" src="/src/client/initializers/colaboraciones.ts"></script>
+```
+
+## This pattern is particularly useful for gallery/carousel sections, map integrations, or any behavior that may be shared across multiple pages.
 
 ## 🎨 Styling Patterns
 
 ### 1. Tailwind Utilities (Preferred)
 
 ```astro
-<button class="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors">
+<button
+  class="rounded-lg bg-cyan-500 px-4 py-2 text-white transition-colors hover:bg-cyan-600"
+>
   Click Me
 </button>
 ```
@@ -178,11 +232,15 @@ src/components/
 
 <style>
   .custom-card {
-    background: linear-gradient(135deg, var(--color-brand-navy), var(--color-brand-dark));
+    background: linear-gradient(
+      135deg,
+      var(--color-brand-navy),
+      var(--color-brand-dark)
+    );
     padding: 2rem;
     border-radius: 1rem;
   }
-  
+
   .custom-card h3 {
     color: var(--color-accent-cyan);
     font-size: 1.5rem;
@@ -197,8 +255,8 @@ For reusable patterns, define in `src/styles/global.css`:
 ```css
 @layer components {
   .btn-primary {
-    @apply px-6 py-3 bg-cyan-500 text-white rounded-lg font-semibold;
-    @apply hover:bg-cyan-600 transition-colors;
+    @apply rounded-lg bg-cyan-500 px-6 py-3 font-semibold text-white;
+    @apply transition-colors hover:bg-cyan-600;
   }
 }
 ```
@@ -209,13 +267,13 @@ For reusable patterns, define in `src/styles/global.css`:
 
 ### Available Directives
 
-| Directive | Behavior | Use Case |
-|-----------|----------|----------|
-| `client:load` | Hydrate immediately on page load | Critical interactive UI |
-| `client:idle` | Hydrate after page becomes idle | Non-critical features |
-| `client:visible` | Hydrate when scrolled into view | Below-the-fold content |
-| `client:media` | Hydrate based on media query | Responsive components |
-| `client:only` | Skip SSR, render only on client | CSR-only libraries |
+| Directive        | Behavior                         | Use Case                |
+| ---------------- | -------------------------------- | ----------------------- |
+| `client:load`    | Hydrate immediately on page load | Critical interactive UI |
+| `client:idle`    | Hydrate after page becomes idle  | Non-critical features   |
+| `client:visible` | Hydrate when scrolled into view  | Below-the-fold content  |
+| `client:media`   | Hydrate based on media query     | Responsive components   |
+| `client:only`    | Skip SSR, render only on client  | CSR-only libraries      |
 
 ### Decision Tree
 
@@ -303,7 +361,7 @@ import MobileMenu from './MobileMenu';
 
 ```tsx
 // Ensure interactive elements are focusable
-<button 
+<button
   onKeyDown={(e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       handleClick();
@@ -346,23 +404,23 @@ interface ComponentProps {
   // Required props (no default)
   title: string;
   id: number;
-  
+
   // Optional props (with ?)
   description?: string;
   imageUrl?: string;
-  
+
   // Optional with default value
   variant?: 'primary' | 'secondary';
   size?: 'sm' | 'md' | 'lg';
 }
 
-const { 
-  title, 
+const {
+  title,
   id,
   description,
   imageUrl,
   variant = 'primary',
-  size = 'md'
+  size = 'md',
 } = Astro.props;
 ```
 
@@ -399,10 +457,10 @@ test('Card renders title and description', async () => {
   const result = await container.renderToString(Card, {
     props: {
       title: 'Test Title',
-      description: 'Test Description'
-    }
+      description: 'Test Description',
+    },
   });
-  
+
   expect(result).toContain('Test Title');
   expect(result).toContain('Test Description');
 });
@@ -419,11 +477,11 @@ import SearchBar from '../../src/components/interactive/SearchBar';
 test('SearchBar calls onSearch when submitted', () => {
   const handleSearch = vi.fn();
   render(<SearchBar onSearch={handleSearch} />);
-  
+
   const input = screen.getByRole('textbox');
   fireEvent.change(input, { target: { value: 'test query' } });
   fireEvent.submit(input.closest('form')!);
-  
+
   expect(handleSearch).toHaveBeenCalledWith('test query');
 });
 ```
@@ -438,19 +496,17 @@ test('SearchBar calls onSearch when submitted', () => {
 ---
 /**
  * Card Component
- * 
+ *
  * A reusable card component for displaying content with optional image, title, and description.
- * 
+ *
  * @component
  * @example
- * ```astro
- * <Card 
- *   title="My Card" 
- *   description="Card description"
- *   imageUrl="/image.jpg"
- *   href="/learn-more"
- * />
- * ```
+ *     <Card
+ *       title="My Card"
+ *       description="Card description"
+ *       imageUrl="/image.jpg"
+ *       href="/learn-more"
+ *     />
  */
 
 interface Props {
@@ -511,9 +567,12 @@ const { title, description } = Astro.props;
 <Features client:load />
 
 <!-- ✅ Good: Minimal hydration -->
-<Header />  <!-- Static -->
-<Hero />    <!-- Static -->
-<InteractiveForm client:visible />  <!-- Only this needs JS -->
+<Header />
+<!-- Static -->
+<Hero />
+<!-- Static -->
+<InteractiveForm client:visible />
+<!-- Only this needs JS -->
 ```
 
 ### 3. Inline Styles
@@ -525,9 +584,7 @@ const { title, description } = Astro.props;
 </div>
 
 <!-- ✅ Good: Utility classes -->
-<div class="bg-brand-navy p-5 rounded-lg">
-  Content
-</div>
+<div class="bg-brand-navy rounded-lg p-5">Content</div>
 ```
 
 ---
