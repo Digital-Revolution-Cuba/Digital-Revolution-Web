@@ -1,0 +1,317 @@
+/**
+ * JoinOurCommunity Component Styles
+ * Optimized for accessibility, performance, and visual appeal
+ */
+
+/* ========================================
+   Container & Layout
+   ======================================== */
+
+.join-our-community {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========================================
+   Decorative Blobs (Left Column)
+   ======================================== */
+
+.decorative-blob {
+  width: clamp(80px, 15vw, 150px);
+  height: clamp(80px, 15vw, 150px);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  background: linear-gradient(
+    135deg,
+    rgba(52, 223, 222, 0.2),
+    rgba(151, 71, 255, 0.2)
+  );
+  filter: blur(20px);
+  animation: blobFloat 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.decorative-blob--top {
+  animation-delay: 0s;
+}
+
+.decorative-blob--bottom {
+  animation-delay: 1s;
+}
+
+@keyframes blobFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .decorative-blob {
+    animation: none;
+  }
+}
+
+/* ========================================
+   Community CTA Card
+   ======================================== */
+
+.community-cta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  padding: clamp(2rem, 4vw, 3rem);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 43, 56, 0.8),
+    rgba(1, 24, 34, 0.95)
+  );
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid rgba(52, 223, 222, 0.2);
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(52, 223, 222, 0.1);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.community-cta:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 15px 50px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(52, 223, 222, 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-cta {
+    transition: none;
+  }
+  
+  .community-cta:hover {
+    transform: none;
+  }
+}
+
+/* ========================================
+   CTA Decorations
+   ======================================== */
+
+.cta-decor {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(52, 223, 222, 0.8),
+    rgba(244, 150, 36, 0.8),
+    rgba(151, 71, 255, 0.8),
+    transparent
+  );
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-decor {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+/* ========================================
+   Title & Subtitle
+   ======================================== */
+
+.community-title {
+  text-align: center;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.community-subtitle {
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* ========================================
+   CTA Button
+   ======================================== */
+
+.cta-btn {
+  position: relative;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(52, 223, 222, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  z-index: -1;
+}
+
+.cta-btn:hover::before {
+  width: 300%;
+  height: 300%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-btn::before {
+    transition: none;
+  }
+  
+  .cta-btn:hover::before {
+    width: 0;
+    height: 0;
+  }
+}
+
+/* ========================================
+   Ring Pulse Ornaments
+   ======================================== */
+
+.cta-ornaments {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ring-pulse {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(52, 223, 222, 0.6);
+  border-radius: 50%;
+  animation: ringPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.ring-pulse--1 {
+  animation-delay: 0s;
+}
+
+.ring-pulse--2 {
+  animation-delay: 0.5s;
+}
+
+.ring-pulse--3 {
+  animation-delay: 1s;
+}
+
+@keyframes ringPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring-pulse {
+    animation: none;
+    opacity: 0.3;
+  }
+}
+
+/* ========================================
+   Community Cards (Images)
+   ======================================== */
+
+.community-card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.community-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community-card {
+    transition: none;
+  }
+  
+  .community-card:hover {
+    transform: none;
+  }
+}
+
+/* ========================================
+   Animate In (Intersection Observer)
+   ======================================== */
+
+.animate-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ========================================
+   Responsive Adjustments
+   ======================================== */
+
+@media (max-width: 768px) {
+  .community-cta {
+    padding: clamp(1.5rem, 3vw, 2rem);
+  }
+  
+  .cta-ornaments {
+    bottom: -20px;
+    height: 40px;
+  }
+  
+  .ring-pulse {
+    width: 30px;
+    height: 30px;
+  }
+}

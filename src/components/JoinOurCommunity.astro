@@ -1,5 +1,6 @@
 ﻿---
 import '../styles/global.css';
+import '../styles/components/join-community.css';
 import { Image } from 'astro:assets';
 import communityImage from '../assets/ImagenPruebaGaleria.avif';
 ---
@@ -16,49 +17,39 @@ import communityImage from '../assets/ImagenPruebaGaleria.avif';
     <div class="decorative-blob decorative-blob--bottom" aria-hidden="true"></div>
   </div>
 
-  <!-- Parallelogram center top and bottom (images removed) -->
+  <!-- Centro: CTA principal consolidado -->
   <div
-    class="md:col-span-auto flex shrink flex-col items-center justify-center gap-2 sm:col-span-1 sm:gap-3 md:items-center md:gap-4"
+    class="community-cta-wrapper md:col-span-auto flex shrink flex-col items-center justify-center gap-4 sm:col-span-1 sm:gap-6 md:items-center md:gap-8"
   >
-    <div class="community-cta" role="region" aria-labelledby="community-title">
+    <div class="community-cta animate-in" role="region" aria-labelledby="community-title">
       <div class="cta-decor" aria-hidden="true"></div>
-      <h2 id="community-title" class="community-title text-sm md:text-xl lg:text-2xl">
+      
+      <h2 id="community-title" class="community-title text-base leading-tight font-bold tracking-wide uppercase sm:text-lg md:text-2xl lg:text-3xl">
         <span class="text-accent-cyan">Únete</span>
         <span class="text-white"> a </span>
         <span class="text-accent-orange">nuestra</span>
         <span class="text-white"> </span>
         <span class="text-accent-purple">comunidad</span>
       </h2>
-      <p class="community-subtitle text-xs sm:text-sm text-muted max-w-[18rem] text-center">Conecta con artistas, comparte tu trabajo y participa en proyectos colaborativos.</p>
-      <button class="cta-btn" aria-label="Crear perfil de artista en Digital Revolution">Crea tu perfil ahora</button>
-      <div class="cta-ornaments" aria-hidden="true">
-        <span class="ring-1"></span>
-        <span class="ring-2"></span>
-      </div>
-    </div>
-
-    <!-- Botón y texto en el centro -->
-    <div
-      class="flex w-full max-w-64 flex-col-reverse items-center gap-2 text-center sm:max-w-80 sm:gap-4 md:gap-4"
-    >
-      <button
-        class="bg-brand-navy hover:bg-accent-cyan hover:text-brand-dark text-accent-orange border-brand-navy focus-visible:outline-accent-cyan rounded-lg border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)] focus-visible:outline-2 focus-visible:outline-offset-2 sm:px-3 sm:py-1.5 sm:text-xs md:px-4 md:py-2 md:text-base"
+      
+      <p class="community-subtitle text-sm sm:text-base text-text-secondary max-w-[20rem] text-center leading-relaxed">
+        Conecta con artistas, comparte tu trabajo y participa en proyectos colaborativos.
+      </p>
+      
+      <a 
+        href="/talentos" 
+        class="cta-btn bg-brand-navy hover:bg-accent-cyan hover:text-brand-dark text-accent-orange border-brand-navy focus-visible:outline-accent-cyan inline-block rounded-lg border px-6 py-3 text-base font-semibold whitespace-nowrap transition-all duration-300 hover:shadow-[0_0_20px_rgba(52,223,222,0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 sm:px-8 sm:py-3.5 md:text-lg"
         aria-label="Crear perfil de artista en Digital Revolution"
       >
         Crea tu perfil ahora
-      </button>
-      <h2
-        class="community-title text-xs leading-tight font-bold tracking-wide uppercase sm:text-sm md:text-xl lg:text-2xl"
-      >
-        <span class="text-accent-cyan">Únete</span>
-        <span class="text-white"> a </span>
-        <span class="text-accent-orange">nuestra</span>
-        <span class="text-white"> </span>
-        <span class="text-accent-purple">comunidad</span>
-      </h2>
+      </a>
+      
+      <div class="cta-ornaments" aria-hidden="true">
+        <span class="ring-pulse ring-pulse--1"></span>
+        <span class="ring-pulse ring-pulse--2"></span>
+        <span class="ring-pulse ring-pulse--3"></span>
+      </div>
     </div>
-
-    <!-- center bottom intentionally empty (decorations handled by CSS) -->
   </div>
 
   <!-- Right column with images -->
