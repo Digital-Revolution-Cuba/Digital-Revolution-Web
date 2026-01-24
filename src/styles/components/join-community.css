@@ -73,16 +73,18 @@
   );
   border-radius: clamp(1.5rem, 3vw, 2.5rem);
   border: 1px solid rgba(52, 223, 222, 0.2);
-  box-shadow: 
+  box-shadow:
     0 10px 40px rgba(0, 0, 0, 0.3),
     0 0 30px rgba(52, 223, 222, 0.1);
   backdrop-filter: blur(10px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .community-cta:hover {
   transform: translateY(-4px);
-  box-shadow: 
+  box-shadow:
     0 15px 50px rgba(0, 0, 0, 0.4),
     0 0 40px rgba(52, 223, 222, 0.2);
 }
@@ -91,7 +93,7 @@
   .community-cta {
     transition: none;
   }
-  
+
   .community-cta:hover {
     transform: none;
   }
@@ -174,7 +176,9 @@
   border-radius: 50%;
   background: rgba(52, 223, 222, 0.3);
   transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
+  transition:
+    width 0.6s ease,
+    height 0.6s ease;
   z-index: -1;
 }
 
@@ -187,7 +191,7 @@
   .cta-btn::before {
     transition: none;
   }
-  
+
   .cta-btn:hover::before {
     width: 0;
     height: 0;
@@ -255,7 +259,9 @@
    ======================================== */
 
 .community-card {
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
 }
 
 .community-card:hover {
@@ -267,7 +273,7 @@
   .community-card {
     transition: none;
   }
-  
+
   .community-card:hover {
     transform: none;
   }
@@ -280,7 +286,9 @@
 .animate-in {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .animate-in.is-visible {
@@ -304,12 +312,12 @@
   .community-cta {
     padding: clamp(1.5rem, 3vw, 2rem);
   }
-  
+
   .cta-ornaments {
     bottom: -20px;
     height: 40px;
   }
-  
+
   .ring-pulse {
     width: 30px;
     height: 30px;
