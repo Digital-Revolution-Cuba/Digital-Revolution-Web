@@ -17,7 +17,7 @@ Bienvenido al repositorio de **Revolucion-Digital-Web**, la interfaz digital que
 
 - **Mostrar Talento:** Una plataforma visual y funcional para destacar perfiles, trabajos y colaboraciones de nuestra comunidad.
 - **Experiencia de Usuario Impactante:** Interfaz atractiva, moderna y de alto rendimiento gracias a la generación de sitios estáticos.
-- **Escalabilidad Sencilla:** Integración con WordPress como headless CMS para una actualización de contenido controlada y eficiente.
+- **Escalabilidad Sencilla:** Preparado para integrarse con un headless CMS o backend propio en el futuro para una actualización de contenido controlada y eficiente.
 
 ---
 
