@@ -6,7 +6,7 @@ Detailed explanation of the Digital Revolution Web folder structure.
 
 ## 📁 Root Level
 
-```
+```text
 Digital-Revolution-Web/
 ├── .astro/              # Astro build cache (auto-generated)
 ├── .github/             # GitHub configurations and AI instructions
@@ -40,7 +40,7 @@ Digital-Revolution-Web/
 
 The heart of the application.
 
-```
+```text
 src/
 ├── assets/              # Raw assets (images, fonts, SVGs)
 ├── components/          # Reusable UI components
@@ -52,6 +52,8 @@ src/
 ├── styles/              # Global CSS and Tailwind config
 ├── types/               # Global TypeScript types
 ├── utils/               # Utility functions
+├── client/             # Client-side initializers (DOM wiring)
+│   └── initializers/   # Page/component initializers
 └── env.d.ts            # Environment type definitions
 ```
 
@@ -61,7 +63,7 @@ src/
 
 Images, fonts, and other raw assets that need processing.
 
-```
+```text
 assets/
 ├── ImagenPruebaGaleria.avif
 ├── prueba.avif
@@ -84,6 +86,7 @@ import heroImage from '../assets/hero.jpg';
 ```
 
 **Rules**:
+
 - Images here are optimized at build time
 - Use `Image` component from `astro:assets`
 - Generates responsive images (AVIF, WebP, JPEG)
@@ -94,7 +97,7 @@ import heroImage from '../assets/hero.jpg';
 
 Reusable components organized by feature.
 
-```
+```text
 components/
 ├── Header.astro                  # Global header
 ├── Footer.astro                  # Global footer
@@ -123,6 +126,7 @@ components/
 ```
 
 **Naming Conventions**:
+
 - `.astro` - Static components
 - `.tsx` - React islands
 - PascalCase for all component files
@@ -133,7 +137,7 @@ components/
 
 Custom hooks and composables (functional utilities).
 
-```
+```text
 composables/
 ├── useCategorySwitch.ts     # Category switching logic
 └── useGallerySlider.ts      # Gallery slider controller
@@ -145,9 +149,15 @@ composables/
 // src/composables/useGallerySlider.ts
 export function useGallerySlider(config) {
   return {
-    next() { /* ... */ },
-    prev() { /* ... */ },
-    goTo(index) { /* ... */ },
+    next() {
+      /* ... */
+    },
+    prev() {
+      /* ... */
+    },
+    goTo(index) {
+      /* ... */
+    },
   };
 }
 ```
@@ -158,7 +168,7 @@ export function useGallerySlider(config) {
 
 Application configuration files.
 
-```
+```text
 config/
 ├── galleryConfig.ts        # Gallery settings
 ├── constants.ts            # Application constants
@@ -183,7 +193,7 @@ export const GALLERY_CONFIG = {
 
 Data files and type definitions.
 
-```
+```text
 data/
 ├── types.ts                    # Core TypeScript interfaces
 ├── index.ts                    # Re-exports for convenience
@@ -208,9 +218,7 @@ export interface Talent {
 // 2. Create data in separate file
 import type { Talent } from './types';
 
-export const talents: Talent[] = [
-  { id: 1, name: 'María', role: 'Fotógrafa' },
-];
+export const talents: Talent[] = [{ id: 1, name: 'María', role: 'Fotógrafa' }];
 
 // 3. Re-export in index.ts for convenience
 export { talents } from './talents';
@@ -224,7 +232,7 @@ export type { Talent } from './types';
 
 Reusable page layouts with common structure.
 
-```
+```text
 layouts/
 └── Layout.astro            # Main layout (header, meta, footer)
 ```
@@ -265,7 +273,7 @@ const { title, description, image } = Astro.props;
 
 Astro's file-based routing system.
 
-```
+```text
 pages/
 ├── index.astro                  # Homepage (/)
 │
@@ -290,6 +298,7 @@ pages/
 ```
 
 **Routing Rules**:
+
 - `index.astro` → `/path`
 - `about.astro` → `/about`
 - `blog/[slug].astro` → `/blog/post-title` (dynamic routes)
@@ -300,7 +309,7 @@ pages/
 
 CSS files for global styles and Tailwind configuration.
 
-```
+```text
 styles/
 ├── global.css                  # Main CSS (Tailwind + globals)
 ├── animations.css              # Animation keyframes
@@ -317,7 +326,7 @@ styles/
 
 ```css
 /* Import Tailwind */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Define design tokens */
 @theme {
@@ -336,7 +345,7 @@ body {
 /* Utility classes */
 @layer components {
   .btn-primary {
-    @apply px-6 py-3 bg-cyan-500 text-white rounded-lg;
+    @apply rounded-lg bg-cyan-500 px-6 py-3 text-white;
   }
 }
 ```
@@ -347,7 +356,7 @@ body {
 
 Helper functions and utilities.
 
-```
+```text
 utils/
 ├── galleryAnimations.js      # Gallery animation helpers
 ├── musicPlayer.ts            # Music player utilities
@@ -372,7 +381,7 @@ export function formatDate(date: Date, locale = 'es-ES'): string {
 
 Files served as-is without processing.
 
-```
+```text
 public/
 ├── robots.txt              # Search engine crawler rules
 ├── sitemap.xml             # Site URL inventory
@@ -385,6 +394,7 @@ public/
 ```
 
 **Rules**:
+
 - Files in `public/` are served from root URL
 - No processing or optimization
 - Use for: favicons, robots.txt, sitemap.xml, etc.
@@ -396,7 +406,7 @@ public/
 
 This comprehensive documentation folder.
 
-```
+```text
 docs/
 ├── README.md                     # Documentation index
 ├── guides/                       # Developer guides
@@ -492,7 +502,7 @@ node_modules/    # Dependencies
 
 Defined in `.gitignore`:
 
-```
+```text
 node_modules/
 dist/
 .astro/
@@ -504,13 +514,13 @@ dist/
 
 ## 📊 Folder Size Guidelines
 
-| Folder | Expected Size | Notes |
-|--------|--------------|-------|
-| `src/components/` | Growing | One file per component |
-| `src/pages/` | Stable | One file per route |
-| `src/data/` | Growing | Split large data files |
-| `src/utils/` | Growing | Keep utilities small and focused |
-| `public/` | Limited | Keep static assets minimal |
+| Folder            | Expected Size | Notes                            |
+| ----------------- | ------------- | -------------------------------- |
+| `src/components/` | Growing       | One file per component           |
+| `src/pages/`      | Stable        | One file per route               |
+| `src/data/`       | Growing       | Split large data files           |
+| `src/utils/`      | Growing       | Keep utilities small and focused |
+| `public/`         | Limited       | Keep static assets minimal       |
 
 ---
 
