@@ -6,95 +6,419 @@ import communityImage from '../assets/ImagenPruebaGaleria.avif';
 ---
 
 <section
-  class="join-our-community bg-brand-backgroundGlobal relative grid grid-cols-3 items-center justify-items-center gap-3 px-3 py-6 sm:gap-x-3 sm:gap-y-4 md:grid-cols-3 md:py-30"
+  class="join-our-community relative overflow-hidden"
   aria-label="Sección para unirse a la comunidad de artistas"
+  data-section="community"
 >
-  <!-- Decorative CTA: images removed and replaced with accessible CTA design -->
-
-  <!-- Left column: decorative shapes (images removed) -->
-  <div class="md:col-span-auto flex shrink flex-col items-center justify-center gap-4 sm:col-span-1 sm:items-start sm:gap-3 md:gap-10">
-    <div class="decorative-blob decorative-blob--top" aria-hidden="true"></div>
-    <div class="decorative-blob decorative-blob--bottom" aria-hidden="true"></div>
-  </div>
-
-  <!-- Centro: CTA principal consolidado -->
-  <div
-    class="community-cta-wrapper md:col-span-auto flex shrink flex-col items-center justify-center gap-4 sm:col-span-1 sm:gap-6 md:items-center md:gap-8"
-  >
-    <div class="community-cta animate-in" role="region" aria-labelledby="community-title">
-      <div class="cta-decor" aria-hidden="true"></div>
-      
-      <h2 id="community-title" class="community-title text-base leading-tight font-bold tracking-wide uppercase sm:text-lg md:text-2xl lg:text-3xl">
-        <span class="text-accent-cyan">Únete</span>
-        <span class="text-white"> a </span>
-        <span class="text-accent-orange">nuestra</span>
-        <span class="text-white"> </span>
-        <span class="text-accent-purple">comunidad</span>
-      </h2>
-      
-      <p class="community-subtitle text-sm sm:text-base text-text-secondary max-w-[20rem] text-center leading-relaxed">
-        Conecta con artistas, comparte tu trabajo y participa en proyectos colaborativos.
-      </p>
-      
-      <a 
-        href="/talentos" 
-        class="cta-btn bg-brand-navy hover:bg-accent-cyan hover:text-brand-dark text-accent-orange border-brand-navy focus-visible:outline-accent-cyan inline-block rounded-lg border px-6 py-3 text-base font-semibold whitespace-nowrap transition-all duration-300 hover:shadow-[0_0_20px_rgba(52,223,222,0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 sm:px-8 sm:py-3.5 md:text-lg"
-        aria-label="Crear perfil de artista en Digital Revolution"
-      >
-        Crea tu perfil ahora
-      </a>
-      
-      <div class="cta-ornaments" aria-hidden="true">
-        <span class="ring-pulse ring-pulse--1"></span>
-        <span class="ring-pulse ring-pulse--2"></span>
-        <span class="ring-pulse ring-pulse--3"></span>
-      </div>
+  <!-- Animated Background Layers -->
+  <div class="community-bg-layers" aria-hidden="true">
+    <!-- Gradient Overlay -->
+    <div class="community-gradient-overlay"></div>
+    
+    <!-- Animated Grid -->
+    <div class="community-grid-pattern"></div>
+    
+    <!-- Floating Particles Container -->
+    <div class="floating-particles-container">
+      <div class="particle particle-1"></div>
+      <div class="particle particle-2"></div>
+      <div class="particle particle-3"></div>
+      <div class="particle particle-4"></div>
+      <div class="particle particle-5"></div>
+      <div class="particle particle-6"></div>
+      <div class="particle particle-7"></div>
+      <div class="particle particle-8"></div>
+      <div class="particle particle-9"></div>
+      <div class="particle particle-10"></div>
+      <div class="particle particle-11"></div>
+      <div class="particle particle-12"></div>
+    </div>
+    
+    <!-- Geometric Shapes Layer -->
+    <div class="geometric-shapes-layer">
+      <div class="geo-shape geo-hexagon geo-hexagon-1"></div>
+      <div class="geo-shape geo-hexagon geo-hexagon-2"></div>
+      <div class="geo-shape geo-circle geo-circle-1"></div>
+      <div class="geo-shape geo-circle geo-circle-2"></div>
+      <div class="geo-shape geo-triangle geo-triangle-1"></div>
+      <div class="geo-shape geo-square geo-square-1"></div>
+    </div>
+    
+    <!-- Glow Orbs -->
+    <div class="glow-orbs">
+      <div class="glow-orb glow-orb-cyan"></div>
+      <div class="glow-orb glow-orb-orange"></div>
+      <div class="glow-orb glow-orb-purple"></div>
     </div>
   </div>
 
-  <!-- Right column with images -->
-  <div
-    class="md:col-span-auto flex shrink flex-col items-center justify-center gap-2 sm:col-span-1 sm:gap-3 md:gap-4"
-  >
-    <!-- Parallelogram right top -->
-    <div style="filter: none;" class="md:flex md:justify-center" aria-hidden="true">
-      <div
-        class="clip-path-parallelogram-left-corner community-card relative h-32 w-20 origin-right skew-y-25 transform overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-48 sm:w-28 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-140 md:w-72 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl lg:h-160 lg:w-80"
-      >
-        <Image
-          src={communityImage}
-          alt=""
-          widths={[80, 192, 288, 400, 560]}
-          sizes="(max-width: 640px) 80px, (max-width: 768px) 192px, (max-width: 1024px) 288px, 400px"
-          format="webp"
-          quality={85}
-          loading="lazy"
-          decoding="async"
-          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-        />
+  <!-- Main Content Container -->
+  <div class="community-content-wrapper">
+    <!-- Left Decorative Column -->
+    <div class="community-left-column animate-slide-right" data-parallax="0.5">
+      <!-- Floating Icons/Badges -->
+      <div class="floating-badges">
+        <div class="badge badge-music">
+          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M9 18V5l12-2v13" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <circle cx="6" cy="18" r="3" stroke-width="2"/>
+            <circle cx="18" cy="16" r="3" stroke-width="2"/>
+          </svg>
+          <span class="badge-label">Música</span>
+        </div>
+        
+        <div class="badge badge-art">
+          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke-width="2"/>
+          </svg>
+          <span class="badge-label">Arte</span>
+        </div>
+        
+        <div class="badge badge-code">
+          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="16 18 22 12 16 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <polyline points="8 6 2 12 8 18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+          <span class="badge-label">Código</span>
+        </div>
+        
+        <div class="badge badge-photo">
+          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/>
+            <polyline points="21 15 16 10 5 21" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+          <span class="badge-label">Foto</span>
+        </div>
+      </div>
+      
+      <!-- Stats Cards -->
+      <div class="stats-cards">
+        <div class="stat-card stat-card-1 glassmorphism">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Artistas</div>
+          <div class="stat-glow"></div>
+        </div>
+        
+        <div class="stat-card stat-card-2 glassmorphism">
+          <div class="stat-number">1.2K</div>
+          <div class="stat-label">Proyectos</div>
+          <div class="stat-glow"></div>
+        </div>
+        
+        <div class="stat-card stat-card-3 glassmorphism">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">Colaboraciones</div>
+          <div class="stat-glow"></div>
+        </div>
       </div>
     </div>
 
-    <!-- Parallelogram right bottom -->
-    <div
-      style="filter: none;" aria-hidden="true"
-      class="md:-mt-32 md:flex md:justify-center"
-    >
-      <div
-        class="clip-path-parallelogram-right-bottom community-card relative h-28 w-18 origin-right transform self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-36 sm:w-22 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-100 md:w-48 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl lg:h-110 lg:w-52"
-      >
-        <Image
-          src={communityImage}
-          alt=""
-          widths={[72, 144, 192, 272]}
-          sizes="(max-width: 640px) 72px, (max-width: 768px) 144px, (max-width: 1024px) 192px, 272px"
-          format="webp"
-          quality={85}
-          loading="lazy"
-          decoding="async"
-          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-        />
+    <!-- Center CTA Column -->
+    <div class="community-center-column" data-parallax="0">
+      <!-- Main CTA Card -->
+      <div class="community-main-cta animate-scale-in" role="region" aria-labelledby="community-title">
+        <!-- Card Decorations -->
+        <div class="cta-card-decorations" aria-hidden="true">
+          <div class="cta-border-glow cta-border-top"></div>
+          <div class="cta-border-glow cta-border-right"></div>
+          <div class="cta-border-glow cta-border-bottom"></div>
+          <div class="cta-border-glow cta-border-left"></div>
+          
+          <div class="cta-corner cta-corner-tl"></div>
+          <div class="cta-corner cta-corner-tr"></div>
+          <div class="cta-corner cta-corner-br"></div>
+          <div class="cta-corner cta-corner-bl"></div>
+        </div>
+        
+        <!-- Floating Elements Inside Card -->
+        <div class="cta-floating-elements" aria-hidden="true">
+          <div class="float-element float-star-1">✦</div>
+          <div class="float-element float-star-2">✧</div>
+          <div class="float-element float-star-3">✦</div>
+          <div class="float-element float-dot-1">•</div>
+          <div class="float-element float-dot-2">•</div>
+          <div class="float-element float-dot-3">•</div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="cta-content">
+          <!-- Title with Letter Animation -->
+          <h2 id="community-title" class="community-title">
+            <span class="title-word title-word-1">
+              <span class="letter letter-animate" style="--letter-index: 0">Ú</span>
+              <span class="letter letter-animate" style="--letter-index: 1">n</span>
+              <span class="letter letter-animate" style="--letter-index: 2">e</span>
+              <span class="letter letter-animate" style="--letter-index: 3">t</span>
+              <span class="letter letter-animate" style="--letter-index: 4">e</span>
+            </span>
+            <span class="title-spacer"> a </span>
+            <span class="title-word title-word-2">
+              <span class="letter letter-animate" style="--letter-index: 5">n</span>
+              <span class="letter letter-animate" style="--letter-index: 6">u</span>
+              <span class="letter letter-animate" style="--letter-index: 7">e</span>
+              <span class="letter letter-animate" style="--letter-index: 8">s</span>
+              <span class="letter letter-animate" style="--letter-index: 9">t</span>
+              <span class="letter letter-animate" style="--letter-index: 10">r</span>
+              <span class="letter letter-animate" style="--letter-index: 11">a</span>
+            </span>
+            <br />
+            <span class="title-word title-word-3">
+              <span class="letter letter-animate" style="--letter-index: 12">c</span>
+              <span class="letter letter-animate" style="--letter-index: 13">o</span>
+              <span class="letter letter-animate" style="--letter-index: 14">m</span>
+              <span class="letter letter-animate" style="--letter-index: 15">u</span>
+              <span class="letter letter-animate" style="--letter-index: 16">n</span>
+              <span class="letter letter-animate" style="--letter-index: 17">i</span>
+              <span class="letter letter-animate" style="--letter-index: 18">d</span>
+              <span class="letter letter-animate" style="--letter-index: 19">a</span>
+              <span class="letter letter-animate" style="--letter-index: 20">d</span>
+            </span>
+          </h2>
+          
+          <!-- Subtitle -->
+          <p class="community-subtitle">
+            Conecta con <strong>artistas</strong>, comparte tu <strong>trabajo</strong> y participa en <strong>proyectos colaborativos</strong>.
+          </p>
+          
+          <!-- Features List -->
+          <div class="community-features">
+            <div class="feature-item">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                  <circle cx="9" cy="7" r="4" stroke-width="2"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                </svg>
+              </div>
+              <span>Red de talento</span>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                  <polyline points="17 8 12 3 7 8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                  <line x1="12" y1="3" x2="12" y2="15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                </svg>
+              </div>
+              <span>Sube tu portafolio</span>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                </svg>
+              </div>
+              <span>Perfil verificado</span>
+            </div>
+          </div>
+          
+          <!-- CTA Button with Advanced Effects -->
+          <div class="cta-button-wrapper">
+            <a 
+              href="/talentos" 
+              class="cta-button cta-button-primary"
+              aria-label="Crear perfil de artista en Digital Revolution"
+            >
+              <span class="cta-button-bg"></span>
+              <span class="cta-button-glow"></span>
+              <span class="cta-button-text">
+                <span class="button-text-main">Crea tu perfil ahora</span>
+                <svg class="button-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <line x1="5" y1="12" x2="19" y2="12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                  <polyline points="12 5 19 12 12 19" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                </svg>
+              </span>
+              <span class="cta-button-ripple"></span>
+            </a>
+            
+            <!-- Secondary Button -->
+            <button class="cta-button cta-button-secondary" aria-label="Ver comunidad">
+              <span class="cta-button-bg"></span>
+              <span class="cta-button-text">
+                <span class="button-text-main">Explorar comunidad</span>
+              </span>
+            </button>
+          </div>
+          
+          <!-- Social Proof -->
+          <div class="social-proof">
+            <div class="user-avatars" aria-label="Miembros de la comunidad">
+              <div class="avatar avatar-1"></div>
+              <div class="avatar avatar-2"></div>
+              <div class="avatar avatar-3"></div>
+              <div class="avatar avatar-4"></div>
+              <div class="avatar-more">+495</div>
+            </div>
+            <p class="social-proof-text">
+              <strong>500+ artistas</strong> ya forman parte de la comunidad
+            </p>
+          </div>
+        </div>
+        
+        <!-- Ring Pulse Effects -->
+        <div class="cta-ring-effects" aria-hidden="true">
+          <div class="ring-pulse-effect ring-effect-1"></div>
+          <div class="ring-pulse-effect ring-effect-2"></div>
+          <div class="ring-pulse-effect ring-effect-3"></div>
+          <div class="ring-pulse-effect ring-effect-4"></div>
+        </div>
+      </div>
+      
+      <!-- Trust Badges -->
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="2"/>
+            <polyline points="9 12 11 14 15 10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+          <span>Verificado</span>
+        </div>
+        
+        <div class="trust-badge">
+          <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke-width="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+          <span>100% Seguro</span>
+        </div>
+        
+        <div class="trust-badge">
+          <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+            <polyline points="12 6 12 12 16 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+          <span>24/7 Soporte</span>
+        </div>
       </div>
     </div>
+
+    <!-- Right Visual Column -->
+    <div class="community-right-column animate-slide-left" data-parallax="0.5">
+      <!-- Modern Image Gallery -->
+      <div class="image-gallery-modern">
+        <!-- Main Featured Image -->
+        <div class="gallery-item gallery-main glassmorphism">
+          <div class="gallery-item-wrapper">
+            <Image
+              src={communityImage}
+              alt="Artista destacado de la comunidad"
+              widths={[300, 400, 600, 800]}
+              sizes="(max-width: 768px) 300px, (max-width: 1024px) 400px, 600px"
+              format="webp"
+              quality={90}
+              loading="lazy"
+              decoding="async"
+              class="gallery-image"
+            />
+            <div class="gallery-overlay">
+              <div class="gallery-info">
+                <span class="gallery-category">Arte Digital</span>
+                <span class="gallery-author">@artist_name</span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-glow"></div>
+        </div>
+        
+        <!-- Secondary Images -->
+        <div class="gallery-item gallery-secondary-1 glassmorphism">
+          <div class="gallery-item-wrapper">
+            <Image
+              src={communityImage}
+              alt="Proyecto colaborativo"
+              widths={[200, 300, 400]}
+              sizes="(max-width: 768px) 200px, 300px"
+              format="webp"
+              quality={85}
+              loading="lazy"
+              decoding="async"
+              class="gallery-image"
+            />
+            <div class="gallery-overlay">
+              <div class="gallery-info">
+                <span class="gallery-category">Música</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="gallery-item gallery-secondary-2 glassmorphism">
+          <div class="gallery-item-wrapper">
+            <Image
+              src={communityImage}
+              alt="Talento destacado"
+              widths={[200, 300, 400]}
+              sizes="(max-width: 768px) 200px, 300px"
+              format="webp"
+              quality={85}
+              loading="lazy"
+              decoding="async"
+              class="gallery-image"
+            />
+            <div class="gallery-overlay">
+              <div class="gallery-info">
+                <span class="gallery-category">Fotografía</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Floating Info Cards -->
+      <div class="floating-info-cards">
+        <div class="info-card info-card-1 glassmorphism">
+          <div class="info-card-icon">🎨</div>
+          <div class="info-card-content">
+            <div class="info-card-title">Portafolio ilimitado</div>
+            <div class="info-card-desc">Muestra todo tu trabajo</div>
+          </div>
+          <div class="info-card-glow"></div>
+        </div>
+        
+        <div class="info-card info-card-2 glassmorphism">
+          <div class="info-card-icon">🤝</div>
+          <div class="info-card-content">
+            <div class="info-card-title">Colabora en vivo</div>
+            <div class="info-card-desc">Proyectos en tiempo real</div>
+          </div>
+          <div class="info-card-glow"></div>
+        </div>
+        
+        <div class="info-card info-card-3 glassmorphism">
+          <div class="info-card-icon">⭐</div>
+          <div class="info-card-content">
+            <div class="info-card-title">Gana reconocimiento</div>
+            <div class="info-card-desc">Sistema de reputación</div>
+          </div>
+          <div class="info-card-glow"></div>
+        </div>
+      </div>
+      
+      <!-- Achievement Badges -->
+      <div class="achievement-showcase">
+        <div class="achievement-item achievement-gold">
+          <div class="achievement-icon">🏆</div>
+          <span class="achievement-label">Top Artista</span>
+        </div>
+        
+        <div class="achievement-item achievement-silver">
+          <div class="achievement-icon">💎</div>
+          <span class="achievement-label">Verificado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bottom Decorative Wave -->
+  <div class="community-wave-divider" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="wave-svg">
+      <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="wave-fill-1"></path>
+      <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="wave-fill-2"></path>
+      <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="wave-fill-3"></path>
+    </svg>
   </div>
 </section>
