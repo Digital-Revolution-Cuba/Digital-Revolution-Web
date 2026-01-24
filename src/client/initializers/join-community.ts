@@ -7,12 +7,12 @@ export function initJoinCommunityAnimations() {
   if (typeof window === 'undefined') return;
 
   const animatedElements = document.querySelectorAll('.animate-in');
-  
+
   if (animatedElements.length === 0) return;
 
   // Check if user prefers reduced motion
   const prefersReducedMotion = window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
+    '(prefers-reduced-motion: reduce)',
   ).matches;
 
   if (prefersReducedMotion) {
@@ -37,7 +37,7 @@ export function initJoinCommunityAnimations() {
     {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px',
-    }
+    },
   );
 
   // Observe all animated elements
