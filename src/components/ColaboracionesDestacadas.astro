@@ -7,9 +7,10 @@ const visibleCards = 3;
 ---
 
 <section id="colaboraciones" class="h-auto w-auto bg-gray-950">
-  <div class="relative z-30 min-h-150 pb-8">
+  <div class="relative z-30 min-h-150 overflow-hidden pb-8">
     <div
-      class="second-clip absolute top-0 right-0 bottom-0 w-2000 bg-orange-500"
+      class="second-clip absolute top-0 right-0 bg-orange-500"
+      aria-hidden="true"
     >
     </div>
     <div class="general relative z-30 min-h-150 bg-teal-300">
@@ -65,6 +66,7 @@ const visibleCards = 3;
               class="cards-track"
               role="list"
               aria-label="Lista de colaboraciones destacadas"
+              data-total={totalCards}
             >
               {
                 colaboracionesData.map((colab) => (
@@ -116,160 +118,9 @@ const visibleCards = 3;
   </div>
 </section>
 
-<script define:vars={{ totalCards, visibleCards }}>
-  /**
-   * Colaboraciones Slider con responsive cards
-   * Optimizado con mediciones dinámicas
-   */
-  function initColaboracionesSlider() {
-    const prevBtn = document.getElementById('prevBtnColab');
-    const nextBtn = document.getElementById('nextBtnColab');
-    const slider = document.getElementById('cardSliderColab');
-    const viewport = document.querySelector('.cards-viewport');
-    const pagination = document.getElementById('paginationColab');
-
-    if (!prevBtn || !nextBtn || !slider || !viewport || !pagination) {
-      console.error('Colaboraciones: Required elements not found');
-      return;
-    }
-
-    let currentIndex = 0;
-    let cardsPerPage = 3;
-    let itemWidth = 0;
-    let gap = 0;
-
-    function calculateLayout() {
-      const firstItem = slider.querySelector('.card-item');
-      if (!firstItem) return;
-
-      const viewportWidth = window.innerWidth;
-
-      if (viewportWidth < 640) {
-        cardsPerPage = 1;
-      } else if (viewportWidth < 1024) {
-        cardsPerPage = 2;
-      } else {
-        cardsPerPage = 3;
-      }
-
-      // Medir el ancho real del item renderizado
-      itemWidth = firstItem.offsetWidth;
-
-      // Obtener el gap real del CSS
-      const computedStyle = window.getComputedStyle(slider);
-      gap = parseFloat(computedStyle.gap) || 0;
-
-      // Ajustar el ancho del viewport para que quepan exactamente las tarjetas indicadas
-      const requiredViewportWidth =
-        itemWidth * cardsPerPage + gap * (cardsPerPage - 1);
-      viewport.style.maxWidth = `${requiredViewportWidth}px`;
-    }
-
-    function getMaxIndex() {
-      return Math.max(0, Math.ceil(totalCards / cardsPerPage) - 1);
-    }
-
-    function generateDots() {
-      pagination.innerHTML = '';
-      const maxIndex = getMaxIndex();
-      const numPages = maxIndex + 1;
-
-      for (let i = 0; i < numPages; i++) {
-        const dot = document.createElement('button');
-        dot.className = `pagination-dot ${i === currentIndex ? 'active' : ''}`;
-        dot.setAttribute('aria-label', `Ir a página ${i + 1}`);
-        dot.addEventListener('click', () => {
-          currentIndex = i;
-          updateSlider();
-        });
-        pagination.appendChild(dot);
-      }
-    }
-
-    function updateSlider() {
-      const maxIndex = getMaxIndex();
-      if (currentIndex > maxIndex) currentIndex = maxIndex;
-
-      const offset = -currentIndex * cardsPerPage * (itemWidth + gap);
-      slider.style.transform = `translateX(${offset}px)`;
-
-      // Update button states
-      const isFirst = currentIndex <= 0;
-      const isLast = currentIndex >= maxIndex;
-
-      prevBtn.disabled = isFirst;
-      nextBtn.disabled = isLast;
-      prevBtn.style.opacity = isFirst ? '0.4' : '1';
-      nextBtn.style.opacity = isLast ? '0.4' : '1';
-
-      // ARIA states
-      prevBtn.setAttribute('aria-disabled', isFirst.toString());
-      nextBtn.setAttribute('aria-disabled', isLast.toString());
-
-      // Update dots
-      const dots = pagination.querySelectorAll('.pagination-dot');
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentIndex);
-      });
-    }
-
-    prevBtn.addEventListener('click', () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateSlider();
-      }
-    });
-
-    nextBtn.addEventListener('click', () => {
-      const maxIndex = getMaxIndex();
-      if (currentIndex < maxIndex) {
-        currentIndex++;
-        updateSlider();
-      }
-    });
-
-    // Keyboard navigation
-    prevBtn.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        prevBtn.click();
-      }
-    });
-
-    nextBtn.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        nextBtn.click();
-      }
-    });
-
-    // Recalcular en resize con debounce
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        calculateLayout();
-        currentIndex = 0;
-        generateDots();
-        updateSlider();
-      }, 150);
-    });
-
-    // Esperar a que las fuentes y estilos se apliquen
-    setTimeout(() => {
-      calculateLayout();
-      generateDots();
-      updateSlider();
-    }, 100);
-  }
-
-  // Inicializar cuando el DOM esté listo
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initColaboracionesSlider);
-  } else {
-    initColaboracionesSlider();
-  }
-</script>
+<!-- Behaviour is initialized from a centralized client initializer -->
+<!-- Include in the page that uses this component: -->
+<!-- <script type="module" src="/src/client/initializers/colaboraciones.ts"></script> -->
 
 <style>
   /* ===================================
@@ -283,7 +134,13 @@ const visibleCards = 3;
   /* Soporte para clases Tailwind usadas en el HTML */
   .second-clip {
     clip-path: polygon(100% 0%, 0 100%, 100% 100%);
-    height: 100%; /* Tomar altura del contenedor padre */
+    /* Usar altura controlada para evitar que sobresalga debajo del clip azul */
+    min-height: 37.5rem; /* Coincide con .background-clip-orange */
+    width: 125rem; /* Ajusta según el diseño */
+    top: 0;
+    right: 0;
+    z-index: 1;
+    pointer-events: none; /* decorativo */
   }
 
   .general {
@@ -406,18 +263,25 @@ const visibleCards = 3;
      Gallery Section con Container Queries
      =================================== */
   .colaboraciones-gallery-wrapper {
+    /* Mobile first: use container queries for component-level responsiveness */
     container-type: inline-size;
     container-name: colaboraciones;
     width: 100%;
     padding: var(--space-md);
+
+    /* Layout variables (tweakable) */
+    --nav-w: 44px; /* base nav button width */
+    --gap: 0.75rem; /* base gap between cards */
+    --gutter: 1rem; /* horizontal padding inside wrapper */
   }
 
   .colaboraciones-navigation {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: clamp(1rem, 2vw, 2rem);
-    max-width: 90rem;
+    gap: var(--gap);
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
   }
 
@@ -429,14 +293,18 @@ const visibleCards = 3;
 
   .cards-track {
     display: flex;
-    gap: 1.5rem;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: var(--gap);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     min-width: max-content;
+    align-items: flex-start;
+    flex-wrap: nowrap; /* Never wrap — keep horizontal layout */
   }
 
   .card-item {
-    flex-shrink: 0;
-    width: 320px;
+    /* Allow cards to shrink if necessary but prefer specified width via clamp */
+    flex: 0 1 auto;
+    width: clamp(140px, 30vw, 280px);
+    box-sizing: border-box;
   }
 
   /* ===================================
@@ -501,25 +369,46 @@ const visibleCards = 3;
   }
 
   /* ===================================
-     Container Query: Mobile
+     Container Query: Tiny mobile (very narrow screens)
      =================================== */
-  @container colaboraciones (max-width: 640px) {
+  @container colaboraciones (max-width: 420px) {
     .colaboraciones-navigation {
-      gap: 0.5rem;
+      gap: calc(var(--gap) * 0.75);
     }
-
     .nav-btn {
-      position: static;
       min-width: 36px;
       min-height: 36px;
     }
-
     .cards-track {
-      gap: 1rem;
+      gap: calc(var(--gap) * 0.75);
     }
-
+    /* Cards get very compact but remain usable */
     .card-item {
-      width: clamp(280px, 80vw, 320px);
+      width: clamp(120px, 28vw, 220px);
+    }
+  }
+
+  /* ===================================
+     Container Query: Mobile
+     =================================== */
+  @container colaboraciones (min-width: 421px) and (max-width: 639px) {
+    .colaboraciones-navigation {
+      gap: calc(var(--gap) * 0.9);
+    }
+    .nav-btn {
+      min-width: 40px;
+      min-height: 40px;
+    }
+    .cards-track {
+      gap: var(--gap);
+    }
+    /* Try to fit 2 cards when space allows */
+    .card-item {
+      width: calc(
+        (100% - (2 * var(--nav-w)) - (1 * var(--gap)) - (2 * var(--gutter))) / 2
+      );
+      min-width: 140px;
+      max-width: 260px;
     }
   }
 
@@ -558,13 +447,24 @@ const visibleCards = 3;
   /* ===================================
      Container Query: Tablet
      =================================== */
-  @container colaboraciones (min-width: 641px) and (max-width: 1023px) {
-    .card-item {
-      width: 300px;
+  @container colaboraciones (min-width: 640px) and (max-width: 1023px) {
+    .colaboraciones-navigation {
+      gap: calc(var(--gap) * 1.15);
     }
-
+    .nav-btn {
+      min-width: 48px;
+      min-height: 48px;
+    }
     .cards-track {
       gap: 1.25rem;
+    }
+    /* Attempt to fit 3 cards */
+    .card-item {
+      width: calc(
+        (100% - (2 * var(--nav-w)) - (2 * 1.25rem) - (2 * var(--gutter))) / 3
+      );
+      min-width: 140px;
+      max-width: 300px;
     }
   }
 
@@ -572,16 +472,24 @@ const visibleCards = 3;
      Container Query: Desktop
      =================================== */
   @container colaboraciones (min-width: 1024px) {
-    .card-item {
-      width: 320px;
+    .colaboraciones-navigation {
+      max-width: 1140px;
+      gap: 1.5rem;
     }
-
     .cards-track {
       gap: 1.5rem;
     }
-
-    .colaboraciones-navigation {
-      gap: 2rem;
+    /* Fit more cards; keep them readable */
+    .card-item {
+      width: clamp(
+        160px,
+        calc(
+          (100% - (2 * var(--nav-w)) - (4 * 1.5rem) - (2 * var(--gutter))) / 6
+        ),
+        320px
+      );
+      min-width: 160px;
+      max-width: 320px;
     }
   }
 

@@ -1,129 +1,394 @@
 ---
-import '../styles/global.css';
+import '../styles/components/join-community.css';
+import { Image } from 'astro:assets';
+import communityImage from '../assets/ImagenPruebaGaleria.avif';
 ---
 
 <section
-  class="join-our-community bg-brand-backgroundGlobal relative flex flex-col items-center justify-center gap-4 px-4 py-6 sm:grid sm:grid-cols-3 sm:items-center sm:justify-items-center sm:gap-3 sm:px-4 sm:py-6 md:flex md:flex-row md:items-center md:justify-center md:gap-5 md:py-30"
+  class="join-our-community"
+  aria-label="Sección para unirse a la comunidad de artistas"
 >
-  <!-- SVG Filter for rounded corners on clip-path -->
-  <svg
-    style="visibility: hidden; position: absolute;"
-    width="0"
-    height="0"
-    xmlns="http://www.w3.org/2000/svg"
-    version="1.1"
-  >
-    <defs>
-      <filter id="goo">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"
-        ></feGaussianBlur>
-        <feColorMatrix
-          in="blur"
-          mode="matrix"
-          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
-          result="goo"></feColorMatrix>
-        <feComposite in="SourceGraphic" in2="goo" operator="atop"></feComposite>
-      </filter>
-    </defs>
-  </svg>
+  <!-- Background Gradient Overlay -->
+  <div class="jc-bg-gradient" aria-hidden="true"></div>
+  
+  <!-- Animated Grid Pattern -->
+  <div class="jc-bg-grid" aria-hidden="true"></div>
+  
+  <!-- Particle System Container -->
+  <div class="jc-particles" aria-hidden="true">
+    <div class="jc-particle jc-particle--1"></div>
+    <div class="jc-particle jc-particle--2"></div>
+    <div class="jc-particle jc-particle--3"></div>
+    <div class="jc-particle jc-particle--4"></div>
+    <div class="jc-particle jc-particle--5"></div>
+    <div class="jc-particle jc-particle--6"></div>
+    <div class="jc-particle jc-particle--7"></div>
+    <div class="jc-particle jc-particle--8"></div>
+    <div class="jc-particle jc-particle--9"></div>
+    <div class="jc-particle jc-particle--10"></div>
+    <div class="jc-particle jc-particle--11"></div>
+    <div class="jc-particle jc-particle--12"></div>
+  </div>
+  
+  <!-- Geometric Shapes -->
+  <div class="jc-shapes" aria-hidden="true">
+    <div class="jc-shape jc-shape--hexagon"></div>
+    <div class="jc-shape jc-shape--circle"></div>
+    <div class="jc-shape jc-shape--triangle"></div>
+    <div class="jc-shape jc-shape--square"></div>
+    <div class="jc-shape jc-shape--pentagon"></div>
+    <div class="jc-shape jc-shape--diamond"></div>
+  </div>
+  
+  <!-- Glow Orbs -->
+  <div class="jc-glow-orb jc-glow-orb--cyan" aria-hidden="true"></div>
+  <div class="jc-glow-orb jc-glow-orb--orange" aria-hidden="true"></div>
+  <div class="jc-glow-orb jc-glow-orb--purple" aria-hidden="true"></div>
 
-  <!-- Parallelogram top left - the other is literally the same but the opposite skew -->
-  <div
-    class="md:col-span-auto flex flex-col items-center justify-center gap-3 sm:col-span-1 sm:items-start sm:gap-3 md:gap-10"
-  >
-    <div
-      class="acordeon-item relative h-32 w-20 origin-right skew-y-[-25deg] transform self-start overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-    >
-      <img
-        src="/src/assets/image (4).png"
-        alt="join our community"
-        class="h-full w-full rounded-lg rounded-tl-md rounded-br-md border-1 object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-      />
+  <!-- Main Content Wrapper (3-Column Grid) -->
+  <div class="jc-content-wrapper">
+    <!-- LEFT COLUMN -->
+    <div class="jc-left-column animate-in">
+      <!-- Floating Badges -->
+      <div class="jc-floating-badge">
+        <div class="jc-badge-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M9 18V5l12-2v13" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <circle cx="6" cy="18" r="3" stroke-width="2"/>
+            <circle cx="18" cy="16" r="3" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="jc-badge-text">
+          <p class="jc-badge-label">Música</p>
+          <p class="jc-badge-count">200+ tracks</p>
+        </div>
+      </div>
+      
+      <div class="jc-floating-badge">
+        <div class="jc-badge-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="jc-badge-text">
+          <p class="jc-badge-label">Arte</p>
+          <p class="jc-badge-count">150+ obras</p>
+        </div>
+      </div>
+      
+      <div class="jc-floating-badge">
+        <div class="jc-badge-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="16 18 22 12 16 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <polyline points="8 6 2 12 8 18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="jc-badge-text">
+          <p class="jc-badge-label">Código</p>
+          <p class="jc-badge-count">80+ proyectos</p>
+        </div>
+      </div>
+      
+      <div class="jc-floating-badge">
+        <div class="jc-badge-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/>
+            <polyline points="21 15 16 10 5 21" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="jc-badge-text">
+          <p class="jc-badge-label">Fotografía</p>
+          <p class="jc-badge-count">300+ fotos</p>
+        </div>
+      </div>
+      
+      <!-- Stats Cards -->
+      <div class="jc-stats-card animate-in animate-in--delay-1">
+        <p class="jc-stats-number">500+</p>
+        <p class="jc-stats-label">Artistas</p>
+      </div>
+      
+      <div class="jc-stats-card animate-in animate-in--delay-2">
+        <p class="jc-stats-number">1.2K</p>
+        <p class="jc-stats-label">Proyectos</p>
+      </div>
+      
+      <div class="jc-stats-card animate-in animate-in--delay-3">
+        <p class="jc-stats-number">50+</p>
+        <p class="jc-stats-label">Colaboraciones</p>
+      </div>
     </div>
 
-    <!-- Parallelogram top bottom -->
-    <div style="filter: url('#goo');">
-      <div
-        class="clip-path-parallelogram-left-corner acordeon-item relative h-28 w-16 origin-right transform self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-0 sm:h-32 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-90 md:w-55 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-      >
-        <img
-          src="/src/assets/image (4).png"
-          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-        />
+    <!-- CENTER COLUMN -->
+    <div class="jc-center-column">
+      <!-- Main CTA Card -->
+      <div class="jc-cta-card">
+        <!-- Corner Decorations -->
+        <div class="jc-corner-decor jc-corner-decor--tl" aria-hidden="true"></div>
+        <div class="jc-corner-decor jc-corner-decor--tr" aria-hidden="true"></div>
+        <div class="jc-corner-decor jc-corner-decor--bl" aria-hidden="true"></div>
+        <div class="jc-corner-decor jc-corner-decor--br" aria-hidden="true"></div>
+        
+        <!-- Floating Stars -->
+        <div class="jc-floating-element jc-floating-star jc-floating-star--1" aria-hidden="true"></div>
+        <div class="jc-floating-element jc-floating-star jc-floating-star--2" aria-hidden="true"></div>
+        <div class="jc-floating-element jc-floating-star jc-floating-star--3" aria-hidden="true"></div>
+        
+        <!-- Floating Dots -->
+        <div class="jc-floating-element jc-floating-dot jc-floating-dot--1" aria-hidden="true"></div>
+        <div class="jc-floating-element jc-floating-dot jc-floating-dot--2" aria-hidden="true"></div>
+        <div class="jc-floating-element jc-floating-dot jc-floating-dot--3" aria-hidden="true"></div>
+        
+        <!-- CTA Content -->
+        <div class="jc-cta-content">
+          <!-- Animated Title -->
+          <h2 class="jc-cta-title">
+            <span class="jc-title-word">
+              <span class="jc-title-letter" style="--letter-index: 0">Ú</span>
+              <span class="jc-title-letter" style="--letter-index: 1">n</span>
+              <span class="jc-title-letter" style="--letter-index: 2">e</span>
+              <span class="jc-title-letter" style="--letter-index: 3">t</span>
+              <span class="jc-title-letter" style="--letter-index: 4">e</span>
+            </span>
+            <span> a </span>
+            <span class="jc-title-word">
+              <span class="jc-title-letter" style="--letter-index: 5">n</span>
+              <span class="jc-title-letter" style="--letter-index: 6">u</span>
+              <span class="jc-title-letter" style="--letter-index: 7">e</span>
+              <span class="jc-title-letter" style="--letter-index: 8">s</span>
+              <span class="jc-title-letter" style="--letter-index: 9">t</span>
+              <span class="jc-title-letter" style="--letter-index: 10">r</span>
+              <span class="jc-title-letter" style="--letter-index: 11">a</span>
+            </span>
+            <br />
+            <span class="jc-title-word jc-gradient-text">
+              <span class="jc-title-letter" style="--letter-index: 12">c</span>
+              <span class="jc-title-letter" style="--letter-index: 13">o</span>
+              <span class="jc-title-letter" style="--letter-index: 14">m</span>
+              <span class="jc-title-letter" style="--letter-index: 15">u</span>
+              <span class="jc-title-letter" style="--letter-index: 16">n</span>
+              <span class="jc-title-letter" style="--letter-index: 17">i</span>
+              <span class="jc-title-letter" style="--letter-index: 18">d</span>
+              <span class="jc-title-letter" style="--letter-index: 19">a</span>
+              <span class="jc-title-letter" style="--letter-index: 20">d</span>
+            </span>
+          </h2>
+          
+          <!-- Subtitle -->
+          <p class="jc-cta-subtitle">
+            Conecta con <strong>artistas</strong>, comparte tu <strong>trabajo</strong> y participa en <strong>proyectos colaborativos</strong>.
+          </p>
+          
+          <!-- Features List -->
+          <ul class="jc-features-list">
+            <li class="jc-feature-item">
+              <svg class="jc-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                <circle cx="9" cy="7" r="4" stroke-width="2"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+              </svg>
+              <span>Red de talento</span>
+            </li>
+            
+            <li class="jc-feature-item">
+              <svg class="jc-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                <polyline points="17 8 12 3 7 8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                <line x1="12" y1="3" x2="12" y2="15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+              </svg>
+              <span>Sube tu portafolio</span>
+            </li>
+            
+            <li class="jc-feature-item">
+              <svg class="jc-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+              </svg>
+              <span>Perfil verificado</span>
+            </li>
+          </ul>
+          
+          <!-- CTA Buttons -->
+          <div class="jc-cta-buttons">
+            <a href="/talentos" class="jc-btn-primary" aria-label="Crear perfil de artista">
+              <span>Busca Perfiles ahora</span>
+              <svg class="jc-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <line x1="5" y1="12" x2="19" y2="12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                <polyline points="12 5 19 12 12 19" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+              </svg>
+            </a>
+            
+            <a href="/galeria" class="jc-btn-secondary" aria-label="Explorar comunidad">
+              <span>Explorar comunidad</span>
+            </a>
+          </div>
+          
+          <!-- Social Proof -->
+          <div class="jc-social-proof">
+            <div class="jc-avatar-group">
+              <img class="jc-avatar" src="https://i.pravatar.cc/100?img=1" alt="Usuario 1" width="48" height="48" />
+              <img class="jc-avatar" src="https://i.pravatar.cc/100?img=2" alt="Usuario 2" width="48" height="48" />
+              <img class="jc-avatar" src="https://i.pravatar.cc/100?img=3" alt="Usuario 3" width="48" height="48" />
+              <img class="jc-avatar" src="https://i.pravatar.cc/100?img=4" alt="Usuario 4" width="48" height="48" />
+            </div>
+            <p class="jc-social-text">
+              <span class="jc-social-highlight">+495</span> artistas activos esta semana
+            </p>
+          </div>
+        </div>
+        
+        <!-- Ring Pulse Effects -->
+        <div class="jc-ring-pulse-container" aria-hidden="true">
+          <div class="jc-ring-pulse jc-ring-pulse--1"></div>
+          <div class="jc-ring-pulse jc-ring-pulse--2"></div>
+          <div class="jc-ring-pulse jc-ring-pulse--3"></div>
+        </div>
+      </div>
+      
+      <!-- Trust Badges -->
+      <div class="jc-trust-badges">
+        <div class="jc-trust-badge">
+          <svg class="jc-trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="2"/>
+            <polyline points="9 12 11 14 15 10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+          <span>Verificado</span>
+        </div>
+        
+        <div class="jc-trust-badge">
+          <svg class="jc-trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke-width="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+          <span>100% Seguro</span>
+        </div>
+        
+        <div class="jc-trust-badge">
+          <svg class="jc-trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+            <polyline points="12 6 12 12 16 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+          <span>24/7 Soporte</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="jc-right-column animate-in">
+      <!-- Modern Gallery -->
+      <div class="jc-modern-gallery">
+        <div class="jc-gallery-item">
+          <Image
+            src={communityImage}
+            alt="Artista destacado"
+            widths={[400, 600, 800]}
+            sizes="(max-width: 768px) 400px, 600px"
+            format="webp"
+            quality={90}
+            loading="lazy"
+            class="jc-gallery-image"
+          />
+          <div class="jc-gallery-overlay">
+            <p class="jc-gallery-label">Arte Digital</p>
+          </div>
+        </div>
+        
+        <div class="jc-gallery-item">
+          <Image
+            src={communityImage}
+            alt="Proyecto musical"
+            widths={[200, 300, 400]}
+            sizes="(max-width: 768px) 200px, 300px"
+            format="webp"
+            quality={85}
+            loading="lazy"
+            class="jc-gallery-image"
+          />
+          <div class="jc-gallery-overlay">
+            <p class="jc-gallery-label">Música</p>
+          </div>
+        </div>
+        
+        <div class="jc-gallery-item">
+          <Image
+            src={communityImage}
+            alt="Fotografía profesional"
+            widths={[200, 300, 400]}
+            sizes="(max-width: 768px) 200px, 300px"
+            format="webp"
+            quality={85}
+            loading="lazy"
+            class="jc-gallery-image"
+          />
+          <div class="jc-gallery-overlay">
+            <p class="jc-gallery-label">Fotografía</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Floating Info Cards -->
+      <div class="jc-info-card">
+        <div class="jc-info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/>
+            <polyline points="21 15 16 10 5 21" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3 class="jc-info-title">Portafolio ilimitado</h3>
+        <p class="jc-info-text">Muestra todo tu trabajo sin límites</p>
+      </div>
+      
+      <div class="jc-info-card">
+        <div class="jc-info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <circle cx="9" cy="7" r="4" stroke-width="2"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3 class="jc-info-title">Colabora en vivo</h3>
+        <p class="jc-info-text">Proyectos en tiempo real</p>
+      </div>
+      
+      <div class="jc-info-card">
+        <div class="jc-info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3 class="jc-info-title">Gana reconocimiento</h3>
+        <p class="jc-info-text">Sistema de reputación y badges</p>
+      </div>
+      
+      <!-- Achievement Badges -->
+      <div class="jc-achievement-badges">
+        <div class="jc-achievement-badge">
+          <div class="jc-achievement-icon">🏆</div>
+          <div class="jc-achievement-text">
+            <p class="jc-achievement-title">Top Artista</p>
+            <p class="jc-achievement-subtitle">Este mes</p>
+          </div>
+        </div>
+        
+        <div class="jc-achievement-badge">
+          <div class="jc-achievement-icon">💎</div>
+          <div class="jc-achievement-text">
+            <p class="jc-achievement-title">Perfil Verificado</p>
+            <p class="jc-achievement-subtitle">Cuenta oficial</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- Parallelogram center top and bottom -->
-  <div
-    class="md:col-span-auto flex flex-col items-center justify-center gap-3 sm:col-span-1 sm:gap-3 md:items-center md:gap-4"
-  >
-    <div style="filter: url('#goo');" class="hidden sm:block">
-      <div
-        class="clip-path-parallelogram-center-top h-20 w-14 self-start overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-      >
-        <img
-          src="/src/assets/image (4).png"
-          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-        />
-      </div>
-    </div>
-
-    <!-- Botón y texto en el centro -->
-    <div
-      class="flex w-full max-w-[280px] flex-col-reverse items-center gap-3 text-center sm:max-w-[350px] sm:gap-4 md:gap-4"
-    >
-      <button
-        class="bg-brand-navy hover:bg-accent-cyan hover:text-brand-dark text-accent-orange border-brand-navy rounded-lg border px-4 py-2 text-xs font-semibold whitespace-nowrap transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)] sm:px-3 sm:py-1.5 sm:text-xs md:px-4 md:py-2 md:text-base"
-      >
-        Crea tu perfil ahora
-      </button>
-      <h4 class="text-xs leading-relaxed sm:text-[10px] md:text-base">
-        Únete a nuestra comunidad
-      </h4>
-    </div>
-
-    <div style="filter: url('#goo');" class="hidden sm:block">
-      <div
-        class="clip-path-parallelogram-center-bottom h-20 w-14 self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md sm:h-28 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-70 md:w-50 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-      >
-        <img
-          src="/src/assets/image (4).png"
-          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-        />
-      </div>
-    </div>
-  </div>
-
-  <!-- Button and text with images above and below - última columna en móvil/sm -->
-  <div
-    class="md:col-span-auto flex flex-col items-center justify-center gap-3 sm:col-span-3 sm:gap-3 md:gap-0"
-  >
-    <!-- Parallelogram right top  -->
-    <div style="filter: url('#goo');" class="md:flex md:justify-center">
-      <div
-        class="clip-path-parallelogram-left-corner acordeon-item relative h-32 w-18 origin-right skew-y-[25deg] transform overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 sm:h-36 sm:w-20 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-120 md:w-60 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-      >
-        <img
-          src="/src/assets/image (4).png"
-          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-        />
-      </div>
-    </div>
-
-    <!-- Parallelogram right bottom - abajo del botón -->
-    <div
-      style="filter: url('#goo');"
-      class="md:-mt-40 md:flex md:justify-center"
-    >
-      <div
-        class="clip-path-parallelogram-right-bottom acordeon-item relative h-28 w-16 origin-right transform self-end overflow-hidden rounded-lg rounded-tl-md rounded-br-md hover:rotate-y-0 hover:rotate-z-0 hover:skew-y-0 sm:h-32 sm:w-18 sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:h-90 md:w-40 md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-      >
-        <img
-          src="/src/assets/image (4).png"
-          class="h-full w-full rounded-lg rounded-tl-md rounded-br-md object-cover shadow-2xl sm:rounded-xl sm:rounded-tl-lg sm:rounded-br-lg md:rounded-4xl md:rounded-tl-2xl md:rounded-br-2xl"
-        />
-      </div>
-    </div>
+  
+  <!-- Wave Divider -->
+  <div class="jc-wave-divider" aria-hidden="true">
+    <svg class="jc-wave-svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#34dfde"></path>
+      <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#f49624"></path>
+      <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#9747ff"></path>
+    </svg>
   </div>
 </section>

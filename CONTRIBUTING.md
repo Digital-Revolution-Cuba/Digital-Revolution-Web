@@ -29,6 +29,14 @@ Usamos el formato:
 - `style/`: Para cambios visuales  
   Ejemplo: `style/mejoras-responsive`
 
+## 🛠️ Configuración de Editor y Estilo
+
+Para asegurar la consistencia del código, sigue estas directrices:
+
+1. **EditorConfig**: El proyecto incluye un archivo `.editorconfig`. Asegúrate de que tu editor lo soporte ( VS Code lo soporta nativamente o vía extensión).
+2. **VS Code**: Se recomiendan las extensiones listadas en `.vscode/extensions.json`. Al abrir el proyecto, VS Code debería sugerirte instalarlas.
+3. **Copilot Instructions**: Si utilizas GitHub Copilot, revisa `.github/copilot-instructions.md` para entender las reglas específicas de arquitectura y rendimiento que el asistente debe seguir.
+
 **Reglas importantes:**
 
 - Usa minúsculas

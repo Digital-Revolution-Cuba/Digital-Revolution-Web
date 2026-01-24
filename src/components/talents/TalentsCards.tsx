@@ -6,33 +6,31 @@ import { useMemo } from 'react';
 export default function TalentSearch() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('Todos');
-  
+
   const filteredTalents = useMemo(() => {
     return talentsMock.filter((talent) => {
       const matchesSearch =
         talent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         talent.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
         talent.skills.some((skill) =>
-          skill.toLowerCase().includes(searchQuery.toLowerCase())
+          skill.toLowerCase().includes(searchQuery.toLowerCase()),
         );
 
       const matchesCategory =
         activeCategory === 'Todos' ||
         talent.role.toLowerCase().includes(activeCategory.toLowerCase()) ||
         talent.skills.some((skill) =>
-          skill.toLowerCase().includes(activeCategory.toLowerCase())
+          skill.toLowerCase().includes(activeCategory.toLowerCase()),
         );
 
       return matchesSearch && matchesCategory;
     });
   }, [searchQuery, activeCategory]);
 
-
-  function LoadMoreTalents(){
-    console.log("Cargando talentos")
+  function LoadMoreTalents() {
+    console.log('Cargando talentos');
   }
 
-  
   return (
     <>
       <div className="talents-search-bar">
@@ -52,7 +50,9 @@ export default function TalentSearch() {
           <button
             key={cat}
             className={`filter-pill ${
-              cat === activeCategory ? 'filter-pill-active' : 'filter-pill-inactive'
+              cat === activeCategory
+                ? 'filter-pill-active'
+                : 'filter-pill-inactive'
             }`}
             onClick={() => setActiveCategory(cat)}
           >
@@ -107,7 +107,9 @@ export default function TalentSearch() {
               </div>
               <div className="talent-footer">
                 {/* Stats o estadísticas del usuario */}
-                <button className="button-cta" style={{padding: "10px 15px"}}>Ver Perfil</button>
+                <button className="button-cta" style={{ padding: '10px 15px' }}>
+                  Ver Perfil
+                </button>
               </div>
             </div>
           </div>
@@ -115,7 +117,9 @@ export default function TalentSearch() {
       </div>
 
       <div className="load-more">
-        <button className="button-cta" onClick={LoadMoreTalents}>Ver Más Talentos</button>
+        <button className="button-cta" onClick={LoadMoreTalents}>
+          Ver Más Talentos
+        </button>
       </div>
     </>
   );

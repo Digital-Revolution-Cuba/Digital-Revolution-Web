@@ -17,8 +17,12 @@ const {
 
 const canonicalURL = new URL(
   Astro.url.pathname,
-  Astro.site || 'https://digital-revolution-web.vercel.app/',
+  Astro.site || 'https://digital-revolution-web.vercel.app/'
 );
+const absImage = new URL(
+  image,
+  Astro.site || 'https://digital-revolution-web.vercel.app/'
+).toString();
 ---
 
 <!doctype html>
@@ -40,19 +44,56 @@ const canonicalURL = new URL(
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={absImage} />
     <meta property="og:locale" content="es_ES" />
+    <!-- Recommended OG image dimensions: 1200x630 -->
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image" content={absImage} />
     <meta name="twitter:creator" content="@drwebcuba" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Digital Revolution Web",
+        "url": "${(Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}",
+        "image": "${absImage}",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "${(Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Digital Revolution Web",
+        "url": "${(Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}",
+        "logo": "${new URL('/favicon.svg', Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}",
+        "sameAs": [
+          "https://twitter.com/digitalrev",
+          "https://instagram.com/digitalrev"
+        ]
+      }
+    </script>
   </head>
   <body>
     <Header />
+    <script type="module" src="/src/client/initializers/header.ts"></script>
+    <script type="module" src="/src/client/initializers/responsive-images.ts"
+    ></script>
+    <script type="module" src="/src/client/initializers/join-community.ts"></script>
     <slot />
   </body>
 </html>
