@@ -5,7 +5,7 @@ description: 'Repository context for Copilot AI — tech stack, standards, rules
 # GitHub Copilot Instructions: Digital-Revolution-Web
 
 **Location:** `.github/copilot-instructions.md`  
-**Purpose:** Guide Copilot's code suggestions for a high-performance, high-conversion landing-page/portfolio built with Astro 5.0 + React 19 (Islands architecture). All suggestions must respect the performance, accessibility, and type-safety constraints below.
+**Purpose:** Guide Copilot's code suggestions for a high-performance, high-conversion landing-page built with Astro 5.0 + React 19 (Islands architecture). All suggestions must respect the performance, accessibility, and type-safety constraints below.
 
 ---
 
@@ -26,7 +26,7 @@ description: 'Repository context for Copilot AI — tech stack, standards, rules
 
 ## Project Overview
 
-**Goal:** Build a landing page/portfolio with best-in-class performance and maintainability.
+**Goal:** Build a landing page with best-in-class performance and maintainability.
 
 **Primary KPIs (non-negotiable):**
 
