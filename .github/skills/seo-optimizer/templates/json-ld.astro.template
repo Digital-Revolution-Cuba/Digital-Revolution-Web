@@ -1,0 +1,55 @@
+---
+/**
+ * JSON-LD Structured Data Template
+ * 
+ * Usage: Include in your Layout component's <head>
+ * 
+ * Props:
+ * - type: Schema type (required)
+ * - data: Additional schema data (optional)
+ */
+
+interface Props {
+  type: 'WebSite' | 'Organization' | 'Article' | 'BreadcrumbList';
+  data?: Record<string, unknown>;
+}
+
+const { type, data = {} } = Astro.props;
+
+// Base schemas
+const schemas = {
+  WebSite: {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Digital Revolution",
+    "url": Astro.site?.toString() || "https://digitalrevolution.com",
+    ...data
+  },
+  Organization: {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Digital Revolution",
+    "url": Astro.site?.toString() || "https://digitalrevolution.com",
+    "logo": `${Astro.site || 'https://digitalrevolution.com'}/logo.png`,
+    ...data
+  },
+  Article: {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Digital Revolution"
+    },
+    ...data
+  },
+  BreadcrumbList: {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    ...data
+  }
+};
+
+const schema = schemas[type];
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema, null, 2)} />
