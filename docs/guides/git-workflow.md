@@ -41,16 +41,16 @@ style/visual-improvements
 
 ### Types
 
-| Type | Purpose | Example |
-|------|---------|---------|
-| `feat` | New feature | `feat/user-authentication` |
-| `fix` | Bug fix | `fix/gallery-loading` |
-| `docs` | Documentation | `docs/api-reference` |
-| `refactor` | Code refactoring | `refactor/header-component` |
-| `style` | Visual/CSS changes | `style/responsive-cards` |
-| `perf` | Performance improvement | `perf/image-optimization` |
-| `test` | Adding tests | `test/component-tests` |
-| `chore` | Maintenance | `chore/update-dependencies` |
+| Type       | Purpose                 | Example                     |
+| ---------- | ----------------------- | --------------------------- |
+| `feat`     | New feature             | `feat/user-authentication`  |
+| `fix`      | Bug fix                 | `fix/gallery-loading`       |
+| `docs`     | Documentation           | `docs/api-reference`        |
+| `refactor` | Code refactoring        | `refactor/header-component` |
+| `style`    | Visual/CSS changes      | `style/responsive-cards`    |
+| `perf`     | Performance improvement | `perf/image-optimization`   |
+| `test`     | Adding tests            | `test/component-tests`      |
+| `chore`    | Maintenance             | `chore/update-dependencies` |
 
 ### Rules
 
@@ -136,6 +136,7 @@ git push -u origin feat/your-feature-name
 ### 6. Merge
 
 Once approved:
+
 - **Squash and merge** (preferred for clean history)
 - Delete branch after merge
 
@@ -248,9 +249,11 @@ docs(guides): add TypeScript guidelines
 
 ```markdown
 ## Description
+
 Brief description of changes and motivation.
 
 ## Type of Change
+
 - [ ] New feature
 - [ ] Bug fix
 - [ ] Documentation update
@@ -258,15 +261,18 @@ Brief description of changes and motivation.
 - [ ] Performance improvement
 
 ## Changes Made
+
 - Added SearchBar component with autocomplete
 - Implemented debouncing for search input
 - Added unit tests for search logic
 
 ## Screenshots (if UI changes)
+
 ![Before](url)
 ![After](url)
 
 ## Testing
+
 - [ ] Tested on Chrome
 - [ ] Tested on Firefox
 - [ ] Tested on mobile
@@ -274,10 +280,12 @@ Brief description of changes and motivation.
 - [ ] Build succeeds
 
 ## Related Issues
+
 Closes #123
 Relates to #456
 
 ## Checklist
+
 - [ ] Code follows project coding standards
 - [ ] Self-reviewed the code
 - [ ] Added/updated documentation
@@ -307,15 +315,21 @@ MAJOR.MINOR.PATCH
 ### Creating a Release
 
 1. **Update CHANGELOG.md**:
+
    ```markdown
    ## [1.2.0] - 2026-01-23
+
    ### Added
+
    - New search functionality
+
    ### Fixed
+
    - Gallery loading bug
    ```
 
 2. **Update package.json version**:
+
    ```json
    {
      "version": "1.2.0"
@@ -323,6 +337,7 @@ MAJOR.MINOR.PATCH
    ```
 
 3. **Create Git tag**:
+
    ```bash
    git tag -a v1.2.0 -m "Release version 1.2.0"
    git push origin v1.2.0

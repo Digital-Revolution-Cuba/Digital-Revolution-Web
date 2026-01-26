@@ -14,31 +14,31 @@ Represents a community talent/member.
 interface Talent {
   /** Unique identifier */
   id: number;
-  
+
   /** Full name */
   name: string;
-  
+
   /** Primary role/profession */
   role: string;
-  
+
   /** Location (city, country) */
   location: string;
-  
+
   /** Profile/avatar image URL */
   image: string;
-  
+
   /** Average rating (0-5) */
   rating: number;
-  
+
   /** Array of skills/specializations */
   skills: string[];
-  
+
   /** Number of followers */
   followers: number;
-  
+
   /** Profile views count */
   views: number;
-  
+
   /** Whether talent is featured */
   featured: boolean;
 }
@@ -71,19 +71,19 @@ Base interface for gallery items (art, music, photography).
 interface GalleryItem {
   /** Unique identifier */
   id: number;
-  
+
   /** Item title */
   title: string;
-  
+
   /** Creator/artist name */
   artist: string;
-  
+
   /** Item description */
   description: string;
-  
+
   /** Image/thumbnail URL */
   image: string;
-  
+
   /** Category/type */
   category: 'arte' | 'musica' | 'fotografia';
 }
@@ -96,13 +96,13 @@ Extends `GalleryItem` for music content.
 ```typescript
 interface MusicItem extends GalleryItem {
   category: 'musica';
-  
+
   /** Audio file URL */
   audioUrl: string;
-  
+
   /** Track duration in seconds */
   duration: number;
-  
+
   /** Music genre */
   genre: string;
 }
@@ -131,13 +131,13 @@ Extends `GalleryItem` for photography.
 ```typescript
 interface FotografiaItem extends GalleryItem {
   category: 'fotografia';
-  
+
   /** Photo location */
   location: string;
-  
+
   /** Camera model used */
   camera?: string;
-  
+
   /** Image dimensions */
   dimensions: {
     width: number;
@@ -156,28 +156,28 @@ Represents a contest/competition.
 interface Contest {
   /** Unique identifier */
   id: number;
-  
+
   /** Contest title */
   title: string;
-  
+
   /** Contest description */
   description: string;
-  
+
   /** Background image URL */
   backgroundImage: string;
-  
+
   /** Contest status */
   status: 'active' | 'upcoming' | 'ended';
-  
+
   /** Submission deadline */
   deadline: Date;
-  
+
   /** Contest category */
   category: 'arte' | 'musica' | 'fotografia' | 'escritura' | 'codigo';
-  
+
   /** Prize information */
   prize?: string;
-  
+
   /** Number of participants */
   participants?: number;
 }
@@ -209,25 +209,25 @@ Represents a collaboration or project.
 interface Collaboration {
   /** Unique identifier */
   id?: number;
-  
+
   /** Organization/project name */
   name: string;
-  
+
   /** Project description */
   description: string;
-  
+
   /** Logo URL */
   logo: string;
-  
+
   /** Project URL */
   url?: string;
-  
+
   /** Collaboration status */
   status?: 'active' | 'completed' | 'upcoming';
-  
+
   /** Project technologies/skills */
   technologies?: string[];
-  
+
   /** Number of collaborators */
   collaborators?: number;
 }
@@ -337,10 +337,15 @@ interface InputProps extends BaseProps {
 type GalleryCategory = 'arte' | 'musica' | 'fotografia';
 
 /** Valid contest categories */
-type ContestCategory = 'arte' | 'musica' | 'fotografia' | 'escritura' | 'codigo';
+type ContestCategory =
+  | 'arte'
+  | 'musica'
+  | 'fotografia'
+  | 'escritura'
+  | 'codigo';
 
 /** Valid talent roles */
-type TalentRole = 
+type TalentRole =
   | 'Fotógrafo'
   | 'Músico'
   | 'Artista Digital'
@@ -356,10 +361,10 @@ type TalentRole =
 interface CategoryConfig {
   /** Category identifier */
   id: GalleryCategory;
-  
+
   /** Display label */
   label: string;
-  
+
   /** Category items */
   items: GalleryItem[];
 }
@@ -397,7 +402,7 @@ const categories: CategoryConfig[] = [
 interface SearchContext {
   /** Search query string */
   query: string;
-  
+
   /** Active filters */
   filters: {
     category?: string;
@@ -405,13 +410,13 @@ interface SearchContext {
     rating?: number;
     featured?: boolean;
   };
-  
+
   /** Sort configuration */
   sort: {
     field: string;
     order: 'asc' | 'desc';
   };
-  
+
   /** Pagination */
   pagination: PaginationParams;
 }
@@ -423,13 +428,13 @@ interface SearchContext {
 interface FilterOption {
   /** Option value */
   value: string;
-  
+
   /** Display label */
   label: string;
-  
+
   /** Number of items matching this filter */
   count?: number;
-  
+
   /** Whether option is active */
   active?: boolean;
 }
@@ -445,34 +450,34 @@ interface FilterOption {
 interface ResponsiveImageProps {
   /** Image source (URL or ImageMetadata) */
   src: string | ImageMetadata;
-  
+
   /** Alt text (required for accessibility) */
   alt: string;
-  
+
   /** Responsive widths array */
   widths?: number[];
-  
+
   /** Sizes attribute for responsive images */
   sizes?: string;
-  
+
   /** Aspect ratio (e.g., "16 / 9") */
   aspectRatio?: string;
-  
+
   /** Loading strategy */
   loading?: 'lazy' | 'eager';
-  
+
   /** Decode strategy */
   decoding?: 'async' | 'sync' | 'auto';
-  
+
   /** Fetch priority */
   fetchpriority?: 'high' | 'low' | 'auto';
-  
+
   /** CSS class */
   class?: string;
-  
+
   /** Object fit */
   objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
-  
+
   /** Image quality (0-100) */
   quality?: number;
 }
@@ -488,19 +493,19 @@ interface ResponsiveImageProps {
 interface FormField<T = string> {
   /** Field name/id */
   name: string;
-  
+
   /** Field label */
   label: string;
-  
+
   /** Field value */
   value: T;
-  
+
   /** Field type */
   type: 'text' | 'email' | 'password' | 'textarea' | 'select' | 'checkbox';
-  
+
   /** Whether field is required */
   required?: boolean;
-  
+
   /** Validation rules */
   validation?: {
     minLength?: number;
@@ -508,13 +513,13 @@ interface FormField<T = string> {
     pattern?: RegExp;
     custom?: (value: T) => boolean;
   };
-  
+
   /** Error message */
   error?: string;
-  
+
   /** Helper text */
   helperText?: string;
-  
+
   /** Placeholder */
   placeholder?: string;
 }
@@ -526,16 +531,16 @@ interface FormField<T = string> {
 interface FormState<T = Record<string, any>> {
   /** Form data */
   data: T;
-  
+
   /** Form errors */
   errors: Record<keyof T, string | undefined>;
-  
+
   /** Whether form is submitting */
   isSubmitting: boolean;
-  
+
   /** Whether form is valid */
   isValid: boolean;
-  
+
   /** Whether form has been modified */
   isDirty: boolean;
 }

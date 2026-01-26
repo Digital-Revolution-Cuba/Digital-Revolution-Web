@@ -1,4 +1,4 @@
-# Documentation Index
+    # Documentation Index
 
 Quick reference index for Digital Revolution Web documentation.
 
@@ -45,26 +45,15 @@ docs/
 
 Start here:
 
-
-
-
-
-
 1. [Quick Start Guide](./guides/quick-start.md) - Get running in 5 minutes
 2. [Project Structure](./architecture/project-structure.md) - Understand the codebase
 3. [Coding Standards](./guides/coding-standards.md) - Write consistent code
 
 4. [Git Workflow](./guides/git-workflow.md) - Contribute correctly
 
-
-
 ### For AI Assistants (Copilot, Claude, etc.)
 
-
-
-
 Essential context:
-
 
 1. [AI Guidelines](./guides/ai-guidelines.md) - Code generation rules
 2. [Architecture Overview](./architecture/overview.md) - System design
@@ -72,21 +61,15 @@ Essential context:
 3. [Data Models](./api/data-models.md) - Type definitions
 4. [Component Guidelines](./components/README.md) - Component patterns
 
-
-
 ### For Contributors
 
-
-
 Before creating a PR:
-
 
 1. [Coding Standards](./guides/coding-standards.md) - Code quality rules
 2. [Git Workflow](./guides/git-workflow.md) - Branching and commits
 
 3. [Component Guidelines](./components/README.md) - Component patterns
 4. [Main Contributing Guide](../CONTRIBUTING.md) - Contribution process
-
 
 ### For Maintainers
 
@@ -172,23 +155,23 @@ Reference documentation:
 
 ## 🔍 Search by Keyword
 
-| Looking for... | See document... |
-|----------------|-----------------|
-| **Setup, installation** | [Quick Start](./guides/quick-start.md) |
-| **Folder structure** | [Project Structure](./architecture/project-structure.md) |
-| **Component patterns** | [Component Guidelines](./components/README.md) |
-| **TypeScript types** | [Data Models](./api/data-models.md) |
-| **Astro vs React** | [Architecture Overview](./architecture/overview.md#islands-architecture) |
-| **Hydration directives** | [Islands Architecture](./architecture/islands.md) |
-| **Tailwind, styling** | [Styling Patterns](./components/styling.md) |
-| **SEO, meta tags** | [SEO Strategy](./architecture/seo-strategy.md) |
-| **Git, branches** | [Git Workflow](./guides/git-workflow.md) |
-| **Commit messages** | [Git Workflow](./guides/git-workflow.md#commit-messages) |
-| **Naming conventions** | [Coding Standards](./guides/coding-standards.md#naming-conventions) |
-| **AI code generation** | [AI Guidelines](./guides/ai-guidelines.md) |
-| **Testing** | [Testing Guide](./guides/testing.md) |
-| **Troubleshooting** | [Troubleshooting](./guides/troubleshooting.md) |
-| **Changelog, versions** | [CHANGELOG](./CHANGELOG.md) |
+| Looking for...           | See document...                                                          |
+| ------------------------ | ------------------------------------------------------------------------ |
+| **Setup, installation**  | [Quick Start](./guides/quick-start.md)                                   |
+| **Folder structure**     | [Project Structure](./architecture/project-structure.md)                 |
+| **Component patterns**   | [Component Guidelines](./components/README.md)                           |
+| **TypeScript types**     | [Data Models](./api/data-models.md)                                      |
+| **Astro vs React**       | [Architecture Overview](./architecture/overview.md#islands-architecture) |
+| **Hydration directives** | [Islands Architecture](./architecture/islands.md)                        |
+| **Tailwind, styling**    | [Styling Patterns](./components/styling.md)                              |
+| **SEO, meta tags**       | [SEO Strategy](./architecture/seo-strategy.md)                           |
+| **Git, branches**        | [Git Workflow](./guides/git-workflow.md)                                 |
+| **Commit messages**      | [Git Workflow](./guides/git-workflow.md#commit-messages)                 |
+| **Naming conventions**   | [Coding Standards](./guides/coding-standards.md#naming-conventions)      |
+| **AI code generation**   | [AI Guidelines](./guides/ai-guidelines.md)                               |
+| **Testing**              | [Testing Guide](./guides/testing.md)                                     |
+| **Troubleshooting**      | [Troubleshooting](./guides/troubleshooting.md)                           |
+| **Changelog, versions**  | [CHANGELOG](./CHANGELOG.md)                                              |
 
 ---
 
