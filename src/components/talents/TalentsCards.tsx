@@ -81,15 +81,32 @@ export default function TalentSearch() {
   return (
     <>
       <div className="talents-search-bar">
-        <SearchIcon />
+        <button
+          type="button"
+          className="search-icon"
+          aria-label="Buscar talentos"
+          title="Buscar"
+        >
+          <SearchIcon />
+        </button>
+
         <input
           type="text"
           placeholder="Buscar talentos, habilidades o roles..."
           className="talents-search-input"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          aria-label="Buscar talentos, habilidades o roles"
         />
-        <FilterIcon />
+
+        <button
+          type="button"
+          className="filter-btn"
+          aria-label="Abrir filtros"
+          title="Filtros"
+        >
+          <FilterIcon />
+        </button>
       </div>
 
       <div className="category-filters">

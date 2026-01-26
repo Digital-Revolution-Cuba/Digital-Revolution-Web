@@ -144,6 +144,15 @@
   top: 50%;
   transform: translate3d(0, -50%, 0);
   color: var(--muted-foreground);
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .talents-search-input {
@@ -179,6 +188,16 @@
   background: var(--muted);
   color: var(--muted-foreground);
   transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.talents-search-bar .search-icon svg,
+.talents-search-bar .filter-btn svg {
+  display: block;
+  vertical-align: middle;
 }
 
 .filter-btn:hover,
