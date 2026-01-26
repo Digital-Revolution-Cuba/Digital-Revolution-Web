@@ -1,11 +1,18 @@
 ---
-import prueba from '../assets/prueba.jpg';
+// Placeholder image data URI (1x1 transparent pixel)
+const placeholderImage =
+  'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="248" height="340"%3E%3Crect fill="%23ddd" width="248" height="340"/%3E%3Ctext x="50%25" y="50%25" font-size="18" text-anchor="middle" dy=".3em" fill="%23999"%3EImagen%3C/text%3E%3C/svg%3E';
 
-// Data for the accordion cards - can be extended
+// Data for the accordion cards - replace with real images
 const accordeonCards = [
-  { id: 1, image: prueba.src, alt: 'Artista 1', backText: 'Artista Digital' },
-  { id: 2, image: prueba.src, alt: 'Artista 2', backText: 'Ilustrador' },
-  { id: 3, image: prueba.src, alt: 'Artista 3', backText: 'Diseñador' },
+  {
+    id: 1,
+    image: placeholderImage, // reemplazar en prod con  images/la imagen real
+    alt: 'Artista 1',
+    backText: 'Artista Digital',
+  },
+  { id: 2, image: placeholderImage, alt: 'Artista 2', backText: 'Ilustrador' },
+  { id: 3, image: placeholderImage, alt: 'Artista 3', backText: 'Diseñador' },
 ];
 
 const totalSlides = accordeonCards.length;
@@ -31,6 +38,10 @@ const totalSlides = accordeonCards.length;
               <img
                 src={card.image}
                 alt={card.alt}
+                width="248"
+                height="340"
+                loading="lazy"
+                decoding="async"
                 class={`h-full w-full border border-white object-cover shadow-2xl ${
                   index % 2 === 0
                     ? 'rounded-4xl rounded-tr-2xl rounded-bl-2xl'
