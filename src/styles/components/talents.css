@@ -67,11 +67,11 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translate3d(0, 20px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -142,7 +142,7 @@
   position: absolute;
   left: 1.25rem;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate3d(0, -50%, 0);
   color: var(--muted-foreground);
 }
 
@@ -173,7 +173,7 @@
   position: absolute;
   right: 0.75rem;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate3d(0, -50%, 0);
   padding: 0.5rem;
   border-radius: 5px;
   background: var(--muted);
@@ -299,7 +299,7 @@
 }
 
 .talent-card:hover {
-  transform: scale(1.05);
+  transform: scale3d(1.05, 1.05, 1);
 }
 
 .talent-card-image {
@@ -318,7 +318,7 @@
 }
 
 .talent-card:hover .talent-card-image img {
-  transform: scale(1.1);
+  transform: scale3d(1.1, 1.1, 1);
 }
 
 .talent-card-image::after {
@@ -473,3 +473,4 @@
   text-align: center;
   margin-top: 3rem;
 }
+
