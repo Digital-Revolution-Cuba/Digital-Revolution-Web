@@ -13,7 +13,10 @@
   "focusArea": "Arte",
   "currentFocus": "Rediseñando la estética del manifiesto 2026.",
   "recentActivity": [
-    { "title": "Campaña 'Nodos Libres'", "link": "#" },
+    {
+      "title": "Campaña 'Nodos Libres'",
+      "link": "https://behance.net/mariagarcia/nodos-libres"
+    },
     { "title": "Workshop de Iluminación" }
   ],
   "externalLink": "https://behance.net/mariagarcia",
