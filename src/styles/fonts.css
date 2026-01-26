@@ -1,0 +1,70 @@
+/**
+ * Self-hosted fonts with font-display: swap for better performance
+ * Reduces render-blocking requests and improves FCP/LCP
+ */
+
+/* Barlow Semi Condensed - Regular 400 */
+@font-face {
+  font-family: 'Barlow Semi Condensed';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url('/fonts/barlow-semi-condensed-v15-latin-regular.woff2') format('woff2'),
+    url('/fonts/barlow-semi-condensed-v15-latin-regular.woff') format('woff');
+}
+
+/* Barlow Semi Condensed - SemiBold 600 */
+@font-face {
+  font-family: 'Barlow Semi Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src:
+    url('/fonts/barlow-semi-condensed-v15-latin-600.woff2') format('woff2'),
+    url('/fonts/barlow-semi-condensed-v15-latin-600.woff') format('woff');
+}
+
+/* Barlow Semi Condensed - Bold 700 */
+@font-face {
+  font-family: 'Barlow Semi Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    url('/fonts/barlow-semi-condensed-v15-latin-700.woff2') format('woff2'),
+    url('/fonts/barlow-semi-condensed-v15-latin-700.woff') format('woff');
+}
+
+/* Rubik - Regular 400 */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url('/fonts/rubik-v28-latin-regular.woff2') format('woff2'),
+    url('/fonts/rubik-v28-latin-regular.woff') format('woff');
+}
+
+/* Rubik - Bold 700 */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    url('/fonts/rubik-v28-latin-700.woff2') format('woff2'),
+    url('/fonts/rubik-v28-latin-700.woff') format('woff');
+}
+
+/* Saira Stencil One - Regular 400 */
+@font-face {
+  font-family: 'Saira Stencil One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url('/fonts/saira-stencil-one-v16-latin-regular.woff2') format('woff2'),
+    url('/fonts/saira-stencil-one-v16-latin-regular.woff') format('woff');
+}
