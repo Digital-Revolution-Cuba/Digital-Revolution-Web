@@ -62,3 +62,44 @@ export const CSS_VARIABLES = {
   FLIP_SWAP_DURATION: '--flip-swap-duration',
   CARD_TRANSITION_DURATION: '--card-transition-duration',
 } as const;
+
+/**
+ * Masonry Grid Configuration
+ * Responsive breakpoints for masonry layout
+ */
+export const MASONRY_CONFIG = {
+  BREAKPOINTS: {
+    MOBILE: 350,
+    TABLET: 750,
+    DESKTOP: 1200,
+  },
+  COLUMNS: {
+    MOBILE: 2,
+    TABLET: 3,
+    DESKTOP: 5,
+  },
+  GUTTER: '10px',
+} as const;
+
+/**
+ * Modal Configuration
+ * Settings for image modal/lightbox
+ */
+export const MODAL_CONFIG = {
+  Z_INDEX: 50,
+  BACKDROP_BLUR: 'sm',
+  ANIMATION_DURATION: 300, // ms
+  OVERLAY_OPACITY: 0.8,
+  MAX_WIDTH: '90vw',
+  MAX_HEIGHT: '90vh',
+} as const;
+
+/**
+ * Infinite Scroll Configuration
+ */
+export const INFINITE_SCROLL_CONFIG = {
+  INITIAL_ITEMS: 20,
+  ITEMS_PER_PAGE: 10,
+  THRESHOLD: 0.5, // IntersectionObserver threshold
+  ROOT_MARGIN: '100px', // Load before reaching bottom
+} as const;

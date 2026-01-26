@@ -1,27 +1,54 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { ArrowUpRight, MapPin, Eye, Users, Star, Crown } from 'lucide-react';
 
-interface Props {
-  entry: CollectionEntry<'talents'>;
-}
-
+// Type utilities for stronger typing
 export async function getStaticPaths() {
   const talents = await getCollection('talents');
-  return talents.map(entry => ({
-    params: { slug: entry.id }, 
-    props: { entry },
+  // Return only params - fetch entry per-page with getEntry() for better typing
+  return talents.map((entry) => ({
+    params: { slug: entry.id },
   }));
 }
 
-const { entry } = Astro.props;
+// Fetch entry per-page using getEntry() - stronger typing, no props serialization
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/talentos');
+}
+
+const entry = await getEntry('talents', slug);
+
+// Handle missing entry with proper error handling
+if (!entry) {
+  return Astro.redirect('/talentos');
+}
+
 const { data } = entry;
 
+// Type-safe destructuring with safe defaults
+const {
+  name = 'Talento Anónimo',
+  role = 'Miembro de la Comunidad',
+  location = '',
+  image = '/placeholder.jpg',
+  communityRole = role,
+  status = 'colaborador',
+  rating = 0,
+  followers = 0,
+  views = 0,
+  skills = [],
+  currentFocus = '',
+  recentActivity = [],
+  externalLink = '',
+  featured = false,
+} = data;
+
 const statusStyles = {
-  core: "text-(--color-accent-yellow) border-(--color-accent-yellow)/30",
-  activo: "text-(--color-accent-cyan) border-(--color-accent-cyan)/30",
-  colaborador: "text-(--color-accent-purple) border-(--color-accent-purple)/30",
+  core: 'text-(--color-accent-yellow) border-(--color-accent-yellow)/30',
+  activo: 'text-(--color-accent-cyan) border-(--color-accent-cyan)/30',
+  colaborador: 'text-(--color-accent-purple) border-(--color-accent-purple)/30',
 };
 
 const formatStat = (num: number) => {
@@ -29,142 +56,260 @@ const formatStat = (num: number) => {
 };
 ---
 
-<Layout title={data.name ? `${data.name} — Perfil Profesional` : "Perfil de Talento"}>
-  <main class="mt-[8rem] py-(--space-xl) px-(--space-md) selection:bg-accent-cyan/30">
-    
+<Layout title={name ? `${name} — Perfil Profesional` : 'Perfil de Talento'}>
+  <main
+    class="selection:bg-accent-cyan/30 mt-[8rem] px-(--space-md) py-(--space-xl)"
+  >
     <article class="mx-auto max-w-(--container-md)">
-      
-      <header class="flex flex-col md:flex-row items-center md:items-start gap-(--space-lg) mb-(--space-xl)">
+      <header
+        class="mb-(--space-xl) flex flex-col items-center gap-(--space-lg) md:flex-row md:items-start"
+      >
         <div class="relative">
-          {data.image && (
-            <img 
-              src={data.image} 
-              alt={data.name} 
-              class="size-32 md:size-56 rounded-full object-cover transition-all duration-500 border border-white/10 shadow-xl"
-            />
-          )}
-          {data.featured && (
-            <div class="absolute -top-2 -right-2 bg-accent-yellow p-2 rounded-full shadow-lg border border-brand-dark">
-              <Crown size={20} className="text-brand-dark" />
-            </div>
-          )}
+          {
+            image && (
+              <img
+                src={image}
+                alt={name}
+                class="size-32 rounded-full border border-white/10 object-cover shadow-xl transition-all duration-500 md:size-56"
+              />
+            )
+          }
+          {
+            featured && (
+              <div class="bg-accent-yellow border-brand-dark absolute -top-2 -right-2 rounded-full border p-2 shadow-lg">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-brand-dark"
+                >
+                  <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" />
+                  <path d="M5 21h14" />
+                </svg>
+              </div>
+            )
+          }
         </div>
 
-        <div class="flex-1 text-center md:text-left pt-2">
-          <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-4">
-            {data.status && (
-              <span class={`text-xs uppercase tracking-[0.2em] font-bold px-3 py-1 border rounded-full ${statusStyles[data.status as keyof typeof statusStyles]}`}>
-                {data.status}
-              </span>
-            )}
-          </div>
-          
-          <h1 class="font-rubik text-3xl font-bold leading-none mb-2">
-            {data.name}
-          </h1>
-          
-          <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 text-white/50 font-barlow uppercase tracking-wide">
-            <p class="text-lg">
-              {data.communityRole || data.role}
-            </p>
-            {data.location && (
-              <span class="flex items-center justify-center md:justify-start gap-1 text-sm lowercase italic">
-                <MapPin size={14} /> {data.location}
-              </span>
-            )}
+        <div class="flex-1 pt-2 text-center md:text-left">
+          <div
+            class="mb-4 flex flex-wrap justify-center gap-3 md:justify-start"
+          >
+            {
+              status && (
+                <span
+                  class={`rounded-full border px-3 py-1 text-xs font-bold tracking-[0.2em] uppercase ${statusStyles[status as keyof typeof statusStyles]}`}
+                >
+                  {status}
+                </span>
+              )
+            }
           </div>
 
-          <div class="flex justify-center md:justify-start gap-8 mt-8 py-4 ">
-            {data.views && (
-              <div class="flex flex-col items-center md:items-start">
-                <span class="text-xs text-white/30 uppercase tracking-tighter flex items-center gap-1">
-                  <Eye size={12}/> Views
+          <h1 class="font-rubik mb-2 text-3xl leading-none font-bold">
+            {name}
+          </h1>
+
+          <div
+            class="font-barlow flex flex-col gap-2 tracking-wide text-white/50 uppercase md:flex-row md:items-center md:gap-6"
+          >
+            <p class="text-lg">
+              {communityRole || role}
+            </p>
+            {
+              location && (
+                <span class="flex items-center justify-center gap-1 text-sm lowercase italic md:justify-start">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>{' '}
+                  {location}
                 </span>
-                <span class="text-xl font-bold text-white/90">{formatStat(data.views)}</span>
-              </div>
-            )}
-            {data.followers && (
-              <div class="flex flex-col items-center md:items-start">
-                <span class="text-xs text-white/30 uppercase tracking-tighter flex items-center gap-1">
-                  <Users size={12}/> Followers
-                </span>
-                <span class="text-xl font-bold text-white/90">{formatStat(data.followers)}</span>
-              </div>
-            )}
-            {data.rating && (
-              <div class="flex flex-col items-center md:items-start">
-                <span class="text-xs text-white/30 uppercase tracking-tighter flex items-center gap-1 text-accent-yellow">
-                  <Star size={12} fill="currentColor"/> Rating
-                </span>
-                <span class="text-xl font-bold text-accent-yellow">{data.rating}</span>
-              </div>
-            )}
+              )
+            }
+          </div>
+
+          <div class="mt-8 flex justify-center gap-8 py-4 md:justify-start">
+            {
+              views && (
+                <div class="flex flex-col items-center md:items-start">
+                  <span class="flex items-center gap-1 text-xs tracking-tighter text-white/30 uppercase">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>{' '}
+                    Views
+                  </span>
+                  <span class="text-xl font-bold text-white/90">
+                    {formatStat(views)}
+                  </span>
+                </div>
+              )
+            }
+            {
+              followers && (
+                <div class="flex flex-col items-center md:items-start">
+                  <span class="flex items-center gap-1 text-xs tracking-tighter text-white/30 uppercase">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>{' '}
+                    Followers
+                  </span>
+                  <span class="text-xl font-bold text-white/90">
+                    {formatStat(followers)}
+                  </span>
+                </div>
+              )
+            }
+            {
+              rating && (
+                <div class="flex flex-col items-center md:items-start">
+                  <span class="text-accent-yellow flex items-center gap-1 text-xs tracking-tighter text-white/30 uppercase">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>{' '}
+                    Rating
+                  </span>
+                  <span class="text-accent-yellow text-xl font-bold">
+                    {rating}
+                  </span>
+                </div>
+              )
+            }
           </div>
         </div>
       </header>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-(--space-lg)">
-        
-        {data.currentFocus && (
-          <section class="md:col-span-7 text-gray-300 space-y-4">
-            <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-accent-orange flex items-center gap-3">
-              <span class="w-8 h-px bg-accent-orange/50"></span>
-              Enfoque Actual
-            </h2>
-            <p class="text-base leading-relaxed pl-11">
-              {data.currentFocus}
-            </p>
-          </section>
-        )}
+      <div class="grid grid-cols-1 gap-(--space-lg) md:grid-cols-12">
+        {
+          currentFocus && (
+            <section class="space-y-4 text-gray-300 md:col-span-7">
+              <h2 class="text-accent-orange flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase">
+                <span class="bg-accent-orange/50 h-px w-8" />
+                Enfoque Actual
+              </h2>
+              <p class="pl-11 text-base leading-relaxed">{currentFocus}</p>
+            </section>
+          )
+        }
 
-        {data.skills && (
-          <section class="md:col-span-5 text-gray-300 space-y-4">
-            <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-accent-cyan flex items-center gap-3">
-              <span class="w-8 h-px bg-accent-cyan/50"></span>
-              Capacidades
-            </h2>
-            <div class="flex flex-wrap gap-x-6 gap-y-2 pl-11">
-              {data.skills.map(skill => (
-                <span class="text-base hover:text-white transition-colors cursor-default font-mono opacity-70">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </section>
-        )}
+        {
+          skills.length > 0 && (
+            <section class="space-y-4 text-gray-300 md:col-span-5">
+              <h2 class="text-accent-cyan flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase">
+                <span class="bg-accent-cyan/50 h-px w-8" />
+                Capacidades
+              </h2>
+              <div class="flex flex-wrap gap-x-6 gap-y-2 pl-11">
+                {skills.map((skill: string) => (
+                  <span class="cursor-default font-mono text-base opacity-70 transition-colors hover:text-white">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )
+        }
 
-        {data.recentActivity && data.recentActivity.length > 0 && (
-          <section class="md:col-span-12 pt-(--space-md) space-y-6">
-            <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-accent-purple flex items-center gap-3">
-              <span class="w-8 h-px bg-accent-purple/50"></span>
-              Participaciones Recientes
-            </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pl-11">
-              {data.recentActivity.map(act => (
-                <div class="group relative p-4 bg-white/[0.02] border-l border-white/10 hover:border-accent-purple transition-all">
-                  <h3 class="text-sm font-bold mb-1">{act.title}</h3>
-                  <p class="text-xs uppercase text-gray-400 tracking-wider italic font-barlow">Proyecto Relevante</p>
-                  {act.link && (
-                    <a href={act.link} class="absolute top-4 right-4 text-white/20 group-hover:text-accent-purple transition-colors">
-                      <ArrowUpRight size={20}/> 
-                    </a>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+        {
+          recentActivity.length > 0 && (
+            <section class="space-y-6 pt-(--space-md) md:col-span-12">
+              <h2 class="text-accent-purple flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase">
+                <span class="bg-accent-purple/50 h-px w-8" />
+                Participaciones Recientes
+              </h2>
+
+              <div class="grid grid-cols-1 gap-4 pl-11 md:grid-cols-2">
+                {recentActivity.map((act: { title: string; link?: string }) => (
+                  <div class="group hover:border-accent-purple relative border-l border-white/10 bg-white/[0.02] p-4 transition-all">
+                    <h3 class="mb-1 text-sm font-bold">{act.title}</h3>
+                    <p class="font-barlow text-xs tracking-wider text-gray-400 uppercase italic">
+                      Proyecto Relevante
+                    </p>
+                    {act.link && (
+                      <a
+                        href={act.link}
+                        class="group-hover:text-accent-purple absolute top-4 right-4 text-white/20 transition-colors"
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M7 7h10v10" />
+                          <path d="M7 17 17 7" />
+                        </svg>
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )
+        }
       </div>
 
-      {data.externalLink && (
-        <footer class="mt-(--space-xl) pt-(--space-lg) flex justify-center">
-          <a href={data.externalLink} class="cta-btn !py-4 !px-12 uppercase text-center tracking-[0.2em] text-sm">
-            Contactar Profesional
-          </a>
-        </footer>
-      )}
-      
+      {
+        externalLink && (
+          <footer class="mt-(--space-xl) flex justify-center pt-(--space-lg)">
+            <a
+              href={externalLink}
+              class="cta-btn !px-12 !py-4 text-center text-sm tracking-[0.2em] uppercase"
+            >
+              Contactar Profesional
+            </a>
+          </footer>
+        )
+      }
     </article>
   </main>
 </Layout>

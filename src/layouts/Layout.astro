@@ -17,11 +17,11 @@ const {
 
 const canonicalURL = new URL(
   Astro.url.pathname,
-  Astro.site || 'https://digital-revolution-web.vercel.app/'
+  Astro.site || 'https://digital-revolution-web.vercel.app/',
 );
 const absImage = new URL(
   image,
-  Astro.site || 'https://digital-revolution-web.vercel.app/'
+  Astro.site || 'https://digital-revolution-web.vercel.app/',
 ).toString();
 ---
 
@@ -99,7 +99,8 @@ const absImage = new URL(
     <script type="module" src="/src/client/initializers/header.ts"></script>
     <script type="module" src="/src/client/initializers/responsive-images.ts"
     ></script>
-    <script type="module" src="/src/client/initializers/join-community.ts"></script>
+    <script type="module" src="/src/client/initializers/join-community.ts"
+    ></script>
     <slot />
   </body>
 </html>

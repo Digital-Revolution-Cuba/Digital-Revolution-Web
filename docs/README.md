@@ -12,11 +12,13 @@
 ## 📚 Table of Contents
 
 ### Getting Started
+
 - [Quick Start Guide](./guides/quick-start.md)
 - [Development Environment Setup](./guides/development-setup.md)
 - [Project Structure](./architecture/project-structure.md)
 
 ### Architecture
+
 - [Architecture Overview](./architecture/overview.md)
 - [Islands Architecture](./architecture/islands.md)
 - [Data Flow](./architecture/data-flow.md)
@@ -24,17 +26,20 @@
 - [Performance Optimization](./architecture/performance.md)
 
 ### Component Documentation
+
 - [Component Guidelines](./components/README.md)
 - [Astro Components](./components/astro-components.md)
 - [React Islands](./components/react-islands.md)
 - [Styling Patterns](./components/styling.md)
 
 ### API Reference
+
 - [Data Models](./api/data-models.md)
 - [Utility Functions](./api/utilities.md)
 - [Configuration](./api/configuration.md)
 
 ### Developer Guides
+
 - [Contributing Guidelines](./guides/contributing.md)
 - [Coding Standards](./guides/coding-standards.md)
 - [Git Workflow](./guides/git-workflow.md)
@@ -43,6 +48,7 @@
 - [Troubleshooting](./guides/troubleshooting.md)
 
 ### AI Assistant Context
+
 - [AI Development Guidelines](./guides/ai-guidelines.md)
 - [Prompt Templates](./guides/prompt-templates.md)
 
@@ -61,15 +67,15 @@ This documentation serves multiple purposes:
 
 ## 🏗️ Project Tech Stack
 
-| Layer | Technology | Version | Purpose |
-|-------|-----------|---------|---------|
-| **Framework** | Astro | 5.16+ | Static Site Generation with Islands |
-| **UI Library** | React | 19.2+ | Interactive components (islands only) |
-| **Styling** | Tailwind CSS | 4.1+ | Utility-first CSS framework |
-| **Language** | TypeScript | 5.x | Type-safe development (strict mode) |
-| **Icons** | Lucide React | Latest | Tree-shakeable icon components |
-| **Images** | Astro Assets + Sharp | Built-in | Optimized image processing |
-| **Package Manager** | pnpm | 9.x+ | Fast, disk space efficient |
+| Layer               | Technology           | Version  | Purpose                               |
+| ------------------- | -------------------- | -------- | ------------------------------------- |
+| **Framework**       | Astro                | 5.16+    | Static Site Generation with Islands   |
+| **UI Library**      | React                | 19.2+    | Interactive components (islands only) |
+| **Styling**         | Tailwind CSS         | 4.1+     | Utility-first CSS framework           |
+| **Language**        | TypeScript           | 5.x      | Type-safe development (strict mode)   |
+| **Icons**           | Lucide React         | Latest   | Tree-shakeable icon components        |
+| **Images**          | Astro Assets + Sharp | Built-in | Optimized image processing            |
+| **Package Manager** | pnpm                 | 9.x+     | Fast, disk space efficient            |
 
 ---
 
@@ -94,18 +100,23 @@ pnpm astro check      # Run Astro diagnostics
 ## 📖 Documentation Principles
 
 ### 1. **Clarity Over Brevity**
+
 Every concept is explained thoroughly with examples.
 
 ### 2. **AI-Friendly Structure**
+
 Documentation is structured to be easily parsed by AI assistants with clear headings, code examples, and decision rationales.
 
 ### 3. **Living Documentation**
+
 This documentation evolves with the codebase. When making architectural changes, update the corresponding docs.
 
 ### 4. **Example-Driven**
+
 Every pattern includes a complete, working code example.
 
 ### 5. **Decision Records**
+
 Major architectural decisions are documented with rationale and alternatives considered.
 
 ---

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
+
 - Content Collections integration for gallery items
 - User authentication and profiles
 - i18n support (Spanish/English)
@@ -21,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.0] - 2026-01-23
 
 ### 🚀 Added
+
 - **Component**: `OptimizedImage.astro` using `astro:assets` for automatic optimization
 - **TypeScript**: Complete Props interfaces with JSDoc in critical components
 - **Accessibility**: ARIA labels and attributes in interactive components
@@ -28,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Feature**: Dynamic props in Hero component
 
 ### ✨ Changed
+
 - **BREAKING**: Changed `client:only="react"` to `client:visible` in all React components
 - **Refactor**: `Card.astro` with pure Tailwind utilities (removed 117 lines of CSS)
 - **TypeScript**: Improved interfaces in `GalleryGrid.tsx` and `TalentsCards.tsx`
@@ -35,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Standard**: Props interfaces without `export` in all Astro components
 
 ### 🐛 Fixed
+
 - Unnecessary hydration with `client:only` that skipped SSR
 - Missing TypeScript types in React components
 - Custom CSS mixed with Tailwind utilities
@@ -42,12 +46,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Missing ARIA labels on interactive elements
 
 ### 📊 Performance
+
 - Time to Interactive: -800ms (25% improvement)
 - First Contentful Paint: -400ms (15% improvement)
 - CSS Bundle: -3KB (Card.astro refactor)
 - TypeScript coverage: 45% → 90%
 
 ### 📝 Documentation
+
 - Added `REFACTORING-COMPLETED.md` with detailed analysis
 - Complete JSDoc in critical components
 - Usage examples in Props interfaces
@@ -57,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] - 2026-01-22
 
 ### Added
+
 - **Documentation**: Comprehensive `/docs` folder structure
   - Architecture overview and patterns
   - Component guidelines (Astro + React)
@@ -80,6 +87,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ESLint and Prettier integration
 
 ### Changed
+
 - **Component Structure**: Refactored several components for better maintainability
   - `AccordeonSlider.astro`: Improved code formatting
   - `ResponsiveImage.astro`: Optimized image loading logic
@@ -88,6 +96,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Data Files**: Formatted and typed all data files (`talents.ts`, `colaboraciones.ts`)
 
 ### Fixed
+
 - **Type Safety**: Eliminated loose typing in component props
 - **Image Loading**: Resolved lazy loading issues in gallery components
 - **Responsive Design**: Fixed mobile layout inconsistencies in talent cards
@@ -97,6 +106,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2025-12-XX
 
 ### Added
+
 - **Initial Project Setup**:
   - Astro 5.0 framework with React 19 islands
   - Tailwind CSS v4 configuration
@@ -130,6 +140,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fluid typography
 
 ### Infrastructure
+
 - GitHub repository setup
 - MIT License
 - Contributing guidelines (`CONTRIBUTING.md`)
@@ -146,16 +157,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This release focuses on **documentation, SEO, and developer experience**.
 
 **For Developers**:
+
 - Complete documentation in `/docs` for onboarding and reference
 - AI guidelines for consistent code generation with Copilot
 - Coding standards and TypeScript patterns
 
 **For SEO**:
+
 - Full meta tag support (Open Graph, Twitter Cards)
 - JSON-LD structured data for search engines
 - `robots.txt` and `sitemap.xml` for crawler management
 
 **For Accessibility**:
+
 - WCAG 2.1 AA compliance improvements
 - Semantic HTML throughout
 - Proper ARIA attributes
@@ -169,13 +183,15 @@ This release focuses on **documentation, SEO, and developer experience**.
 No breaking changes. This is a purely additive release.
 
 **New Features**:
+
 1. Use the new `Layout` props for page-specific SEO:
+
    ```astro
    <Layout
      title="Page Title"
      description="Page description"
      image="/og-image.jpg"
-   >
+   />
    ```
 
 2. Reference `/docs` for component patterns and coding standards
@@ -212,6 +228,7 @@ None in this release.
 ## Contributing
 
 See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines on:
+
 - Commit message format (Conventional Commits)
 - Branch naming conventions
 - Pull request process

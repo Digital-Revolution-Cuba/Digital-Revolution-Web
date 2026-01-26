@@ -1,6 +1,6 @@
 ---
-import ConcursoCard from './ConcursoCard.astro';
 import { concursosData } from '../data/concursosData';
+import ConcursoCard from './ConcursoCard.astro';
 
 // Configuración del slider de cards
 const totalCards = concursosData.length;
@@ -10,9 +10,9 @@ const visibleCards = 3; // Cards visibles a la vez en desktop
 <section id="concursos" class="bg-brand-backgroundGlobal h-auto w-auto">
   <div class="general bg-accent-cyan relative z-30 min-h-128 pb-12">
     <!-- Título -->
-    <h1 class="heading-impact pt-20 pl-6 sm:pt-20 sm:pl-10">
+    <h2 class="heading-impact pt-20 pl-6 sm:pt-20 sm:pl-10">
       Concursos <br /> Activos
-    </h1>
+    </h2>
 
     <!-- Slider container -->
     <div class="concursos-slider-wrapper">

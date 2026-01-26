@@ -102,11 +102,11 @@
   0%,
   100% {
     opacity: 0.6;
-    transform: scale(1);
+    transform: scale3d(1, 1, 1);
   }
   50% {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale3d(1.05, 1.05, 1);
   }
 }
 
@@ -382,11 +382,11 @@
 @keyframes shapePulse {
   0%,
   100% {
-    transform: scale(1);
+    transform: scale3d(1, 1, 1);
     opacity: 0.1;
   }
   50% {
-    transform: scale(1.15);
+    transform: scale3d(1.15, 1.15, 1);
     opacity: 0.2;
   }
 }
@@ -394,10 +394,10 @@
 @keyframes shapeFloat {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translateY(-30px);
+    transform: translate3d(0, -30px, 0);
   }
 }
 
@@ -509,7 +509,7 @@
 }
 
 .jc-floating-badge:hover {
-  transform: translateY(-4px) scale(1.02);
+  transform: translate3d(0, -4px, 0) scale(1.02);
   box-shadow: var(--jc-shadow-md), var(--jc-shadow-glow);
 }
 
@@ -562,7 +562,7 @@
 }
 
 .jc-stats-card:hover {
-  transform: translateY(-2px);
+  transform: translate3d(0, -2px, 0);
 }
 
 .jc-stats-number {
@@ -615,7 +615,7 @@
 }
 
 .jc-cta-card:hover {
-  transform: translateY(-6px);
+  transform: translate3d(0, -6px, 0);
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.4),
     0 0 50px rgba(var(--jc-cyan-rgb), 0.4);
@@ -642,10 +642,10 @@
 
 @keyframes borderFlow {
   0% {
-    transform: translateX(-100%);
+    transform: translate3d(-100%, 0, 0);
   }
   100% {
-    transform: translateX(100%);
+    transform: translate3d(100%, 0, 0);
   }
 }
 
@@ -878,7 +878,7 @@
 .jc-feature-item:hover {
   background: rgba(var(--jc-cyan-rgb), 0.2);
   border-color: rgba(var(--jc-cyan-rgb), 0.4);
-  transform: translateY(-2px);
+  transform: translate3d(0, -2px, 0);
 }
 
 .jc-feature-icon {
@@ -923,7 +923,7 @@
 }
 
 .jc-btn-primary:hover {
-  transform: translateY(-2px) scale(1.02);
+  transform: translate3d(0, -2px, 0) scale(1.02);
   box-shadow:
     var(--jc-shadow-lg),
     0 0 30px rgba(var(--jc-cyan-rgb), 0.6);
@@ -953,7 +953,7 @@
 }
 
 .jc-btn-primary:hover .jc-btn-icon {
-  transform: translateX(4px);
+  transform: translate3d(4px, 0, 0);
 }
 
 /* Secondary CTA Button */
@@ -978,7 +978,7 @@
 .jc-btn-secondary:hover {
   border-color: rgba(var(--jc-cyan-rgb), 1);
   background: rgba(var(--jc-cyan-rgb), 0.1);
-  transform: translateY(-2px);
+  transform: translate3d(0, -2px, 0);
   box-shadow: 0 0 20px rgba(var(--jc-cyan-rgb), 0.3);
 }
 
@@ -1023,7 +1023,7 @@
 }
 
 .jc-avatar:hover {
-  transform: translateY(-4px) scale(1.1);
+  transform: translate3d(0, -4px, 0) scale(1.1);
   z-index: 1;
 }
 
@@ -1042,7 +1042,7 @@
   position: absolute;
   bottom: -40px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0);
   width: 100%;
   height: 80px;
   display: flex;
@@ -1072,11 +1072,11 @@
 
 @keyframes ringPulseOut {
   0% {
-    transform: scale(0.6);
+    transform: scale3d(0.6, 0.6, 1);
     opacity: 1;
   }
   100% {
-    transform: scale(2.5);
+    transform: scale3d(2.5, 2.5, 1);
     opacity: 0;
   }
 }
@@ -1143,7 +1143,7 @@
 }
 
 .jc-gallery-item:hover {
-  transform: scale(1.05);
+  transform: scale3d(1.05, 1.05, 1);
   z-index: 1;
 }
 
@@ -1155,7 +1155,7 @@
 }
 
 .jc-gallery-item:hover .jc-gallery-image {
-  transform: scale(1.1);
+  transform: scale3d(1.1, 1.1, 1);
 }
 
 .jc-gallery-overlay {
@@ -1191,7 +1191,7 @@
 }
 
 .jc-info-card:hover {
-  transform: translateX(-4px);
+  transform: translate3d(-4px, 0, 0);
 }
 
 .jc-info-icon {
@@ -1250,7 +1250,7 @@
 }
 
 .jc-achievement-badge:hover {
-  transform: translateX(-4px);
+  transform: translate3d(-4px, 0, 0);
 }
 
 .jc-achievement-icon {
@@ -1306,7 +1306,7 @@
 
 .animate-in {
   opacity: 0;
-  transform: translateY(40px);
+  transform: translate3d(0, 40px, 0);
   transition:
     opacity var(--jc-duration-slow) var(--jc-ease-smooth),
     transform var(--jc-duration-slow) var(--jc-ease-smooth);
@@ -1314,7 +1314,7 @@
 
 .animate-in.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .animate-in--delay-1 {
@@ -1351,11 +1351,11 @@
 @keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translate3d(0, 30px, 0);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -1584,3 +1584,4 @@
 /* ========================================
    End of JoinOurCommunity Styles
    ======================================== */
+

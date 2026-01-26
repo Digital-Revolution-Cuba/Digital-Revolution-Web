@@ -31,6 +31,7 @@ pnpm install
 ```
 
 This will install all required packages including:
+
 - Astro 5.16+
 - React 19
 - Tailwind CSS 4
@@ -82,9 +83,9 @@ interface Props {
 const { name, greeting = 'Hello' } = Astro.props;
 ---
 
-<div class="p-6 bg-white rounded-lg shadow-lg">
+<div class="rounded-lg bg-white p-6 shadow-lg">
   <h2 class="text-2xl font-bold">{greeting}, {name}!</h2>
-  <p class="text-gray-600 mt-2">Welcome to Digital Revolution Web</p>
+  <p class="mt-2 text-gray-600">Welcome to Digital Revolution Web</p>
 </div>
 ```
 
@@ -174,12 +175,8 @@ import { useState } from 'react';
 
 export default function Counter() {
   const [count, setCount] = useState(0);
-  
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Count: {count}
-    </button>
-  );
+
+  return <button onClick={() => setCount(count + 1)}>Count: {count}</button>;
 }
 ```
 
@@ -228,6 +225,7 @@ VS Code will prompt you to install these when you open the project.
 ### Settings
 
 The project includes `.vscode/settings.json` with optimized settings for:
+
 - Auto-formatting on save
 - Tailwind CSS autocomplete
 - TypeScript strict mode

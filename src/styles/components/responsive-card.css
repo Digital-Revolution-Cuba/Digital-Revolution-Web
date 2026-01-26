@@ -126,7 +126,7 @@
 /* Hover states - only for devices that support hover */
 @media (hover: hover) and (pointer: fine) {
   .responsive-card:hover .responsive-card__media img {
-    transform: scale(1.05);
+    transform: scale3d(1.05, 1.05, 1);
   }
 
   .responsive-card__cta:hover {
@@ -152,3 +152,4 @@
     transition: none;
   }
 }
+

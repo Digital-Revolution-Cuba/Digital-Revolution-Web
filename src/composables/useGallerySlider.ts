@@ -3,8 +3,8 @@
  * Handles slider state, navigation, and keyboard controls
  */
 
-import { GALLERY_CONFIG } from '../config/galleryConfig';
 import type { CategoryType } from '../data/types';
+import { debounce } from '../utils/debounce';
 
 export interface SliderState {
   currentIndex: number;
@@ -238,24 +238,20 @@ export function createGallerySlider(
 
   /**
    * Setup resize handler to update slider on window resize
+   * Debounced to 250ms para mejor rendimiento
    */
   function setupResizeHandler() {
-    let resizeTimeout: number;
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = window.setTimeout(() => {
-        calculateLayout();
-        generateDots();
-        state.currentIndex = 0; // Reset to first page on resize
-        updateSlider();
-      }, 150);
-    };
+    const handleResize = debounce(() => {
+      calculateLayout();
+      generateDots();
+      state.currentIndex = 0; // Reset to first page on resize
+      updateSlider();
+    }, 250);
 
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      clearTimeout(resizeTimeout);
     };
   }
 
