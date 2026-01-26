@@ -1,7 +1,54 @@
-import { useState } from 'react';
-import { MapPin, Search, Filter } from 'lucide-react';
+import { useMemo, useState } from 'react';
 import { categories, talents as talentsMock } from '../../data/talents.ts';
-import { useMemo } from 'react';
+import { logger } from '../../utils/logger.ts';
+
+// SVG Icons inline (reemplazo de lucide-react para reducir bundle)
+const SearchIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="11" cy="11" r="8" />
+    <path d="m21 21-4.35-4.35" />
+  </svg>
+);
+
+const FilterIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+  </svg>
+);
+
+const MapPinIcon = ({ size = 16 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+    <circle cx="12" cy="10" r="3" />
+  </svg>
+);
 
 export default function TalentSearch() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -28,13 +75,13 @@ export default function TalentSearch() {
   }, [searchQuery, activeCategory]);
 
   function LoadMoreTalents() {
-    console.log('Cargando talentos');
+    logger.log('Cargando talentos');
   }
 
   return (
     <>
       <div className="talents-search-bar">
-        <Search className="search-icon" />
+        <SearchIcon />
         <input
           type="text"
           placeholder="Buscar talentos, habilidades o roles..."
@@ -42,7 +89,7 @@ export default function TalentSearch() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <Filter className="filter-btn" />
+        <FilterIcon />
       </div>
 
       <div className="category-filters">
@@ -95,7 +142,7 @@ export default function TalentSearch() {
                 </div>
               </div>
               <div className="talent-location">
-                <MapPin size={16} />
+                <MapPinIcon size={16} />
                 <span>{talent.location}</span>
               </div>
               <div className="talent-skills">
