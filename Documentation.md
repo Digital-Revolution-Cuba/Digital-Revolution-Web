@@ -83,15 +83,15 @@ package.json                # Dependencias y scripts
 ## 📝 Cambios Recientes (Changelog Corto)
 
 1. **Optimización SEO Completa**:
-    - Agregado soporte para `robots` meta tag en `Layout.astro`.
-    - Implementado `JSON-LD` dinámico para datos estructurados.
-    - Definidos títulos y descripciones únicos para todas las páginas principales.
-    - Creados `sitemap.xml` y `robots.txt`.
+   - Agregado soporte para `robots` meta tag en `Layout.astro`.
+   - Implementado `JSON-LD` dinámico para datos estructurados.
+   - Definidos títulos y descripciones únicos para todas las páginas principales.
+   - Creados `sitemap.xml` y `robots.txt`.
 2. **Mejoras de Accesibilidad**:
-    - Corregidos atributos `alt` en imágenes (uso de descripciones reales o decorativas).
-    - Asegurada jerarquía de encabezados (`h1` único por página).
+   - Corregidos atributos `alt` en imágenes (uso de descripciones reales o decorativas).
+   - Asegurada jerarquía de encabezados (`h1` único por página).
 3. **Configuración de IA (.github/)**:
-    - Establecidos agentes (`seo`, `content`, `component`) e instrucciones personalizadas para guiar la generación de código.
+   - Establecidos agentes (`seo`, `content`, `component`) e instrucciones personalizadas para guiar la generación de código.
 
 ---
 
