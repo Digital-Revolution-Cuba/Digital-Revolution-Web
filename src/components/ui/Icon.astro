@@ -1,0 +1,41 @@
+---
+/**
+ * Icon Component - Base UI Component
+ * Wrapper for consistent icon styling
+ */
+
+interface Props {
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  color?: string;
+  class?: string;
+  ariaLabel?: string;
+  ariaHidden?: boolean;
+}
+
+const {
+  size = 'md',
+  color = 'currentColor',
+  class: className = '',
+  ariaLabel,
+  ariaHidden = false,
+} = Astro.props;
+
+const sizeClasses = {
+  xs: 'w-3 h-3',
+  sm: 'w-4 h-4',
+  md: 'w-6 h-6',
+  lg: 'w-8 h-8',
+  xl: 'w-10 h-10',
+};
+
+const classes = `${sizeClasses[size]} ${className}`;
+---
+
+<span
+  class={classes}
+  style={`color: ${color};`}
+  aria-label={ariaLabel}
+  aria-hidden={ariaHidden}
+>
+  <slot />
+</span>

@@ -1,0 +1,47 @@
+---
+/**
+ * GalleryControls Component
+ * Category selection buttons for the gallery
+ */
+import type { CategoryConfig } from '../../../types/gallery.types';
+import CategoryButton from '../../gallery/CategoryButton.astro';
+
+interface Props {
+  categories: CategoryConfig[];
+  activeCategory?: string;
+}
+
+const { categories, activeCategory = 'arte' } = Astro.props;
+---
+
+<div class="category-controls" data-category-buttons>
+  {
+    categories.map((category, index) => (
+      <CategoryButton
+        category={category.id}
+        label={category.label}
+        isActive={category.id === activeCategory}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .category-controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    .category-controls {
+      padding: 1rem;
+      gap: 0.5rem;
+    }
+  }
+</style>

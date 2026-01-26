@@ -1,0 +1,175 @@
+---
+/**
+ * GallerySlider Component
+ * Main slider with navigation buttons and gallery items
+ */
+import type {
+  CategoryConfig,
+  GalleryItem,
+  ArteGalleryItem,
+  MusicGalleryItem,
+  FotografiaGalleryItem,
+} from '../../../types/gallery.types';
+import GalleryItemComponent from '../../gallery/GalleryItem.astro';
+import MusicCard from '../../gallery/MusicCard.astro';
+import FotografiaCard from '../../gallery/FotografiaCard.astro';
+import NavigationButton from '../../gallery/NavigationButton.astro';
+
+interface Props {
+  categories: CategoryConfig[];
+}
+
+const { categories } = Astro.props;
+
+// Type guards
+function isArteItem(item: GalleryItem): item is ArteGalleryItem {
+  return item.type === 'arte';
+}
+
+function isMusicaItem(item: GalleryItem): item is MusicGalleryItem {
+  return item.type === 'musica';
+}
+
+function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
+  return item.type === 'fotografia';
+}
+---
+
+<div class="gallery-outer-wrapper">
+  <div class="gallery-inner-container">
+    <NavigationButton
+      id="prevBtn"
+      direction="prev"
+      ariaLabel="Previous gallery page"
+    />
+
+    <div class="gallery-container">
+      <div class="gallery-viewport">
+        <div id="imageSlider" class="gallery-track">
+          {
+            categories.map((category) =>
+              category.items.map((item) => {
+                if (isArteItem(item))
+                  return <GalleryItemComponent item={item} />;
+                if (isMusicaItem(item)) return <MusicCard item={item} />;
+                if (isFotografiaItem(item))
+                  return <FotografiaCard item={item} />;
+                return null;
+              }),
+            )
+          }
+        </div>
+      </div>
+    </div>
+
+    <NavigationButton
+      id="nextBtn"
+      direction="next"
+      ariaLabel="Next gallery page"
+    />
+  </div>
+</div>
+
+<style>
+  .gallery-outer-wrapper {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+  .gallery-inner-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: calc(100vw - 2rem);
+  }
+
+  .gallery-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    flex: 1;
+    max-width: 100%;
+  }
+
+  .gallery-viewport {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 1.25rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .gallery-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-track {
+    display: flex;
+    align-items: flex-start;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    gap: 1rem;
+  }
+
+  .gallery-container::before,
+  .gallery-container::after {
+    display: none !important;
+  }
+
+  /* Responsive breakpoints */
+  @media (max-width: 640px) {
+    .gallery-inner-container {
+      max-width: calc(100vw - 1rem);
+      gap: 0.25rem;
+    }
+
+    .gallery-container {
+      max-width: calc(100vw - 5rem);
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+    .gallery-inner-container {
+      max-width: calc(100vw - 2rem);
+    }
+
+    .gallery-container {
+      max-width: calc(100vw - 6rem);
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1023px) {
+    .gallery-inner-container {
+      max-width: min(900px, calc(100vw - 2rem));
+    }
+
+    .gallery-container {
+      max-width: calc(100% - 6rem);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-inner-container {
+      max-width: 1240px;
+    }
+
+    .gallery-container {
+      width: 1140px;
+      max-width: 1140px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-track {
+      transition: none;
+    }
+  }
+</style>
