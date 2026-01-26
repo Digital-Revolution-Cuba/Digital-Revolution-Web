@@ -1,0 +1,170 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { ArrowUpRight, MapPin, Eye, Users, Star, Crown } from 'lucide-react';
+
+interface Props {
+  entry: CollectionEntry<'talents'>;
+}
+
+export async function getStaticPaths() {
+  const talents = await getCollection('talents');
+  return talents.map(entry => ({
+    params: { slug: entry.id }, 
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+
+const statusStyles = {
+  core: "text-(--color-accent-yellow) border-(--color-accent-yellow)/30",
+  activo: "text-(--color-accent-cyan) border-(--color-accent-cyan)/30",
+  colaborador: "text-(--color-accent-purple) border-(--color-accent-purple)/30",
+};
+
+const formatStat = (num: number) => {
+  return num >= 1000 ? (num / 1000).toFixed(1) + 'k' : num;
+};
+---
+
+<Layout title={data.name ? `${data.name} — Perfil Profesional` : "Perfil de Talento"}>
+  <main class="mt-[8rem] py-(--space-xl) px-(--space-md) selection:bg-accent-cyan/30">
+    
+    <article class="mx-auto max-w-(--container-md)">
+      
+      <header class="flex flex-col md:flex-row items-center md:items-start gap-(--space-lg) mb-(--space-xl)">
+        <div class="relative">
+          {data.image && (
+            <img 
+              src={data.image} 
+              alt={data.name} 
+              class="size-32 md:size-56 rounded-full object-cover transition-all duration-500 border border-white/10 shadow-xl"
+            />
+          )}
+          {data.featured && (
+            <div class="absolute -top-2 -right-2 bg-accent-yellow p-2 rounded-full shadow-lg border border-brand-dark">
+              <Crown size={20} className="text-brand-dark" />
+            </div>
+          )}
+        </div>
+
+        <div class="flex-1 text-center md:text-left pt-2">
+          <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-4">
+            {data.status && (
+              <span class={`text-xs uppercase tracking-[0.2em] font-bold px-3 py-1 border rounded-full ${statusStyles[data.status as keyof typeof statusStyles]}`}>
+                {data.status}
+              </span>
+            )}
+          </div>
+          
+          <h1 class="font-rubik text-3xl font-bold leading-none mb-2">
+            {data.name}
+          </h1>
+          
+          <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 text-white/50 font-barlow uppercase tracking-wide">
+            <p class="text-lg">
+              {data.communityRole || data.role}
+            </p>
+            {data.location && (
+              <span class="flex items-center justify-center md:justify-start gap-1 text-sm lowercase italic">
+                <MapPin size={14} /> {data.location}
+              </span>
+            )}
+          </div>
+
+          <div class="flex justify-center md:justify-start gap-8 mt-8 py-4 ">
+            {data.views && (
+              <div class="flex flex-col items-center md:items-start">
+                <span class="text-xs text-white/30 uppercase tracking-tighter flex items-center gap-1">
+                  <Eye size={12}/> Views
+                </span>
+                <span class="text-xl font-bold text-white/90">{formatStat(data.views)}</span>
+              </div>
+            )}
+            {data.followers && (
+              <div class="flex flex-col items-center md:items-start">
+                <span class="text-xs text-white/30 uppercase tracking-tighter flex items-center gap-1">
+                  <Users size={12}/> Followers
+                </span>
+                <span class="text-xl font-bold text-white/90">{formatStat(data.followers)}</span>
+              </div>
+            )}
+            {data.rating && (
+              <div class="flex flex-col items-center md:items-start">
+                <span class="text-xs text-white/30 uppercase tracking-tighter flex items-center gap-1 text-accent-yellow">
+                  <Star size={12} fill="currentColor"/> Rating
+                </span>
+                <span class="text-xl font-bold text-accent-yellow">{data.rating}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-(--space-lg)">
+        
+        {data.currentFocus && (
+          <section class="md:col-span-7 text-gray-300 space-y-4">
+            <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-accent-orange flex items-center gap-3">
+              <span class="w-8 h-px bg-accent-orange/50"></span>
+              Enfoque Actual
+            </h2>
+            <p class="text-base leading-relaxed pl-11">
+              {data.currentFocus}
+            </p>
+          </section>
+        )}
+
+        {data.skills && (
+          <section class="md:col-span-5 text-gray-300 space-y-4">
+            <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-accent-cyan flex items-center gap-3">
+              <span class="w-8 h-px bg-accent-cyan/50"></span>
+              Capacidades
+            </h2>
+            <div class="flex flex-wrap gap-x-6 gap-y-2 pl-11">
+              {data.skills.map(skill => (
+                <span class="text-base hover:text-white transition-colors cursor-default font-mono opacity-70">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {data.recentActivity && data.recentActivity.length > 0 && (
+          <section class="md:col-span-12 pt-(--space-md) space-y-6">
+            <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-accent-purple flex items-center gap-3">
+              <span class="w-8 h-px bg-accent-purple/50"></span>
+              Participaciones Recientes
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pl-11">
+              {data.recentActivity.map(act => (
+                <div class="group relative p-4 bg-white/[0.02] border-l border-white/10 hover:border-accent-purple transition-all">
+                  <h3 class="text-sm font-bold mb-1">{act.title}</h3>
+                  <p class="text-xs uppercase text-gray-400 tracking-wider italic font-barlow">Proyecto Relevante</p>
+                  {act.link && (
+                    <a href={act.link} class="absolute top-4 right-4 text-white/20 group-hover:text-accent-purple transition-colors">
+                      <ArrowUpRight size={20}/> 
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+
+      {data.externalLink && (
+        <footer class="mt-(--space-xl) pt-(--space-lg) flex justify-center">
+          <a href={data.externalLink} class="cta-btn !py-4 !px-12 uppercase text-center tracking-[0.2em] text-sm">
+            Contactar Profesional
+          </a>
+        </footer>
+      )}
+      
+    </article>
+  </main>
+</Layout>

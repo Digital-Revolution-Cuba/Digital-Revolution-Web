@@ -1,0 +1,17 @@
+{
+  "name": "Sofia Chen",
+  "role": "Artista Generativa & Creative Coder",
+  "image": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&h=700&fit=crop",
+  "communityRole": "Visual Artist",
+  "status": "colaborador",
+  "tags": ["Generative", "Shaders", "AI Art"],
+  "skills": ["Three.js", "GLSL", "Python", "TouchDesigner"],
+  "focusArea": "Arte",
+  "currentFocus": "Experimentando con la intersección entre IA y shaders para crear interfaces reactivas al audio.",
+  "recentActivity": [
+    { "title": "Instalación Reactiva: Nodos Vivos", "link": "https://behance.net/sofiachen" },
+    { "title": "Cover Art para Revolución Digital Vol. 2" }
+  ],
+  "externalLink": "https://sofiachen.art",
+  "featured": true
+}
