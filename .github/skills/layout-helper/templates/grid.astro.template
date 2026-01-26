@@ -1,0 +1,34 @@
+---
+/**
+ * Grid Component Template
+ * 
+ * Usage: Copy this template for responsive grid layouts
+ * 
+ * Props:
+ * - columns: Number of columns at largest breakpoint
+ * - gap: Gap size between items
+ */
+
+interface Props {
+  columns?: 2 | 3 | 4;
+  gap?: 'sm' | 'md' | 'lg';
+}
+
+const { columns = 3, gap = 'md' } = Astro.props;
+
+const columnClasses = {
+  2: 'grid-cols-1 md:grid-cols-2',
+  3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+};
+
+const gapClasses = {
+  sm: 'gap-4',
+  md: 'gap-6',
+  lg: 'gap-8',
+};
+---
+
+<div class:list={['grid', columnClasses[columns], gapClasses[gap]]}>
+  <slot />
+</div>
