@@ -4,6 +4,8 @@
  * Provides tools for testing responsive design, accessibility, and performance
  */
 
+import { logger } from './logger.ts';
+
 // ========================================
 // Breakpoint Definitions
 // ========================================
@@ -43,7 +45,7 @@ export const DEVICES = {
  */
 export function testContainerQueries() {
   const hasSupport = CSS.supports('container-type', 'inline-size');
-  console.log(
+  logger.log(
     `Container Queries: ${hasSupport ? '✅ Supported' : '❌ Not supported'}`,
   );
   return hasSupport;
@@ -55,7 +57,7 @@ export function testContainerQueries() {
  */
 export function testClamp() {
   const hasSupport = CSS.supports('width', 'clamp(1rem, 2vw, 3rem)');
-  console.log(
+  logger.log(
     `CSS clamp(): ${hasSupport ? '✅ Supported' : '❌ Not supported'}`,
   );
   return hasSupport;
@@ -68,10 +70,10 @@ export function testClamp() {
 export function testHasSelector() {
   try {
     document.querySelector(':has(*)');
-    console.log('CSS :has(): ✅ Supported');
+    logger.log('CSS :has(): ✅ Supported');
     return true;
   } catch {
-    console.log('CSS :has(): ❌ Not supported');
+    logger.log('CSS :has(): ❌ Not supported');
     return false;
   }
 }
@@ -81,7 +83,7 @@ export function testHasSelector() {
  * @returns {Object} Object with all test results
  */
 export function runFeatureTests() {
-  console.group('🔍 CSS Feature Detection');
+  logger.group('🔍 CSS Feature Detection');
   const results = {
     containerQueries: testContainerQueries(),
     clamp: testClamp(),
@@ -95,17 +97,17 @@ export function runFeatureTests() {
     touchDevice: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
     hoverDevice: window.matchMedia('(hover: hover)').matches,
   };
-  console.log(
+  logger.log(
     'Prefers Reduced Motion:',
     results.prefersReducedMotion ? '⚡ Yes' : '🎬 No',
   );
-  console.log(
+  logger.log(
     'Color Scheme:',
     results.prefersColorScheme === 'dark' ? '🌙 Dark' : '☀️ Light',
   );
-  console.log('Touch Device:', results.touchDevice ? '👆 Yes' : '🖱️ No');
-  console.log('Hover Device:', results.hoverDevice ? '🖱️ Yes' : '👆 No');
-  console.groupEnd();
+  logger.log('Touch Device:', results.touchDevice ? '👆 Yes' : '🖱️ No');
+  logger.log('Hover Device:', results.hoverDevice ? '🖱️ Yes' : '👆 No');
+  logger.groupEnd();
   return results;
 }
 
@@ -150,16 +152,16 @@ export function auditTouchTargets() {
     }
   });
 
-  console.group(`👆 Touch Target Audit (Min: ${minSize}px)`);
+  logger.group(`👆 Touch Target Audit (Min: ${minSize}px)`);
   if (violations.length > 0) {
-    console.warn(`❌ Found ${violations.length} violations:`);
+    logger.warn(`❌ Found ${violations.length} violations:`);
     violations.forEach((v, i) => {
-      console.log(`${i + 1}. ${v.selector}: ${v.issue}`);
+      logger.log(`${i + 1}. ${v.selector}: ${v.issue}`);
     });
   } else {
-    console.log('✅ All touch targets meet WCAG 2.2 requirements');
+    logger.log('✅ All touch targets meet WCAG 2.2 requirements');
   }
-  console.groupEnd();
+  logger.groupEnd();
 
   return violations;
 }
@@ -200,16 +202,16 @@ export function auditFocusIndicators() {
     }
   });
 
-  console.group('🎯 Focus Indicator Audit');
+  logger.group('🎯 Focus Indicator Audit');
   if (violations.length > 0) {
-    console.warn(`⚠️ Found ${violations.length} potential issues:`);
+    logger.warn(`⚠️ Found ${violations.length} potential issues:`);
     violations.forEach((v, i) => {
-      console.log(`${i + 1}. ${v.selector}: ${v.issue}`);
+      logger.log(`${i + 1}. ${v.selector}: ${v.issue}`);
     });
   } else {
-    console.log('✅ Focus indicators appear to be present');
+    logger.log('✅ Focus indicators appear to be present');
   }
-  console.groupEnd();
+  logger.groupEnd();
 
   return violations;
 }
@@ -251,17 +253,17 @@ export function auditImageAlt() {
     }
   });
 
-  console.group('🖼️ Image Alt Text Audit');
+  logger.group('🖼️ Image Alt Text Audit');
   if (violations.length > 0) {
-    console.warn(`❌ Found ${violations.length} issues:`);
+    logger.warn(`❌ Found ${violations.length} issues:`);
     violations.forEach((v, i) => {
-      console.log(`${i + 1}. ${v.selector}: ${v.issue}`);
-      console.log(`   Source: ${v.src.substring(0, 50)}...`);
+      logger.log(`${i + 1}. ${v.selector}: ${v.issue}`);
+      logger.log(`   Source: ${v.src.substring(0, 50)}...`);
     });
   } else {
-    console.log('✅ All images have proper alt text');
+    logger.log('✅ All images have proper alt text');
   }
-  console.groupEnd();
+  logger.groupEnd();
 
   return violations;
 }
@@ -270,11 +272,11 @@ export function auditImageAlt() {
  * Run full accessibility audit
  */
 export function runAccessibilityAudit() {
-  console.group('♿ Accessibility Audit');
+  logger.group('♿ Accessibility Audit');
   auditTouchTargets();
   auditFocusIndicators();
   auditImageAlt();
-  console.groupEnd();
+  logger.groupEnd();
 }
 
 // ========================================
@@ -296,15 +298,15 @@ export function logViewportInfo() {
     }
   }
 
-  console.group('📱 Viewport Info');
-  console.log(`Size: ${width}x${height}px`);
-  console.log(`Pixel Ratio: ${pixelRatio}x`);
-  console.log(
+  logger.group('📱 Viewport Info');
+  logger.log(`Size: ${width}x${height}px`);
+  logger.log(`Pixel Ratio: ${pixelRatio}x`);
+  logger.log(
     `Active Breakpoint: ${breakpoint} (≥${BREAKPOINTS[breakpoint]}px)`,
   );
-  console.log(`Touch: ${'ontouchstart' in window ? 'Yes' : 'No'}`);
-  console.log(`Orientation: ${width > height ? 'Landscape' : 'Portrait'}`);
-  console.groupEnd();
+  logger.log(`Touch: ${'ontouchstart' in window ? 'Yes' : 'No'}`);
+  logger.log(`Orientation: ${width > height ? 'Landscape' : 'Portrait'}`);
+  logger.groupEnd();
 }
 
 /**
@@ -345,7 +347,7 @@ export function showBreakpointIndicator() {
   updateIndicator();
   window.addEventListener('resize', updateIndicator);
 
-  console.log(
+  logger.log(
     '📐 Breakpoint indicator added. Call hideBreakpointIndicator() to remove.',
   );
 
@@ -362,7 +364,7 @@ export function hideBreakpointIndicator() {
   const indicator = document.getElementById('breakpoint-indicator');
   if (indicator) {
     indicator.remove();
-    console.log('📐 Breakpoint indicator removed');
+    logger.log('📐 Breakpoint indicator removed');
   }
 }
 
@@ -390,11 +392,11 @@ export function simulateViewport(width, height) {
   iframe.src = window.location.href;
   document.body.appendChild(iframe);
 
-  console.log(`📱 Simulating ${width}x${height}px viewport`);
+  logger.log(`📱 Simulating ${width}x${height}px viewport`);
 
   return () => {
     iframe.remove();
-    console.log('📱 Viewport simulation removed');
+    logger.log('📱 Viewport simulation removed');
   };
 }
 
@@ -406,12 +408,12 @@ export function simulateViewport(width, height) {
 export function simulateDevice(deviceName) {
   const device = DEVICES[deviceName];
   if (!device) {
-    console.error(`Unknown device: ${deviceName}`);
-    console.log('Available devices:', Object.keys(DEVICES).join(', '));
+    logger.error(`Unknown device: ${deviceName}`);
+    logger.log('Available devices:', Object.keys(DEVICES).join(', '));
     return () => {};
   }
 
-  console.log(`📱 Simulating ${deviceName} (${device.width}x${device.height})`);
+  logger.log(`📱 Simulating ${deviceName} (${device.width}x${device.height})`);
   return simulateViewport(device.width, device.height);
 }
 
@@ -423,7 +425,7 @@ export function simulateDevice(deviceName) {
  * Get Core Web Vitals metrics
  */
 export function getWebVitals() {
-  console.group('⚡ Core Web Vitals');
+  logger.group('⚡ Core Web Vitals');
 
   // LCP (Largest Contentful Paint)
   if ('PerformanceObserver' in window) {
@@ -431,11 +433,11 @@ export function getWebVitals() {
       const lcpObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         const lastEntry = entries[entries.length - 1];
-        console.log(`LCP: ${Math.round(lastEntry.startTime)}ms`);
+        logger.log(`LCP: ${Math.round(lastEntry.startTime)}ms`);
       });
       lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
     } catch (e) {
-      console.log('LCP: Not available');
+      logger.log('LCP: Not available');
     }
   }
 
@@ -445,7 +447,7 @@ export function getWebVitals() {
     (entry) => entry.name === 'first-contentful-paint',
   );
   if (fcp) {
-    console.log(`FCP: ${Math.round(fcp.startTime)}ms`);
+    logger.log(`FCP: ${Math.round(fcp.startTime)}ms`);
   }
 
   // CLS (Cumulative Layout Shift)
@@ -458,23 +460,23 @@ export function getWebVitals() {
             clsValue += entry.value;
           }
         }
-        console.log(`CLS: ${clsValue.toFixed(3)}`);
+        logger.log(`CLS: ${clsValue.toFixed(3)}`);
       });
       clsObserver.observe({ entryTypes: ['layout-shift'] });
     } catch (e) {
-      console.log('CLS: Not available');
+      logger.log('CLS: Not available');
     }
   }
 
   // Navigation timing
   const navTiming = performance.getEntriesByType('navigation')[0];
   if (navTiming) {
-    console.log(`DOM Interactive: ${Math.round(navTiming.domInteractive)}ms`);
-    console.log(`DOM Complete: ${Math.round(navTiming.domComplete)}ms`);
-    console.log(`Load Event: ${Math.round(navTiming.loadEventEnd)}ms`);
+    logger.log(`DOM Interactive: ${Math.round(navTiming.domInteractive)}ms`);
+    logger.log(`DOM Complete: ${Math.round(navTiming.domComplete)}ms`);
+    logger.log(`Load Event: ${Math.round(navTiming.loadEventEnd)}ms`);
   }
 
-  console.groupEnd();
+  logger.groupEnd();
 }
 
 // ========================================
@@ -510,18 +512,18 @@ function generateSelector(el) {
  * Run all tests
  */
 export function runAllTests() {
-  console.clear();
-  console.log('🚀 Running Responsive Design Tests\n');
+  logger.log('=== Test Suite Started ===');
+  logger.log('🚀 Running Responsive Design Tests\n');
 
   runFeatureTests();
-  console.log('');
+  logger.log('');
   logViewportInfo();
-  console.log('');
+  logger.log('');
   runAccessibilityAudit();
-  console.log('');
+  logger.log('');
   getWebVitals();
 
-  console.log('\n✨ Tests complete!');
+  logger.log('\n✨ Tests complete!');
 }
 
 // Export for use in browser console
@@ -546,7 +548,7 @@ if (typeof window !== 'undefined') {
     runAllTests,
   };
 
-  console.log(
+  logger.log(
     '📦 Responsive testing utilities loaded! Use window.responsiveTests to access.',
   );
 }

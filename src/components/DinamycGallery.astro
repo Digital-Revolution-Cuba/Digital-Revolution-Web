@@ -82,61 +82,9 @@ const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
       />
     </div>
 
-    <script type="module" define:vars={{ totalImages, visibleImages }}>
-      import { createGallerySlider } from '/src/composables/useGallerySlider.ts';
-      import { createCategorySwitch } from '/src/composables/useCategorySwitch.ts';
-      import { initializeMusicPlayers } from '/src/utils/musicPlayer.ts';
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const slider = document.getElementById('imageSlider');
-        const buttonsContainer = document.querySelector(
-          '[data-category-buttons]'
-        );
-
-        if (!prevBtn || !nextBtn || !slider || !buttonsContainer) {
-          console.error('Gallery: Required elements not found');
-          return;
-        }
-
-        // Initialize slider
-        const gallerySlider = createGallerySlider(
-          slider,
-          prevBtn,
-          nextBtn,
-          totalImages
-        );
-
-        const cleanupSlider = gallerySlider.initialize();
-
-        // Initialize category switching
-        const categorySwitch = createCategorySwitch(
-          buttonsContainer,
-          gallerySlider.resetSlider,
-          {
-            onCategoryChange: (category) => {
-              console.log('Category changed to:', category);
-              // Re-initialize music players when switching to musica
-              if (category === 'musica') {
-                setTimeout(initializeMusicPlayers, 100);
-              }
-            },
-          }
-        );
-
-        const cleanupCategory = categorySwitch.initialize('arte');
-
-        // Initialize music players
-        initializeMusicPlayers();
-
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', () => {
-          cleanupSlider();
-          cleanupCategory();
-        });
-      });
-    </script>
+    <!-- Behaviour is initialized from a centralized client initializer -->
+    <!-- Add to the page that uses this component: -->
+    <!-- <script type="module" src="/src/client/initializers/galeria.ts"></script> -->
 
     <style>
       /* Base gallery section */

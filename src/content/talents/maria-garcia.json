@@ -1,0 +1,24 @@
+{
+  "name": "María García",
+  "role": "Fotógrafa de Retratos",
+  "location": "Madrid, España",
+  "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop",
+  "communityRole": "Visual Lead en Revolución Digital",
+  "status": "core",
+  "rating": 4.9,
+  "followers": 12500,
+  "views": 45200,
+  "tags": ["Visuals", "Branding", "Storytelling"],
+  "skills": ["Fotografía", "Dirección de Arte", "Post-producción"],
+  "focusArea": "Arte",
+  "currentFocus": "Rediseñando la estética del manifiesto 2026.",
+  "recentActivity": [
+    {
+      "title": "Campaña 'Nodos Libres'",
+      "link": "https://behance.net/mariagarcia/nodos-libres"
+    },
+    { "title": "Workshop de Iluminación" }
+  ],
+  "externalLink": "https://behance.net/mariagarcia",
+  "featured": true
+}

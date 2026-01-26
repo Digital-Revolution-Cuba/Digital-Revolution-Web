@@ -3,8 +3,8 @@
  * Handles slider state, navigation, and keyboard controls
  */
 
-import { GALLERY_CONFIG } from '../config/galleryConfig';
 import type { CategoryType } from '../data/types';
+import { debounce } from '../utils/debounce';
 
 export interface SliderState {
   currentIndex: number;
@@ -17,12 +17,33 @@ export function createGallerySlider(
   prevButton: HTMLButtonElement,
   nextButton: HTMLButtonElement,
   totalImages: number,
+  options?: {
+    paginationElement?: HTMLElement | null;
+    viewportElement?: HTMLElement | null;
+  },
 ) {
   const state: SliderState = {
     currentIndex: 0,
     currentCategory: 'arte',
     isAnimating: false,
   };
+
+  const paginationElement = options?.paginationElement || null;
+  const viewportElement = options?.viewportElement || null;
+
+  let itemWidthFromDom = 0;
+  let gapFromDom = 0;
+  let activeTotalImages = totalImages; // Track active category's item count
+
+  /**
+   * Get the count of visible items in the current category
+   */
+  function getVisibleItemCount(): number {
+    const visibleItems = sliderElement.querySelectorAll(
+      '.gallery-item:not([style*="display: none"]), .card-item:not([style*="display: none"])',
+    );
+    return visibleItems.length || totalImages;
+  }
 
   /**
    * Get responsive values based on viewport width
@@ -65,10 +86,23 @@ export function createGallerySlider(
    * Updates the slider position and button states
    */
   function updateSlider() {
-    const { itemWidth, imagesPerPage } = getResponsiveValues();
-    const maxIndex = Math.max(0, Math.ceil(totalImages / imagesPerPage) - 1);
+    // Update active item count based on what's actually visible
+    activeTotalImages = getVisibleItemCount();
 
-    const offset = -state.currentIndex * imagesPerPage * itemWidth;
+    const { itemWidth, imagesPerPage } = getResponsiveValues();
+    const usedItemWidth = itemWidthFromDom || itemWidth;
+    const usedGap = gapFromDom || 0;
+
+    // Calculate max index: total pages minus one (for 0-based index)
+    const totalPages = Math.ceil(activeTotalImages / imagesPerPage);
+    const maxIndex = Math.max(0, totalPages - 1);
+
+    // Clamp current index to valid range
+    state.currentIndex = Math.max(0, Math.min(state.currentIndex, maxIndex));
+
+    // Calculate offset based on cards per page
+    const offset =
+      -state.currentIndex * imagesPerPage * (usedItemWidth + usedGap);
     sliderElement.style.transform = `translateX(${offset}px)`;
 
     // Update button states
@@ -76,6 +110,67 @@ export function createGallerySlider(
     nextButton.disabled = state.currentIndex >= maxIndex;
     prevButton.style.opacity = state.currentIndex <= 0 ? '0.5' : '1';
     nextButton.style.opacity = state.currentIndex >= maxIndex ? '0.5' : '1';
+
+    // Update dots if pagination is present
+    if (paginationElement) {
+      const dots = Array.from(
+        paginationElement.querySelectorAll('.pagination-dot'),
+      );
+      dots.forEach((dot, i) =>
+        dot.classList.toggle('active', i === state.currentIndex),
+      );
+    }
+  }
+
+  function calculateLayout() {
+    // Prefer DOM measurements when available so sizing matches rendered cards
+    const firstItem = sliderElement.querySelector(
+      '.card-item, .gallery-item',
+    ) as HTMLElement | null;
+    if (firstItem && viewportElement) {
+      itemWidthFromDom = firstItem.offsetWidth;
+
+      const computedStyle = window.getComputedStyle(sliderElement);
+      gapFromDom = parseFloat(computedStyle.gap) || 0;
+
+      const { imagesPerPage } = getResponsiveValues();
+      const requiredViewportWidth =
+        itemWidthFromDom * imagesPerPage + gapFromDom * (imagesPerPage - 1);
+      viewportElement.style.maxWidth = `${requiredViewportWidth}px`;
+    } else {
+      // Reset DOM-based measurements
+      itemWidthFromDom = 0;
+      gapFromDom = 0;
+      if (viewportElement) {
+        viewportElement.style.maxWidth = '';
+      }
+    }
+  }
+
+  // Dots generation (if pagination container provided)
+  const dotCleanups: Array<() => void> = [];
+  function generateDots() {
+    if (!paginationElement) return;
+
+    // Update active item count
+    activeTotalImages = getVisibleItemCount();
+
+    paginationElement.innerHTML = '';
+    const { imagesPerPage } = getResponsiveValues();
+    const numPages = Math.max(1, Math.ceil(activeTotalImages / imagesPerPage));
+
+    for (let i = 0; i < numPages; i++) {
+      const dot = document.createElement('button');
+      dot.className = `pagination-dot ${i === state.currentIndex ? 'active' : ''}`;
+      dot.setAttribute('aria-label', `Ir a página ${i + 1}`);
+      const onClick = () => {
+        state.currentIndex = i;
+        updateSlider();
+      };
+      dot.addEventListener('click', onClick);
+      paginationElement.appendChild(dot);
+      dotCleanups.push(() => dot.removeEventListener('click', onClick));
+    }
   }
 
   /**
@@ -92,8 +187,12 @@ export function createGallerySlider(
    * Navigate to next page
    */
   function navigateNext() {
+    // Update active item count
+    activeTotalImages = getVisibleItemCount();
+
     const { imagesPerPage } = getResponsiveValues();
-    const maxIndex = Math.max(0, Math.ceil(totalImages / imagesPerPage) - 1);
+    const totalPages = Math.ceil(activeTotalImages / imagesPerPage);
+    const maxIndex = Math.max(0, totalPages - 1);
 
     if (state.currentIndex < maxIndex) {
       state.currentIndex++;
@@ -114,8 +213,14 @@ export function createGallerySlider(
    */
   function setupKeyboardNavigation() {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Update active item count
+      activeTotalImages = getVisibleItemCount();
+
       const { imagesPerPage } = getResponsiveValues();
-      const maxIndex = Math.max(0, Math.ceil(totalImages / imagesPerPage) - 1);
+      const maxIndex = Math.max(
+        0,
+        Math.ceil(activeTotalImages / imagesPerPage) - 1,
+      );
 
       if (e.key === 'ArrowLeft' && state.currentIndex > 0) {
         navigatePrevious();
@@ -133,22 +238,20 @@ export function createGallerySlider(
 
   /**
    * Setup resize handler to update slider on window resize
+   * Debounced to 250ms para mejor rendimiento
    */
   function setupResizeHandler() {
-    let resizeTimeout: number;
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = window.setTimeout(() => {
-        state.currentIndex = 0; // Reset to first page on resize
-        updateSlider();
-      }, 150);
-    };
+    const handleResize = debounce(() => {
+      calculateLayout();
+      generateDots();
+      state.currentIndex = 0; // Reset to first page on resize
+      updateSlider();
+    }, 250);
 
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      clearTimeout(resizeTimeout);
     };
   }
 
@@ -156,6 +259,8 @@ export function createGallerySlider(
    * Initialize slider
    */
   function initialize() {
+    calculateLayout();
+    generateDots();
     updateSlider();
 
     prevButton.addEventListener('click', navigatePrevious);
@@ -169,6 +274,7 @@ export function createGallerySlider(
       nextButton.removeEventListener('click', navigateNext);
       cleanupKeyboard();
       cleanupResize();
+      dotCleanups.forEach((cleanup) => cleanup());
     };
   }
 

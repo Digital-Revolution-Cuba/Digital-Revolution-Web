@@ -43,7 +43,8 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 320px;
+    /* Let parent control card width for fluid layout */
+    max-width: none;
     background: var(--palette-brand-dark, #011822);
     border-radius: 1rem;
     overflow: hidden;
@@ -59,7 +60,8 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
 
   .colaboracion-image-wrapper {
     width: 100%;
-    height: 200px;
+    /* Responsive image height: mobile-first, scales with viewport */
+    height: clamp(120px, 22vw, 200px);
     overflow: hidden;
   }
 
@@ -123,33 +125,19 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
     color: var(--palette-brand-dark, #011822);
   }
 
-  /* Responsive sizing - Sincronizado con slider logic */
-  @media (max-width: 639px) {
-    .colaboracion-card {
-      width: calc(100vw - 80px);
-      max-width: 280px;
-    }
-    .colaboracion-image-wrapper {
-      height: 160px;
-    }
-    .colaboracion-title {
-      font-size: 1.125rem;
-    }
-    .colaboracion-description {
-      font-size: 0.8rem;
-    }
+  /* Keep typography responsive, but remove hard width rules so parent controls sizing */
+  .colaboracion-title {
+    font-size: clamp(1rem, 4vw, 1.25rem);
   }
 
-  @media (min-width: 640px) and (max-width: 1023px) {
-    .colaboracion-card {
-      width: calc((100vw - 100px) / 2);
-      max-width: 300px;
-    }
+  .colaboracion-description {
+    font-size: clamp(0.8rem, 3vw, 0.875rem);
   }
 
-  @media (min-width: 1024px) {
-    .colaboracion-card {
-      width: 320px;
+  /* Ensure CTA scales slightly on very small screens */
+  @media (max-width: 420px) {
+    .colaboracion-cta {
+      padding: 0.4rem 1rem;
     }
   }
 </style>

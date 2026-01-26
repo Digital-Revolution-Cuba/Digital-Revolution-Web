@@ -8,26 +8,32 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "type-check": "astro sync && tsc --noEmit",
+    "check": "astro check",
+    "validate": "pnpm format:check && pnpm type-check && pnpm check",
+    "prepare": "husky"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.6",
     "@astrojs/react": "^4.4.2",
     "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "astro": "^5.16.6",
     "lightningcss": "^1.30.2",
-    "lucide-react": "^0.562.0",
+    "nanostores": "^1.1.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-measure": "^2.5.2",
     "react-responsive-masonry": "^2.7.1",
     "sharp": "^0.34.5",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@types/react-measure": "^2.0.12",
-    "@types/react-responsive-masonry": "^2.7.0",
+    "astro-compress": "^2.3.9",
+    "husky": "^9.1.7",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.14"

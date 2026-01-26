@@ -1,11 +1,18 @@
 ---
-import prueba from '../assets/prueba.jpg';
+// Placeholder image data URI (1x1 transparent pixel)
+const placeholderImage =
+  'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="248" height="340"%3E%3Crect fill="%23ddd" width="248" height="340"/%3E%3Ctext x="50%25" y="50%25" font-size="18" text-anchor="middle" dy=".3em" fill="%23999"%3EImagen%3C/text%3E%3C/svg%3E';
 
-// Data for the accordion cards - can be extended
+// Data for the accordion cards - replace with real images
 const accordeonCards = [
-  { id: 1, image: prueba.src, alt: 'Artista 1', backText: 'Artista Digital' },
-  { id: 2, image: prueba.src, alt: 'Artista 2', backText: 'Ilustrador' },
-  { id: 3, image: prueba.src, alt: 'Artista 3', backText: 'Diseñador' },
+  {
+    id: 1,
+    image: placeholderImage, // reemplazar en prod con  images/la imagen real
+    alt: 'Artista 1',
+    backText: 'Artista Digital',
+  },
+  { id: 2, image: placeholderImage, alt: 'Artista 2', backText: 'Ilustrador' },
+  { id: 3, image: placeholderImage, alt: 'Artista 3', backText: 'Diseñador' },
 ];
 
 const totalSlides = accordeonCards.length;
@@ -13,171 +20,67 @@ const totalSlides = accordeonCards.length;
 
 <div class="acordeon-wrapper">
   <div class="acordeon-container" id="acordeonSlider">
-    <!-- Cards rendered dynamically -->
-    {accordeonCards.map((card, index) => (
-      <div
-        class={`acordeon-item group relative transform transition-all duration-500 ${
-          index % 2 === 0 
-            ? 'origin-left -translate-y-7 skew-y-[18deg] hover:translate-y-14 hover:skew-y-[-18deg]' 
-            : 'origin-right skew-y-[-25deg] hover:translate-y-24 hover:skew-y-[25deg]'
-        } hover:z-50 hover:rotate-y-0 hover:rotate-z-0`}
-        style={`height: ${index === 1 ? '21.25rem' : index === 2 ? '21.25rem' : '21.25rem'}; width: ${index === 0 ? '15.5rem' : index === 1 ? '12.5rem' : '13.75rem'};`}
-        data-slide-index={index}
-      >
-        <div class={`flip-inner relative h-full w-full transition-transform duration-700 ${index % 2 === 0 ? 'group-hover:-rotate-y-180' : 'group-hover:rotate-y-180'}`}>
-          <!-- Front Face -->
-          <div class="flip-front absolute inset-0 h-full w-full backface-hidden">
-            <img
-              src={card.image}
-              alt={card.alt}
-              class={`h-full w-full object-cover shadow-2xl border border-white ${
-                index % 2 === 0 
-                  ? 'rounded-4xl rounded-tr-2xl rounded-bl-2xl' 
+    {
+      accordeonCards.map((card, index) => (
+        <div
+          class={`acordeon-item group relative transform transition-all duration-500 ${
+            index % 2 === 0
+              ? 'origin-left -translate-y-7 skew-y-18 hover:translate-y-14 hover:-skew-y-18'
+              : 'origin-right -skew-y-25 hover:translate-y-24 hover:skew-y-25'
+          } hover:z-50 hover:rotate-y-0 hover:rotate-z-0`}
+          style={`height: ${index === 1 ? '21.25rem' : index === 2 ? '21.25rem' : '21.25rem'}; width: ${index === 0 ? '15.5rem' : index === 1 ? '12.5rem' : '13.75rem'};`}
+          data-slide-index={index}
+        >
+          <div
+            class={`flip-inner relative h-full w-full transition-transform duration-700 ${index % 2 === 0 ? 'group-hover:-rotate-y-180' : 'group-hover:rotate-y-180'}`}
+          >
+            <div class="flip-front absolute inset-0 h-full w-full backface-hidden">
+              <img
+                src={card.image}
+                alt={card.alt}
+                width="248"
+                height="340"
+                loading="lazy"
+                decoding="async"
+                class={`h-full w-full border border-white object-cover shadow-2xl ${
+                  index % 2 === 0
+                    ? 'rounded-4xl rounded-tr-2xl rounded-bl-2xl'
+                    : 'rounded-4xl rounded-tl-2xl rounded-br-2xl'
+                }`}
+              />
+            </div>
+
+            <div
+              class={`flip-back bg-brand-navy absolute inset-0 flex h-full w-full rotate-y-180 items-center justify-center border border-white shadow-2xl backface-hidden ${
+                index % 2 === 0
+                  ? 'rounded-4xl rounded-tr-2xl rounded-bl-2xl'
                   : 'rounded-4xl rounded-tl-2xl rounded-br-2xl'
               }`}
-            />
-          </div>
-          <!-- Back Face -->
-          <div class={`flip-back absolute inset-0 flex h-full w-full rotate-y-180 items-center justify-center border border-white bg-[#002b38] shadow-2xl backface-hidden ${
-            index % 2 === 0 
-              ? 'rounded-4xl rounded-tr-2xl rounded-bl-2xl' 
-              : 'rounded-4xl rounded-tl-2xl rounded-br-2xl'
-          }`}>
-            <span class="text-xl font-bold text-white">{card.backText}</span>
+            >
+              <span class="text-xl font-bold text-white">{card.backText}</span>
+            </div>
           </div>
         </div>
-      </div>
-    ))}
+      ))
+    }
   </div>
 
   <!-- Navigation Dots -->
   <div class="acordeon-dots" id="acordeonDots">
-    {accordeonCards.map((_, index) => (
-      <button
-        class={`acordeon-dot ${index === 0 ? 'active' : ''}`}
-        data-index={index}
-        aria-label={`Ver tarjeta ${index + 1}`}
-      />
-    ))}
+    {
+      accordeonCards.map((_, index) => (
+        <button
+          class={`acordeon-dot ${index === 0 ? 'active' : ''}`}
+          data-index={index}
+          aria-label={`Ver tarjeta ${index + 1}`}
+        />
+      ))
+    }
   </div>
 </div>
 
-<script define:vars={{ totalSlides }}>
-  document.addEventListener('DOMContentLoaded', () => {
-    const dotsContainer = document.getElementById('acordeonDots');
-    const sliderContainer = document.getElementById('acordeonSlider');
-    
-    if (!dotsContainer || !sliderContainer) return;
-
-    const dots = dotsContainer.querySelectorAll('.acordeon-dot');
-    const cards = sliderContainer.querySelectorAll('.acordeon-item');
-    let currentIndex = 0;
-    let isAnimating = false;
-
-    function animateTransition(fromIndex, toIndex) {
-      if (isAnimating) return;
-      isAnimating = true;
-
-      // Efecto Stagger: Desfasar la salida de las cards
-      cards.forEach((card, i) => {
-        // Añadir delay progresivo a cada card para la animación de salida
-        // Usamos variables CSS para que los keyframes las respeten si es necesario,
-        // o simplemente aplicamos el delay directo al estilo.
-        card.style.animationDelay = `${i * 100}ms`;
-        card.classList.add('slide-out-left');
-      });
-
-      // Actualizar dots inmediatamente
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === toIndex);
-      });
-
-      // Calculamos el tiempo total de salida: duración de anim (400ms) + max delay (200ms)
-      const exitDuration = 600; 
-
-      setTimeout(() => {
-        cards.forEach((card, i) => {
-          card.classList.remove('slide-out-left', 'highlighted');
-          card.style.animationDelay = '0ms'; // Reset delay para la entrada
-          
-          // Stagger también para la entrada
-          card.style.animationDelay = `${i * 75}ms`;
-          card.classList.add('slide-in-right');
-          
-          if (i === toIndex) {
-            card.classList.add('highlighted');
-          }
-        });
-
-        // Limpiar clases y delays después de que termine la entrada
-        setTimeout(() => {
-          cards.forEach((card) => {
-            card.classList.remove('slide-in-right');
-            card.style.animationDelay = '0ms';
-          });
-          isAnimating = false;
-        }, 600);
-      }, exitDuration - 100);
-
-      currentIndex = toIndex;
-    }
-
-    function updateActiveState(index, animate = true) {
-      if (animate && index !== currentIndex) {
-        animateTransition(currentIndex, index);
-      } else {
-        // Sin animación (estado inicial)
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === index);
-        });
-        cards.forEach((card, i) => {
-          card.style.animationDelay = '0ms';
-          if (i === index) {
-            card.classList.add('highlighted');
-          } else {
-            card.classList.remove('highlighted');
-          }
-        });
-        currentIndex = index;
-      }
-    }
-
-    // Click handlers for dots
-    dots.forEach((dot) => {
-      dot.addEventListener('click', (e) => {
-        const index = parseInt(e.target.dataset.index, 10);
-        if (!isAnimating) {
-          updateActiveState(index, true);
-        }
-      });
-    });
-
-    // Auto-rotate every 6 seconds (Professional timing)
-    let autoRotate = setInterval(() => {
-      if (!isAnimating) {
-        const nextIndex = (currentIndex + 1) % totalSlides;
-        updateActiveState(nextIndex, true);
-      }
-    }, 6000);
-
-    // Pause auto-rotate on hover
-    sliderContainer.addEventListener('mouseenter', () => {
-      clearInterval(autoRotate);
-    });
-
-    sliderContainer.addEventListener('mouseleave', () => {
-      autoRotate = setInterval(() => {
-        if (!isAnimating) {
-          const nextIndex = (currentIndex + 1) % totalSlides;
-          updateActiveState(nextIndex, true);
-        }
-      }, 6000);
-    });
-
-    // Estado inicial sin animación
-    updateActiveState(0, false);
-  });
-</script>
+<!-- Accordeon behaviour is initialized from a centralized client initializer -->
+<!-- Include on pages using this component: <script type="module" src="/src/client/initializers/accordeon.ts"></script> -->
 
 <style>
   .acordeon-wrapper {
@@ -279,13 +182,19 @@ const totalSlides = accordeonCards.length;
     15% {
       /* Pico sutil de glitch con aberración cromática */
       transform: translateX(-10px) skewX(2deg);
-      text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9;
-      box-shadow: 5px 0 15px rgba(255, 0, 193, 0.3), -5px 0 15px rgba(0, 255, 249, 0.3);
+      text-shadow:
+        2px 0 #ff00c1,
+        -2px 0 #00fff9;
+      box-shadow:
+        5px 0 15px rgba(255, 0, 193, 0.3),
+        -5px 0 15px rgba(0, 255, 249, 0.3);
       clip-path: inset(10% 0 15% 0);
     }
     30% {
       transform: translateX(-20px) skewX(-2deg);
-      text-shadow: -2px 0 #ff00c1, 2px 0 #00fff9;
+      text-shadow:
+        -2px 0 #ff00c1,
+        2px 0 #00fff9;
       clip-path: inset(40% 0 20% 0);
       opacity: 0.9;
     }
@@ -304,7 +213,8 @@ const totalSlides = accordeonCards.length;
 
   /* Animación de entrada Profesional con desvanecimiento suave */
   .acordeon-item.slide-in-right {
-    animation: slideInRightProfessional 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation: slideInRightProfessional 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)
+      forwards;
   }
 
   @keyframes slideInRightProfessional {
@@ -326,7 +236,7 @@ const totalSlides = accordeonCards.length;
       transform: scale(0.7);
       transform-origin: center;
     }
-    
+
     .acordeon-dots {
       margin-top: 2rem;
     }

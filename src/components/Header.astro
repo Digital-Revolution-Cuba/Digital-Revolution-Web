@@ -15,10 +15,19 @@ const navLinks = [
     <!-- Logo -->
 
     <a href="/" class="header-logo" aria-label="Ir al inicio">
-      <img src={logo.src} alt="" class="logo-icon" aria-hidden="true" />
+      <img
+        src={logo.src}
+        alt=""
+        width="60"
+        height="60"
+        class="logo-icon"
+        aria-hidden="true"
+      />
       <img
         src={RevolucionDigitalText.src}
         alt="Revolución Digital"
+        width="180"
+        height="40"
         class="logo-text"
       />
     </a>
@@ -402,90 +411,5 @@ const navLinks = [
   }
 </style>
 
-<script>
-  import { initializeHeader } from './HeaderInteractivity';
-
-  let cleanup = () => {};
-
-  const initHeader = () => {
-    cleanup(); // Limpia listeners de navegación anterior (importante con View Transitions)
-    cleanup = initializeHeader();
-  };
-
-  // Ejecuta al cargar la página por primera vez
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeader);
-  } else {
-    initHeader();
-  }
-
-  // Re-ejecuta en cada navegación con View Transitions (Astro's SPA mode)
-  document.addEventListener('astro:page-load', initHeader);
-
-  // Cleanup global al salir de la página (opcional pero buena práctica)
-  document.addEventListener('astro:before-swap', () => cleanup());
-</script>
-
-<!-- <script>
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const header = document.getElementById('main-header');
-
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', () => {
-      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-      menuToggle.setAttribute('aria-expanded', (!isExpanded).toString());
-      mobileMenu.setAttribute('aria-hidden', isExpanded.toString());
-    });
-
-    // Close menu on escape key
-    document.addEventListener('keydown', (e) => {
-      if (
-        e.key === 'Escape' &&
-        menuToggle.getAttribute('aria-expanded') === 'true'
-      ) {
-        menuToggle.setAttribute('aria-expanded', 'false');
-        mobileMenu.setAttribute('aria-hidden', 'true');
-        menuToggle.focus();
-      }
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!header?.contains(e.target as Node)) {
-        menuToggle.setAttribute('aria-expanded', 'false');
-        mobileMenu.setAttribute('aria-hidden', 'true');
-      }
-    });
-  }
-
-  // Hide header on scroll down, show on scroll up
-  let lastScrollY = window.scrollY;
-  let ticking = false;
-
-  function updateHeader() {
-    const currentScrollY = window.scrollY;
-
-    if (header) {
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        header.style.transform = 'translateX(-50%) translateY(-150%)';
-      } else {
-        header.style.transform = 'translateX(-50%) translateY(0)';
-      }
-    }
-
-    lastScrollY = currentScrollY;
-    ticking = false;
-  }
-
-  window.addEventListener(
-    'scroll',
-    () => {
-      if (!ticking) {
-        requestAnimationFrame(updateHeader);
-        ticking = true;
-      }
-    },
-    { passive: true }
-  );
-</script> -->
+<!-- Header behaviour is initialized from a centralized client initializer: -->
+<!-- <script type="module" src="/src/client/initializers/header.ts"></script> -->

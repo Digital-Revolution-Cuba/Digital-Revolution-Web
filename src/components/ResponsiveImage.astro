@@ -40,75 +40,78 @@ const imageSrc = typeof src === 'string' ? src : src.src;
 // Check if using Astro's image optimization (local images)
 const isOptimizedImage = typeof src !== 'string';
 
-// Generate srcset for different widths (for external images or custom handling)
+// Use actual image dimensions if available from metadata
+const imageWidth = typeof src !== 'string' && src.width ? src.width : 800;
+const imageHeight = typeof src !== 'string' && src.height ? src.height : 0;
+
+// Calculate dimensions for width/height attributes (helps CLS)
+const aspectParts = aspectRatio.split('/').map(Number);
+const aspectValue = aspectParts[0] / aspectParts[1];
+const defaultWidth = imageWidth;
+const defaultHeight = imageHeight || Math.round(defaultWidth / aspectValue);
+
+// Generate srcset for different widths
 function generateSrcset(baseUrl: string, format: string): string {
-  return widths.map(function(w) { 
-    const url = isOptimizedImage 
-      ? `${baseUrl}?w=${w}&f=${format}&q=${quality}`
-      : `${baseUrl}?w=${w}&format=${format}&quality=${quality}`;
-    return `${url} ${w}w`; 
-  }).join(', ');
+  return widths
+    .map(function (w) {
+      const url = isOptimizedImage
+        ? `${baseUrl}?w=${w}&f=${format}&q=${quality}`
+        : `${baseUrl}?w=${w}&format=${format}&quality=${quality}`;
+      return `${url} ${w}w`;
+    })
+    .join(', ');
 }
 
 const avifSrcset = generateSrcset(imageSrc, 'avif');
 const webpSrcset = generateSrcset(imageSrc, 'webp');
 const fallbackSrcset = generateSrcset(imageSrc, 'jpg');
-
-// Calculate dimensions for width/height attributes (helps CLS)
-const aspectParts = aspectRatio.split('/').map(Number);
-const aspectValue = aspectParts[0] / aspectParts[1];
-const defaultWidth = 800;
-const defaultHeight = Math.round(defaultWidth / aspectValue);
 ---
 
 <picture class:list={['optimized-image-wrapper', className]}>
-  {isOptimizedImage ? (
-    <!-- For local images, use Astro's built-in optimization -->
-    <img
-      src={imageSrc}
-      alt={alt}
-      loading={loading}
-      decoding={decoding}
-      fetchpriority={fetchpriority}
-      width={defaultWidth}
-      height={defaultHeight}
-      style={`aspect-ratio: ${aspectRatio}; object-fit: ${objectFit};`}
-      class="optimized-image"
-    />
-  ) : (
-    <!-- For external/string URLs, provide manual optimization -->
-    <Fragment>
-      <!-- AVIF: Mejor compresión, soporte moderno -->
-      <source
-        type="image/avif"
-        srcset={avifSrcset}
-        sizes={sizes}
-      />
-      
-      <!-- WebP: Buen balance, amplio soporte -->
-      <source
-        type="image/webp"
-        srcset={webpSrcset}
-        sizes={sizes}
-      />
-      
-      <!-- JPEG Fallback -->
-      <img
-        src={`${imageSrc}?w=${defaultWidth}&q=${quality}`}
-        srcset={fallbackSrcset}
-        sizes={sizes}
-        alt={alt}
-        loading={loading}
-        decoding={decoding}
-        fetchpriority={fetchpriority}
-        width={defaultWidth}
-        height={defaultHeight}
-        style={`aspect-ratio: ${aspectRatio}; object-fit: ${objectFit};`}
-        class="optimized-image"
-      />
-    </Fragment>
-  )}
-  
+  {
+    isOptimizedImage ? (
+      <Fragment>
+        <source type="image/avif" srcset={avifSrcset} sizes={sizes} />
+
+        <source type="image/webp" srcset={webpSrcset} sizes={sizes} />
+
+        <img
+          src={imageSrc}
+          srcset={fallbackSrcset}
+          sizes={sizes}
+          alt={alt}
+          loading={loading}
+          decoding={decoding}
+          fetchpriority={fetchpriority}
+          width={defaultWidth}
+          height={defaultHeight}
+          style={`aspect-ratio: ${aspectRatio}; object-fit: ${objectFit};`}
+          class="optimized-image"
+        />
+      </Fragment>
+    ) : (
+      <Fragment>
+        <source type="image/avif" srcset={avifSrcset} sizes={sizes} />
+
+        <source type="image/webp" srcset={webpSrcset} sizes={sizes} />
+
+        <img
+          src={`${imageSrc}?w=${defaultWidth}&q=${quality}`}
+          srcset={fallbackSrcset}
+          sizes={sizes}
+          alt={alt}
+          loading={loading}
+          decoding={decoding}
+          fetchpriority={fetchpriority}
+          width={defaultWidth}
+          height={defaultHeight}
+          style={`aspect-ratio: ${aspectRatio}; object-fit: ${objectFit};`}
+          class="optimized-image"
+        />
+      </Fragment>
+    )
+  }
+
   <!-- Placeholder para prevenir CLS -->
   <div class="image-placeholder" aria-hidden="true"></div>
 </picture>
@@ -125,21 +128,21 @@ const defaultHeight = Math.round(defaultWidth / aspectValue);
       rgba(var(--palette-brand-dark-rgb), 0.6)
     );
   }
-  
+
   .optimized-image {
     width: 100%;
     height: auto;
     display: block;
-    
+
     /* Smooth loading transition */
     opacity: 0;
     transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   .optimized-image.loaded {
     opacity: 1;
   }
-  
+
   .image-placeholder {
     position: absolute;
     inset: 0;
@@ -152,21 +155,21 @@ const defaultHeight = Math.round(defaultWidth / aspectValue);
     transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
   }
-  
+
   .optimized-image-wrapper:has(.optimized-image.loaded) .image-placeholder {
     opacity: 0;
   }
-  
+
   /* Hover effect solo en dispositivos con hover */
   @media (hover: hover) and (pointer: fine) {
     .optimized-image-wrapper:hover .optimized-image {
       transform: scale(1.05);
-      transition: 
+      transition:
         transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
         opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
-  
+
   /* Optimización para reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .optimized-image,
@@ -197,18 +200,18 @@ const defaultHeight = Math.round(defaultWidth / aspectValue);
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const img = entry.target as HTMLImageElement;
-            
+
             // Agregar clase loaded cuando la imagen esté cargada
             const handleLoad = () => {
               img.classList.add('loaded');
             };
-            
+
             if (img.complete) {
               handleLoad();
             } else {
               img.addEventListener('load', handleLoad, { once: true });
             }
-            
+
             // Dejar de observar esta imagen
             imageObserver.unobserve(img);
           }
@@ -216,33 +219,30 @@ const defaultHeight = Math.round(defaultWidth / aspectValue);
       },
       {
         rootMargin: '100px', // Pre-cargar 100px antes
-        threshold: 0.01
-      }
+        threshold: 0.01,
+      },
     );
-    
-    // Observar todas las imágenes lazy
-    document.querySelectorAll('.optimized-image[loading="lazy"]').forEach((img) => {
-      imageObserver.observe(img);
-    });
-    
-    // Para imágenes eager, cargarlas inmediatamente
-    document.querySelectorAll('.optimized-image[loading="eager"]').forEach((img) => {
-      const handleLoad = () => {
-        (img as HTMLImageElement).classList.add('loaded');
-      };
-      
-      if ((img as HTMLImageElement).complete) {
-        handleLoad();
-      } else {
-        img.addEventListener('load', handleLoad, { once: true });
-      }
-    });
-  }
 
-  // Inicializar cuando el DOM esté listo
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initImageLoading);
-  } else {
-    initImageLoading();
+    // Observar todas las imágenes lazy
+    document
+      .querySelectorAll('.optimized-image[loading="lazy"]')
+      .forEach((img) => {
+        imageObserver.observe(img);
+      });
+
+    // Para imágenes eager, cargarlas inmediatamente
+    document
+      .querySelectorAll('.optimized-image[loading="eager"]')
+      .forEach((img) => {
+        const handleLoad = () => {
+          (img as HTMLImageElement).classList.add('loaded');
+        };
+
+        if ((img as HTMLImageElement).complete) {
+          handleLoad();
+        } else {
+          img.addEventListener('load', handleLoad, { once: true });
+        }
+      });
   }
 </script>

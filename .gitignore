@@ -28,3 +28,9 @@ pnpm-debug.log*
 .prettierrc
 
 .agent
+
+.github
+
+.astro
+.vscode
+.husky
