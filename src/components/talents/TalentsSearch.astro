@@ -1,10 +1,12 @@
 ---
-import { getCollection } from 'astro:content';
-import TalentSearch from './TalentsCards';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import { categories } from '../../config/talentsConfig.ts';
+import TalentSearch from './TalentsCards';
 
-const allTalents = await getCollection('talents');
+const allTalents: CollectionEntry<'talents'>[] = await getCollection('talents');
 
+// Fallback for empty collection
+const hasTalents = allTalents && allTalents.length > 0;
 ---
 
 <section id="talentos" class="talents-section">
@@ -19,6 +21,26 @@ const allTalents = await getCollection('talents');
       </p>
     </div>
 
-    <TalentSearch client:visible />
+    {
+      hasTalents ? (
+        <TalentSearch
+          client:visible
+          initialTalents={allTalents}
+          categories={categories}
+        />
+      ) : (
+        <div
+          class="empty-state"
+          style="text-align: center; padding: 4rem 2rem;"
+        >
+          <p style="font-size: 1.25rem; color: var(--color-text-secondary); margin-bottom: 1rem;">
+            No hay talentos disponibles en este momento.
+          </p>
+          <p style="color: var(--color-text-muted);">
+            Vuelve pronto para descubrir a nuestra comunidad de creativos.
+          </p>
+        </div>
+      )
+    }
   </div>
 </section>

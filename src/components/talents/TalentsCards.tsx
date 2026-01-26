@@ -1,6 +1,11 @@
-import { useMemo, useState } from 'react';
-import { categories, talents as talentsMock } from '../../data/talents.ts';
-import { logger } from '../../utils/logger.ts';
+import type { CollectionEntry } from 'astro:content';
+import { useInfiniteScroll } from '../../composables/features/useInfiniteScroll';
+import { useTalentsFilter } from '../../composables/features/useTalentsFilter';
+import {
+  useTalentsSort,
+  type SortOption,
+} from '../../composables/features/useTalentsSort';
+import { INFINITE_SCROLL_CONFIG } from '../../config/galleryConfig';
 
 // SVG Icons inline (reemplazo de lucide-react para reducir bundle)
 const SearchIcon = () => (
@@ -50,37 +55,51 @@ const MapPinIcon = ({ size = 16 }: { size?: number }) => (
   </svg>
 );
 
+const StarIcon = ({
+  size = 12,
+  fill = 'currentColor',
+}: {
+  size?: number;
+  fill?: string;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill={fill}
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+  </svg>
+);
+
 interface Props {
   initialTalents: CollectionEntry<'talents'>[];
   categories: string[];
 }
 
 export default function TalentSearch({ initialTalents, categories }: Props) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('Todos');
+  // Use custom hooks for business logic
+  const {
+    searchQuery,
+    setSearchQuery,
+    activeCategory,
+    setActiveCategory,
+    filteredTalents,
+  } = useTalentsFilter(initialTalents);
 
-  const filteredTalents = useMemo(() => {
-    return initialTalents.filter((talent) => {
-      const { name = '', role = '', skills = [] } = talent.data;
-      
-      const matchesSearch =
-        name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        skills.some((skill) => skill.toLowerCase().includes(searchQuery.toLowerCase()));
+  const { sortBy, setSortBy, sortedTalents } = useTalentsSort(filteredTalents);
 
-      const matchesCategory =
-        activeCategory === 'Todos' ||
-        (talent.data.status && talent.data.status.toLowerCase() === activeCategory.toLowerCase()) ||
-        role.toLowerCase().includes(activeCategory.toLowerCase()) ||
-        skills.some((skill) => skill.toLowerCase().includes(activeCategory.toLowerCase()));
-
-      return matchesSearch && matchesCategory;
+  const { visibleItems, hasMore, isLoading, observerTarget } =
+    useInfiniteScroll(sortedTalents, {
+      initialItems: INFINITE_SCROLL_CONFIG.INITIAL_ITEMS,
+      itemsPerPage: INFINITE_SCROLL_CONFIG.ITEMS_PER_PAGE,
+      threshold: INFINITE_SCROLL_CONFIG.THRESHOLD,
+      rootMargin: INFINITE_SCROLL_CONFIG.ROOT_MARGIN,
     });
-  }, [searchQuery, activeCategory]);
-
-  function LoadMoreTalents() {
-    logger.log('Cargando talentos');
-  }
 
   return (
     <>
@@ -118,7 +137,9 @@ export default function TalentSearch({ initialTalents, categories }: Props) {
           <button
             key={cat}
             className={`filter-pill ${
-              cat === activeCategory ? 'filter-pill-active' : 'filter-pill-inactive'
+              cat === activeCategory
+                ? 'filter-pill-active'
+                : 'filter-pill-inactive'
             }`}
             onClick={() => setActiveCategory(cat)}
           >
@@ -129,20 +150,32 @@ export default function TalentSearch({ initialTalents, categories }: Props) {
 
       <div className="talents-header">
         <p className="results-count">
-          <span>{filteredTalents.length}</span> talentos encontrados
+          <span>{sortedTalents.length}</span> talentos encontrados
         </p>
         <div className="sort-dropdown">
           <span>Ordenar por:</span>
-          <select>
-            <option>Profesion</option>
-            <option>Ciudad</option>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as SortOption)}
+          >
+            <option value="profesion">Profesión</option>
+            <option value="ciudad">Ciudad</option>
+            <option value="rating">Rating</option>
           </select>
         </div>
       </div>
 
       <div className="talents-grid">
-        {filteredTalents.map((talent, index) => {
+        {visibleItems.map((talent, index) => {
           const { data, id } = talent;
+          const {
+            name = '',
+            image = '/placeholder.jpg',
+            rating,
+            location = '',
+            skills = [],
+          } = data;
+
           return (
             <div
               key={id}
@@ -150,43 +183,71 @@ export default function TalentSearch({ initialTalents, categories }: Props) {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="talent-card-image">
-                <img src={data.image || '/placeholder.jpg'} alt={data.name} />
-                <div className="talent-actions">
-                  {data.rating && (
-                    <div className="rating-badge">
-                      <Star size={12} fill="currentColor" />
-                      <span>{data.rating}</span>
-                    </div>
-                  )}
+                <img src={image} alt={name} />
+              </div>
+
+              <div className="talent-card-content">
+                <h3 className="talent-name">{name}</h3>
+
+                <div className="talent-location">
+                  <MapPinIcon size={16} />
+                  <span>{location}</span>
                 </div>
+                <div className="talent-skills">
+                  {skills.slice(0, 3).map((skill) => (
+                    <span key={skill} className="skill-tag">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+
+                {rating && (
+                  <div className="talent-rating">
+                    <StarIcon size={14} fill="currentColor" />
+                    <span>{rating.toFixed(1)}</span>
+                    <span className="rating-label">Rating</span>
+                  </div>
+                )}
               </div>
-              <div className="talent-location">
-                <MapPinIcon size={16} />
-                <span>{talent.location}</span>
-              </div>
-              <div className="talent-skills">
-                {talent.skills.slice(0, 3).map((skill) => (
-                  <span key={skill} className="skill-tag">
-                    {skill}
-                  </span>
-                ))}
-              </div>
+
               <div className="talent-footer">
-                {/* Stats o estadísticas del usuario */}
-                <button className="button-cta" style={{ padding: '10px 15px' }}>
-                  Ver Perfil
-                </button>
+                <a
+                  href={`/perfiles/${id}`}
+                  className="cta-profile-btn"
+                  aria-label={`Ver perfil completo de ${name}`}
+                >
+                  <span>Ver Perfil Completo</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </a>
               </div>
             </div>
           );
         })}
       </div>
 
-      <div className="load-more">
-        <button className="button-cta" onClick={() => console.log('Cargando...')}>
-          Ver Más Talentos
-        </button>
-      </div>
+      {hasMore && (
+        <div ref={observerTarget} className="load-more">
+          {isLoading ? (
+            <div className="animate-pulse text-cyan-400">
+              Cargando más talentos...
+            </div>
+          ) : (
+            <button className="button-cta">Ver Más Talentos</button>
+          )}
+        </div>
+      )}
     </>
   );
 }
