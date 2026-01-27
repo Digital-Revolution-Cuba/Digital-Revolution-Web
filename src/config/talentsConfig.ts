@@ -4,6 +4,5 @@ export const categories = [
   'Diseño',
   'Música',
   'Desarrollo',
-  'Arte'
+  'Arte',
 ];
-

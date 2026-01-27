@@ -10,6 +10,7 @@
 4. Abre un Pull Request contra la rama `main` del repositorio original
 5. Describe tus cambios claramente en la descripción del PR
 6. No olvides mencionar cualquier issue relacionado que le de solución el PR
+7. Envia fotos de los cambios visuales si aplica
 
 ## 📌 Nombres de ramas:
 
