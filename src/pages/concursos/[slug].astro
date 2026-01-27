@@ -1,0 +1,901 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const concursos = await getCollection('concursos');
+  
+  return concursos.map((concurso) => ({
+    params: { slug: concurso.data.slug },
+    props: { concurso },
+  }));
+}
+
+interface Props {
+  concurso: CollectionEntry<'concursos'>;
+}
+
+const { concurso } = Astro.props;
+const { data } = concurso;
+
+// Format dates
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(date);
+};
+
+const formatShortDate = (date: Date) => {
+  return new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(date);
+};
+
+// Calculate days remaining
+const daysRemaining = Math.ceil(
+  (data.fechas.cierre.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+);
+
+// Category labels
+const categoryLabels: Record<string, string> = {
+  'fotografia': 'Fotografía',
+  'musica': 'Música',
+  'arte-digital': 'Arte Digital',
+  'ilustracion': 'Ilustración',
+  'diseno-grafico': 'Diseño Gráfico',
+  'video': 'Video',
+  'escritura': 'Escritura',
+};
+
+// Status configuration
+const statusConfig: Record<string, { label: string; color: string }> = {
+  'activo': { label: 'Activo Ahora', color: 'var(--palette-accent-cyan)' },
+  'proximo': { label: 'Próximamente', color: 'var(--palette-accent-purple)' },
+  'finalizado': { label: 'Finalizado', color: 'var(--palette-accent-yellow)' },
+  'cerrado': { label: 'Cerrado', color: 'rgba(255, 255, 255, 0.5)' },
+};
+
+const currentStatus = statusConfig[data.status];
+---
+
+<Layout
+  title={`${data.title} — Concursos Digital Revolution`}
+  description={data.description}
+  image={data.image}
+>
+  <div class="concurso-detail-page">
+    <!-- Hero Section with Background -->
+    <section class="hero-section">
+      <div class="hero-background">
+        <img src={data.image} alt={data.imageAlt} class="hero-bg-image" />
+        <div class="hero-overlay"></div>
+      </div>
+      
+      <div class="hero-content-wrapper">
+        <div class="hero-content">
+          <!-- Breadcrumb -->
+          <nav class="breadcrumb">
+            <a href="/">Inicio</a>
+            <span class="separator">/</span>
+            <a href="/concursos">Concursos</a>
+            <span class="separator">/</span>
+            <span class="current">{data.title}</span>
+          </nav>
+          
+          <!-- Category & Status -->
+          <div class="meta-badges">
+            <span class="category-badge">
+              {categoryLabels[data.category]}
+            </span>
+            <span class="status-badge" style={`--status-color: ${currentStatus.color}`}>
+              <span class="status-dot"></span>
+              {currentStatus.label}
+            </span>
+          </div>
+          
+          <!-- Title -->
+          <h1 class="hero-title">{data.title}</h1>
+          
+          <!-- Description -->
+          <p class="hero-description">{data.description}</p>
+          
+          <!-- Key Info Cards -->
+          <div class="info-cards">
+            <div class="info-card">
+              <div class="info-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </div>
+              <div class="info-content">
+                <span class="info-label">Cierre</span>
+                <span class="info-value">{formatShortDate(data.fechas.cierre)}</span>
+              </div>
+            </div>
+            
+            {daysRemaining > 0 && data.status === 'activo' && (
+              <div class="info-card highlight">
+                <div class="info-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">Tiempo restante</span>
+                  <span class="info-value">{daysRemaining} días</span>
+                </div>
+              </div>
+            )}
+            
+            {data.maxParticipants && (
+              <div class="info-card">
+                <div class="info-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">Participantes</span>
+                  <span class="info-value">
+                    {data.currentParticipants} / {data.maxParticipants}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          <!-- CTA Button -->
+          {data.participationLink && data.status === 'activo' && (
+            <div class="hero-cta">
+              <a href={data.participationLink} class="cta-button primary" target="_blank" rel="noopener noreferrer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                </svg>
+                Participar Ahora
+              </a>
+              <button class="cta-button secondary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                  <polyline points="16 6 12 2 8 6"/>
+                  <line x1="12" y1="2" x2="12" y2="15"/>
+                </svg>
+                Compartir
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Prizes Section -->
+      <section class="content-section prizes-section">
+        <h2 class="section-title">
+          <span class="title-icon">🏆</span>
+          Premios
+        </h2>
+        
+        <div class="prizes-grid">
+          {data.premios.map((premio) => (
+            <div class={`prize-card position-${premio.position}`}>
+              <div class="prize-position">
+                <span class="position-number">#{premio.position}</span>
+                {premio.position === 1 && <span class="crown">👑</span>}
+              </div>
+              <h3 class="prize-title">{premio.prize}</h3>
+              {premio.value && (
+                <p class="prize-value">{premio.value}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Requirements Section -->
+      <section class="content-section">
+        <h2 class="section-title">
+          <span class="title-icon">📋</span>
+          Requisitos de Participación
+        </h2>
+        
+        <div class="requirements-list">
+          {data.requisitos.map((req, index) => (
+            <div class="requirement-item">
+              <div class="requirement-number">{index + 1}</div>
+              <p class="requirement-text">{req.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Timeline Section -->
+      <section class="content-section">
+        <h2 class="section-title">
+          <span class="title-icon">📅</span>
+          Cronograma
+        </h2>
+        
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Inicio del Concurso</h3>
+              <p class="timeline-date">{formatDate(data.fechas.inicio)}</p>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Fecha de Cierre</h3>
+              <p class="timeline-date">{formatDate(data.fechas.cierre)}</p>
+            </div>
+          </div>
+          
+          {data.fechas.resultados && (
+            <div class="timeline-item">
+              <div class="timeline-marker special"></div>
+              <div class="timeline-content">
+                <h3 class="timeline-title">Anuncio de Resultados</h3>
+                <p class="timeline-date">{formatDate(data.fechas.resultados)}</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <!-- Organizer Info -->
+      {data.organizer && (
+        <section class="content-section organizer-section">
+          <div class="organizer-card">
+            <div class="organizer-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div>
+              <p class="organizer-label">Organizado por</p>
+              <h3 class="organizer-name">{data.organizer}</h3>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <!-- Tags -->
+      {data.tags && data.tags.length > 0 && (
+        <div class="tags-section">
+          {data.tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <!-- Bottom CTA -->
+    {data.participationLink && data.status === 'activo' && (
+      <section class="bottom-cta">
+        <div class="bottom-cta-content">
+          <h2 class="bottom-cta-title">¿Listo para participar?</h2>
+          <p class="bottom-cta-text">
+            No dejes pasar esta oportunidad. ¡Inscríbete ahora!
+          </p>
+          <a href={data.participationLink} class="cta-button primary large" target="_blank" rel="noopener noreferrer">
+            Participar en el Concurso
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+      </section>
+    )}
+  </div>
+</Layout>
+
+<style>
+  .concurso-detail-page {
+    min-height: 100vh;
+    background: var(--palette-background);
+  }
+
+  /* Hero Section */
+  .hero-section {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.3);
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--palette-background-rgb), 0.7) 0%,
+      rgba(var(--palette-background-rgb), 0.9) 50%,
+      var(--palette-background) 100%
+    );
+  }
+
+  .hero-content-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 24px 80px;
+  }
+
+  .hero-content {
+    max-width: 800px;
+  }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    font-size: 0.875rem;
+    font-family: var(--font-rubik);
+  }
+
+  .breadcrumb a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--palette-accent-cyan);
+  }
+
+  .breadcrumb .separator {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .breadcrumb .current {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  /* Meta Badges */
+  .meta-badges {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .category-badge {
+    padding: 8px 16px;
+    background: rgba(var(--palette-accent-purple-rgb), 0.2);
+    border: 1px solid rgba(var(--palette-accent-purple-rgb), 0.4);
+    color: var(--palette-accent-purple);
+    font-size: 0.813rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+  }
+
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--status-color);
+    color: var(--status-color);
+    font-size: 0.813rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--status-color);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* Hero Title */
+  .hero-title {
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: #fff;
+    line-height: 1.1;
+    margin: 0 0 24px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    margin: 0 0 40px;
+    font-family: var(--font-rubik);
+  }
+
+  /* Info Cards */
+  .info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .info-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .info-card.highlight {
+    background: rgba(var(--palette-accent-cyan-rgb), 0.1);
+    border-color: rgba(var(--palette-accent-cyan-rgb), 0.3);
+  }
+
+  .info-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(var(--palette-accent-cyan-rgb), 0.4);
+  }
+
+  .info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: rgba(var(--palette-accent-cyan-rgb), 0.2);
+    border-radius: 10px;
+    color: var(--palette-accent-cyan);
+    flex-shrink: 0;
+  }
+
+  .info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .info-label {
+    font-size: 0.813rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-rubik);
+  }
+
+  .info-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: var(--font-barlow);
+  }
+
+  /* CTA Buttons */
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .cta-button.primary {
+    background: linear-gradient(
+      135deg,
+      var(--palette-accent-cyan),
+      var(--palette-accent-blue)
+    );
+    color: var(--palette-brand-dark);
+    box-shadow: 0 8px 20px rgba(var(--palette-accent-cyan-rgb), 0.3);
+  }
+
+  .cta-button.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(var(--palette-accent-cyan-rgb), 0.4);
+  }
+
+  .cta-button.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+  }
+
+  .cta-button.secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .cta-button.large {
+    padding: 18px 36px;
+    font-size: 1.125rem;
+  }
+
+  /* Main Content */
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 24px;
+  }
+
+  .content-section {
+    margin-bottom: 80px;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: #fff;
+    margin: 0 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .title-icon {
+    font-size: 1.2em;
+  }
+
+  /* Prizes Grid */
+  .prizes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .prize-card {
+    position: relative;
+    padding: 32px 24px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.4);
+    border: 2px solid rgba(var(--palette-accent-cyan-rgb), 0.2);
+    border-radius: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .prize-card.position-1 {
+    border-color: rgba(var(--palette-accent-yellow-rgb), 0.4);
+    background: linear-gradient(
+      135deg,
+      rgba(var(--palette-accent-yellow-rgb), 0.1),
+      rgba(var(--palette-accent-orange-rgb), 0.1)
+    );
+  }
+
+  .prize-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(var(--palette-accent-cyan-rgb), 0.5);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .prize-position {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .position-number {
+    font-size: 2rem;
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: var(--palette-accent-cyan);
+  }
+
+  .prize-card.position-1 .position-number {
+    color: var(--palette-accent-yellow);
+  }
+
+  .crown {
+    font-size: 1.5rem;
+  }
+
+  .prize-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    color: #fff;
+    margin: 0 0 8px;
+  }
+
+  .prize-value {
+    font-size: 1rem;
+    color: var(--palette-accent-cyan);
+    font-weight: 600;
+    font-family: var(--font-rubik);
+    margin: 0;
+  }
+
+  /* Requirements List */
+  .requirements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .requirement-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.4);
+    border-left: 3px solid var(--palette-accent-cyan);
+    border-radius: 12px;
+  }
+
+  .requirement-number {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--palette-accent-cyan-rgb), 0.2);
+    color: var(--palette-accent-cyan);
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    border-radius: 8px;
+  }
+
+  .requirement-text {
+    flex: 1;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin: 0;
+    font-family: var(--font-rubik);
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: linear-gradient(
+      180deg,
+      var(--palette-accent-cyan),
+      var(--palette-accent-purple)
+    );
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 32px;
+  }
+
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-marker {
+    position: absolute;
+    left: -31px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    background: var(--palette-accent-cyan);
+    border: 3px solid var(--palette-background);
+    border-radius: 50%;
+  }
+
+  .timeline-marker.special {
+    background: var(--palette-accent-yellow);
+    box-shadow: 0 0 20px rgba(var(--palette-accent-yellow-rgb), 0.5);
+  }
+
+  .timeline-content {
+    padding: 12px 20px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.4);
+    border-radius: 12px;
+  }
+
+  .timeline-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    color: #fff;
+    margin: 0 0 8px;
+  }
+
+  .timeline-date {
+    font-size: 0.938rem;
+    color: var(--palette-accent-cyan);
+    font-family: var(--font-rubik);
+    margin: 0;
+  }
+
+  /* Organizer Section */
+  .organizer-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.4);
+    border: 1px solid rgba(var(--palette-accent-cyan-rgb), 0.2);
+    border-radius: 16px;
+  }
+
+  .organizer-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(var(--palette-accent-cyan-rgb), 0.2);
+    border-radius: 12px;
+    color: var(--palette-accent-cyan);
+    flex-shrink: 0;
+  }
+
+  .organizer-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 4px;
+    font-family: var(--font-rubik);
+  }
+
+  .organizer-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    color: #fff;
+    margin: 0;
+  }
+
+  /* Tags */
+  .tags-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 24px;
+  }
+
+  .tag {
+    padding: 8px 16px;
+    background: rgba(var(--palette-accent-purple-rgb), 0.1);
+    border: 1px solid rgba(var(--palette-accent-purple-rgb), 0.3);
+    color: var(--palette-accent-purple);
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: var(--font-rubik);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .tag:hover {
+    background: rgba(var(--palette-accent-purple-rgb), 0.2);
+    border-color: rgba(var(--palette-accent-purple-rgb), 0.5);
+  }
+
+  /* Bottom CTA */
+  .bottom-cta {
+    padding: 80px 24px;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--palette-accent-cyan-rgb), 0.05),
+      rgba(var(--palette-accent-purple-rgb), 0.05)
+    );
+  }
+
+  .bottom-cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .bottom-cta-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: #fff;
+    margin: 0 0 16px;
+  }
+
+  .bottom-cta-text {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 32px;
+    font-family: var(--font-rubik);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-content-wrapper {
+      padding: 100px 20px 60px;
+    }
+
+    .info-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .prizes-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .timeline {
+      padding-left: 32px;
+    }
+
+    .organizer-card {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
