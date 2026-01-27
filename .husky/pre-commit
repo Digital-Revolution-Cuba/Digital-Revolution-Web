@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Run format check
+pnpm format:check || {
+  echo "❌ Format check failed. Run 'pnpm format' to fix formatting issues."
+  exit 1
+}
+
+# Quick type check (optional, comment out if too slow)
+pnpm check || {
+  echo "⚠️  Astro check found issues. Review and fix before committing."
+  exit 1
+}

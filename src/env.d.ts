@@ -1,4 +1,4 @@
-/// <reference types="astro/client" />
+/// <reference types="astro/client" /   >
 
 declare module '*.avif' {
   const value: {

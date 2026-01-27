@@ -18,7 +18,12 @@ const { title, description, href = '#', logo } = Astro.props;
     >
       {
         logo ? (
-          <img src={logo} alt={`Logo`} class="h-6 w-auto" loading="lazy" />
+          <img
+            src={logo}
+            alt={`${title} logo`}
+            class="h-6 w-auto"
+            loading="lazy"
+          />
         ) : (
           <span class="text-xs opacity-60">Logo</span>
         )

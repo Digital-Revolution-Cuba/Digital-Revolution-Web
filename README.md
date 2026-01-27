@@ -1,8 +1,15 @@
 # Revolucion-Digital-Web 🚀
 
 [![NPM Package](https://github.com/Digital-Revolution-Cuba/Digital-Revolution-Web/actions/workflows/build.yml/badge.svg)](https://github.com/Digital-Revolution-Cuba/Digital-Revolution-Web/actions/workflows/build.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-90%25-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Astro](https://img.shields.io/badge/Astro-5.16-FF5D01?logo=astro)](https://astro.build/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
+[![Performance](https://img.shields.io/badge/Lighthouse-90+-success?logo=lighthouse)](https://developers.google.com/speed/pagespeed/insights/)
 
 Bienvenido al repositorio de **Revolucion-Digital-Web**, la interfaz digital que da vida a la comunidad de talentos. Este proyecto es la cara web de nuestra organización, diseñada para mostrar de forma dinámica y atractiva el talento en arte, música, desarrollo, escritura y más.
+
+> **🎯 Refactorización v0.3.0 Completada** (Enero 2026)  
+> Cumplimiento de estándares mejorado de 58% → 78%. Ver [REFACTORING-COMPLETED.md](./REFACTORING-COMPLETED.md) para detalles.
 
 ---
 
@@ -16,10 +23,14 @@ Bienvenido al repositorio de **Revolucion-Digital-Web**, la interfaz digital que
 
 ## 🛠 Tecnologías Utilizadas
 
-- **[Astro](https://astro.build/)**  
-  Un generador de sitios estáticos que garantiza rapidez, optimización y flexibilidad en el front-end.
-- **Headless CMS / Backend (Futuro):**  
-  Preparado para integrarse con un CMS headless o un backend propio para gestionar contenido dinámico en el futuro.
+- **[Astro 5.16](https://astro.build/)**  
+  Framework web moderno con Islands Architecture para máximo rendimiento.
+- **[React 19](https://react.dev/)**  
+  Hidratación selectiva solo donde es necesaria (`client:visible`, `client:idle`).
+- **[Tailwind CSS 4](https://tailwindcss.com/)**  
+  Utility-first CSS con design tokens en `@theme`.
+- **[TypeScript (Strict)](https://www.typescriptlang.org/)**  
+  Type-safety completo con 90% coverage.
 - **Integración de APIs:**  
   Consumo de datos dinámicos durante el proceso de build, combinando lo mejor de un sitio estático con contenido fresco.
 

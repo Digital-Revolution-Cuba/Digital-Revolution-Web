@@ -17,6 +17,8 @@ const { item } = Astro.props;
     <img
       src={item.image}
       alt={`${item.title}${item.photographer ? ` by ${item.photographer}` : ''}`}
+      width="285"
+      height="380"
       class="photo-image h-full w-full rounded-[25px] object-cover shadow-md transition duration-300"
       loading="lazy"
     />

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Saira+Stencil+One&display=swap');
+@import './fonts.css';
 @import 'tailwindcss';
 @import './animations.css';
 @import './components/responsive-card.css';
@@ -261,6 +261,213 @@ body {
       transparent
     );
   }
+
+  /* Join Our Community - Enhanced styles */
+  .community-card {
+    position: relative;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .community-card:hover {
+    transform: scale(1.02);
+    box-shadow:
+      0 8px 24px rgba(var(--palette-accent-cyan-rgb), 0.3),
+      0 0 20px rgba(var(--palette-accent-purple-rgb), 0.2);
+  }
+
+  /* New CTA design for Join Our Community (images removed) */
+  .community-cta {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--palette-brand-navy-rgb), 0.06),
+      rgba(var(--palette-brand-dark-rgb), 0.02)
+    );
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    overflow: visible;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .community-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .cta-decor {
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 140%;
+    background-image:
+      radial-gradient(
+        circle at 20% 20%,
+        rgba(var(--palette-accent-cyan-rgb), 0.07),
+        transparent 18%
+      ),
+      radial-gradient(
+        circle at 80% 80%,
+        rgba(var(--palette-accent-purple-rgb), 0.06),
+        transparent 20%
+      );
+    filter: blur(18px);
+    pointer-events: none;
+    border-radius: 20px;
+    z-index: 0;
+  }
+
+  .cta-btn {
+    position: relative;
+    z-index: 2;
+    appearance: none;
+    border: none;
+    padding: 0.6rem 1.1rem;
+    border-radius: 0.8rem;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(
+      90deg,
+      var(--color-accent-cyan),
+      var(--color-accent-purple)
+    );
+    box-shadow: 0 8px 20px rgba(var(--palette-accent-cyan-rgb), 0.18);
+    cursor: pointer;
+    overflow: hidden;
+    transition:
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(var(--palette-accent-purple-rgb), 0.18);
+  }
+  .cta-btn:active {
+    transform: translateY(-1px);
+  }
+  .cta-btn:focus-visible {
+    outline: 3px solid rgba(var(--palette-accent-cyan-rgb), 0.4);
+    outline-offset: 3px;
+  }
+
+  .cta-btn::after {
+    content: '';
+    position: absolute;
+    left: -60%;
+    top: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.06)
+    );
+    transform: skewX(-20deg);
+    transition: left 650ms ease;
+    pointer-events: none;
+  }
+
+  .cta-btn:hover::after {
+    left: 120%;
+  }
+
+  .cta-ornaments {
+    position: absolute;
+    right: -6%;
+    bottom: -6%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .cta-ornaments .ring {
+    display: block;
+    position: absolute;
+    border-radius: 9999px;
+    border: 2px solid rgba(var(--palette-accent-cyan-rgb), 0.08);
+  }
+  .cta-ornaments .ring-1 {
+    width: 64px;
+    height: 64px;
+    right: 0;
+    bottom: 0;
+    animation: ringPulse 3.5s infinite ease-in-out;
+  }
+  .cta-ornaments .ring-2 {
+    width: 40px;
+    height: 40px;
+    right: 10px;
+    bottom: 8px;
+    animation: ringPulse 4.5s infinite ease-in-out;
+    animation-delay: 300ms;
+  }
+
+  @keyframes ringPulse {
+    0% {
+      transform: scale(0.92);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.12);
+      opacity: 0.12;
+    }
+    100% {
+      transform: scale(0.92);
+      opacity: 0.7;
+    }
+  }
+
+  /* Decorative blobs that replace images */
+  .decorative-blob {
+    width: 140px;
+    height: 140px;
+    border-radius: 18px;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--palette-accent-cyan-rgb), 0.08),
+      rgba(var(--palette-accent-purple-rgb), 0.05)
+    );
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    transform: translateY(0);
+    transition: transform 300ms ease;
+  }
+  .decorative-blob--top {
+    transform: translateY(-6px) rotate(-6deg);
+  }
+  .decorative-blob--bottom {
+    transform: translateY(6px) rotate(6deg);
+  }
+  .decorative-blob:hover {
+    transform: translateY(-8px) rotate(-2deg);
+  }
+
+  .community-title {
+    text-shadow:
+      2px 2px 0 rgba(0, 0, 0, 0.5),
+      0 0 10px rgba(var(--palette-accent-cyan-rgb), 0.4);
+    letter-spacing: 0.05em;
+  }
+
+  /* Optimized Image - Ensure images fill container properly */
+  .optimized-image-wrapper {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+  }
+
+  .optimized-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 }
 /* Parallelogram 2 - the larger one */
 .clip-path-parallelogram-left-corner {
@@ -268,7 +475,9 @@ body {
 }
 
 .clip-path-parallelogram-center-top {
-  clip-path: polygon(0 25%, 100% 11%, 100% 100%, 0 100%);
+  /* Mobile-first: polygon provided from Figma/Clippy */
+  -webkit-clip-path: polygon(11% 40%, 87% 30%, 87% 100%, 11% 100%);
+  clip-path: polygon(11% 40%, 87% 30%, 87% 100%, 11% 100%);
 }
 
 .clip-path-parallelogram-center-bottom {
@@ -277,4 +486,59 @@ body {
 
 .clip-path-parallelogram-right-bottom {
   clip-path: polygon(0 21%, 100% 43%, 100% 87%, 0 100%);
+}
+
+/* Slightly adjusted clip-paths for small screens to keep shapes proportional */
+@media (max-width: 640px) {
+  .clip-path-parallelogram-left-corner {
+    clip-path: polygon(12% 22%, 100% 0%, 82% 82%, 6% 90%);
+  }
+
+  .clip-path-parallelogram-center-top {
+    /* keep same mobile shape (explicit) so it matches Figma mobile rendering */
+    -webkit-clip-path: polygon(11% 40%, 87% 30%, 87% 100%, 11% 100%);
+    clip-path: polygon(11% 40%, 87% 30%, 87% 100%, 11% 100%);
+  }
+
+  .clip-path-parallelogram-center-bottom {
+    clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 76%);
+  }
+
+  .clip-path-parallelogram-right-bottom {
+    clip-path: polygon(0 24%, 100% 40%, 100% 86%, 0 100%);
+  }
+
+  .rounded-rhombus-left {
+    clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%);
+  }
+}
+
+/* Common styles for all clip-path elements to mitigate anti-aliasing and halo effects */
+.clip-path-parallelogram-left-corner,
+.clip-path-parallelogram-center-top,
+.clip-path-parallelogram-center-bottom,
+.clip-path-parallelogram-right-bottom {
+  overflow: hidden;
+  /* Individual classes above define their own clip-path polygons; avoid overriding them here. */
+  /* Prefer will-change: clip-path (not transform) and avoid forcing a new composite layer via translateZ(0)
+     which can introduce anti-aliasing / halo issues when combined with filters. */
+  will-change: clip-path;
+  transform: none;
+  backface-visibility: hidden;
+}
+
+/* Simple polygon clip-path — edit percentages directly to adjust shape */
+.rounded-rhombus-left {
+  overflow: hidden;
+  clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+}
+
+/* Ensure image fills the clipped area */
+.rounded-rhombus-left img,
+.rounded-rhombus-left .optimized-image,
+.rounded-rhombus-left .Image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
