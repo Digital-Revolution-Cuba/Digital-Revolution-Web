@@ -44,4 +44,69 @@ const talents = defineCollection({
   }),
 });
 
-export const collections = { talents };
+/**
+ * Concursos Collection Schema
+ * Defines the structure for contest entries in the community
+ */
+const concursos = defineCollection({
+  type: 'data',
+  schema: z.object({
+    // Core Information
+    id: z.string(),
+    slug: z.string(),
+    title: z.string(),
+    description: z.string(),
+
+    // Classification
+    category: z.enum([
+      'fotografia',
+      'musica',
+      'arte-digital',
+      'ilustracion',
+      'diseno-grafico',
+      'video',
+      'escritura',
+    ]),
+    status: z
+      .enum(['activo', 'proximo', 'finalizado', 'cerrado'])
+      .default('activo'),
+
+    // Visual
+    image: z.string(),
+    imageAlt: z.string(),
+
+    // Dates
+    fechas: z.object({
+      inicio: z.coerce.date(),
+      cierre: z.coerce.date(),
+      resultados: z.coerce.date().optional(),
+    }),
+
+    // Contest Details
+    premios: z.array(
+      z.object({
+        position: z.number(),
+        prize: z.string(),
+        value: z.string().optional(),
+      }),
+    ),
+    requisitos: z.array(
+      z.object({
+        id: z.string(),
+        description: z.string(),
+      }),
+    ),
+
+    // Participation
+    participationLink: z.string().url().optional(),
+    maxParticipants: z.number().optional(),
+    currentParticipants: z.number().default(0),
+
+    // Additional metadata
+    organizer: z.string().optional(),
+    tags: z.array(z.string()).default([]),
+    featured: z.boolean().default(false),
+  }),
+});
+
+export const collections = { talents, concursos };
