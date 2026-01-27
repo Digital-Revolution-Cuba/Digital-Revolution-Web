@@ -2,15 +2,14 @@
 import ColaboracionesDestacadas from '../components/ColaboracionesDestacadas.astro';
 import ColaboracionesDestacadasTitle from '../components/ColaboracionesDestacadasTitle.astro';
 import Concursos from '../components/Concursos.astro';
-import DinamicGallery from '../components/DinamycGallery.astro';
 import DinamycGalleryTitle from '../components/DinamycGalleryTitle.astro';
 import Gallery from '../components/features/gallery/Gallery.astro';
-import { arteGallery, musicaGallery, fotografiaGallery } from '../data';
-import type { CategoryConfig } from '../types/gallery.types';
-import ColaboracionesDestacadasTitle from '../components/ColaboracionesDestacadasTitle.astro';
-import ColaboracionesDestacadas from '../components/ColaboracionesDestacadas.astro';
-import JoinOurCommunity from '../components/JoinOurCommunity.astro';
 import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import JoinOurCommunity from '../components/JoinOurCommunity.astro';
+import { arteGallery, fotografiaGallery, musicaGallery } from '../data';
+import Layout from '../layouts/Layout.astro';
+import type { CategoryConfig } from '../types/gallery.types';
 
 // Gallery configuration
 const galleryCategories: CategoryConfig[] = [
@@ -39,6 +38,3 @@ const galleryCategories: CategoryConfig[] = [
   <script type="module" src="/src/client/initializers/concursos.ts"></script>
   <script type="module" src="/src/client/initializers/accordeon.ts"></script>
 </Layout>
-
-  
-  
