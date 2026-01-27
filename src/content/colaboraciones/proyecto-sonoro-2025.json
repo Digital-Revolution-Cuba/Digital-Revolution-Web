@@ -1,0 +1,67 @@
+{
+  "id": "collab-proyecto-sonoro-2025",
+  "slug": "proyecto-sonoro-2025",
+  "title": "Proyecto Sonoro: Archivo Digital de Música Cubana",
+  "description": "Iniciativa colaborativa para digitalizar y preservar el patrimonio musical cubano, creando una plataforma accesible para músicos, investigadores y audiencias globales.",
+  "descriptionLong": "El Proyecto Sonoro es una colaboración histórica entre Digital Revolution y el Instituto de Música que busca rescatar, digitalizar y democratizar el acceso al vasto patrimonio musical cubano. A través de tecnología de última generación y la participación activa de músicos, historiadores y desarrolladores, estamos construyendo un archivo digital que preservará para futuras generaciones las obras de compositores cubanos desde el siglo XIX hasta la actualidad.",
+  "status": "activa",
+  "areas": ["musica", "tecnologia", "educacion", "contenido"],
+  "partner": {
+    "name": "Instituto de Música Contemporánea",
+    "type": "Institución",
+    "website": "https://example.com/imc"
+  },
+  "image": "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800&q=80",
+  "imageAlt": "Estudio de grabación profesional con equipos de audio analógicos y digitales",
+  "fechas": {
+    "inicio": "2025-03-01T00:00:00.000Z",
+    "fin": "2026-12-31T23:59:59.000Z"
+  },
+  "participants": [
+    {
+      "name": "Elena Martínez",
+      "role": "Directora de Archivo Digital"
+    },
+    {
+      "name": "Carlos Rodríguez",
+      "role": "Ingeniero de Audio"
+    },
+    {
+      "name": "Ana López",
+      "role": "Desarrolladora Full Stack"
+    },
+    {
+      "name": "Dr. Miguel Santos",
+      "role": "Investigador Musical"
+    }
+  ],
+  "impacto": [
+    {
+      "metric": "Obras Digitalizadas",
+      "value": "500+"
+    },
+    {
+      "metric": "Músicos Participantes",
+      "value": "120"
+    },
+    {
+      "metric": "Horas de Audio",
+      "value": "1,200+"
+    },
+    {
+      "metric": "Usuarios Activos",
+      "value": "15,000+"
+    }
+  ],
+  "objetivos": [
+    "Digitalizar más de 2,000 obras musicales históricas para 2027",
+    "Crear una plataforma de streaming accesible y educativa",
+    "Establecer un estándar de preservación digital para archivos culturales",
+    "Formar a nuevos profesionales en técnicas de restauración y digitalización",
+    "Conectar músicos cubanos con audiencias internacionales"
+  ],
+  "externalLink": "https://example.com/proyecto-sonoro",
+  "repositoryLink": "https://github.com/example/proyecto-sonoro",
+  "tags": ["música", "patrimonio", "digitalización", "educación", "streaming"],
+  "featured": true
+}

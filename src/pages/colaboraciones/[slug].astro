@@ -1,0 +1,1017 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const colaboraciones = await getCollection('colaboraciones');
+
+  return colaboraciones.map((colaboracion) => ({
+    params: { slug: colaboracion.data.slug },
+    props: { colaboracion },
+  }));
+}
+
+interface Props {
+  colaboracion: CollectionEntry<'colaboraciones'>;
+}
+
+const { colaboracion } = Astro.props;
+const { data } = colaboracion;
+
+// Import area and status labels
+const areaLabelsMap: Record<string, string> = {
+  arte: 'Arte',
+  musica: 'Música',
+  tecnologia: 'Tecnología',
+  educacion: 'Educación',
+  contenido: 'Contenido',
+  eventos: 'Eventos',
+  investigacion: 'Investigación',
+};
+
+const statusLabelsMap: Record<string, string> = {
+  activa: 'Activa',
+  finalizada: 'Finalizada',
+  pausada: 'Pausada',
+  planificada: 'Planificada',
+};
+
+// Format dates
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+};
+
+const formatMonthYear = (date: Date) => {
+  return new Intl.DateTimeFormat('es-ES', {
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+};
+
+// Calculate duration if ended
+const calculateDuration = () => {
+  if (!data.fechas.fin) return null;
+  const months = Math.floor(
+    (data.fechas.fin.getTime() - data.fechas.inicio.getTime()) / (1000 * 60 * 60 * 24 * 30)
+  );
+  return months > 0 ? `${months} meses` : 'Menos de 1 mes';
+};
+
+const duration = calculateDuration();
+
+// Status color mapping
+const statusColors: Record<string, string> = {
+  activa: 'var(--palette-accent-cyan)',
+  finalizada: 'var(--palette-accent-purple)',
+  pausada: 'var(--palette-accent-yellow)',
+  planificada: 'var(--palette-accent-blue)',
+};
+
+const statusColor = statusColors[data.status];
+---
+
+<Layout
+  title={`${data.title} — Colaboraciones Digital Revolution`}
+  description={data.description}
+  image={data.image}
+>
+  <div class="colaboracion-detail-page">
+    <section class="hero-section">
+      <div class="hero-background">
+        <img src={data.image} alt={data.imageAlt} class="hero-bg-image" />
+        <div class="hero-overlay"></div>
+      </div>
+
+      <div class="hero-content-wrapper">
+        <div class="hero-content">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Inicio</a>
+            <span class="separator">/</span>
+            <a href="/colaboraciones">Colaboraciones</a>
+            <span class="separator">/</span>
+            <span class="current">{data.title}</span>
+          </nav>
+
+          <div class="meta-badges">
+            {
+              data.areas.map((area) => (
+                  <span class="area-badge">{areaLabelsMap[area]}</span>
+                ))
+            }
+            <span class="status-badge" style={`--status-color: ${statusColor}`}>
+              <span class="status-dot"></span>
+              {statusLabelsMap[data.status]}
+            </span>
+          </div>
+
+          <h1 class="hero-title">{data.title}</h1>
+
+          <p class="hero-description">{data.description}</p>
+
+          <div class="info-cards">
+            <div class="info-card">
+              <div class="info-icon">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <div class="info-content">
+                <span class="info-label">Socio</span>
+                <span class="info-value">{data.partner.name}</span>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-icon">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+              <div class="info-content">
+                <span class="info-label">Inicio</span>
+                <span class="info-value">{formatMonthYear(data.fechas.inicio)}</span>
+              </div>
+            </div>
+
+            {
+              data.participants.length > 0 && (
+                <div class="info-card">
+                  <div class="info-icon">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Participantes</span>
+                    <span class="info-value">{data.participants.length}</span>
+                  </div>
+                </div>
+              )
+            }
+
+            {
+              duration && (
+                <div class="info-card">
+                  <div class="info-icon">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Duración</span>
+                    <span class="info-value">{duration}</span>
+                  </div>
+                </div>
+              )
+            }
+          </div>
+
+          {
+            (data.externalLink || data.repositoryLink) && (
+              <div class="hero-cta">
+                {data.externalLink && (
+                  <a
+                    href={data.externalLink}
+                    class="cta-button primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                    Visitar Proyecto
+                  </a>
+                )}
+                {data.repositoryLink && (
+                  <a
+                    href={data.repositoryLink}
+                    class="cta-button secondary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                    </svg>
+                    Ver Código
+                  </a>
+                )}
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </section>
+
+    <div class="main-content">
+      {
+        data.descriptionLong && (
+          <section class="content-section">
+            <h2 class="section-title">Acerca del Proyecto</h2>
+            <p class="long-description">{data.descriptionLong}</p>
+          </section>
+        )
+      }
+
+      {
+        data.objetivos.length > 0 && (
+          <section class="content-section">
+            <h2 class="section-title">Objetivos</h2>
+            <div class="objectives-list">
+              {(data.objetivos as string[]).map((objetivo, index) => (
+                <div class="objective-item">
+                  <div class="objective-number">{index + 1}</div>
+                  <p class="objective-text">{objetivo}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        data.impacto.length > 0 && (
+          <section class="content-section">
+            <h2 class="section-title">Impacto</h2>
+            <div class="impact-grid">
+              {(data.impacto as any[]).map((metric) => (
+                <div class="impact-card">
+                  <h3 class="impact-value">{metric.value}</h3>
+                  <p class="impact-label">{metric.metric}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        data.participants.length > 0 && (
+          <section class="content-section">
+            <h2 class="section-title">Equipo Participante</h2>
+            <div class="participants-grid">
+              {data.participants.map((participant: any) => (
+                <div class="participant-card">
+                  <div class="participant-avatar">
+                    {participant.avatar ? (
+                      <img src={participant.avatar} alt={participant.name} />
+                    ) : (
+                      <svg
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                      </svg>
+                    )}
+                  </div>
+                  <div>
+                    <h3 class="participant-name">{participant.name}</h3>
+                    <p class="participant-role">{participant.role}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        data.partner.website && (
+          <section class="content-section partner-section">
+            <div class="partner-card">
+              <div class="partner-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </div>
+              <div>
+                <p class="partner-label">Organización Colaboradora</p>
+                <h3 class="partner-name">{data.partner.name}</h3>
+                <p class="partner-type">{data.partner.type}</p>
+                <a
+                  href={data.partner.website}
+                  class="partner-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Visitar sitio web
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <polyline
+                      points="15 3 21 3 21 9"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <line
+                      x1="10"
+                      y1="14"
+                      x2="21"
+                      y2="3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </section>
+        )
+      }
+
+      {
+        data.tags.length > 0 && (
+          <div class="tags-section">
+            {data.tags.map((tag: string) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    {
+      data.externalLink && data.status === 'activa' && (
+        <section class="bottom-cta">
+          <div class="bottom-cta-content">
+            <h2 class="bottom-cta-title">Únete a esta colaboración</h2>
+            <p class="bottom-cta-text">
+              Conoce más sobre el proyecto y descubre cómo puedes participar
+            </p>
+            <a
+              href={data.externalLink}
+              class="cta-button primary large"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Más información
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <line
+                  x1="5"
+                  y1="12"
+                  x2="19"
+                  y2="12"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <polyline
+                  points="12 5 19 12 12 19"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+        </section>
+      )
+    }
+  </div>
+</Layout>
+
+<style>
+  .colaboracion-detail-page {
+    min-height: 100vh;
+    background: var(--palette-background);
+  }
+
+  .hero-section {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.3);
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--palette-background-rgb), 0.7) 0%,
+      rgba(var(--palette-background-rgb), 0.9) 50%,
+      var(--palette-background) 100%
+    );
+  }
+
+  .hero-content-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 24px 80px;
+  }
+
+  .hero-content {
+    max-width: 800px;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    font-size: 0.875rem;
+    font-family: var(--font-rubik);
+  }
+
+  .breadcrumb a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--palette-accent-cyan);
+  }
+
+  .breadcrumb .separator {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .breadcrumb .current {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .meta-badges {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .area-badge {
+    padding: 8px 16px;
+    background: rgba(var(--palette-accent-purple-rgb), 0.2);
+    border: 1px solid rgba(var(--palette-accent-purple-rgb), 0.4);
+    color: var(--palette-accent-purple);
+    font-size: 0.813rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+  }
+
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--status-color);
+    color: var(--status-color);
+    font-size: 0.813rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--status-color);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(0.8);
+    }
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: #fff;
+    line-height: 1.1;
+    margin: 0 0 24px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    margin: 0 0 40px;
+    font-family: var(--font-rubik);
+  }
+
+  .info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .info-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .info-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(var(--palette-accent-cyan-rgb), 0.4);
+  }
+
+  .info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: rgba(var(--palette-accent-cyan-rgb), 0.2);
+    border-radius: 10px;
+    color: var(--palette-accent-cyan);
+    flex-shrink: 0;
+  }
+
+  .info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .info-label {
+    font-size: 0.813rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-rubik);
+  }
+
+  .info-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: var(--font-barlow);
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .cta-button.primary {
+    background: linear-gradient(
+      135deg,
+      var(--palette-accent-cyan),
+      var(--palette-accent-blue)
+    );
+    color: var(--palette-brand-dark);
+    box-shadow: 0 8px 20px rgba(var(--palette-accent-cyan-rgb), 0.3);
+  }
+
+  .cta-button.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(var(--palette-accent-cyan-rgb), 0.4);
+  }
+
+  .cta-button.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+  }
+
+  .cta-button.secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .cta-button.large {
+    padding: 18px 36px;
+    font-size: 1.125rem;
+  }
+
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 24px;
+  }
+
+  .content-section {
+    margin-bottom: 80px;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: #fff;
+    margin: 0 0 32px;
+  }
+
+  .long-description {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.8;
+    font-family: var(--font-rubik);
+    margin: 0;
+  }
+
+  .objectives-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .objective-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.4);
+    border-left: 3px solid var(--palette-accent-cyan);
+    border-radius: 12px;
+  }
+
+  .objective-number {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--palette-accent-cyan-rgb), 0.2);
+    color: var(--palette-accent-cyan);
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    border-radius: 8px;
+  }
+
+  .objective-text {
+    flex: 1;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin: 0;
+    font-family: var(--font-rubik);
+  }
+
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+
+  .impact-card {
+    padding: 32px 24px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.4);
+    border: 2px solid rgba(var(--palette-accent-cyan-rgb), 0.2);
+    border-radius: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .impact-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(var(--palette-accent-cyan-rgb), 0.5);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .impact-value {
+    font-size: 2.5rem;
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: var(--palette-accent-cyan);
+    margin: 0 0 8px;
+  }
+
+  .impact-label {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: var(--font-rubik);
+    margin: 0;
+  }
+
+  .participants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .participant-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .participant-card:hover {
+    border-color: rgba(var(--palette-accent-cyan-rgb), 0.3);
+    transform: translateY(-2px);
+  }
+
+  .participant-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(var(--palette-accent-cyan-rgb), 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--palette-accent-cyan);
+  }
+
+  .participant-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .participant-name {
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    color: #fff;
+    margin: 0 0 4px;
+  }
+
+  .participant-role {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-rubik);
+    margin: 0;
+  }
+
+  .partner-section {
+    background: rgba(var(--palette-brand-navy-rgb), 0.2);
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .partner-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .partner-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(var(--palette-accent-cyan-rgb), 0.2);
+    border-radius: 12px;
+    color: var(--palette-accent-cyan);
+    flex-shrink: 0;
+  }
+
+  .partner-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 4px;
+    font-family: var(--font-rubik);
+  }
+
+  .partner-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    color: #fff;
+    margin: 0 0 4px;
+  }
+
+  .partner-type {
+    font-size: 0.938rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 12px;
+    font-family: var(--font-rubik);
+  }
+
+  .partner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--palette-accent-cyan);
+    font-size: 0.938rem;
+    font-weight: 600;
+    font-family: var(--font-rubik);
+    text-decoration: none;
+    transition: gap 0.3s ease;
+  }
+
+  .partner-link:hover {
+    gap: 10px;
+  }
+
+  .tags-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 24px;
+  }
+
+  .tag {
+    padding: 8px 16px;
+    background: rgba(var(--palette-accent-purple-rgb), 0.1);
+    border: 1px solid rgba(var(--palette-accent-purple-rgb), 0.3);
+    color: var(--palette-accent-purple);
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: var(--font-rubik);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .tag:hover {
+    background: rgba(var(--palette-accent-purple-rgb), 0.2);
+    border-color: rgba(var(--palette-accent-purple-rgb), 0.5);
+  }
+
+  .bottom-cta {
+    padding: 80px 24px;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--palette-accent-cyan-rgb), 0.05),
+      rgba(var(--palette-accent-purple-rgb), 0.05)
+    );
+  }
+
+  .bottom-cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .bottom-cta-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: #fff;
+    margin: 0 0 16px;
+  }
+
+  .bottom-cta-text {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 32px;
+    font-family: var(--font-rubik);
+  }
+
+  @media (max-width: 768px) {
+    .hero-content-wrapper {
+      padding: 100px 20px 60px;
+    }
+
+    .info-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .impact-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .participants-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .partner-card {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

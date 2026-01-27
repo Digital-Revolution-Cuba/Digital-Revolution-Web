@@ -1,0 +1,69 @@
+{
+  "id": "collab-hackathon-innovacion",
+  "slug": "hackathon-innovacion-social",
+  "title": "Hackathon de Innovación Social 2025",
+  "description": "Evento anual que reúne desarrolladores, diseñadores y emprendedores para crear soluciones tecnológicas a desafíos sociales de la comunidad cubana.",
+  "descriptionLong": "El Hackathon de Innovación Social es una competencia de 48 horas donde equipos multidisciplinarios colaboran para desarrollar prototipos funcionales de aplicaciones, plataformas y servicios que aborden problemas reales de educación, salud, transporte y comunicación en Cuba. Con el apoyo de TechHub Caribe, proporcionamos mentoría experta, infraestructura y premios para convertir ideas en proyectos viables.",
+  "status": "finalizada",
+  "areas": ["tecnologia", "eventos", "educacion"],
+  "partner": {
+    "name": "TechHub Caribe",
+    "type": "Empresa",
+    "website": "https://example.com/techhub"
+  },
+  "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80",
+  "imageAlt": "Equipo de desarrolladores trabajando en laptops durante un hackathon",
+  "fechas": {
+    "inicio": "2025-10-10T09:00:00.000Z",
+    "fin": "2025-10-12T18:00:00.000Z"
+  },
+  "participants": [
+    {
+      "name": "David Castro",
+      "role": "Organizador Principal"
+    },
+    {
+      "name": "María Torres",
+      "role": "Coordinadora de Mentores"
+    },
+    {
+      "name": "Jorge Ramírez",
+      "role": "Juez Técnico"
+    }
+  ],
+  "impacto": [
+    {
+      "metric": "Participantes",
+      "value": "120"
+    },
+    {
+      "metric": "Proyectos Creados",
+      "value": "24"
+    },
+    {
+      "metric": "Mentores Voluntarios",
+      "value": "18"
+    },
+    {
+      "metric": "Premios Otorgados",
+      "value": "$10,000"
+    }
+  ],
+  "objetivos": [
+    "Fomentar la cultura de innovación y emprendimiento tecnológico",
+    "Identificar talentos emergentes en desarrollo de software",
+    "Generar soluciones prácticas para la comunidad local",
+    "Crear networking entre profesionales del sector tech",
+    "Documentar mejores prácticas de desarrollo ágil"
+  ],
+  "externalLink": "https://example.com/hackathon-2025",
+  "caseStudyLink": "https://example.com/hackathon-case-study",
+  "tags": [
+    "hackathon",
+    "desarrollo",
+    "innovación",
+    "emprendimiento",
+    "networking"
+  ],
+  "featured": false
+}

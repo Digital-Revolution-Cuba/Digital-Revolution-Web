@@ -1,0 +1,410 @@
+---
+/**
+ * ColaboracionCardDetailed Component
+ * Tarjeta detallada para mostrar colaboraciones de la Content Collection
+ * Usado en /colaboraciones/index.astro
+ */
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  colaboracion: CollectionEntry<'colaboraciones'>;
+}
+
+const { colaboracion } = Astro.props;
+const { data } = colaboracion;
+
+// Format date
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('es-ES', {
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+};
+
+// Status color mapping
+const statusColors: Record<typeof data.status, string> = {
+  activa: 'var(--palette-accent-cyan)',
+  finalizada: 'var(--palette-accent-purple)',
+  pausada: 'var(--palette-accent-yellow)',
+  planificada: 'var(--palette-accent-blue)',
+};
+
+const statusColor = statusColors[data.status];
+
+// Area labels
+const areaLabels: Record<string, string> = {
+  arte: 'Arte',
+  musica: 'Música',
+  tecnologia: 'Tecnología',
+  educacion: 'Educación',
+  contenido: 'Contenido',
+  eventos: 'Eventos',
+  investigacion: 'Investigación',
+};
+
+// Status labels
+const statusLabels: Record<typeof data.status, string> = {
+  activa: 'Activa',
+  finalizada: 'Finalizada',
+  pausada: 'Pausada',
+  planificada: 'Planificada',
+};
+---
+
+<article class={`colaboracion-card-detailed ${data.featured ? 'featured' : ''}`}>
+  <a href={`/colaboraciones/${data.slug}`} class="card-link">
+    <div class="card-image-wrapper">
+      <img src={data.image} alt={data.imageAlt} class="card-image" loading="lazy" />
+      <div class="card-overlay"></div>
+
+      {
+        data.featured && (
+          <span class="featured-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+            </svg>
+            Destacada
+          </span>
+        )
+      }
+
+      <span class="status-badge" style={`--status-color: ${statusColor}`}>
+        <span class="status-indicator"></span>
+        {statusLabels[data.status]}
+      </span>
+    </div>
+
+    <div class="card-content">
+      <div class="card-meta">
+        <div class="partner-info">
+          <svg
+            class="partner-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke-linecap="round"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round"></path>
+          </svg>
+          <span class="partner-name">{data.partner.name}</span>
+        </div>
+        <span class="date-info">{formatDate(data.fechas.inicio)}</span>
+      </div>
+
+      <h3 class="card-title">{data.title}</h3>
+
+      <p class="card-description">{data.description}</p>
+
+      <div class="card-footer">
+        <div class="areas-tags">
+          {
+            data.areas.slice(0, 3).map((area) => (
+              <span class="area-tag">{areaLabels[area]}</span>
+            ))
+          }
+          {data.areas.length > 3 && <span class="area-tag-more">+{data.areas.length - 3}</span>}
+        </div>
+
+        <span class="card-cta">
+          <span>Ver más</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path
+              d="M3.333 8h9.334M9.333 4.667 12.667 8l-3.334 3.333"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+        </span>
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .colaboracion-card-detailed {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(var(--palette-brand-navy-rgb), 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+  }
+
+  .colaboracion-card-detailed:hover {
+    transform: translateY(-4px);
+    border-color: rgba(var(--palette-accent-cyan-rgb), 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .colaboracion-card-detailed.featured {
+    border-color: rgba(var(--palette-accent-orange-rgb), 0.3);
+  }
+
+  .colaboracion-card-detailed.featured:hover {
+    border-color: rgba(var(--palette-accent-orange-rgb), 0.5);
+  }
+
+  .card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+  }
+
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .colaboracion-card-detailed:hover .card-image {
+    transform: scale(1.05);
+  }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(var(--palette-background-rgb), 0.7) 100%
+    );
+    pointer-events: none;
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--palette-accent-orange-rgb), 0.9),
+      rgba(var(--palette-accent-yellow-rgb), 0.9)
+    );
+    color: var(--palette-brand-dark);
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+    z-index: 2;
+  }
+
+  .status-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(var(--palette-brand-navy-rgb), 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--status-color);
+    color: var(--status-color);
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+    z-index: 2;
+  }
+
+  .status-indicator {
+    width: 6px;
+    height: 6px;
+    background: var(--status-color);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(0.85);
+    }
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 20px;
+  }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+
+  .partner-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.813rem;
+    font-family: var(--font-rubik);
+  }
+
+  .partner-icon {
+    flex-shrink: 0;
+    color: var(--palette-accent-cyan);
+  }
+
+  .partner-name {
+    font-weight: 500;
+  }
+
+  .date-info {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+    font-family: var(--font-rubik);
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    color: #fff;
+    line-height: 1.3;
+    margin: 0 0 12px;
+    transition: color 0.3s ease;
+  }
+
+  .colaboracion-card-detailed:hover .card-title {
+    color: var(--palette-accent-cyan);
+  }
+
+  .card-description {
+    font-size: 0.938rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+    margin: 0 0 16px;
+    font-family: var(--font-rubik);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    gap: 12px;
+  }
+
+  .areas-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .area-tag {
+    padding: 4px 10px;
+    background: rgba(var(--palette-accent-purple-rgb), 0.15);
+    border: 1px solid rgba(var(--palette-accent-purple-rgb), 0.3);
+    color: var(--palette-accent-purple);
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-rubik);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .colaboracion-card-detailed:hover .area-tag {
+    background: rgba(var(--palette-accent-purple-rgb), 0.25);
+    border-color: rgba(var(--palette-accent-purple-rgb), 0.4);
+  }
+
+  .area-tag-more {
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-rubik);
+    border-radius: 6px;
+  }
+
+  .card-cta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--palette-accent-cyan);
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: var(--font-barlow);
+    transition: gap 0.3s ease;
+  }
+
+  .colaboracion-card-detailed:hover .card-cta {
+    gap: 10px;
+  }
+
+  .card-cta svg {
+    transition: transform 0.3s ease;
+  }
+
+  .colaboracion-card-detailed:hover .card-cta svg {
+    transform: translateX(2px);
+  }
+
+  @media (max-width: 768px) {
+    .card-image-wrapper {
+      height: 180px;
+    }
+
+    .card-content {
+      padding: 16px;
+    }
+
+    .card-title {
+      font-size: 1.125rem;
+    }
+
+    .card-description {
+      font-size: 0.875rem;
+    }
+
+    .card-footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
