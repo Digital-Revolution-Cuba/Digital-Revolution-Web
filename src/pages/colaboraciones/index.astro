@@ -1,42 +1,454 @@
 ---
+import { getCollection } from 'astro:content';
+import ColaboracionCardDetailed from '../../components/ColaboracionCardDetailed.astro';
 import Layout from '../../layouts/Layout.astro';
-import FeaturedCollaborationCard from './components/FeaturedCollaborationCard.astro';
-import { collaborations } from './data/colaboraciones';
+
+// Get all colaboraciones from content collection
+const allColaboraciones = await getCollection('colaboraciones');
+
+// Sort: featured first, then by status (activa > planificada > pausada > finalizada)
+const colaboracionesOrdenadas = allColaboraciones.sort((a, b) => {
+  // Featured first
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+
+  // Then by status priority
+  const statusPriority: Record<string, number> = {
+    activa: 1,
+    planificada: 2,
+    pausada: 3,
+    finalizada: 4,
+  };
+
+  return statusPriority[a.data.status] - statusPriority[b.data.status];
+});
+
+// Separate active/planned from finished/paused
+const colaboracionesActivas = colaboracionesOrdenadas.filter(
+  (c) => c.data.status === 'activa' || c.data.status === 'planificada',
+);
+const colaboracionesFinalizadas = colaboracionesOrdenadas.filter(
+  (c) => c.data.status === 'finalizada' || c.data.status === 'pausada',
+);
 ---
 
 <Layout
-  title="Colaboraciones destacadas — Digital Revolution Web"
-  description="Proyectos y equipos destacados de la comunidad Digital Revolution. Conoce colaboraciones reales y casos de éxito."
+  title="Colaboraciones — Digital Revolution Web"
+  description="Descubre las colaboraciones y alianzas de la comunidad Digital Revolution con organizaciones, empresas y proyectos que impulsan el talento creativo."
   image="/og-colaboraciones.jpg"
 >
-  <section class="relative py-30">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <!-- Header -->
-      <div class="mb-14 max-w-xl">
-        <h1
-          class="mb-8 text-3xl font-black text-white drop-shadow-lg md:text-4xl"
-        >
-          COLABORACIONES<br />DESTACADAS
+  <div class="colaboraciones-page">
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>Colaboraciones</span>
+        </div>
+
+        <h1 class="hero-title">
+          Construyendo <span class="gradient-text">juntos</span>
         </h1>
-        <p class="mt-4 text-gray-300">
-          Proyectos y equipos con los que hemos trabajado creando soluciones
-          digitales sólidas y escalables.
+
+        <p class="hero-description">
+          Alianzas estratégicas con organizaciones, empresas y proyectos que
+          comparten nuestra visión de impulsar el talento creativo y tecnológico
+          de la comunidad.
         </p>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">{colaboracionesActivas.length}</span>
+            <span class="stat-label">Colaboraciones Activas</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">
+              {
+                allColaboraciones.reduce(
+                  (acc, c) => acc + c.data.participants.length,
+                  0,
+                )
+              }+
+            </span>
+            <span class="stat-label">Participantes</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">
+              {
+                allColaboraciones.reduce(
+                  (acc, c) => acc + c.data.areas.length,
+                  0,
+                )
+              }
+            </span>
+            <span class="stat-label">Áreas de Impacto</span>
+          </div>
+        </div>
       </div>
 
-      <!-- Grid -->
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          collaborations.map((collab) => (
-            <FeaturedCollaborationCard
-              title={collab.name}
-              description={collab.description}
-              href={collab.url}
-              logo={collab.logo}
-            />
-          ))
-        }
+      <div class="hero-decoration">
+        <div class="deco-circle deco-circle-1"></div>
+        <div class="deco-circle deco-circle-2"></div>
+        <div class="deco-circle deco-circle-3"></div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    {
+      colaboracionesActivas.length > 0 && (
+        <section class="colaboraciones-section">
+          <div class="section-header">
+            <h2 class="section-title">Colaboraciones Activas</h2>
+            <p class="section-subtitle">
+              Proyectos en curso que están transformando nuestra comunidad
+            </p>
+          </div>
+
+          <div class="colaboraciones-grid">
+            {colaboracionesActivas.map((colaboracion) => (
+              <ColaboracionCardDetailed colaboracion={colaboracion} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      colaboracionesFinalizadas.length > 0 && (
+        <section class="colaboraciones-section colaboraciones-finished">
+          <div class="section-header">
+            <h2 class="section-title">Colaboraciones Finalizadas</h2>
+            <p class="section-subtitle">
+              Proyectos completados y su impacto en la comunidad
+            </p>
+          </div>
+
+          <div class="colaboraciones-grid">
+            {colaboracionesFinalizadas.map((colaboracion) => (
+              <ColaboracionCardDetailed colaboracion={colaboracion} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2 class="cta-title">¿Quieres colaborar con nosotros?</h2>
+        <p class="cta-description">
+          Si tienes un proyecto o iniciativa que pueda beneficiar a la
+          comunidad, nos encantaría conocerla
+        </p>
+        <a href="/contacto" class="cta-button">
+          Proponer Colaboración
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path
+              d="M4.167 10h11.666M11.667 5.833 15.833 10l-4.166 4.167"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </div>
 </Layout>
+
+<style>
+  .colaboraciones-page {
+    min-height: 100vh;
+    background: var(--palette-background);
+    padding-top: 100px;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(var(--palette-accent-cyan-rgb), 0.1);
+    border: 1px solid rgba(var(--palette-accent-cyan-rgb), 0.3);
+    border-radius: 100px;
+    color: var(--palette-accent-cyan);
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: var(--font-barlow);
+    margin-bottom: 24px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: #fff;
+    line-height: 1.1;
+    margin: 0 0 24px;
+  }
+
+  .gradient-text {
+    background: linear-gradient(
+      135deg,
+      var(--palette-accent-cyan),
+      var(--palette-accent-purple)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+    margin: 0 0 48px;
+    font-family: var(--font-rubik);
+    max-width: 700px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: var(--palette-accent-cyan);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-rubik);
+  }
+
+  .stat-divider {
+    width: 1px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .hero-decoration {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .deco-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.4;
+    filter: blur(80px);
+  }
+
+  .deco-circle-1 {
+    top: -100px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(
+      circle,
+      rgba(var(--palette-accent-cyan-rgb), 0.3),
+      transparent
+    );
+  }
+
+  .deco-circle-2 {
+    bottom: -150px;
+    left: -50px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(
+      circle,
+      rgba(var(--palette-accent-purple-rgb), 0.2),
+      transparent
+    );
+  }
+
+  .deco-circle-3 {
+    top: 50%;
+    right: 10%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(
+      circle,
+      rgba(var(--palette-accent-blue-rgb), 0.25),
+      transparent
+    );
+  }
+
+  /* Colaboraciones Section */
+  .colaboraciones-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 24px;
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: #fff;
+    margin: 0 0 16px;
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-rubik);
+    margin: 0;
+  }
+
+  .colaboraciones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 32px;
+  }
+
+  .colaboraciones-finished {
+    background: rgba(var(--palette-brand-navy-rgb), 0.2);
+    border-radius: 24px;
+    padding: 60px 24px;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 80px 24px;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--palette-accent-cyan-rgb), 0.05),
+      rgba(var(--palette-accent-purple-rgb), 0.05)
+    );
+    border-radius: 24px;
+  }
+
+  .cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .cta-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    font-family: var(--font-saira);
+    color: #fff;
+    margin: 0 0 16px;
+  }
+
+  .cta-description {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    margin: 0 0 32px;
+    font-family: var(--font-rubik);
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    background: linear-gradient(
+      135deg,
+      var(--palette-accent-cyan),
+      var(--palette-accent-blue)
+    );
+    color: var(--palette-brand-dark);
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(var(--palette-accent-cyan-rgb), 0.3);
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(var(--palette-accent-cyan-rgb), 0.4);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .colaboraciones-page {
+      padding-top: 80px;
+    }
+
+    .hero-section {
+      padding: 60px 20px;
+    }
+
+    .hero-stats {
+      gap: 24px;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+    }
+
+    .colaboraciones-section {
+      padding: 40px 20px;
+    }
+
+    .colaboraciones-finished {
+      padding: 40px 20px;
+    }
+
+    .colaboraciones-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .cta-section {
+      margin: 60px 20px;
+      padding: 60px 20px;
+    }
+  }
+</style>

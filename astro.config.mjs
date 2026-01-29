@@ -7,7 +7,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'static', // SSG por defecto para mejor rendimiento
+  output: 'static', // SSG por defecto para mejor rendimiento (valorar a futuro el hybrid o el server (cuando implementemos backend))
   vite: {
     plugins: [tailwindcss()],
     build: {
