@@ -1,10 +1,10 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
-  const concursos = await getCollection('concursos');
-  
+  const concursos = (await (getCollection as any)('concursos')) as any[];
+
   return concursos.map((concurso) => ({
     params: { slug: concurso.data.slug },
     props: { concurso },
@@ -12,11 +12,11 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  concurso: CollectionEntry<'concursos'>;
+  concurso: any;
 }
 
-const { concurso } = Astro.props;
-const { data } = concurso;
+const { concurso } = Astro.props as { concurso: any };
+const { data } = concurso as any;
 
 // Format dates
 const formatDate = (date: Date) => {
@@ -190,7 +190,7 @@ const currentStatus = statusConfig[data.status];
         </h2>
         
         <div class="prizes-grid">
-          {data.premios.map((premio) => (
+          {data.premios.map((premio: { position: number; prize: string; value?: string }) => (
             <div class={`prize-card position-${premio.position}`}>
               <div class="prize-position">
                 <span class="position-number">#{premio.position}</span>
@@ -213,7 +213,7 @@ const currentStatus = statusConfig[data.status];
         </h2>
         
         <div class="requirements-list">
-          {data.requisitos.map((req, index) => (
+          {data.requisitos.map((req: { id: string; description: string }, index: number) => (
             <div class="requirement-item">
               <div class="requirement-number">{index + 1}</div>
               <p class="requirement-text">{req.description}</p>
@@ -281,7 +281,7 @@ const currentStatus = statusConfig[data.status];
       <!-- Tags -->
       {data.tags && data.tags.length > 0 && (
         <div class="tags-section">
-          {data.tags.map((tag) => (
+          {(data.tags as string[]).map((tag) => (
             <span class="tag">{tag}</span>
           ))}
         </div>

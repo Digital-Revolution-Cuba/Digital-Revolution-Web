@@ -1,3 +1,4 @@
+import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
 
 /**
@@ -5,7 +6,7 @@ import { defineCollection, z } from 'astro:content';
  * Defines the structure for talent profiles in the community
  */
 const talents = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.json', base: './src/content/talents' }),
   schema: z.object({
     // Core Identity (Required for valid profiles)
     name: z.string(),
@@ -49,7 +50,7 @@ const talents = defineCollection({
  * Defines the structure for contest entries in the community
  */
 const concursos = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.json', base: './src/content/concursos' }),
   schema: z.object({
     // Core Information
     id: z.string(),
@@ -109,4 +110,83 @@ const concursos = defineCollection({
   }),
 });
 
-export const collections = { talents, concursos };
+/**
+ * Colaboraciones Collection Schema
+ * Defines the structure for community collaborations with external partners
+ */
+const colaboraciones = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/colaboraciones' }),
+  schema: z.object({
+    // Core Information
+    id: z.string(),
+    slug: z.string(),
+    title: z.string(),
+    description: z.string(),
+    descriptionLong: z.string().optional(),
+
+    // Classification
+    status: z
+      .enum(['activa', 'finalizada', 'pausada', 'planificada'])
+      .default('activa'),
+    areas: z.array(
+      z.enum([
+        'arte',
+        'musica',
+        'tecnologia',
+        'educacion',
+        'contenido',
+        'eventos',
+        'investigacion',
+      ]),
+    ),
+
+    // Partner Information
+    partner: z.object({
+      name: z.string(),
+      type: z.string(), // Empresa, ONG, Institución, Comunidad
+      logo: z.string().optional(),
+      website: z.string().url().optional(),
+    }),
+
+    // Visual
+    image: z.string(),
+    imageAlt: z.string(),
+
+    // Dates
+    fechas: z.object({
+      inicio: z.coerce.date(),
+      fin: z.coerce.date().optional(),
+    }),
+
+    // Collaboration Details
+    participants: z
+      .array(
+        z.object({
+          name: z.string(),
+          role: z.string(),
+          avatar: z.string().optional(),
+        }),
+      )
+      .default([]),
+    impacto: z
+      .array(
+        z.object({
+          metric: z.string(),
+          value: z.string(),
+        }),
+      )
+      .default([]),
+    objetivos: z.array(z.string()).default([]),
+
+    // Links
+    externalLink: z.string().url().optional(),
+    repositoryLink: z.string().url().optional(),
+    caseStudyLink: z.string().url().optional(),
+
+    // Additional metadata
+    tags: z.array(z.string()).default([]),
+    featured: z.boolean().default(false),
+  }),
+});
+
+export const collections = { talents, concursos, colaboraciones };
