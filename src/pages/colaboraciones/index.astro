@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-import ColaboracionCardDetailed from '../../components/ColaboracionCardDetailed.astro';
 import Layout from '../../layouts/Layout.astro';
+import DiagonalDivider from '../../components/DiagonalDivider.astro';
+import CollaborationCard from '../../components/CollaborationCard.astro';
 
 // Get all colaboraciones from content collection
 const allColaboraciones = await getCollection('colaboraciones');
@@ -30,6 +31,14 @@ const colaboracionesActivas = colaboracionesOrdenadas.filter(
 const colaboracionesFinalizadas = colaboracionesOrdenadas.filter(
   (c) => c.data.status === 'finalizada' || c.data.status === 'pausada',
 );
+
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+};
 ---
 
 <Layout
@@ -37,418 +46,246 @@ const colaboracionesFinalizadas = colaboracionesOrdenadas.filter(
   description="Descubre las colaboraciones y alianzas de la comunidad Digital Revolution con organizaciones, empresas y proyectos que impulsan el talento creativo."
   image="/og-colaboraciones.jpg"
 >
-  <div class="colaboraciones-page">
-    <section class="hero-section">
-      <div class="hero-content">
-        <div class="hero-badge">
+  <div class="collab-page-container">
+    {/* Section 1: Header/Intro - Dark Background */}
+    <section class="collab-hero py-24 md:py-32">
+      <div class="container mx-auto px-6">
+        <div class="animate-fade-in max-w-4xl opacity-0">
+          <h1
+            class="mb-8 text-6xl leading-none font-black tracking-tighter text-white md:text-8xl"
+          >
+            COLABORACIONES <span class="text-stroke-cyan">DESTACADAS</span>
+          </h1>
+          <p
+            class="max-w-2xl text-xl leading-relaxed font-light text-gray-400 md:text-2xl"
+          >
+            Descubre proyectos innovadores y únete a nuestra comunidad creativa.
+            Explora colaboraciones activas y pasadas que transforman ideas en
+            realidad.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* Divider 1: Cyan */}
+    <DiagonalDivider color="#34dfde" direction="down" />
+
+    {/* Section 2: Active Collaborations - Cyan Background */}
+    <section class="collab-section-active bg-accent-cyan py-24">
+      <div class="container mx-auto px-6">
+        {/* Section Header */}
+        <div class="mb-16">
+          <div class="mb-4 flex items-center gap-4">
+            <h2
+              class="text-4xl font-black tracking-tight text-black uppercase md:text-6xl"
+            >
+              Colaboraciones Activas
+            </h2>
+          </div>
+          <p class="text-xl font-medium text-black/70">
+            Proyectos en curso donde puedes participar ahora
+          </p>
+        </div>
+
+        {/* Grid Layout */}
+        {
+          colaboracionesActivas.length > 0 ? (
+            <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+              {colaboracionesActivas.map((collab) => (
+                <CollaborationCard
+                  id={collab.id}
+                  image={collab.data.image}
+                  title={collab.data.title}
+                  description={collab.data.description}
+                  location={collab.data.partner.name}
+                  date={formatDate(collab.data.fechas.inicio)}
+                  isActive={collab.data.status === 'activa'}
+                  isFeatured={collab.data.featured}
+                  tags={collab.data.tags}
+                  slug={collab.data.slug}
+                />
+              ))}
+            </div>
+          ) : (
+            <div class="rounded-3xl border-2 border-dashed border-black/10 bg-black/5 py-20 text-center">
+              <p class="text-xl font-bold text-black/60">
+                No hay colaboraciones activas en este momento.
+              </p>
+            </div>
+          )
+        }
+      </div>
+    </section>
+
+    {/* Section 3: Finished Collaborations - Dark Background */}
+    <section class="collab-section-finished bg-brand-background-global py-24">
+      <div class="container mx-auto px-6">
+        <button
+          id="toggle-finished"
+          class="group bg-brand-navy/50 hover:bg-brand-navy flex w-full items-center justify-between rounded-3xl border border-white/5 p-10 text-left transition-all duration-500"
+          aria-expanded="false"
+        >
+          <div>
+            <div class="mb-3 flex items-center gap-5">
+              <h2
+                class="text-4xl font-black tracking-tight text-white uppercase md:text-5xl"
+              >
+                Colaboraciones Finalizadas
+              </h2>
+            </div>
+            <p class="ml-16 text-lg font-light text-gray-400">
+              Proyectos completados que inspiraron a nuestra comunidad
+            </p>
+          </div>
           <svg
-            width="20"
-            height="20"
+            class="chevron group-hover:text-accent-purple h-10 w-10 text-gray-500 transition-transform duration-500"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            <path d="m6 9 6 6 6-6"></path>
           </svg>
-          <span>Colaboraciones</span>
+        </button>
+
+        {/* Expandable Grid */}
+        <div
+          id="finished-grid"
+          class="mt-12 hidden overflow-hidden transition-all duration-500"
+        >
+          {
+            colaboracionesFinalizadas.length > 0 ? (
+              <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+                {colaboracionesFinalizadas.map((collab) => (
+                  <CollaborationCard
+                    id={collab.id}
+                    image={collab.data.image}
+                    title={collab.data.title}
+                    description={collab.data.description}
+                    location={collab.data.partner.name}
+                    date={formatDate(collab.data.fechas.inicio)}
+                    isActive={false}
+                    isFeatured={collab.data.featured}
+                    tags={collab.data.tags}
+                    slug={collab.data.slug}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div class="rounded-3xl border border-white/10 bg-white/5 py-20 text-center">
+                <p class="text-xl font-medium text-gray-500">
+                  No hay colaboraciones finalizadas aún.
+                </p>
+              </div>
+            )
+          }
         </div>
-
-        <h1 class="hero-title">
-          Construyendo <span class="gradient-text">juntos</span>
-        </h1>
-
-        <p class="hero-description">
-          Alianzas estratégicas con organizaciones, empresas y proyectos que
-          comparten nuestra visión de impulsar el talento creativo y tecnológico
-          de la comunidad.
-        </p>
-
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-number">{colaboracionesActivas.length}</span>
-            <span class="stat-label">Colaboraciones Activas</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-number">
-              {
-                allColaboraciones.reduce(
-                  (acc, c) => acc + c.data.participants.length,
-                  0,
-                )
-              }+
-            </span>
-            <span class="stat-label">Participantes</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-number">
-              {
-                allColaboraciones.reduce(
-                  (acc, c) => acc + c.data.areas.length,
-                  0,
-                )
-              }
-            </span>
-            <span class="stat-label">Áreas de Impacto</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-decoration">
-        <div class="deco-circle deco-circle-1"></div>
-        <div class="deco-circle deco-circle-2"></div>
-        <div class="deco-circle deco-circle-3"></div>
       </div>
     </section>
 
-    {
-      colaboracionesActivas.length > 0 && (
-        <section class="colaboraciones-section">
-          <div class="section-header">
-            <h2 class="section-title">Colaboraciones Activas</h2>
-            <p class="section-subtitle">
-              Proyectos en curso que están transformando nuestra comunidad
-            </p>
-          </div>
+    {/* Divider 3: Orange */}
+    <DiagonalDivider color="#f49624" direction="down" />
 
-          <div class="colaboraciones-grid">
-            {colaboracionesActivas.map((colaboracion) => (
-              <ColaboracionCardDetailed colaboracion={colaboracion} />
-            ))}
-          </div>
-        </section>
-      )
-    }
-
-    {
-      colaboracionesFinalizadas.length > 0 && (
-        <section class="colaboraciones-section colaboraciones-finished">
-          <div class="section-header">
-            <h2 class="section-title">Colaboraciones Finalizadas</h2>
-            <p class="section-subtitle">
-              Proyectos completados y su impacto en la comunidad
-            </p>
-          </div>
-
-          <div class="colaboraciones-grid">
-            {colaboracionesFinalizadas.map((colaboracion) => (
-              <ColaboracionCardDetailed colaboracion={colaboracion} />
-            ))}
-          </div>
-        </section>
-      )
-    }
-
-    <section class="cta-section">
-      <div class="cta-content">
-        <h2 class="cta-title">¿Quieres colaborar con nosotros?</h2>
-        <p class="cta-description">
-          Si tienes un proyecto o iniciativa que pueda beneficiar a la
-          comunidad, nos encantaría conocerla
+    {/* Section 4: CTA - Orange Background */}
+    <section class="collab-cta bg-accent-orange px-6 py-32">
+      <div class="container mx-auto max-w-4xl text-center">
+        <h2
+          class="mb-8 text-5xl leading-none font-black tracking-tighter text-black uppercase md:text-7xl"
+        >
+          ¿Quieres colaborar con nosotros?
+        </h2>
+        <p
+          class="mx-auto mb-12 max-w-2xl text-xl font-medium text-black/80 md:text-2xl"
+        >
+          Tenemos oportunidades emocionantes para creadores, desarrolladores,
+          diseñadores y emprendedores. Únete a nuestra comunidad y haz que tu
+          idea sea realidad.
         </p>
-        <a href="/contacto" class="cta-button">
+        <a
+          href="/contacto"
+          class="inline-block rounded-2xl bg-black px-12 py-5 text-xl font-black tracking-widest text-white uppercase transition-all duration-300 hover:scale-105 hover:bg-gray-900 hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
+        >
           Proponer Colaboración
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path
-              d="M4.167 10h11.666M11.667 5.833 15.833 10l-4.166 4.167"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
-          </svg>
         </a>
       </div>
     </section>
   </div>
 </Layout>
 
+<script>
+  const toggleBtn = document.getElementById('toggle-finished');
+  const finishedGrid = document.getElementById('finished-grid');
+  const chevron = document.querySelector('.chevron') as HTMLElement | null;
+
+  if (toggleBtn && finishedGrid && chevron) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+
+      toggleBtn.setAttribute('aria-expanded', (!isExpanded).toString());
+      finishedGrid.classList.toggle('hidden');
+      chevron.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+
+      if (!isExpanded) {
+        finishedGrid.classList.add('animate-fade-in-up');
+      }
+    });
+  }
+</script>
+
 <style>
-  .colaboraciones-page {
-    min-height: 100vh;
-    background: var(--palette-background);
-    padding-top: 100px;
+  .collab-page-container {
+    background: #001018;
+    overflow-x: hidden;
   }
 
-  /* Hero Section */
-  .hero-section {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 80px 24px;
-    overflow: hidden;
+  .text-stroke-cyan {
+    -webkit-text-stroke: 1.5px #34dfde;
+    color: transparent;
   }
 
-  .hero-content {
-    position: relative;
-    z-index: 1;
-    max-width: 800px;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: rgba(var(--palette-accent-cyan-rgb), 0.1);
-    border: 1px solid rgba(var(--palette-accent-cyan-rgb), 0.3);
-    border-radius: 100px;
-    color: var(--palette-accent-cyan);
-    font-size: 0.875rem;
-    font-weight: 600;
-    font-family: var(--font-barlow);
-    margin-bottom: 24px;
-  }
-
-  .hero-title {
-    font-size: clamp(2.5rem, 7vw, 4.5rem);
-    font-weight: 900;
-    font-family: var(--font-saira);
-    color: #fff;
-    line-height: 1.1;
-    margin: 0 0 24px;
-  }
-
-  .gradient-text {
-    background: linear-gradient(
-      135deg,
-      var(--palette-accent-cyan),
-      var(--palette-accent-purple)
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero-description {
-    font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.8);
-    line-height: 1.7;
-    margin: 0 0 48px;
-    font-family: var(--font-rubik);
-    max-width: 700px;
-  }
-
-  .hero-stats {
-    display: flex;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .stat-number {
-    font-size: 2.5rem;
-    font-weight: 900;
-    font-family: var(--font-saira);
-    color: var(--palette-accent-cyan);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.6);
-    font-family: var(--font-rubik);
-  }
-
-  .stat-divider {
-    width: 1px;
-    background: rgba(255, 255, 255, 0.15);
-  }
-
-  .hero-decoration {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .deco-circle {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.4;
-    filter: blur(80px);
-  }
-
-  .deco-circle-1 {
-    top: -100px;
-    right: -100px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(
-      circle,
-      rgba(var(--palette-accent-cyan-rgb), 0.3),
-      transparent
-    );
-  }
-
-  .deco-circle-2 {
-    bottom: -150px;
-    left: -50px;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(
-      circle,
-      rgba(var(--palette-accent-purple-rgb), 0.2),
-      transparent
-    );
-  }
-
-  .deco-circle-3 {
-    top: 50%;
-    right: 10%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(
-      circle,
-      rgba(var(--palette-accent-blue-rgb), 0.25),
-      transparent
-    );
-  }
-
-  /* Colaboraciones Section */
-  .colaboraciones-section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 24px;
-  }
-
-  .section-header {
-    margin-bottom: 48px;
-    text-align: center;
-  }
-
-  .section-title {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 900;
-    font-family: var(--font-saira);
-    color: #fff;
-    margin: 0 0 16px;
-  }
-
-  .section-subtitle {
-    font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.7);
-    font-family: var(--font-rubik);
-    margin: 0;
-  }
-
-  .colaboraciones-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 32px;
-  }
-
-  .colaboraciones-finished {
-    background: rgba(var(--palette-brand-navy-rgb), 0.2);
-    border-radius: 24px;
-    padding: 60px 24px;
-  }
-
-  /* CTA Section */
-  .cta-section {
-    max-width: 1200px;
-    margin: 80px auto;
-    padding: 80px 24px;
-    background: linear-gradient(
-      135deg,
-      rgba(var(--palette-accent-cyan-rgb), 0.05),
-      rgba(var(--palette-accent-purple-rgb), 0.05)
-    );
-    border-radius: 24px;
-  }
-
-  .cta-content {
-    max-width: 700px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .cta-title {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 900;
-    font-family: var(--font-saira);
-    color: #fff;
-    margin: 0 0 16px;
-  }
-
-  .cta-description {
-    font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.7;
-    margin: 0 0 32px;
-    font-family: var(--font-rubik);
-  }
-
-  .cta-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 16px 32px;
-    background: linear-gradient(
-      135deg,
-      var(--palette-accent-cyan),
-      var(--palette-accent-blue)
-    );
-    color: var(--palette-brand-dark);
-    font-size: 1rem;
-    font-weight: 700;
-    font-family: var(--font-barlow);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    text-decoration: none;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 20px rgba(var(--palette-accent-cyan-rgb), 0.3);
-  }
-
-  .cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(var(--palette-accent-cyan-rgb), 0.4);
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .colaboraciones-page {
-      padding-top: 80px;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
     }
-
-    .hero-section {
-      padding: 60px 20px;
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
+  }
 
-    .hero-stats {
-      gap: 24px;
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
     }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-    .stat-number {
-      font-size: 2rem;
-    }
+  .animate-fade-in {
+    animation: fadeIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
 
-    .colaboraciones-section {
-      padding: 40px 20px;
-    }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
 
-    .colaboraciones-finished {
-      padding: 40px 20px;
-    }
-
-    .colaboraciones-grid {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-
-    .cta-section {
-      margin: 60px 20px;
-      padding: 60px 20px;
-    }
+  .collab-hero {
+    background-image:
+      radial-gradient(
+        circle at 80% 20%,
+        rgba(52, 223, 222, 0.08),
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 20% 80%,
+        rgba(151, 71, 255, 0.05),
+        transparent 40%
+      );
   }
 </style>

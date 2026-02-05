@@ -1,0 +1,201 @@
+---
+/**
+ * CollaborationCard Component
+ * 
+ * Diseño: Tarjeta oscura con borde sutil, imagen prominente,
+ * badges de estado en colores vibrantes, información compacta.
+ */
+
+interface Props {
+  id: string;
+  image: string;
+  title: string;
+  description: string;
+  location: string;
+  date: string;
+  isActive: boolean;
+  isFeatured: boolean;
+  tags: string[];
+  slug?: string;
+}
+
+const {
+  image,
+  title,
+  description,
+  location,
+  date,
+  isActive,
+  isFeatured,
+  tags,
+  slug
+} = Astro.props;
+
+const href = slug ? `/colaboraciones/${slug}` : '#';
+---
+
+<div class="collab-card group">
+  <a href={href} class="block h-full no-underline">
+    {/* Image Container */}
+    <div class="relative overflow-hidden bg-gray-700 h-56 rounded-t-3xl">
+      <img
+        src={image}
+        alt={title}
+        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+        loading="lazy"
+      />
+      
+      {/* Status Badges - Top Right Corner */}
+      <div class="absolute top-4 right-4 flex gap-2">
+        {isActive && (
+          <div class="collab-badge collab-badge-active">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-2 10h9L11 22l2-10H4Z"/></svg>
+            <span>Activa</span>
+          </div>
+        )}
+        {isFeatured && (
+          <div class="collab-badge collab-badge-featured">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span>Destacada</span>
+          </div>
+        )}
+      </div>
+    </div>
+
+    {/* Content Section */}
+    <div class="collab-card-content p-6">
+      {/* Title */}
+      <h3 class="collab-card-title">
+        {title}
+      </h3>
+
+      {/* Description */}
+      <p class="collab-card-description">
+        {description}
+      </p>
+
+      {/* Metadata Row: Location & Date */}
+      <div class="flex flex-col gap-2 mb-4">
+        <div class="collab-card-meta">
+          <svg class="w-3.5 h-3.5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="truncate">{location}</span>
+        </div>
+        <div class="collab-card-meta">
+          <svg class="w-3.5 h-3.5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>{date}</span>
+        </div>
+      </div>
+
+      {/* Tags */}
+      {tags.length > 0 && (
+        <div class="collab-tags mb-4">
+          {tags.slice(0, 3).map((tag) => (
+            <span class="collab-tag">
+              {tag}
+            </span>
+          ))}
+          {tags.length > 3 && (
+            <span class="collab-tag">
+              +{tags.length - 3}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* CTA Button */}
+      <div class="w-full text-center py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black font-black rounded-lg transition-all duration-200 text-sm">
+        Ver Más
+      </div>
+    </div>
+  </a>
+</div>
+
+<style>
+  .collab-card {
+    background: var(--palette-brand-navy);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    height: 100%;
+  }
+
+  .collab-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(var(--palette-accent-cyan-rgb), 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .collab-card-title {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    font-family: var(--font-barlow);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .collab-card-description {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    font-family: var(--font-rubik);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .collab-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: var(--font-rubik);
+  }
+
+  .collab-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    font-family: var(--font-barlow);
+  }
+
+  .collab-badge-active {
+    background: var(--palette-accent-purple);
+    color: white;
+  }
+
+  .collab-badge-featured {
+    background: var(--palette-accent-yellow);
+    color: var(--palette-brand-dark);
+  }
+
+  .collab-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .collab-tag {
+    padding: 0.25rem 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.7rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-family: var(--font-rubik);
+  }
+</style>
