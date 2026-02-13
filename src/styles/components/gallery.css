@@ -161,7 +161,7 @@
 }
 
 /* Reduced motion */
-@media (prefers-reduced-motion: reduce) {}
+@media (prefers-reduced-motion: reduce) {}  
   .gallery-track {
     transition: none;
   }
