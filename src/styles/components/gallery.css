@@ -161,9 +161,10 @@
 }
 
 /* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {}
   .gallery-track {
     transition: none;
+  }
 /* --------------------------------------------------------------
    Root design tokens (puedes vincularlos a tu tema Shadcn/Tailwind)
 ----------------------------------------------------------------- */
