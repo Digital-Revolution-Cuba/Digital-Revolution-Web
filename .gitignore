@@ -30,7 +30,7 @@ pnpm-debug.log*
 .agent
 
 .github
-
+.claude
 .astro
 .vscode
 .husky
