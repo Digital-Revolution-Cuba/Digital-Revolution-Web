@@ -9,7 +9,25 @@
 Bienvenido al repositorio de **Revolucion-Digital-Web**, la interfaz digital que da vida a la comunidad de talentos. Este proyecto es la cara web de nuestra organización, diseñada para mostrar de forma dinámica y atractiva el talento en arte, música, desarrollo, escritura y más.
 
 > **🎯 Refactorización v0.3.0 Completada** (Enero 2026)  
-> Cumplimiento de estándares mejorado de 58% → 78%. Ver [REFACTORING-COMPLETED.md](./REFACTORING-COMPLETED.md) para detalles.
+> Cumplimiento de estándares mejorado de 58% → 78%. Ver [docs/CHANGELOG.md](./docs/CHANGELOG.md) para detalles.
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# 1. Clone repository
+git clone https://github.com/Digital-Revolution-Cuba/Digital-Revolution-Web.git
+cd Digital-Revolution-Web
+
+# 2. Install dependencies
+pnpm install
+
+# 3. Start development server
+pnpm dev
+```
+
+**First time here?** → Read the [Getting Started Tutorial](./docs/tutorials/getting-started.md)
 
 ---
 
@@ -23,99 +41,100 @@ Bienvenido al repositorio de **Revolucion-Digital-Web**, la interfaz digital que
 
 ## 🛠 Tecnologías Utilizadas
 
-- **[Astro 5.16](https://astro.build/)**  
-  Framework web moderno con Islands Architecture para máximo rendimiento.
-- **[React 19](https://react.dev/)**  
-  Hidratación selectiva solo donde es necesaria (`client:visible`, `client:idle`).
-- **[Tailwind CSS 4](https://tailwindcss.com/)**  
-  Utility-first CSS con design tokens en `@theme`.
-- **[TypeScript (Strict)](https://www.typescriptlang.org/)**  
-  Type-safety completo con 90% coverage.
-- **Integración de APIs:**  
-  Consumo de datos dinámicos durante el proceso de build, combinando lo mejor de un sitio estático con contenido fresco.
+- **[Astro 5.16](https://astro.build/)** — Framework web moderno con Islands Architecture para máximo rendimiento.
+- **[React 19](https://react.dev/)** — Hidratación selectiva solo donde es necesaria (`client:visible`, `client:idle`).
+- **[Tailwind CSS 4](https://tailwindcss.com/)** — Utility-first CSS con design tokens en `@theme`.
+- **[TypeScript (Strict)](https://www.typescriptlang.org/)** — Type-safety completo con 90% coverage.
+- **pnpm** — Package manager rápido y eficiente.
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📖 Documentation
 
-### Header Global
+**Complete documentation is available in [docs/](./docs/)**
 
-- **Logo** (enlace a Home)
-- **Menú Principal:**
-  - 🏆 **Concursos**
-    - Activos, Anteriores y Organización de concursos.
-  - 🎨 **Galería**
-    - Categorías: Arte, Música, Código y Escritura.
-  - 👤 **Perfiles**
-    - Listado de talentos segmentado por categoría.
-  - 🔍 **Descubre Talentos**
-    - CTA destacado para explorar el talento.
-  - 🤝 **Colaboraciones**
-    - Proyectos y colaboraciones en la comunidad.
+### Quick Links
 
-### Página de Inicio (Home)
+- 🎓 [Tutorials](./docs/tutorials/) — Learn step-by-step
+- 🔧 [How-To Guides](./docs/how-to/) — Solve specific tasks
+- 📖 [Reference](./docs/reference/) — Look up technical details
+- 💡 [Explanation](./docs/explanation/) — Understand concepts
 
-- **Hero Section:**
-  - Título llamativo y descripción breve del proyecto.
-  - CTA principal: **Explora Talentos** (redirecciona a la sección de perfiles).
-  - Mini-preview interactiva: Carrusel con perfiles destacados.
-- **Secciones Destacadas:**
-  - 📢 **Concursos Activos:** Cards interactivas con enlaces a detalles completos.
-  - 🎨 **Galería Dinámica:** Rotación de trabajos destacados (arte, música, código, etc.).
-  - 🤝 **Colaboraciones Destacadas:** Ejemplos de proyectos colaborativos.
-  - 🔗 **Únete a la Comunidad:** Invitación y guía para participar.
-
-### Galería / Perfiles de Talentos
-
-- **Diseño Adaptable:**  
-  Diferentes presentaciones para cada disciplina:
-  - **Artistas/Cosplay:** Galería tipo Instagram con scroll infinito, descripción y redes.
-  - **Músicos:** Reproductor integrado y enlaces a redes sociales.
-  - **Programadores/Game Devs:** Capturas, enlaces a GitHub/itch.io y detalles técnicos.
-  - **Escritores:** Fragmentos de trabajos y enlaces a publicaciones.
-
-### Concursos y Colaboraciones
-
-- **Concursos:**
-  - Listado de concursos activos con detalles (fecha límite, premios, requisitos).
-  - Galería de ganadores y proyectos pasados.
-  - CTA para organización de nuevos concursos.
-- **Colaboraciones:**
-  - Proyectos destacados y llamados a la acción para nuevas colaboraciones.
-
-### Footer
-
-- **Redes Sociales:**  
-  Íconos y enlaces a las principales plataformas.
-- **Contacto:**  
-  Información y enlace directo al WhatsApp de la comunidad.
+**Documentation follows the [Diátaxis Framework](https://diataxis.fr/)**
 
 ---
 
-## 🔧 Cómo Contribuir
+## 📁 Project Structure
 
-¡Tu aporte es esencial! Para colaborar en **Revolucion-Digital-Web** sigue estos pasos:
+```
+Digital-Revolution-Web/
+├── src/                    # Source code
+│   ├── pages/             # Routes (file-based routing)
+│   ├── components/        # Reusable UI components
+│   ├── layouts/           # Page layouts
+│   ├── content/           # Content collections (JSON/MD)
+│   ├── data/              # Static data
+│   ├── styles/            # Global CSS
+│   └── types/             # TypeScript types
+├── public/                # Static assets
+│   ├── images/           # Images (organized by section)
+│   ├── fonts/            # Self-hosted fonts
+│   └── favicon/          # Favicon files
+├── docs/                  # Documentation (Diátaxis framework)
+│   ├── tutorials/        # Learning-oriented
+│   ├── how-to/           # Task-oriented
+│   ├── reference/        # Information-oriented
+│   └── explanation/      # Understanding-oriented
+└── dist/                  # Build output (generated)
+```
 
-1. **Fork** este repositorio.
-2. Crea una **rama** para tu feature o mejora.
-3. Realiza tus cambios y envía un **Pull Request** con una descripción detallada.
-4. Sigue las pautas de estilo y estructura definidas en este documento.
+**Detailed structure:** [docs/reference/project-structure.md](./docs/reference/project-structure.md)
 
 ---
 
-## 📜 Licencia
+## 🤝 Contributing
 
-Este proyecto se distribuye bajo la [Licencia MIT](LICENSE). Consulta el archivo para más detalles.
+We welcome contributions! Please follow these steps:
+
+1. **Read the documentation**
+   - [Getting Started Tutorial](./docs/tutorials/getting-started.md)
+   - [Git Workflow How-To](./docs/how-to/git-workflow.md)
+   - [Coding Standards Reference](./docs/reference/coding-standards.md)
+
+2. **Fork the repository**
+3. **Create a feature branch** (`git checkout -b feat/amazing-feature`)
+4. **Commit your changes** (`git commit -m 'feat: add amazing feature'`)
+5. **Push to the branch** (`git push origin feat/amazing-feature`)
+6. **Open a Pull Request**
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 
 ---
 
-## 📞 Contacto
+## 📊 Project Status
 
-Si tienes dudas, sugerencias o deseas colaborar, contáctanos:
-
-- [WhatsApp de la comunidad](https://chat.whatsapp.com/KnUKS0iM8463oXkeT9OKbt)
-- Redes sociales: [Facebook](https://www.facebook.com/share/16Kcj558mD/), [Twitter](https://x.com/Revol2025?t=gCb0C9f3UmUTreOmUMAQOA&s=09), [Instagram](#https://www.instagram.com/revoluciondigital2025?igsh=bHFjMGp4MmdkdGQx)
+- **Version**: 0.3.0
+- **Status**: 🟢 Active Development
+- **Last Updated**: February 2026
+- **Lighthouse Score**: 90+ (Performance, Accessibility, Best Practices, SEO)
 
 ---
 
-Revolucion-Digital-Web es la puerta de entrada a una comunidad vibrante y en constante crecimiento. ¡Únete a nosotros para transformar el panorama digital y dar voz al talento!
+## 📜 License
+
+This project is distributed under the [MIT License](LICENSE). See the file for more details.
+
+---
+
+## 📞 Contact
+
+Questions, suggestions, or want to collaborate?
+
+- 💬 [WhatsApp Community](https://chat.whatsapp.com/KnUKS0iM8463oXkeT9OKbt)
+- 📘 [Facebook](https://www.facebook.com/share/16Kcj558mD/)
+- 🐦 [Twitter](https://x.com/Revol2025?t=gCb0C9f3UmUTreOmUMAQOA&s=09)
+- 📸 [Instagram](https://www.instagram.com/revoluciondigital2025?igsh=bHFjMGp4MmdkdGQx)
+
+---
+
+**Revolucion-Digital-Web** is the gateway to a vibrant and growing community. Join us to transform the digital landscape and give voice to talent! 🚀

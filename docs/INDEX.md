@@ -1,103 +1,187 @@
-    # Documentation Index
+# 📑 Documentation Index
 
-Quick reference index for Digital Revolution Web documentation.
+**Quick reference for all documentation in Digital Revolution Web**
+
+This index follows the [Diátaxis Framework](https://diataxis.fr/) to organize documentation by purpose.
 
 ---
 
-## 📑 Documentation Structure
+## 📐 Documentation Structure
 
 ```
 docs/
-├── README.md                 # Main documentation hub
-├── CHANGELOG.md              # Version history and changes
+├── README.md                          # Documentation hub
+├── INDEX.md                           # This file — Quick reference index
+├── CHANGELOG.md                       # Version history
 │
-├── guides/                   # Developer guides
-│   ├── quick-start.md       # Getting started in 5 minutes
-│   ├── coding-standards.md  # Code quality standards
-│   ├── git-workflow.md      # Git and branching strategy
-│   ├── ai-guidelines.md     # AI assistant guidelines
-│   └── troubleshooting.md   # Common issues and solutions
+├── tutorials/                         # 🎓 Learning-oriented (step-by-step)
+│   ├── getting-started.md
+│   ├── your-first-component.md
+│   └── building-a-gallery.md
 │
-├── architecture/             # Architecture documentation
-│   ├── overview.md          # High-level architecture
-│   ├── project-structure.md # Folder structure explained
-│   ├── islands.md           # Islands architecture details
-│   ├── data-flow.md         # Data flow patterns
-│   └── seo-strategy.md      # SEO implementation
+├── how-to/                            # 🔧 Task-oriented (solve problems)
+│   ├── add-new-page.md
+│   ├── optimize-images.md
+│   ├── git-workflow.md
+│   ├── deploy-to-vercel.md
+│   └── contributing.md
 │
-├── components/               # Component documentation
-│   ├── README.md            # Component guidelines
-│   ├── astro-components.md  # Astro component patterns
-│   ├── react-islands.md     # React island patterns
-│   └── styling.md           # Styling best practices
+├── reference/                         # 📖 Information-oriented (look up details)
+│   ├── project-structure.md
+│   ├── coding-standards.md
+│   ├── configuration.md
+│   ├── cli-commands.md
+│   ├── api/
+│   │   ├── data-models.md
+│   │   └── utilities.md
+│   └── components/
+│       ├── README.md
+│       ├── astro-components.md
+│       └── react-islands.md
 │
-└── api/                      # API reference
-    ├── data-models.md       # TypeScript types and interfaces
-    ├── utilities.md         # Utility functions
-    └── configuration.md     # Configuration options
+└── explanation/                       # 💡 Understanding-oriented (concepts)
+    ├── architecture.md
+    ├── why-astro.md
+    ├── islands-architecture.md
+    ├── performance-strategy.md
+    └── data-flow.md
 ```
 
 ---
 
-## 🚀 Quick Links by Role
+## 🎯 Find Documentation by Purpose
 
-### For New Developers
+### I want to learn → Tutorials
 
-Start here:
+**Learning-oriented**: Step-by-step lessons that teach concepts through practice
 
-1. [Quick Start Guide](./guides/quick-start.md) - Get running in 5 minutes
-2. [Project Structure](./architecture/project-structure.md) - Understand the codebase
-3. [Coding Standards](./guides/coding-standards.md) - Write consistent code
+| Document | Description | Time | Level |
+|----------|-------------|------|-------|
+| [Getting Started](./tutorials/getting-started.md) | Set up dev environment | 15 min | Beginner |
 
-4. [Git Workflow](./guides/git-workflow.md) - Contribute correctly
+### I need to solve a problem → How-To Guides
 
-### For AI Assistants (Copilot, Claude, etc.)
+**Task-oriented**: Practical steps to accomplish specific goals
 
-Essential context:
+| Document | Description |
+|----------|-------------|
+| [Git Workflow](./how-to/git-workflow.md) | Branching and commit conventions |
 
-1. [AI Guidelines](./guides/ai-guidelines.md) - Code generation rules
-2. [Architecture Overview](./architecture/overview.md) - System design
+### I need to look something up → Reference
 
-3. [Data Models](./api/data-models.md) - Type definitions
-4. [Component Guidelines](./components/README.md) - Component patterns
+**Information-oriented**: Technical details, APIs, configurations
 
-### For Contributors
+| Category | Documents |
+|----------|-----------|
+| **Project** | [Project Structure](./reference/project-structure.md) |
+| **Code Quality** | [Coding Standards](./reference/coding-standards.md) |
+| **API** | [Data Models](./reference/api/data-models.md) |
 
-Before creating a PR:
+### I want to understand → Explanation
 
-1. [Coding Standards](./guides/coding-standards.md) - Code quality rules
-2. [Git Workflow](./guides/git-workflow.md) - Branching and commits
+**Understanding-oriented**: Concepts, design decisions, architecture
 
-3. [Component Guidelines](./components/README.md) - Component patterns
-4. [Main Contributing Guide](../CONTRIBUTING.md) - Contribution process
-
-### For Maintainers
-
-Reference documentation:
-
-1. [Architecture Overview](./architecture/overview.md) - System design decisions
-2. [CHANGELOG](./CHANGELOG.md) - Version history
-3. [Data Models](./api/data-models.md) - Type system
-4. [Utilities Reference](./api/utilities.md) - Helper functions
+| Document | Description |
+|----------|-------------|
+| [Architecture](./explanation/architecture.md) | System design and patterns |
 
 ---
 
-## 📖 Documentation by Topic
+## 👥 Find Documentation by Role
+
+### New Developer
+
+**Start here:**
+
+
+
+
+1. [Getting Started Tutorial](./tutorials/getting-started.md)
+2. [Architecture Explanation](./explanation/architecture.md)
+3. [Project Structure Reference](./reference/project-structure.md)
+4. [Coding Standards Reference](./reference/coding-standards.md)
+
+
+### Contributor
+
+
+
+**Making a PR:**
+
+
+1. [Git Workflow How-To](./how-to/git-workflow.md)
+2. [Coding Standards Reference](./reference/coding-standards.md)
+
+
+### AI Assistant (Copilot/Claude/etc.)
+
+
+**Context for code generation:**
+
+
+1. [Data Models Reference](./reference/api/data-models.md)
+2. [Architecture Explanation](./explanation/architecture.md)
+
+
+
+---
+
+
+
+
+## 📚 Documentation by Topic
+
+
+
+### Setup & Configuration
+
+
+- [Getting Started Tutorial](./tutorials/getting-started.md)
+
+
 
 ### Architecture & Design
 
-- [Architecture Overview](./architecture/overview.md)
-- [Project Structure](./architecture/project-structure.md)
-- [Islands Architecture](./architecture/islands.md)
-- [Data Flow Patterns](./architecture/data-flow.md)
-- [SEO Strategy](./architecture/seo-strategy.md)
+- [Architecture Explanation](./explanation/architecture.md)
 
-### Components
 
-- [Component Guidelines](./components/README.md)
-- [Astro Components](./components/astro-components.md)
-- [React Islands](./components/react-islands.md)
-- [Styling Patterns](./components/styling.md)
+### Development
+
+- [Git Workflow How-To](./how-to/git-workflow.md)
+- [Data Models Reference](./reference/api/data-models.md)
+
+### Images & Assets
+
+- [Image Directory Structure](../public/images/README.md)
+
+---
+
+## 📝 Contributing to Documentation
+
+Found an error or want to improve docs?
+
+1. Follow [Diátaxis principles](https://diataxis.fr/):
+   - **Tutorials**: Learning-oriented, step-by-step
+   - **How-To**: Task-oriented, solve problems
+   - **Reference**: Information-oriented, lookup
+   - **Explanation**: Understanding-oriented, concepts
+2. Update this index if adding new docs
+3. Submit a PR
+
+---
+
+## 🔗 External Resources
+
+- [Astro Docs](https://docs.astro.build/)
+- [React Docs](https://react.dev/)
+- [Tailwind CSS Docs](https://tailwindcss.com/docs)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Diátaxis Framework](https://diataxis.fr/)
+
+---
+
+**Last Updated**: February 2026  
+**Documentation Version**: 1.0.0
 
 ### Development
 
