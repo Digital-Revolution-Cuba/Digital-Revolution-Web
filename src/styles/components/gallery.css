@@ -164,5 +164,628 @@
 @media (prefers-reduced-motion: reduce) {
   .gallery-track {
     transition: none;
+/* --------------------------------------------------------------
+   Root design tokens (puedes vincularlos a tu tema Shadcn/Tailwind)
+----------------------------------------------------------------- */
+:root {
+  --background: #0f0f0f;
+  --foreground: #ffffff;
+  --accent: #f97316;
+  --primary: #06b6d4;
+  --primary-foreground: #ffffff;
+  --accent-foreground: #ffffff;
+  --muted-foreground: #a1a1a1;
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+/* --------------------------------------------------------------
+   Hero Section
+----------------------------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: system-ui, sans-serif;
+}
+
+/* --------------------------------------------------------------
+   Background layers
+----------------------------------------------------------------- */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: var(--color-brand-background-global);
+}
+
+.hero__bg-base {
+  position: absolute;
+  inset: 0;
+  background: var(--color-brand-background-global);
+}
+
+.hero__bg-orange {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 50%;
+}
+
+.hero__bg-orange polygon {
+  fill: var(--accent);
+}
+
+.hero__bg-cyan {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: var(--primary);
+}
+
+.hero__bg-diagonal {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__bg-diagonal polygon {
+  fill: var(--color-brand-background-global);
+}
+
+/* --------------------------------------------------------------
+   Content wrapper
+----------------------------------------------------------------- */
+.hero__content {
+  position: relative;
+  z-index: 10;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 96px 16px 64px;
+}
+
+@media (min-width: 768px) {
+  .hero__content {
+    padding: 96px 32px 64px;
+  }
+}
+
+/* --------------------------------------------------------------
+   Layout (left + right)
+----------------------------------------------------------------- */
+.hero__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .hero__layout {
+    flex-direction: row;
+    gap: 32px;
+    align-items: center;
+  }
+}
+
+.hero__left,
+.hero__right {
+  flex: 1;
+}
+
+/* Badge animations */
+.hero__badge {
+  animation: slideDown 0.6s ease-out 0.1s both;
+}
+
+/* Title animations */
+.hero__title {
+  animation: slideUp 0.8s ease-out 0.2s both;
+}
+
+
+
+/* Description animations */
+.hero__description {
+  animation: slideUp 0.8s ease-out 0.3s both;
+}
+
+/* Actions animations */
+.hero__actions {
+  animation: slideUp 0.8s ease-out 0.4s both;
+}
+
+/* Stats animations */
+.hero__stats {
+  animation: slideUp 0.8s ease-out 0.5s both;
+}
+/* --------------------------------------------------------------
+   Title
+----------------------------------------------------------------- */
+.hero__title {
+  margin-top: 100px;
+  margin-bottom: 24px;
+  font-weight: 900;
+  line-height: 0.9;
+  font-size: 58px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .hero__title {
+    margin-top: 0;
+    font-size: 72px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__title {
+    font-size: 96px;
+    text-align: left;
+  }
+}
+
+.hero__title-primary {
+  margin-bottom: 10px;
+  color: var(--accent);
+  text-shadow: 0 0 30px rgba(249, 115, 22, 0.4);
+}
+
+.hero__title-secondary {
+  color: var(--foreground);
+}
+
+.hero__title-tertiary {
+  color: var(--foreground);
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------
+   Description
+----------------------------------------------------------------- */
+.hero__description {
+  max-width: 480px;
+  margin: 0 auto 32px;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .hero__description {
+    text-align: left;
+    margin-left: 0;
+  }
+}
+
+/* --------------------------------------------------------------
+   Actions
+----------------------------------------------------------------- */
+.hero__actions {
+  display: flex;
+  margin-bottom: 20px;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 640px) {
+  .hero__actions {
+    flex-direction: row;
+  }
+}
+
+.hero__btn-primary {
+  padding: 16px 32px;
+  background: var(--accent);
+  color: var(--accent-foreground);
+  font-weight: 700;
+  border-radius: 999px;
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.3s ease;
+}
+
+.hero__btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(249, 115, 22, 0.5);
+}
+
+.hero__btn-primary:hover::before {
+  left: 100%;
+}
+
+.hero__btn-secondary {
+  padding: 10px 24px;
+  background: #0f1f35;
+  color: var(--foreground);
+  border: 1px solid var(--foreground);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: none;
+}
+
+.hero__btn-secondary:hover {
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.hero__btn-tertiary {
+  padding: 10px 24px;
+  background: #0f1f35;
+  color: var(--accent);
+  border: 1px solid #0f1f35;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: none;
+}
+
+.hero__btn-tertiary:hover {
+  background: var(--primary);
+  color: var(--background);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+}
+
+/* --------------------------------------------------------------
+   Media (right-floating images)
+----------------------------------------------------------------- */
+.hero__right {
+  position: relative;
+  height: 500px;
+  max-width: 480px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .hero__right {
+    height: 600px;
+  }
+}
+
+.hero__media {
+  position: relative;
+  margin-top: 40px;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+/* Main image centered */
+.hero__media-main {
+  position: absolute;
+  z-index: -2;
+  top: 50%;
+  left: 50%;
+  width: 256px;
+  transform: translate(-50%, -50%);
+}
+
+/* Secondary top right */
+.hero__media-secondary {
+  position: absolute;
+  top: 16px;
+  z-index: -2;
+  right: 0;
+  width: 192px;
+}
+
+@media (min-width: 768px) {
+  .hero__media-secondary {
+    top: 32px;
+    right: 0;
+    width: 224px;
+  }
+}
+
+/* Tertiary bottom left */
+.hero__media-tertiary {
+  position: absolute;
+  bottom: 32px;
+  left: 16px;
+  width: 176px;
+}
+
+@media (min-width: 768px) {
+  .hero__media-tertiary {
+    bottom: 48px;
+    left: 32px;
+    width: 192px;
+  }
+}
+
+.hero__media-content {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 4px solid var(--border);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  transition: all 0.4s ease;
+}
+
+.hero__media-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.hero__media-content:hover img {
+  transform: scale(1.08);
+}
+
+.hero__media-content.secondary {
+  border-width: 2px;
+  border-color: rgba(249, 115, 22, 0.3);
+  transform: rotate(6deg);
+  transition: all 0.4s ease;
+}
+
+.hero__media-content.secondary:hover {
+  transform: rotate(0deg);
+  box-shadow: 0 15px 50px rgba(249, 115, 22, 0.3);
+}
+
+.hero__media-content.tertiary {
+  border-width: 2px;
+  border-color: rgba(6, 182, 212, 0.3);
+  transform: rotate(-6deg);
+  transition: all 0.4s ease;
+}
+
+.hero__media-content.tertiary:hover {
+  transform: rotate(0deg);
+  box-shadow: 0 15px 50px rgba(6, 182, 212, 0.3);
+}
+
+/* Caption */
+.hero__media-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(to top, rgba(15, 15, 15, 0.9), transparent);
+}
+
+.hero__media-caption span {
+  font-size: 12px;
+  color: var(--foreground);
+}
+
+/* Decorative dots */
+.hero__dot-accent,
+.hero__dot-primary,
+.hero__dot-neutral {
+  position: absolute;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.hero__dot-accent {
+  top: 80px;
+  left: 32px;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+}
+
+.hero__dot-primary {
+  bottom: 128px;
+  right: 48px;
+  width: 12px;
+  height: 12px;
+  background: var(--primary);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+  animation: pulse 2s ease-in-out infinite 0.3s;
+}
+
+.hero__dot-neutral {
+  top: 33%;
+  right: 25%;
+  width: 8px;
+  height: 8px;
+  background: var(--foreground);
+  animation: pulse 2s ease-in-out infinite 0.6s;
+}
+
+/* --------------------------------------------------------------
+   Animations
+----------------------------------------------------------------- */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-12px);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 5px rgba(6, 182, 212, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.6));
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+/* --------------------------------------------------------------
+   Decorative Geometric Elements
+----------------------------------------------------------------- */
+.hero__decorative {
+  position: absolute;
+  pointer-events: none;
+}
+
+.hero__line-horizontal {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  opacity: 0.5;
+  animation: slideRight 1.2s ease-out infinite;
+}
+
+.hero__line-vertical {
+  position: absolute;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--accent), transparent);
+  opacity: 0.5;
+  animation: slideDown 1.2s ease-out infinite;
+}
+
+.hero__circle-outline {
+  position: absolute;
+  border: 2px solid;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.hero__circle-outline.accent {
+  border-color: var(--accent);
+}
+
+.hero__circle-outline.primary {
+  border-color: var(--primary);
+}
+
+.hero__triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0.2;
+  animation: rotate 8s linear infinite;
+}
+
+.hero__triangle.accent {
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 35px solid var(--accent);
+}
+
+.hero__triangle.primary {
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 26px solid var(--primary);
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

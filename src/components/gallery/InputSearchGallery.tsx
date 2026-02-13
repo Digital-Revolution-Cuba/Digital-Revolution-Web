@@ -1,56 +1,20 @@
+import { Search, X } from 'lucide-react';
 import { useMemo } from 'react';
 
-// SVG Icons inline
-const SearchIcon = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="11" cy="11" r="8" />
-    <path d="m21 21-4.35-4.35" />
-  </svg>
-);
-
-const XIcon = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M18 6 6 18" />
-    <path d="m6 6 12 12" />
-  </svg>
-);
-
-export function InputSearchGallery({
-  images,
-  searchAuthor,
-  setSearchAuthor,
-  filteredImages,
-  handleClearSearch,
-}: {
-  images: Array<any>;
-  searchAuthor: string;
-  setSearchAuthor: (author: string) => void;
-  filteredImages: Array<any>;
-  handleClearSearch: () => void;
+export function InputSearchGallery({ images, searchAuthor, setSearchAuthor, filteredImages, handleClearSearch }: {
+    images: Array<any>;
+    searchAuthor: string;
+    setSearchAuthor: (author: string) => void;
+    filteredImages: Array<any>;
+    handleClearSearch: () => void;
 }) {
-  const uniqueAuthors = useMemo(() => {
-    return Array.from(new Set(images.map((img) => img.author)));
-  }, [images]);
 
-  return (
+  
+    const uniqueAuthors = useMemo(() => {
+        return Array.from(new Set(images.map((img) => img.author)));
+    }, [images]);
+
+    return (
     <>
       <div className="mb-16 text-center">
         <h1 className="font-impact section-title mb-6 text-5xl font-black italic md:text-6xl lg:text-7xl">
@@ -62,9 +26,7 @@ export function InputSearchGallery({
       <div className="mb-12 flex flex-col items-center px-4 transition-all duration-500 ease-out">
         <div className="relative mb-8 w-full max-w-3xl">
           <div className="relative">
-            <div className="pointer-events-none absolute top-1/2 left-5 h-5 w-5 -translate-y-1/2 transform text-gray-500">
-              <SearchIcon />
-            </div>
+            <Search className="pointer-events-none absolute top-1/2 left-5 h-5 w-5 -translate-y-1/2 transform text-gray-500" />
             <input
               type="text"
               placeholder="Buscar imagenes por autor..."
@@ -77,7 +39,7 @@ export function InputSearchGallery({
                 onClick={handleClearSearch}
                 className="absolute top-1/2 right-4 -translate-y-1/2 transform text-gray-500 transition-colors duration-200 hover:text-orange-500"
               >
-                <XIcon />
+                <X className="h-5 w-5" />
               </button>
             )}
           </div>
@@ -90,7 +52,7 @@ export function InputSearchGallery({
                 <button
                   key={author}
                   onClick={() => setSearchAuthor(author)}
-                  className="border-opacity-50 hover:border-opacity-100 cursor-pointer rounded-full border-2 border-orange-500 bg-transparent px-5 py-2.5 font-medium text-orange-500 transition-all duration-300 hover:border-orange-500 hover:bg-orange-500/20 hover:text-orange-100"
+                  className="border-opacity-50 hover:border-opacity-100 rounded-full border-2 border-orange-500 bg-transparent px-5 py-2.5 font-medium text-orange-500 transition-all duration-300 hover:border-orange-500 hover:bg-orange-500/20 hover:text-orange-100 cursor-pointer"
                   style={{
                     animation: `fadeInUp 0.5s ease-out forwards`,
                     animationDelay: `${index * 0.05}s`,
@@ -155,6 +117,6 @@ export function InputSearchGallery({
 
         `}</style>
       </div>
-    </>
-  );
+      </>
+    )
 }

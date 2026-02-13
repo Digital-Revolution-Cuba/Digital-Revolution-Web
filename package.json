@@ -32,6 +32,8 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@types/react-measure": "^2.0.12",
+    "@types/react-responsive-masonry": "^2.7.0",
     "astro-compress": "^2.3.9",
     "husky": "^9.1.7",
     "prettier": "^3.7.4",
