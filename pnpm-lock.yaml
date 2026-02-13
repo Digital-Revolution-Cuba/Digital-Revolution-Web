@@ -29,6 +29,9 @@ importers:
       lightningcss:
         specifier: ^1.30.2
         version: 1.30.2
+      lucide-react:
+        specifier: ^0.563.0
+        version: 0.563.0(react@19.2.3)
       nanostores:
         specifier: ^1.1.0
         version: 1.1.0
@@ -54,6 +57,12 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
     devDependencies:
+      '@types/react-measure':
+        specifier: ^2.0.12
+        version: 2.0.12
+      '@types/react-responsive-masonry':
+        specifier: ^2.7.0
+        version: 2.7.0
       astro-compress:
         specifier: ^2.3.9
         version: 2.3.9(@types/node@25.0.3)(jiti@2.6.1)(rollup@4.53.5)(typescript@5.9.3)(yaml@2.8.2)
@@ -854,6 +863,12 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
+  '@types/react-measure@2.0.12':
+    resolution: {integrity: sha512-Y6V11CH6bU7RhqrIdENPwEUZlPXhfXNGylMNnGwq5TAEs2wDoBA3kSVVM/EQ8u72sz5r9ja+7W8M8PIVcS841Q==}
+
+  '@types/react-responsive-masonry@2.7.0':
+    resolution: {integrity: sha512-eMOxLcmPo3M8IDcTCmgK/luxjlJiqK1glZr15iM0+DYhL0QFlJvnNEgjhyOBGFlXsjlnLbcz1/M3/Q3fSeU1sQ==}
+
   '@types/react@19.2.7':
     resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
 
@@ -1531,6 +1546,11 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
+
+  lucide-react@0.563.0:
+    resolution: {integrity: sha512-8dXPB2GI4dI8jV4MgUDGBeLdGk8ekfqVZ0BdLcrRzocGgG75ltNEmWS+gE7uokKF/0oSUuczNDT+g9hFJ23FkA==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -3213,6 +3233,14 @@ snapshots:
     dependencies:
       '@types/react': 19.2.7
 
+  '@types/react-measure@2.0.12':
+    dependencies:
+      '@types/react': 19.2.7
+
+  '@types/react-responsive-masonry@2.7.0':
+    dependencies:
+      '@types/react': 19.2.7
+
   '@types/react@19.2.7':
     dependencies:
       csstype: 3.2.3
@@ -4137,6 +4165,10 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  lucide-react@0.563.0(react@19.2.3):
+    dependencies:
+      react: 19.2.3
 
   magic-string@0.30.21:
     dependencies:

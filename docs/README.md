@@ -1,81 +1,114 @@
-# Digital Revolution Web - Documentation
+# 📚 Digital Revolution Web — Documentation Hub
 
-> **Complete technical documentation for developers and AI assistants**
+> **Complete technical documentation following the Diátaxis framework**
 
-[![Astro](https://img.shields.io/badge/Astro-5.0-FF5D01?logo=astro&logoColor=white)](https://astro.build/)
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-
----
-
-## 📚 Table of Contents
-
-### Getting Started
-
-- [Quick Start Guide](./guides/quick-start.md)
-- [Development Environment Setup](./guides/development-setup.md)
-- [Project Structure](./architecture/project-structure.md)
-
-### Architecture
-
-- [Architecture Overview](./architecture/overview.md)
-- [Islands Architecture](./architecture/islands.md)
-- [Data Flow](./architecture/data-flow.md)
-- [SEO Strategy](./architecture/seo-strategy.md)
-- [Performance Optimization](./architecture/performance.md)
-
-### Component Documentation
-
-- [Component Guidelines](./components/README.md)
-- [Astro Components](./components/astro-components.md)
-- [React Islands](./components/react-islands.md)
-- [Styling Patterns](./components/styling.md)
-
-### API Reference
-
-- [Data Models](./api/data-models.md)
-- [Utility Functions](./api/utilities.md)
-- [Configuration](./api/configuration.md)
-
-### Developer Guides
-
-- [Contributing Guidelines](./guides/contributing.md)
-- [Coding Standards](./guides/coding-standards.md)
-- [Git Workflow](./guides/git-workflow.md)
-- [Testing Guide](./guides/testing.md)
-- [Deployment](./guides/deployment.md)
-- [Troubleshooting](./guides/troubleshooting.md)
-
-### AI Assistant Context
-
-- [AI Development Guidelines](./guides/ai-guidelines.md)
-- [Prompt Templates](./guides/prompt-templates.md)
+[![Astro](https://img.shields.io/badge/Astro-5.16-FF5D01?logo=astro)](https://astro.build/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 
 ---
 
-## 🎯 Purpose of This Documentation
+## 🎯 Quick Navigation by Need
 
-This documentation serves multiple purposes:
+### 🎓 I want to learn the basics
+→ **[Tutorials](./tutorials/)** — Step-by-step lessons
 
-1. **For Developers**: Comprehensive technical reference for contributing to the project
-2. **For AI Assistants**: Structured context to generate consistent, high-quality code
-3. **For Maintainers**: Architecture decisions and patterns documentation
-4. **For Onboarding**: Quick ramp-up for new team members
+### 🔧 I need to accomplish a specific task
+→ **[How-To Guides](./how-to/)** — Practical solutions
+
+### 📖 I need to look up technical details
+→ **[Reference](./reference/)** — API documentation
+
+### 💡 I want to understand concepts
+→ **[Explanation](./explanation/)** — Architecture & design decisions
 
 ---
 
-## 🏗️ Project Tech Stack
+## 📐 Documentation Structure (Diátaxis Framework)
 
-| Layer               | Technology           | Version  | Purpose                               |
-| ------------------- | -------------------- | -------- | ------------------------------------- |
-| **Framework**       | Astro                | 5.16+    | Static Site Generation with Islands   |
-| **UI Library**      | React                | 19.2+    | Interactive components (islands only) |
-| **Styling**         | Tailwind CSS         | 4.1+     | Utility-first CSS framework           |
-| **Language**        | TypeScript           | 5.x      | Type-safe development (strict mode)   |
-| **Icons**           | Lucide React         | Latest   | Tree-shakeable icon components        |
-| **Images**          | Astro Assets + Sharp | Built-in | Optimized image processing            |
-| **Package Manager** | pnpm                 | 9.x+     | Fast, disk space efficient            |
+This documentation follows the **Diátaxis** framework, organizing content into 4 distinct types:
+
+```
+docs/
+├── tutorials/          # 🎓 Learning-oriented (study + action)
+│   ├── getting-started.md
+│   ├── your-first-component.md
+│   └── building-a-gallery.md
+│
+├── how-to/             # 🔧 Task-oriented (work + action)
+│   ├── add-new-page.md
+│   ├── optimize-images.md
+│   ├── git-workflow.md
+│   └── deploy-to-vercel.md
+│
+├── reference/          # 📖 Information-oriented (work + cognition)
+│   ├── api/
+│   ├── components/
+│   ├── configuration.md
+│   └── coding-standards.md
+│
+└── explanation/        # 💡 Understanding-oriented (study + cognition)
+    ├── architecture.md
+    ├── why-astro.md
+    ├── performance-strategy.md
+    └── data-flow.md
+```
+
+---
+
+## 🚀 Quick Start for Different Audiences
+
+### 👨‍💻 New Developer
+
+1. Read [Getting Started Tutorial](./tutorials/getting-started.md) (10 min)
+2. Complete [Your First Component](./tutorials/your-first-component.md) (20 min)
+3. Check [Coding Standards Reference](./reference/coding-standards.md)
+4. Read [Architecture Explanation](./explanation/architecture.md)
+
+### 🤖 AI Assistant (GitHub Copilot, etc.)
+
+1. Read [AI Guidelines](./reference/ai-guidelines.md)
+2. Check [Component Patterns Reference](./reference/components/)
+3. Review [Data Models Reference](./reference/api/data-models.md)
+4. Understand [Islands Architecture](./explanation/islands-architecture.md)
+
+### 👥 Contributor
+
+1. Read [Contributing How-To](./how-to/contributing.md)
+2. Check [Git Workflow How-To](./how-to/git-workflow.md)
+3. Review [Coding Standards Reference](./reference/coding-standards.md)
+4. Test changes using [Testing How-To](./how-to/testing.md)
+
+### 🏗️ Maintainer
+
+1. Review [Architecture Explanation](./explanation/architecture.md)
+2. Check [Performance Strategy](./explanation/performance-strategy.md)
+3. Read [Deployment How-To](./how-to/deploy.md)
+4. Monitor [CHANGELOG](./CHANGELOG.md)
+
+---
+
+## 🛠️ Tech Stack Overview
+
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Framework** | Astro 5.16+ | SSG with Islands Architecture |
+| **UI Components** | React 19 | Interactive islands only |
+| **Styling** | Tailwind CSS 4.1 | Utility-first CSS |
+| **Language** | TypeScript (strict) | Type-safe development |
+| **Content** | Content Collections | Type-safe content management |
+| **Images** | Astro Assets + Sharp | Optimized image processing |
+| **Package Manager** | pnpm 10+ | Fast, efficient installs |
+
+---
+
+## 📊 Project Status
+
+- **Version**: 0.3.0
+- **Status**: 🟢 Active Development
+- **Last Updated**: February 2026
+- **Lighthouse Score**: 90+ (Performance, Accessibility, Best Practices, SEO)
 
 ---
 
