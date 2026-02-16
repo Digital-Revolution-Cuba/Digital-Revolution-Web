@@ -1,260 +1,349 @@
 ---
 /**
  * ConcursosCTA - Call to Action section for proposing new contests
- * Encourages community engagement
+ * DESIGN: Diagonal clip-path with yellow/cyan palette matching index identity
  */
 ---
 
 <section class="concursos-cta" aria-labelledby="cta-heading">
-  <div class="cta-container">
-    <div class="cta-content">
+  <!-- Cyan transition strip -->
+  <div class="cta-cyan-strip" aria-hidden="true"></div>
+
+  <!-- Yellow main CTA area -->
+  <div class="cta-yellow-area">
+    <div class="cta-inner">
       <h2 id="cta-heading" class="cta-title">
-        ¿Tienes una idea para un concurso?
+        Crea Tu Propio<br />Desafío Creativo
       </h2>
 
       <p class="cta-description">
-        Ayúdanos a organizar el próximo gran desafío creativo de la comunidad.
-        Comparte tu propuesta y hagamos realidad experiencias increíbles juntos.
+        ¿Tienes una idea innovadora para un concurso? Comparte tu visión con la
+        comunidad y ayúdanos a organizar experiencias únicas que inspiren a
+        miles de creativos.
       </p>
 
-      <div class="cta-actions">
-        <a
-          href="/contacto"
-          class="cta-button primary"
-          aria-label="Proponer un nuevo concurso"
-        >
-          Proponer Concurso
+      <div class="cta-features">
+        <div class="feature-item">
           <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
             fill="none"
+            stroke="currentColor"
+            stroke-width="2"
             aria-hidden="true"
           >
-            <path
-              d="M4.167 10h11.666M11.667 5.833 15.833 10l-4.166 4.167"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
           </svg>
-        </a>
+          <span>Proceso Simplificado</span>
+        </div>
+        <div class="feature-item">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>Soporte del Equipo</span>
+        </div>
+        <div class="feature-item">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 6v6l4 2"></path>
+          </svg>
+          <span>Respuesta Rápida</span>
+        </div>
+      </div>
 
-        <a
-          href="/docs/concursos"
-          class="cta-button secondary"
-          aria-label="Conocer más sobre los concursos"
-        >
-          Conoce más
+      <div class="cta-actions">
+        <a href="/contacto" class="cta-button-primary"> Proponer Concurso </a>
+        <a href="/docs/concursos" class="cta-button-secondary">
+          Ver Requisitos
         </a>
       </div>
     </div>
-
-    <!-- Decorative elements -->
-    <div class="cta-decoration" aria-hidden="true">
-      <div class="deco-shape deco-shape-1"></div>
-      <div class="deco-shape deco-shape-2"></div>
-    </div>
   </div>
+
+  <!-- Dark bottom with closing clip -->
+  <div class="cta-dark-bottom" aria-hidden="true"></div>
 </section>
 
 <style>
+  /* === CTA — Angular clip design (yellow/cyan like index) === */
   .concursos-cta {
     position: relative;
-    max-width: 1200px;
-    margin: 80px auto;
-    padding: 0 24px;
-  }
-
-  .cta-container {
-    position: relative;
-    background: linear-gradient(
-      135deg,
-      rgba(var(--palette-accent-cyan-rgb), 0.1),
-      rgba(var(--palette-accent-purple-rgb), 0.1)
-    );
-    border: 1px solid rgba(var(--palette-accent-cyan-rgb), 0.2);
-    border-radius: 24px;
-    padding: 60px 40px;
-    text-align: center;
-    backdrop-filter: blur(10px);
+    width: 100%;
     overflow: hidden;
+    margin-top: 4rem;
   }
 
-  .cta-content {
-    position: relative;
-    z-index: 1;
+  /* Cyan transition strip at top */
+  .cta-cyan-strip {
+    background: var(--palette-accent-cyan, #34dfde);
+    height: 70px;
+    clip-path: polygon(0 0, 100% 50%, 100% 100%, 0 100%);
   }
 
+  /* Yellow main area */
+  .cta-yellow-area {
+    background: var(--palette-accent-yellow, #ffc943);
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem);
+    margin-top: -1px;
+    clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  }
+
+  .cta-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Title */
   .cta-title {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 900;
-    font-family: var(--font-barlow);
-    color: #fff;
-    margin: 0 0 16px;
-    line-height: 1.2;
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    font-weight: bold;
+    color: var(--palette-brand-dark, #011822);
+    line-height: 1;
+    margin: 0 0 1.25rem;
+    display: inline-block;
+    transform: scaleX(1.05);
+    transform-origin: left;
   }
 
+  /* Description */
   .cta-description {
-    font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.8);
-    max-width: 700px;
-    margin: 0 auto 32px;
+    font-family: var(--font-barlow, 'Barlow Semi Condensed', sans-serif);
+    font-size: clamp(0.938rem, 2.5vw, 1.125rem);
     line-height: 1.6;
-    font-family: var(--font-rubik);
+    color: rgba(1, 24, 34, 0.8);
+    max-width: 650px;
+    margin: 0 0 1.75rem;
   }
 
-  .cta-actions {
+  /* Features */
+  .cta-features {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
+    gap: 1.75rem;
+    margin-bottom: 1.75rem;
     flex-wrap: wrap;
   }
 
-  .cta-button {
-    display: inline-flex;
+  .feature-item {
+    display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px 32px;
-    font-size: 1rem;
-    font-weight: 700;
+    gap: 8px;
     font-family: var(--font-barlow);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--palette-brand-dark, #011822);
+  }
+
+  .feature-item svg {
+    stroke: var(--palette-brand-navy, #002b38);
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Actions */
+  .cta-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-button-primary {
+    display: inline-block;
+    padding: 0.813rem 2rem;
+    background: var(--palette-brand-navy, #002b38);
+    color: var(--palette-accent-orange, #f49624);
+    border: 2px solid var(--palette-accent-cyan, #34dfde);
+    border-radius: 0.5rem;
+    font-family: var(--font-barlow);
+    font-size: 0.938rem;
+    font-weight: 700;
+    text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    text-decoration: none;
-    border-radius: 12px;
     transition: all 0.3s ease;
-    white-space: nowrap;
   }
 
-  .cta-button.primary {
-    background: linear-gradient(
-      135deg,
-      var(--palette-accent-cyan),
-      var(--palette-accent-blue)
-    );
-    color: var(--palette-brand-dark);
-    box-shadow: 0 8px 20px rgba(var(--palette-accent-cyan-rgb), 0.3);
-  }
-
-  .cta-button.primary:hover {
+  .cta-button-primary:hover {
+    background: var(--palette-accent-cyan, #34dfde);
+    color: var(--palette-brand-dark, #011822);
+    box-shadow: 0 0 20px rgba(52, 223, 222, 0.4);
     transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(var(--palette-accent-cyan-rgb), 0.4);
   }
 
-  .cta-button.primary:focus {
-    outline: 3px solid rgba(var(--palette-accent-cyan-rgb), 0.5);
-    outline-offset: 2px;
-  }
-
-  .cta-button.primary svg {
-    transition: transform 0.3s ease;
-  }
-
-  .cta-button.primary:hover svg {
-    transform: translateX(4px);
-  }
-
-  .cta-button.secondary {
+  .cta-button-secondary {
+    display: inline-block;
+    padding: 0.813rem 2rem;
     background: transparent;
-    color: var(--palette-accent-cyan);
-    border: 2px solid rgba(var(--palette-accent-cyan-rgb), 0.3);
+    color: var(--palette-brand-dark, #011822);
+    border: 2px solid var(--palette-brand-dark, #011822);
+    border-radius: 0.5rem;
+    font-family: var(--font-barlow);
+    font-size: 0.938rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
   }
 
-  .cta-button.secondary:hover {
-    background: rgba(var(--palette-accent-cyan-rgb), 0.1);
-    border-color: rgba(var(--palette-accent-cyan-rgb), 0.5);
+  .cta-button-secondary:hover {
+    background: var(--palette-brand-dark, #011822);
+    color: var(--palette-accent-yellow, #ffc943);
     transform: translateY(-2px);
   }
 
-  .cta-button.secondary:focus {
-    outline: 3px solid rgba(var(--palette-accent-cyan-rgb), 0.5);
-    outline-offset: 2px;
+  /* Dark bottom closing strip */
+  .cta-dark-bottom {
+    background: var(--palette-background, #001018);
+    height: 60px;
+    margin-top: -60px;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%, 0 100%);
   }
 
-  /* Decorative shapes */
-  .cta-decoration {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-  }
+  /* === RESPONSIVE === */
 
-  .deco-shape {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(60px);
-    opacity: 0.2;
-    animation: float 15s ease-in-out infinite;
-  }
-
-  .deco-shape-1 {
-    width: 400px;
-    height: 400px;
-    background: var(--palette-accent-purple);
-    top: -150px;
-    right: -100px;
-  }
-
-  .deco-shape-2 {
-    width: 350px;
-    height: 350px;
-    background: var(--palette-accent-cyan);
-    bottom: -150px;
-    left: -100px;
-    animation-delay: -7s;
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translate(0, 0) scale(1);
-    }
-    50% {
-      transform: translate(20px, -20px) scale(1.1);
-    }
-  }
-
-  /* Responsive */
+  /* Tablet adjustments */
   @media (max-width: 768px) {
-    .concursos-cta {
-      margin: 60px auto;
+    .cta-cyan-strip {
+      height: 55px;
+      clip-path: polygon(0 0, 100% 60%, 100% 100%, 0 100%);
     }
 
-    .cta-container {
-      padding: 40px 24px;
-      border-radius: 16px;
+    .cta-yellow-area {
+      padding: 2.5rem 1.5rem;
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
     }
 
-    .cta-description {
-      font-size: 1rem;
-      margin-bottom: 24px;
+    .cta-dark-bottom {
+      height: 50px;
+      margin-top: -50px;
+      clip-path: polygon(0 60%, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .cta-features {
+      flex-direction: column;
+      gap: 1rem;
     }
 
     .cta-actions {
       flex-direction: column;
-      width: 100%;
     }
 
-    .cta-button {
+    .cta-button-primary,
+    .cta-button-secondary {
+      text-align: center;
       width: 100%;
-      justify-content: center;
-      padding: 14px 24px;
-      font-size: 0.938rem;
-    }
-
-    .deco-shape-1,
-    .deco-shape-2 {
-      width: 250px;
-      height: 250px;
     }
   }
 
+  /* Mobile adjustments (390px and below) */
   @media (max-width: 480px) {
+    .cta-cyan-strip {
+      height: 45px;
+      clip-path: polygon(0 0, 100% 70%, 100% 100%, 0 100%);
+    }
+
+    .cta-yellow-area {
+      padding: 2rem 1.25rem;
+      clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+    }
+
+    .cta-title {
+      font-size: clamp(1.625rem, 7vw, 2rem);
+      margin-bottom: 1rem;
+      line-height: 1.05;
+    }
+
+    .cta-description {
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-features {
+      gap: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-item {
+      font-size: 0.813rem;
+    }
+
+    .feature-item svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .cta-button-primary,
+    .cta-button-secondary {
+      padding: 0.75rem 1.75rem;
+      font-size: 0.875rem;
+    }
+
+    .cta-dark-bottom {
+      height: 40px;
+      margin-top: -40px;
+      clip-path: polygon(0 70%, 100% 0, 100% 100%, 0 100%);
+    }
+  }
+
+  /* Extra small mobile (360px and below) */
+  @media (max-width: 360px) {
+    .cta-cyan-strip {
+      height: 40px;
+    }
+
+    .cta-yellow-area {
+      padding: 1.75rem 1rem;
+    }
+
     .cta-title {
       font-size: 1.5rem;
+    }
+
+    .cta-description {
+      font-size: 0.813rem;
+    }
+
+    .feature-item {
+      font-size: 0.75rem;
+    }
+
+    .feature-item svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .cta-button-primary,
+    .cta-button-secondary {
+      padding: 0.688rem 1.5rem;
+      font-size: 0.813rem;
+    }
+
+    .cta-dark-bottom {
+      height: 35px;
+      margin-top: -35px;
     }
   }
 </style>
