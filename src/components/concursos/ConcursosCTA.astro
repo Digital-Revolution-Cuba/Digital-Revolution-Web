@@ -1,0 +1,260 @@
+---
+/**
+ * ConcursosCTA - Call to Action section for proposing new contests
+ * Encourages community engagement
+ */
+---
+
+<section class="concursos-cta" aria-labelledby="cta-heading">
+  <div class="cta-container">
+    <div class="cta-content">
+      <h2 id="cta-heading" class="cta-title">
+        ¿Tienes una idea para un concurso?
+      </h2>
+
+      <p class="cta-description">
+        Ayúdanos a organizar el próximo gran desafío creativo de la comunidad.
+        Comparte tu propuesta y hagamos realidad experiencias increíbles juntos.
+      </p>
+
+      <div class="cta-actions">
+        <a
+          href="/contacto"
+          class="cta-button primary"
+          aria-label="Proponer un nuevo concurso"
+        >
+          Proponer Concurso
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M4.167 10h11.666M11.667 5.833 15.833 10l-4.166 4.167"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </a>
+
+        <a
+          href="/docs/concursos"
+          class="cta-button secondary"
+          aria-label="Conocer más sobre los concursos"
+        >
+          Conoce más
+        </a>
+      </div>
+    </div>
+
+    <!-- Decorative elements -->
+    <div class="cta-decoration" aria-hidden="true">
+      <div class="deco-shape deco-shape-1"></div>
+      <div class="deco-shape deco-shape-2"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .concursos-cta {
+    position: relative;
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 24px;
+  }
+
+  .cta-container {
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--palette-accent-cyan-rgb), 0.1),
+      rgba(var(--palette-accent-purple-rgb), 0.1)
+    );
+    border: 1px solid rgba(var(--palette-accent-cyan-rgb), 0.2);
+    border-radius: 24px;
+    padding: 60px 40px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 900;
+    font-family: var(--font-barlow);
+    color: #fff;
+    margin: 0 0 16px;
+    line-height: 1.2;
+  }
+
+  .cta-description {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 700px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+    font-family: var(--font-rubik);
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-barlow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .cta-button.primary {
+    background: linear-gradient(
+      135deg,
+      var(--palette-accent-cyan),
+      var(--palette-accent-blue)
+    );
+    color: var(--palette-brand-dark);
+    box-shadow: 0 8px 20px rgba(var(--palette-accent-cyan-rgb), 0.3);
+  }
+
+  .cta-button.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(var(--palette-accent-cyan-rgb), 0.4);
+  }
+
+  .cta-button.primary:focus {
+    outline: 3px solid rgba(var(--palette-accent-cyan-rgb), 0.5);
+    outline-offset: 2px;
+  }
+
+  .cta-button.primary svg {
+    transition: transform 0.3s ease;
+  }
+
+  .cta-button.primary:hover svg {
+    transform: translateX(4px);
+  }
+
+  .cta-button.secondary {
+    background: transparent;
+    color: var(--palette-accent-cyan);
+    border: 2px solid rgba(var(--palette-accent-cyan-rgb), 0.3);
+  }
+
+  .cta-button.secondary:hover {
+    background: rgba(var(--palette-accent-cyan-rgb), 0.1);
+    border-color: rgba(var(--palette-accent-cyan-rgb), 0.5);
+    transform: translateY(-2px);
+  }
+
+  .cta-button.secondary:focus {
+    outline: 3px solid rgba(var(--palette-accent-cyan-rgb), 0.5);
+    outline-offset: 2px;
+  }
+
+  /* Decorative shapes */
+  .cta-decoration {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .deco-shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.2;
+    animation: float 15s ease-in-out infinite;
+  }
+
+  .deco-shape-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--palette-accent-purple);
+    top: -150px;
+    right: -100px;
+  }
+
+  .deco-shape-2 {
+    width: 350px;
+    height: 350px;
+    background: var(--palette-accent-cyan);
+    bottom: -150px;
+    left: -100px;
+    animation-delay: -7s;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(20px, -20px) scale(1.1);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .concursos-cta {
+      margin: 60px auto;
+    }
+
+    .cta-container {
+      padding: 40px 24px;
+      border-radius: 16px;
+    }
+
+    .cta-description {
+      font-size: 1rem;
+      margin-bottom: 24px;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .cta-button {
+      width: 100%;
+      justify-content: center;
+      padding: 14px 24px;
+      font-size: 0.938rem;
+    }
+
+    .deco-shape-1,
+    .deco-shape-2 {
+      width: 250px;
+      height: 250px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cta-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
