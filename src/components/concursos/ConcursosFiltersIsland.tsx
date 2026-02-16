@@ -3,15 +3,15 @@
  * React Island for client-side filtering and search functionality
  */
 
-import React, { useState, useMemo } from 'react';
 import type { CollectionEntry } from 'astro:content';
+import { useMemo, useState } from 'react';
 import type {
   ConcursoCategory,
   ConcursoStatus,
 } from '../../types/concursos.types';
-import SearchBar from '../ui/SearchBar';
-import FilterButtons from '../ui/FilterButtons';
 import EmptyState from '../ui/EmptyState';
+import FilterButtons from '../ui/FilterButtons';
+import SearchBar from '../ui/SearchBar';
 
 interface Props {
   concursos: CollectionEntry<'concursos'>[];
