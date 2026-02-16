@@ -3,7 +3,6 @@
  * Accessible button group with active states
  */
 
-import React from 'react';
 import type {
   ConcursoCategory,
   ConcursoStatus,
