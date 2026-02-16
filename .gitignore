@@ -28,7 +28,7 @@ pnpm-debug.log*
 .prettierrc
 
 .agent
-
+docs
 .github
 .claude
 .astro
