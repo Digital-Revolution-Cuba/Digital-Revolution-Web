@@ -4,7 +4,6 @@
  */
 
 import { Search } from 'lucide-react';
-import React from 'react';
 
 interface EmptyStateProps {
   query?: string;
