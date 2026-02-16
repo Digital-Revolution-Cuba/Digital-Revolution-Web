@@ -93,7 +93,7 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } =
     overflow: hidden;
   }
 
-  /* --- Background image layer --- */
+  /* --- Background image layer (clean, no overlay) --- */
   .hero-background-image {
     position: absolute;
     inset: 0;
@@ -109,15 +109,27 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } =
     z-index: 1;
   }
 
-  /* --- Dark top panel (gradient overlay only) --- */
+  /* --- Dark top panel (gradient overlay via ::before) --- */
   .hero-dark {
     position: relative;
-    /* Gradient overlay only (no background-image) */
-    background: linear-gradient(rgba(0, 16, 24, 0.85), rgba(0, 16, 24, 0.75));
     min-height: clamp(250px, 20vw, 200px);
     padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 4vw, 3rem)
       clamp(5rem, 10vw, 10rem);
     z-index: 3;
+  }
+
+  /* Gradient overlay for hero-dark section */
+  .hero-dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 16, 24, 0.75) 0%,
+      rgba(0, 16, 24, 0.7) 100%
+    );
+    z-index: -1;
+    pointer-events: none;
   }
 
   .hero-content {
@@ -168,18 +180,26 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } =
     box-shadow: 0 0 20px rgba(52, 223, 222, 0.4);
   }
 
-  /* --- Layered container --- */
+  /* --- Layered container (gradient overlay via ::before) --- */
   .hero-cyan-blue {
     position: relative;
     isolation: isolate;
     overflow: hidden;
     min-height: clamp(100px, 20vw, 200px);
-    /* background-image:
-      linear-gradient(rgba(0, 16, 24, 0.85), rgba(0, 16, 24, 0.75)),
-      url('../../assets/concursosBackgraund.png'); */
-    background-size: cover;
-    background-position: top;
-    background-repeat: no-repeat;
+  }
+
+  /* Gradient overlay for hero-cyan-blue section (same as hero-dark) */
+  .hero-cyan-blue::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 16, 24, 0.75) 0%,
+      rgba(0, 16, 24, 0.7) 100%
+    );
+    z-index: 0;
+    pointer-events: none;
   }
 
   /* --- Cyan diagonal strip (background, peeks through yellow's cutout) --- */
