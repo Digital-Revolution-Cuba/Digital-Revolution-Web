@@ -5,10 +5,19 @@
 
 import type { CollectionEntry } from 'astro:content';
 import { useMemo, useState } from 'react';
-import type {
-  ConcursoCategory,
-  ConcursoStatus,
-} from '../../types/concursos.types';
+import {
+  CATEGORIES,
+  CATEGORY_LABELS,
+  STATUS_CONFIG,
+  STATUSES,
+} from '../../config/concursosConfig';
+import {
+  filterByCategory,
+  filterBySearch,
+  filterByStatus,
+  formatDate,
+  sortConcursos,
+} from '../../utils/concursosUtils';
 import EmptyState from '../ui/EmptyState';
 import FilterButtons from '../ui/FilterButtons';
 import SearchBar from '../ui/SearchBar';
@@ -17,108 +26,28 @@ interface Props {
   concursos: CollectionEntry<'concursos'>[];
 }
 
-// Category options
-const CATEGORIES: Array<{ value: ConcursoCategory; label: string }> = [
-  { value: 'fotografia', label: 'Fotografía' },
-  { value: 'musica', label: 'Música' },
-  { value: 'arte-digital', label: 'Arte Digital' },
-  { value: 'ilustracion', label: 'Ilustración' },
-  { value: 'diseno-grafico', label: 'Diseño Gráfico' },
-  { value: 'video', label: 'Video' },
-  { value: 'escritura', label: 'Escritura' },
-];
-
-// Status options
-const STATUSES: Array<{ value: ConcursoStatus; label: string }> = [
-  { value: 'activo', label: 'Activo' },
-  { value: 'proximo', label: 'Próximamente' },
-  { value: 'finalizado', label: 'Finalizado' },
-  { value: 'cerrado', label: 'Cerrado' },
-];
-
-// Category label mapping
-const categoryLabels: Record<ConcursoCategory, string> = {
-  fotografia: 'Fotografía',
-  musica: 'Música',
-  'arte-digital': 'Arte Digital',
-  ilustracion: 'Ilustración',
-  'diseno-grafico': 'Diseño Gráfico',
-  video: 'Video',
-  escritura: 'Escritura',
-};
-
-// Status configuration
-const statusConfig: Record<ConcursoStatus, { label: string; class: string }> = {
-  activo: { label: 'Activo', class: 'status-active' },
-  proximo: { label: 'Próximamente', class: 'status-upcoming' },
-  finalizado: { label: 'Finalizado', class: 'status-finished' },
-  cerrado: { label: 'Cerrado', class: 'status-closed' },
-};
-
 export default function ConcursosFiltersIsland({ concursos }: Props) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
-  // Filter contests based on search and filters
-  const filteredConcursos = useMemo(() => {
-    return concursos.filter((concurso) => {
-      // Search match (title, description, tags)
-      const matchesSearch =
-        searchQuery === '' ||
-        concurso.data.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        concurso.data.description
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase()) ||
-        concurso.data.tags?.some((tag) =>
-          tag.toLowerCase().includes(searchQuery.toLowerCase()),
-        );
+  // Apply all filters and sorting
+  const filteredAndSortedConcursos = useMemo(() => {
+    let filtered = concursos;
 
-      // Category match
-      const matchesCategory =
-        selectedCategory === null ||
-        concurso.data.category === selectedCategory;
+    // Apply filters
+    filtered = filterBySearch(filtered, searchQuery);
+    filtered = filterByCategory(filtered, selectedCategory);
+    filtered = filterByStatus(filtered, selectedStatus);
 
-      // Status match
-      const matchesStatus =
-        selectedStatus === null || concurso.data.status === selectedStatus;
-
-      return matchesSearch && matchesCategory && matchesStatus;
-    });
+    // Sort results
+    return sortConcursos(filtered);
   }, [concursos, searchQuery, selectedCategory, selectedStatus]);
-
-  // Sort filtered contests
-  const sortedConcursos = useMemo(() => {
-    return [...filteredConcursos].sort((a, b) => {
-      // Featured first
-      if (a.data.featured && !b.data.featured) return -1;
-      if (!a.data.featured && b.data.featured) return 1;
-
-      // Then by status priority
-      const statusPriority: Record<string, number> = {
-        activo: 1,
-        proximo: 2,
-        finalizado: 3,
-        cerrado: 4,
-      };
-
-      return statusPriority[a.data.status] - statusPriority[b.data.status];
-    });
-  }, [filteredConcursos]);
 
   const handleClearFilters = () => {
     setSearchQuery('');
     setSelectedCategory(null);
     setSelectedStatus(null);
-  };
-
-  // Format date helper
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('es-ES', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    }).format(new Date(date));
   };
 
   return (
@@ -150,10 +79,12 @@ export default function ConcursosFiltersIsland({ concursos }: Props) {
           aria-live="polite"
           aria-atomic="true"
         >
-          {sortedConcursos.length > 0 ? (
+          {filteredAndSortedConcursos.length > 0 ? (
             <p>
-              Mostrando <strong>{sortedConcursos.length}</strong>{' '}
-              {sortedConcursos.length === 1 ? 'concurso' : 'concursos'}
+              Mostrando <strong>{filteredAndSortedConcursos.length}</strong>{' '}
+              {filteredAndSortedConcursos.length === 1
+                ? 'concurso'
+                : 'concursos'}
             </p>
           ) : null}
         </div>
@@ -164,9 +95,9 @@ export default function ConcursosFiltersIsland({ concursos }: Props) {
           role="region"
           aria-label="Resultados de concursos"
         >
-          {sortedConcursos.length > 0 ? (
-            sortedConcursos.map((concurso) => {
-              const statusInfo = statusConfig[concurso.data.status];
+          {filteredAndSortedConcursos.length > 0 ? (
+            filteredAndSortedConcursos.map((concurso) => {
+              const statusInfo = STATUS_CONFIG[concurso.data.status];
 
               return (
                 <article
@@ -195,7 +126,7 @@ export default function ConcursosFiltersIsland({ concursos }: Props) {
 
                     <div className="card-content">
                       <div className="card-category">
-                        {categoryLabels[concurso.data.category]}
+                        {CATEGORY_LABELS[concurso.data.category]}
                       </div>
 
                       <h3 className="card-title">{concurso.data.title}</h3>
