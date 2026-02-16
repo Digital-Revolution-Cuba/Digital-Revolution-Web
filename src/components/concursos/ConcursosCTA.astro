@@ -1,0 +1,349 @@
+---
+/**
+ * ConcursosCTA - Call to Action section for proposing new contests
+ * DESIGN: Diagonal clip-path with yellow/cyan palette matching index identity
+ */
+---
+
+<section class="concursos-cta" aria-labelledby="cta-heading">
+  <!-- Cyan transition strip -->
+  <div class="cta-cyan-strip" aria-hidden="true"></div>
+
+  <!-- Yellow main CTA area -->
+  <div class="cta-yellow-area">
+    <div class="cta-inner">
+      <h2 id="cta-heading" class="cta-title">
+        Crea Tu Propio<br />Desafío Creativo
+      </h2>
+
+      <p class="cta-description">
+        ¿Tienes una idea innovadora para un concurso? Comparte tu visión con la
+        comunidad y ayúdanos a organizar experiencias únicas que inspiren a
+        miles de creativos.
+      </p>
+
+      <div class="cta-features">
+        <div class="feature-item">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          <span>Proceso Simplificado</span>
+        </div>
+        <div class="feature-item">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>Soporte del Equipo</span>
+        </div>
+        <div class="feature-item">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 6v6l4 2"></path>
+          </svg>
+          <span>Respuesta Rápida</span>
+        </div>
+      </div>
+
+      <div class="cta-actions">
+        <a href="/contacto" class="cta-button-primary"> Proponer Concurso </a>
+        <a href="/docs/concursos" class="cta-button-secondary">
+          Ver Requisitos
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark bottom with closing clip -->
+  <div class="cta-dark-bottom" aria-hidden="true"></div>
+</section>
+
+<style>
+  /* === CTA — Angular clip design (yellow/cyan like index) === */
+  .concursos-cta {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 4rem;
+  }
+
+  /* Cyan transition strip at top */
+  .cta-cyan-strip {
+    background: var(--palette-accent-cyan, #34dfde);
+    height: 70px;
+    clip-path: polygon(0 0, 100% 50%, 100% 100%, 0 100%);
+  }
+
+  /* Yellow main area */
+  .cta-yellow-area {
+    background: var(--palette-accent-yellow, #ffc943);
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem);
+    margin-top: -1px;
+    clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  }
+
+  .cta-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Title */
+  .cta-title {
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    font-weight: bold;
+    color: var(--palette-brand-dark, #011822);
+    line-height: 1;
+    margin: 0 0 1.25rem;
+    display: inline-block;
+    transform: scaleX(1.05);
+    transform-origin: left;
+  }
+
+  /* Description */
+  .cta-description {
+    font-family: var(--font-barlow, 'Barlow Semi Condensed', sans-serif);
+    font-size: clamp(0.938rem, 2.5vw, 1.125rem);
+    line-height: 1.6;
+    color: rgba(1, 24, 34, 0.8);
+    max-width: 650px;
+    margin: 0 0 1.75rem;
+  }
+
+  /* Features */
+  .cta-features {
+    display: flex;
+    gap: 1.75rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-barlow);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--palette-brand-dark, #011822);
+  }
+
+  .feature-item svg {
+    stroke: var(--palette-brand-navy, #002b38);
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Actions */
+  .cta-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-button-primary {
+    display: inline-block;
+    padding: 0.813rem 2rem;
+    background: var(--palette-brand-navy, #002b38);
+    color: var(--palette-accent-orange, #f49624);
+    border: 2px solid var(--palette-accent-cyan, #34dfde);
+    border-radius: 0.5rem;
+    font-family: var(--font-barlow);
+    font-size: 0.938rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+  }
+
+  .cta-button-primary:hover {
+    background: var(--palette-accent-cyan, #34dfde);
+    color: var(--palette-brand-dark, #011822);
+    box-shadow: 0 0 20px rgba(52, 223, 222, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .cta-button-secondary {
+    display: inline-block;
+    padding: 0.813rem 2rem;
+    background: transparent;
+    color: var(--palette-brand-dark, #011822);
+    border: 2px solid var(--palette-brand-dark, #011822);
+    border-radius: 0.5rem;
+    font-family: var(--font-barlow);
+    font-size: 0.938rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+  }
+
+  .cta-button-secondary:hover {
+    background: var(--palette-brand-dark, #011822);
+    color: var(--palette-accent-yellow, #ffc943);
+    transform: translateY(-2px);
+  }
+
+  /* Dark bottom closing strip */
+  .cta-dark-bottom {
+    background: var(--palette-background, #001018);
+    height: 60px;
+    margin-top: -60px;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%, 0 100%);
+  }
+
+  /* === RESPONSIVE === */
+
+  /* Tablet adjustments */
+  @media (max-width: 768px) {
+    .cta-cyan-strip {
+      height: 55px;
+      clip-path: polygon(0 0, 100% 60%, 100% 100%, 0 100%);
+    }
+
+    .cta-yellow-area {
+      padding: 2.5rem 1.5rem;
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    }
+
+    .cta-dark-bottom {
+      height: 50px;
+      margin-top: -50px;
+      clip-path: polygon(0 60%, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .cta-features {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+    }
+
+    .cta-button-primary,
+    .cta-button-secondary {
+      text-align: center;
+      width: 100%;
+    }
+  }
+
+  /* Mobile adjustments (390px and below) */
+  @media (max-width: 480px) {
+    .cta-cyan-strip {
+      height: 45px;
+      clip-path: polygon(0 0, 100% 70%, 100% 100%, 0 100%);
+    }
+
+    .cta-yellow-area {
+      padding: 2rem 1.25rem;
+      clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+    }
+
+    .cta-title {
+      font-size: clamp(1.625rem, 7vw, 2rem);
+      margin-bottom: 1rem;
+      line-height: 1.05;
+    }
+
+    .cta-description {
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-features {
+      gap: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-item {
+      font-size: 0.813rem;
+    }
+
+    .feature-item svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .cta-button-primary,
+    .cta-button-secondary {
+      padding: 0.75rem 1.75rem;
+      font-size: 0.875rem;
+    }
+
+    .cta-dark-bottom {
+      height: 40px;
+      margin-top: -40px;
+      clip-path: polygon(0 70%, 100% 0, 100% 100%, 0 100%);
+    }
+  }
+
+  /* Extra small mobile (360px and below) */
+  @media (max-width: 360px) {
+    .cta-cyan-strip {
+      height: 40px;
+    }
+
+    .cta-yellow-area {
+      padding: 1.75rem 1rem;
+    }
+
+    .cta-title {
+      font-size: 1.5rem;
+    }
+
+    .cta-description {
+      font-size: 0.813rem;
+    }
+
+    .feature-item {
+      font-size: 0.75rem;
+    }
+
+    .feature-item svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .cta-button-primary,
+    .cta-button-secondary {
+      padding: 0.688rem 1.5rem;
+      font-size: 0.813rem;
+    }
+
+    .cta-dark-bottom {
+      height: 35px;
+      margin-top: -35px;
+    }
+  }
+</style>

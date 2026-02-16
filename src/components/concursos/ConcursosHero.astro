@@ -1,0 +1,395 @@
+---
+/**
+ * Hero section for the Concursos (Contests) page
+ * DESIGN: Angular clip-path sections with cyan/yellow palette
+ * matching the index page visual identity (Impact font, diagonal clips, bold colors)
+ */
+
+interface Props {
+  activeCount: number;
+  totalParticipants: number;
+  totalPrizes: string | number;
+  totalCategories: number;
+}
+
+const { activeCount, totalParticipants, totalPrizes, totalCategories } =
+  Astro.props;
+---
+
+<section class="concursos-hero" aria-labelledby="hero-heading">
+  <!-- Background layer wrapper (absolute positioned, spans entire hero) -->
+  <div class="hero-background-wrapper">
+    <div class="hero-background-image"></div>
+  </div>
+
+  <!-- Content wrapper (positioned above background) -->
+  <div class="hero-content-wrapper">
+    <!-- Dark top section with title -->
+    <div class="hero-dark">
+      <div class="hero-content">
+        <h1 id="hero-heading" class="hero-title">
+          Concursos<br />Activos
+        </h1>
+        <p class="hero-description">
+          Participa en desafíos creativos diseñados para impulsar tu talento.
+          Desde fotografía hasta diseño digital, encuentra el concurso perfecto
+          para destacar.
+        </p>
+        <a href="#concursos-filters" class="hero-cta"> Explorar Concursos </a>
+      </div>
+    </div>
+
+    <!-- Layered container: cyan background with yellow overlay -->
+    <div class="hero-cyan-blue">
+      <!-- Cyan diagonal strip (background layer, peeks through yellow's cutout) -->
+      <div class="hero-cyan" aria-hidden="true"></div>
+      <!-- Yellow section with stats (foreground layer with diagonal cutout) -->
+      <div class="hero-yellow">
+        <div
+          class="stats-row"
+          role="group"
+          aria-label="Estadísticas de concursos"
+        >
+          <div class="stat-block">
+            <span class="stat-value">{activeCount}</span>
+            <span class="stat-name">Activos</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-block">
+            <span class="stat-value">{totalParticipants}+</span>
+            <span class="stat-name">Participantes</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-block">
+            <span class="stat-value">{totalPrizes}</span>
+            <span class="stat-name">En Premios</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-block">
+            <span class="stat-value">{totalCategories}</span>
+            <span class="stat-name">Categorías</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End content wrapper -->
+</section>
+
+<style>
+  /* === HERO — Angular clip design (matches index identity) === */
+  .concursos-hero {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate; /* Creates stacking context */
+  }
+
+  /* --- Background wrapper (absolute, spans entire hero) --- */
+  .hero-background-wrapper {
+    position: absolute;
+    inset: 0; /* Shorthand for top: 0; right: 0; bottom: 0; left: 0; */
+    z-index: 0;
+    pointer-events: none; /* Allows clicks to pass through to content */
+    overflow: hidden;
+  }
+
+  /* --- Background image layer (clean, no overlay) --- */
+  .hero-background-image {
+    position: absolute;
+    inset: 0;
+    background-image: url('../../assets/concursosBackgraund.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* --- Content wrapper (positioned above background) --- */
+  .hero-content-wrapper {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* --- Dark top panel (gradient overlay via ::before) --- */
+  .hero-dark {
+    position: relative;
+    min-height: clamp(250px, 20vw, 200px);
+    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 4vw, 3rem)
+      clamp(5rem, 10vw, 10rem);
+    z-index: 3;
+  }
+
+  /* Gradient overlay for hero-dark section */
+  .hero-dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 16, 24, 0.75) 0%,
+      rgba(0, 16, 24, 0.7) 100%
+    );
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    max-width: 700px;
+  }
+
+  .hero-title {
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-weight: bold;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    margin: 0 0 1.25rem;
+    display: inline-block;
+    transform: scaleX(1.1);
+    transform-origin: left;
+    color: #ffffff;
+  }
+
+  .hero-description {
+    font-family: var(--font-barlow, 'Barlow Semi Condensed', sans-serif);
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    font-size: clamp(0.938rem, 2.5vw, 1.25rem);
+    max-width: 520px;
+    margin: 0 0 1.75rem;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: var(--palette-brand-navy, #002b38);
+    color: var(--palette-accent-orange, #f49624);
+    border: 2px solid var(--palette-accent-cyan, #34dfde);
+    border-radius: 0.5rem;
+    padding: 0.75rem 2rem;
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+    font-weight: 600;
+    font-family: var(--font-barlow);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .hero-cta:hover {
+    background: var(--palette-accent-cyan, #34dfde);
+    color: var(--palette-brand-dark, #011822);
+    box-shadow: 0 0 20px rgba(52, 223, 222, 0.4);
+  }
+
+  /* --- Layered container (gradient overlay via ::before) --- */
+  .hero-cyan-blue {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: clamp(100px, 20vw, 200px);
+  }
+
+  /* Gradient overlay for hero-cyan-blue section (same as hero-dark) */
+  .hero-cyan-blue::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 16, 24, 0.75) 0%,
+      rgba(0, 16, 24, 0.7) 100%
+    );
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* --- Cyan diagonal strip (background, peeks through yellow's cutout) --- */
+  .hero-cyan {
+    position: absolute;
+    inset: 0; /* Shorthand for top, right, bottom, left: 0 */
+    background: var(--palette-accent-cyan, #34dfde);
+    clip-path: polygon(0 5%, 100% 33%, 100% 86%, 0 86%);
+    z-index: 1;
+  }
+
+  /* --- Yellow section with stats (foreground with top-left cutout) --- */
+  .hero-yellow {
+    position: relative;
+    background: var(--palette-accent-yellow, #ffc943);
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem)
+      clamp(2rem, 4vw, 3rem);
+    clip-path: polygon(0 20%, 100% 0%, 100% 100%, 0% 100%);
+    z-index: 2;
+  }
+
+  /* --- Stats row --- */
+  .stats-row {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 3rem);
+    flex-wrap: wrap;
+  }
+
+  .stat-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 90px;
+    flex: 1 1 auto;
+  }
+
+  .stat-value {
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-size: clamp(1.75rem, 5vw, 3.5rem);
+    font-weight: bold;
+    line-height: 1;
+    color: var(--palette-brand-dark, #011822);
+  }
+
+  .stat-name {
+    font-family: var(--font-barlow);
+    font-size: clamp(0.688rem, 2vw, 0.938rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: rgba(1, 24, 34, 0.7);
+    text-align: center;
+  }
+
+  .stat-divider {
+    width: 2px;
+    height: 40px;
+    background: rgba(1, 24, 34, 0.2);
+    flex-shrink: 0;
+  }
+
+  /* === RESPONSIVE === */
+
+  /* Tablet adjustments */
+  @media (max-width: 768px) {
+    .hero-dark {
+      padding-bottom: clamp(4rem, 8vw, 6rem);
+      /* Gradient overlay only (background-image removed) */
+      background: linear-gradient(rgba(0, 16, 24, 0.88), rgba(0, 16, 24, 0.78));
+    }
+
+    .hero-layered-container {
+      min-height: clamp(120px, 18vw, 200px);
+    }
+
+    /* Mantiene clip-path base: polygon(0 5%, 100% 33%, 100% 86%, 0 86%) */
+
+    .stats-row {
+      gap: 1.25rem;
+      padding-top: 0.75rem;
+    }
+
+    .stat-divider {
+      display: none;
+    }
+
+    .stat-block {
+      min-width: 75px;
+      flex: 0 1 auto;
+    }
+  }
+
+  /* Mobile adjustments (390px and below) */
+  @media (max-width: 480px) {
+    .hero-dark {
+      padding: 3rem 1.25rem 3.5rem;
+      /* Gradient overlay only (background-image removed) */
+      background: linear-gradient(rgba(0, 16, 24, 0.9), rgba(0, 16, 24, 0.8));
+    }
+
+    .hero-layered-container {
+      min-height: clamp(100px, 15vw, 150px);
+    }
+
+    /* Mantiene clip-path base: polygon(0 5%, 100% 33%, 100% 86%, 0 86%) */
+    /* Mantiene hero-yellow base: polygon(0 20%, 100% 0%, 100% 100%, 0% 100%) */
+
+    .hero-title {
+      font-size: clamp(2rem, 10vw, 2.75rem);
+      margin-bottom: 1rem;
+    }
+
+    .hero-description {
+      font-size: 0.938rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-cta {
+      padding: 0.688rem 1.75rem;
+      font-size: 0.875rem;
+    }
+
+    .hero-yellow {
+      padding: 2rem 1.25rem 1.75rem;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      padding-top: 0.5rem;
+      max-width: 100%;
+    }
+
+    .stat-divider {
+      display: none;
+    }
+
+    .stat-block {
+      min-width: auto;
+      width: 100%;
+    }
+
+    .stat-value {
+      font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    .stat-name {
+      font-size: 0.75rem;
+      letter-spacing: 0.3px;
+    }
+  }
+
+  /* Extra small mobile (360px and below) */
+  @media (max-width: 360px) {
+    .hero-dark {
+      padding: 2.5rem 1rem 3rem;
+    }
+
+    .hero-layered-container {
+      min-height: clamp(80px, 12vw, 120px);
+    }
+
+    /* Mantiene clip-path base: polygon(0 5%, 100% 33%, 100% 86%, 0 86%) */
+    /* Mantiene hero-yellow base: polygon(0 20%, 100% 0%, 100% 100%, 0% 100%) */
+
+    .hero-title {
+      font-size: 1.875rem;
+    }
+
+    .hero-description {
+      font-size: 0.875rem;
+    }
+
+    .stats-row {
+      gap: 1rem;
+    }
+
+    .stat-value {
+      font-size: 1.375rem;
+    }
+
+    .stat-name {
+      font-size: 0.688rem;
+    }
+  }
+</style>
