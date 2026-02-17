@@ -1,5 +1,15 @@
 ---
-import type { ConcursoCategory, ConcursoStatus } from '../types/concursos.types';
+/**
+ * ConcursoCard - Contest card component
+ * Displays contest information with image, category, status, and dates
+ */
+
+import { CATEGORY_LABELS, STATUS_CONFIG } from '../../config/concursosConfig';
+import type {
+  ConcursoCategory,
+  ConcursoStatus,
+} from '../../types/concursos.types';
+import { formatDate } from '../../utils/concursosUtils';
 
 interface Props {
   id: string;
@@ -13,76 +23,75 @@ interface Props {
   featured?: boolean;
 }
 
-const { id, slug, title, category, status, image, imageAlt, fechaCierre, featured = false } = Astro.props;
+const {
+  id,
+  slug,
+  title,
+  category,
+  status,
+  image,
+  imageAlt,
+  fechaCierre,
+  featured = false,
+} = Astro.props;
 
-// Format date
-const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat('es-ES', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  }).format(date);
-};
-
-// Category labels
-const categoryLabels: Record<ConcursoCategory, string> = {
-  'fotografia': 'Fotografía',
-  'musica': 'Música',
-  'arte-digital': 'Arte Digital',
-  'ilustracion': 'Ilustración',
-  'diseno-grafico': 'Diseño Gráfico',
-  'video': 'Video',
-  'escritura': 'Escritura',
-};
-
-// Status labels and styles
-const statusConfig: Record<ConcursoStatus, { label: string; class: string }> = {
-  'activo': { label: 'Activo', class: 'status-active' },
-  'proximo': { label: 'Próximamente', class: 'status-upcoming' },
-  'finalizado': { label: 'Finalizado', class: 'status-finished' },
-  'cerrado': { label: 'Cerrado', class: 'status-closed' },
-};
-
-const statusInfo = statusConfig[status];
+const statusInfo = STATUS_CONFIG[status];
 ---
 
 <article class={`concurso-card ${featured ? 'featured' : ''}`} data-id={id}>
   <a href={`/concursos/${slug}`} class="card-link">
     <div class="card-image-wrapper">
-      <img 
-        src={image} 
-        alt={imageAlt}
-        class="card-image"
-        loading="lazy"
-      />
+      <img src={image} alt={imageAlt} class="card-image" loading="lazy" />
       <div class="card-overlay"></div>
-      {featured && (
-        <span class="featured-badge">Destacado</span>
-      )}
+      {featured && <span class="featured-badge">Destacado</span>}
       <span class={`status-badge ${statusInfo.class}`}>
         {statusInfo.label}
       </span>
     </div>
-    
+
     <div class="card-content">
       <div class="card-category">
-        {categoryLabels[category]}
+        {CATEGORY_LABELS[category]}
       </div>
-      
+
       <h3 class="card-title">{title}</h3>
-      
+
       <div class="card-footer">
         <div class="card-date">
-          <svg class="icon-calendar" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M12.667 2.667H3.333A.667.667 0 0 0 2.667 3.333v9.334a.667.667 0 0 0 .666.666h9.334a.667.667 0 0 0 .666-.666V3.333a.667.667 0 0 0-.666-.666ZM10.667 1.333v2.667M5.333 1.333v2.667M2.667 6.667h10.666" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg
+            class="icon-calendar"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M12.667 2.667H3.333A.667.667 0 0 0 2.667 3.333v9.334a.667.667 0 0 0 .666.666h9.334a.667.667 0 0 0 .666-.666V3.333a.667.667 0 0 0-.666-.666ZM10.667 1.333v2.667M5.333 1.333v2.667M2.667 6.667h10.666"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
           </svg>
           <span>Cierre: {formatDate(fechaCierre)}</span>
         </div>
-        
+
         <span class="card-cta">
           Ver detalles
-          <svg class="icon-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3.333 8h9.334M9.333 4.667 12.667 8l-3.334 3.333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg
+            class="icon-arrow"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M3.333 8h9.334M9.333 4.667 12.667 8l-3.334 3.333"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
           </svg>
         </span>
       </div>
@@ -105,7 +114,7 @@ const statusInfo = statusConfig[status];
   .concurso-card:hover {
     transform: translateY(-8px);
     border-color: rgba(var(--palette-accent-cyan-rgb), 0.4);
-    box-shadow: 
+    box-shadow:
       0 20px 40px rgba(0, 0, 0, 0.4),
       0 0 20px rgba(var(--palette-accent-cyan-rgb), 0.2);
   }
@@ -116,7 +125,7 @@ const statusInfo = statusConfig[status];
 
   .concurso-card.featured:hover {
     border-color: rgba(var(--palette-accent-orange-rgb), 0.6);
-    box-shadow: 
+    box-shadow:
       0 20px 40px rgba(0, 0, 0, 0.4),
       0 0 30px rgba(var(--palette-accent-orange-rgb), 0.3);
   }
