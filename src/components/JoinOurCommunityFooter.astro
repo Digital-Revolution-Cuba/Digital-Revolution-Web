@@ -1,0 +1,191 @@
+---
+import image0 from "../assets/footer-images/image.webp";
+import image1 from "../assets/footer-images/image (1).webp";
+import image2 from "../assets/footer-images/image (2).webp";
+import image3 from "../assets/footer-images/image (3).webp";
+import image4 from "../assets/footer-images/image (4).webp";
+import image5 from "../assets/footer-images/image (5).webp";
+
+const footerImages = {
+  top: [image0, image1, image2],
+  bottom: [image3, image4, image5],
+};
+
+---
+
+<section class="join-our-community-footer">
+  <div class="grid-wrapper">
+    <div class="items-container">
+      {footerImages.top.map((image) => (
+        <div class="footer-image-wrapper footer-image-wrapper--top">
+          <img
+            src={image.src}
+            width={image.width}
+            height={image.height}
+            alt="Miembro de la comunidad"
+            class="footer-image"
+          />
+        </div>
+      ))}
+      <div class="center-container-footer center-container-footer--mobile">
+        <p class="footer-text">Unete a la comunidad</p>
+        <a
+          role="button"
+          aria-label="Crea tu perfil ahora"
+          class="hero-cta mb-3"
+          href="/talentos"
+        >
+          Crea tu perfil ahora
+        </a>
+      </div>
+      {footerImages.bottom.map((image) => (
+        <div class="footer-image-wrapper footer-image-wrapper--bottom">
+          <img
+            src={image.src}
+            width={image.width}
+            height={image.height}
+            alt="Miembro de la comunidad"
+            class="footer-image"
+          />
+        </div>
+      ))}
+    </div>
+    <div class="center-container-footer center-container-footer--desktop">
+      <p class="footer-text">Unete a la comunidad</p>
+      <a
+        role="button"
+        aria-label="Crea tu perfil ahora"
+        class="hero-cta mb-3"
+        href="/talentos"
+      >
+        Crea tu perfil ahora
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .join-our-community-footer {
+    background-color: #0a111f;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
+  }
+
+  .grid-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .items-container {
+    display: grid;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+    justify-items: center;
+  }
+
+  /* Mobile: flex-like flow - top row, center (in flow), bottom row */
+  @media (max-width: 767px) {
+    .items-container {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(5, auto);
+      column-gap: clamp(1.5rem, 4vw, 2.5rem);
+      row-gap: clamp(2rem, 5vw, 3rem);
+    }
+
+    .footer-image-wrapper--top:nth-child(1) {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .footer-image-wrapper--top:nth-child(2) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .footer-image-wrapper--top:nth-child(3) {
+      grid-column: 1;
+      grid-row: 2;
+    }
+    .center-container-footer--mobile {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 1.5rem 0;
+    }
+    .footer-image-wrapper--bottom:nth-child(5) {
+      grid-column: 1;
+      grid-row: 4;
+    }
+    .footer-image-wrapper--bottom:nth-child(6) {
+      grid-column: 2;
+      grid-row: 4;
+    }
+    .footer-image-wrapper--bottom:nth-child(7) {
+      grid-column: 1;
+      grid-row: 5;
+    }
+    .center-container-footer--desktop {
+      display: none;
+    }
+  }
+
+  /* Desktop: grid overlay */
+  @media (min-width: 768px) {
+    .grid-wrapper {
+      display: grid;
+      grid-template-areas: "main";
+    }
+    .items-container {
+      grid-area: main;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      column-gap: clamp(10px, 15px, 20px);
+      row-gap: clamp(4.5rem, 11.5vw, 9.5rem);
+    }
+    .center-container-footer--mobile {
+      display: none;
+    }
+    .center-container-footer--desktop {
+      grid-area: main;
+      align-self: center;
+      justify-self: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .center-container-footer--desktop .hero-cta {
+      pointer-events: auto;
+    }
+  }
+
+  .footer-image-wrapper {
+    width: 100%;
+    max-width: clamp(180px, 22vw, 280px);
+    aspect-ratio: 3 / 4;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a111f;
+  }
+
+  .footer-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .footer-text {
+    color: var(--palette-accent-cyan);
+    font-family: Impact, "Impact", "Arial Black", sans-serif;
+    font-size: clamp(2.5rem, 3rem, 3.5rem);
+    font-weight: 400;
+  }
+</style>
