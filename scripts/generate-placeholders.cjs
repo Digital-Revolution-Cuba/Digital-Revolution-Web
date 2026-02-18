@@ -270,4 +270,193 @@ for (let i = 0; i < 4; i++) {
   );
 }
 
+// ─── Home Gallery: Arte (8 items) ────────────────────────────────────
+console.log("\n🎨 Home Gallery — Arte:");
+const arteDir = path.join(PUBLIC, "gallery", "arte");
+const arteItems = [
+  { label: "Arte Digital 1", artist: "Gloria" },
+  { label: "Arte Digital 2", artist: "Sofía Martínez" },
+  { label: "Arte Digital 3", artist: "Carlos Ruiz" },
+  { label: "Arte Digital 4", artist: "Ana López" },
+  { label: "Arte Digital 5", artist: "Miguel Torres" },
+  { label: "Arte Digital 6", artist: "Laura Sánchez" },
+  { label: "Arte Digital 7", artist: "Diego Ramírez" },
+  { label: "Arte Digital 8", artist: "Valentina Cruz" },
+];
+const arteColors = [
+  ["#e94560", "#533483"],
+  ["#533483", "#0f3460"],
+  ["#0f3460", "#e94560"],
+  ["#1a1a2e", "#e94560"],
+  ["#e94560", "#1a1a2e"],
+  ["#16213e", "#533483"],
+  ["#533483", "#16213e"],
+  ["#0f3460", "#1a1a2e"],
+];
+for (let i = 0; i < arteItems.length; i++) {
+  const [bg, accent] = arteColors[i];
+  write(
+    path.join(arteDir, `arte-${i + 1}.svg`),
+    svg(285, 380, bg, accent, arteItems[i].label),
+  );
+}
+
+// ─── Home Gallery: Música (8 items) ──────────────────────────────────
+console.log("\n🎵 Home Gallery — Música:");
+const musicaDir = path.join(PUBLIC, "gallery", "musica");
+const musicaItems = [
+  { label: "Don't stop me", artist: "Frank y su tropa" },
+  { label: "Summer Vibes", artist: "Los Tropicales" },
+  { label: "Electric Dreams", artist: "Synth Wave" },
+  { label: "Midnight Jazz", artist: "Blue Notes" },
+  { label: "Rock Anthem", artist: "The Legends" },
+  { label: "Acoustic Soul", artist: "Marina del Rey" },
+  { label: "Urban Beats", artist: "DJ Fusion" },
+  { label: "Classical Mix", artist: "Orchestra Plus" },
+];
+const musicaColors = [
+  ["#0f3460", "#e94560"],
+  ["#533483", "#0f3460"],
+  ["#16213e", "#533483"],
+  ["#e94560", "#16213e"],
+  ["#1a1a2e", "#0f3460"],
+  ["#0f3460", "#533483"],
+  ["#533483", "#e94560"],
+  ["#16213e", "#1a1a2e"],
+];
+for (let i = 0; i < musicaItems.length; i++) {
+  const [bg, accent] = musicaColors[i];
+  write(
+    path.join(musicaDir, `music-${i + 1}.svg`),
+    svg(285, 380, bg, accent, musicaItems[i].label),
+  );
+}
+
+// ─── Home Gallery: Fotografía (8 items) ──────────────────────────────
+console.log("\n📷 Home Gallery — Fotografía:");
+const fotografiaDir = path.join(PUBLIC, "gallery", "fotografia");
+const fotografiaItems = [
+  { label: "Urban Landscape", photographer: "Carlos Méndez" },
+  { label: "Portrait Series", photographer: "Ana García" },
+  { label: "Nature Study", photographer: "Luis Rodríguez" },
+  { label: "Street Photography", photographer: "María López" },
+  { label: "Architectural Study", photographer: "José Martínez" },
+  { label: "Abstract Composition", photographer: "Elena Torres" },
+  { label: "Documentary Project", photographer: "Roberto Sánchez" },
+  { label: "Light and Shadow", photographer: "Carmen Ruiz" },
+];
+const fotografiaColors = [
+  ["#1a1a2e", "#16213e"],
+  ["#16213e", "#e94560"],
+  ["#e94560", "#0f3460"],
+  ["#0f3460", "#1a1a2e"],
+  ["#533483", "#1a1a2e"],
+  ["#1a1a2e", "#533483"],
+  ["#e94560", "#533483"],
+  ["#0f3460", "#16213e"],
+];
+for (let i = 0; i < fotografiaItems.length; i++) {
+  const [bg, accent] = fotografiaColors[i];
+  write(
+    path.join(fotografiaDir, `photo-${i + 1}.svg`),
+    svg(285, 380, bg, accent, fotografiaItems[i].label),
+  );
+}
+
+// ─── Concursos Activos Slider (6 items) ──────────────────────────────
+console.log("\n🏆 Concursos Activos (slider):");
+const concursosSliderDir = path.join(PUBLIC, "concursos");
+const concursosSlider = [
+  {
+    file: "concurso-fotografia.svg",
+    bg: "#1a1a2e",
+    accent: "#e94560",
+    label: "Fotografía",
+  },
+  {
+    file: "concurso-arte-digital.svg",
+    bg: "#e94560",
+    accent: "#533483",
+    label: "Arte Digital",
+  },
+  {
+    file: "concurso-arte-digital-2.svg",
+    bg: "#533483",
+    accent: "#e94560",
+    label: "Arte Digital II",
+  },
+  {
+    file: "concurso-ilustracion.svg",
+    bg: "#0f3460",
+    accent: "#16213e",
+    label: "Ilustración",
+  },
+  {
+    file: "concurso-diseno.svg",
+    bg: "#16213e",
+    accent: "#533483",
+    label: "Diseño Gráfico",
+  },
+  {
+    file: "concurso-musica.svg",
+    bg: "#533483",
+    accent: "#0f3460",
+    label: "Música",
+  },
+];
+for (const c of concursosSlider) {
+  write(
+    path.join(concursosSliderDir, c.file),
+    svg(400, 300, c.bg, c.accent, c.label),
+  );
+}
+
+// ─── Colaboraciones Destacadas Slider (6 items) ───────────────────────
+console.log("\n🤝 Colaboraciones Destacadas (slider):");
+const colabSliderDir = path.join(PUBLIC, "colaboraciones");
+const colabSlider = [
+  {
+    file: "corto-eclipse.svg",
+    bg: "#0f3460",
+    accent: "#e94560",
+    label: "Eclipse",
+  },
+  {
+    file: "corto-eclipse-2.svg",
+    bg: "#e94560",
+    accent: "#0f3460",
+    label: "Eclipse II",
+  },
+  {
+    file: "corto-eclipse-3.svg",
+    bg: "#16213e",
+    accent: "#533483",
+    label: "Eclipse III",
+  },
+  {
+    file: "synth-wave.svg",
+    bg: "#533483",
+    accent: "#16213e",
+    label: "Synth Wave",
+  },
+  {
+    file: "digital-dreams.svg",
+    bg: "#1a1a2e",
+    accent: "#e94560",
+    label: "Digital Dreams",
+  },
+  {
+    file: "documental-creativos.svg",
+    bg: "#e94560",
+    accent: "#1a1a2e",
+    label: "Creativos",
+  },
+];
+for (const c of colabSlider) {
+  write(
+    path.join(colabSliderDir, c.file),
+    svg(320, 240, c.bg, c.accent, c.label),
+  );
+}
+
 console.log("\n✅ All placeholder images generated successfully!\n");
