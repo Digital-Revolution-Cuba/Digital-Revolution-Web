@@ -5,7 +5,7 @@
   "description": "Demuestra tu talento como productor musical. Crea un track original de música electrónica y compite por increíbles premios y la oportunidad de ser escuchado por profesionales de la industria.",
   "category": "musica",
   "status": "proximo",
-  "image": "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=800&q=80",
+  "image": "/images/concursos/activos/musica-electronica-2026.svg",
   "imageAlt": "Productor de música electrónica en su estudio",
   "fechas": {
     "inicio": "2026-02-01T00:00:00.000Z",
