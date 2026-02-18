@@ -1,11 +1,12 @@
-import { useGalleryModal } from '../../composables/features/useGalleryModal';
-import { useImageSearch } from '../../composables/features/useImageSearch';
-import { useInfiniteScroll } from '../../composables/features/useInfiniteScroll';
+import { useGalleryModal } from "../../composables/features/useGalleryModal";
+import { useImageSearch } from "../../composables/features/useImageSearch";
+import { useInfiniteScroll } from "../../composables/features/useInfiniteScroll";
 import {
   INFINITE_SCROLL_CONFIG,
   MASONRY_CONFIG,
-} from '../../config/galleryConfig';
-import { InputSearchGallery } from './InputSearchGallery';
+} from "../../config/galleryConfig";
+import type { GalleryItem } from "../../data/gallery";
+import { InputSearchGallery } from "./InputSearchGallery";
 
 // SVG Icon inline
 const XIcon = () => (
@@ -25,10 +26,7 @@ const XIcon = () => (
 );
 
 interface Gallery {
-  images: {
-    download_url: string;
-    author: string;
-  }[];
+  images: readonly GalleryItem[];
 }
 
 export function GalleryGrid({ images }: Gallery) {
@@ -63,34 +61,37 @@ export function GalleryGrid({ images }: Gallery) {
           <div
             className="gallery-grid"
             style={{
-              display: 'grid',
+              display: "grid",
               gridTemplateColumns: `repeat(auto-fill, minmax(${
                 window.innerWidth < MASONRY_CONFIG.BREAKPOINTS.TABLET
-                  ? '150px'
+                  ? "150px"
                   : window.innerWidth < MASONRY_CONFIG.BREAKPOINTS.DESKTOP
-                    ? '200px'
-                    : '250px'
+                    ? "200px"
+                    : "250px"
               }, 1fr))`,
               gap: MASONRY_CONFIG.GUTTER,
-              width: '100%',
+              width: "100%",
             }}
           >
-            {visibleItems.map((img, index) => (
+            {visibleItems.map((img) => (
               <div
-                key={`${img.author}-${index}`}
+                key={img.id}
                 className="group w-full cursor-pointer overflow-hidden rounded-lg"
                 onClick={() => openModal(img)}
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src={img.download_url}
-                    alt={img.author}
+                    src={img.src}
+                    alt={img.alt}
                     className="h-auto w-full rounded-lg transition-transform duration-300 group-hover:scale-105"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 flex items-end justify-between rounded-lg bg-linear-to-t from-black/60 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <span className="text-sm font-medium text-white">
-                      {img.author}
+                      {img.creator.name}
+                    </span>
+                    <span className="text-xs text-gray-300">
+                      {img.category}
                     </span>
                   </div>
                 </div>
@@ -129,20 +130,20 @@ export function GalleryGrid({ images }: Gallery) {
         <div
           className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ${
             isModalVisible
-              ? 'bg-black/80 opacity-100 backdrop-blur-sm'
-              : 'bg-black/0 opacity-0 backdrop-blur-none'
+              ? "bg-black/80 opacity-100 backdrop-blur-sm"
+              : "bg-black/0 opacity-0 backdrop-blur-none"
           }`}
           onClick={closeModal}
         >
           <div
             className={`bg-brand-background-global relative h-[90vh] w-[90vw] max-w-5xl overflow-hidden rounded-xl transition-all duration-300 ${
-              isModalVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+              isModalVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"
             }`}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="absolute top-0 right-0 left-0 z-10 flex items-center justify-between bg-[var(--color-brand-background-global)] px-6 py-4 backdrop-blur-sm">
               <h2 className="text-lg font-semibold text-white">
-                {selectedImage.author}
+                {selectedImage.creator.name}
               </h2>
               <button
                 onClick={closeModal}
@@ -155,8 +156,8 @@ export function GalleryGrid({ images }: Gallery) {
             {/* Image Container */}
             <div className="bg-brand-background-global flex h-full w-full items-center justify-center px-4 pt-16 pb-4">
               <img
-                src={selectedImage.download_url}
-                alt={selectedImage.author}
+                src={selectedImage.src}
+                alt={selectedImage.alt}
                 className="h-full w-full rounded-lg object-contain"
               />
             </div>

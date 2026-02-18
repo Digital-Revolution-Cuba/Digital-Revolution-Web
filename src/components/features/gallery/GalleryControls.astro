@@ -7,7 +7,7 @@ import type { CategoryConfig } from '../../../types/gallery.types';
 import CategoryButton from '../../gallery/CategoryButton.astro';
 
 interface Props {
-  categories: CategoryConfig[];
+  categories: readonly CategoryConfig[];
   activeCategory?: string;
 }
 

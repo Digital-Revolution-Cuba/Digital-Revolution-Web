@@ -178,7 +178,7 @@ const { item } = Astro.props;
   /* Responsive sizing - solo ajustar contenedor */
   @media (max-width: 640px) {
     .gallery-item {
-      width: calc(100vw - 80px) !important;
+      width: calc(100dvw - 80px) !important;
       max-width: 285px !important;
     }
     .music-album-cover {
@@ -198,14 +198,14 @@ const { item } = Astro.props;
 
   @media (min-width: 641px) and (max-width: 768px) {
     .gallery-item {
-      width: calc((100vw - 100px) / 2) !important;
+      width: calc((100dvw - 100px) / 2) !important;
       max-width: 285px !important;
     }
   }
 
   @media (min-width: 769px) and (max-width: 1023px) {
     .gallery-item {
-      width: calc((100vw - 120px) / 3) !important;
+      width: calc((100dvw - 120px) / 3) !important;
       max-width: 285px !important;
     }
   }
