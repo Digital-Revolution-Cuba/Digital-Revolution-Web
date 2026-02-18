@@ -2,7 +2,8 @@
  * Central export for all gallery data
  */
 
-export * from './types';
-export { arteGallery } from './arteGallery';
-export { musicaGallery } from './musicaGallery';
-export { fotografiaGallery } from './fotografiaGallery';
+export { accordeonCards } from "./accordeonData";
+export { arteGallery } from "./arteGallery";
+export { fotografiaGallery } from "./fotografiaGallery";
+export { musicaGallery } from "./musicaGallery";
+export * from "./types";
