@@ -568,6 +568,7 @@
 .jc-stats-number {
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 800;
+  font-family: var(--font-impact);
   background: linear-gradient(
     135deg,
     rgba(var(--jc-cyan-rgb), 1),
@@ -793,15 +794,16 @@
   font-weight: 900;
   line-height: 1.1;
   margin: 0;
-  letter-spacing: -0.02em;
 }
 
 .jc-title-word {
-  display: inline-block;
+  display: inline-flex;
+  
 }
 
 .jc-title-letter {
   display: inline-block;
+  font-family: var(--font-impact);
   animation: letterReveal 0.8s var(--jc-ease-bounce) backwards;
   animation-delay: calc(var(--letter-index) * 0.05s);
 }

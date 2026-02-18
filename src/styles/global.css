@@ -10,10 +10,10 @@
    =========================== */
 @theme {
   /* Fonts */
-  --font-saira: 'Saira Stencil One', sans-serif;
-  --font-barlow: 'Barlow Semi Condensed', sans-serif;
-  --font-rubik: 'Rubik', sans-serif;
-  --default-font-family: var(--font-rubik);
+  --font-inter: 'Inter',sans-serif;
+  --font-roboto: 'Roboto', sans-serif ;
+  --font-impact: 'Impact',sans-serif;
+  --default-font-family: var(--font-inter);
 
   /* ---------------------------
      Palette (base colors + RGB)
@@ -171,6 +171,11 @@
 /* ===========================
    Global base styles
    =========================== */
+
+* {
+  font-family: var(--font-inter);
+}
+
 html,
 body {
   background-color: var(--color-brand-background-global);
@@ -389,6 +394,10 @@ body {
     transform: skewX(-20deg);
     transition: left 650ms ease;
     pointer-events: none;
+  }
+
+  .btn-primary {
+    @apply border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark font-roboto font-medium rounded-lg border px-6 py-2.5 text-base transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)];
   }
 
   .cta-btn:hover::after {

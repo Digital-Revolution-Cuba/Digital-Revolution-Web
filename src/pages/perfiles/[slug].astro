@@ -111,12 +111,12 @@ const formatStat = (num: number) => {
             }
           </div>
 
-          <h1 class="font-rubik mb-2 text-3xl leading-none font-bold">
+          <h1 class="mb-2 text-3xl leading-none font-bold">
             {name}
           </h1>
 
           <div
-            class="font-barlow flex flex-col gap-2 tracking-wide text-white/50 uppercase md:flex-row md:items-center md:gap-6"
+            class="flex flex-col gap-2 tracking-wide text-white/50 uppercase md:flex-row md:items-center md:gap-6"
           >
             <p class="text-lg">
               {communityRole || role}
@@ -267,7 +267,7 @@ const formatStat = (num: number) => {
                 {recentActivity.map((act: { title: string; link?: string }) => (
                   <div class="group hover:border-accent-purple relative border-l border-white/10 bg-white/[0.02] p-4 transition-all">
                     <h3 class="mb-1 text-sm font-bold">{act.title}</h3>
-                    <p class="font-barlow text-xs tracking-wider text-gray-400 uppercase italic">
+                    <p class="text-xs tracking-wider text-gray-400 uppercase italic">
                       Proyecto Relevante
                     </p>
                     {act.link && (
