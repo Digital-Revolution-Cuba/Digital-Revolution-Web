@@ -1,225 +1,275 @@
-// Centralized initializer for Accordeon slider
-function initAccordeon() {
-  const dotsContainer = document.getElementById("acordeonDots");
-  const sliderContainer = document.getElementById("acordeonSlider");
+/**
+ * Accordion Slider — Client-side initializer
+ *
+ * Responsibilities:
+ * - Page navigation via dots (each dot = a group of cards)
+ * - Smooth page transitions (fade-slide, no chaotic glitch)
+ * - Mobile card flip on tap
+ * - Auto-rotation
+ * - Keyboard accessibility
+ *
+ * This module follows single-responsibility: it only handles
+ * DOM interaction. Data and config live in their own modules.
+ */
 
-  if (!dotsContainer || !sliderContainer) return;
+// ─── Constants ───────────────────────────────────────────────
+const SELECTORS = {
+  wrapper: ".acordeon-wrapper",
+  slider: "#acordeonSlider",
+  dotsNav: "#acordeonDots",
+  dot: ".acordeon-dot",
+  page: ".acordeon-page",
+  card: ".acordeon-item",
+} as const;
 
-  const dots = dotsContainer.querySelectorAll(".acordeon-dot");
-  const cards = sliderContainer.querySelectorAll(".acordeon-item");
-  let currentIndex = 0;
+const CSS_CLASSES = {
+  active: "active",
+  pageExit: "page-exit",
+  pageEnter: "page-enter",
+  mobileFlipped: "mobile-flipped",
+} as const;
+
+const ANIMATION = {
+  /** Duration of exit animation — must match CSS `pageFadeOut` */
+  exitDuration: 350,
+  /** Duration of entrance animation — must match CSS `pageFadeIn` + stagger */
+  enterDuration: 400,
+  /** Auto-rotation interval in ms */
+  autoRotateInterval: 10_000,
+  /** How long a mobile-flipped card stays flipped */
+  mobileFlipRevert: 4_000,
+  /** Drag threshold in px to distinguish tap from swipe */
+  dragThreshold: 5,
+} as const;
+
+// ─── Utility helpers ─────────────────────────────────────────
+
+function isTouchDevice(): boolean {
+  return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+}
+
+// ─── Main initializer ────────────────────────────────────────
+
+function initAccordeon(): void {
+  const wrapper = document.querySelector<HTMLElement>(SELECTORS.wrapper);
+  const slider = document.querySelector<HTMLElement>(SELECTORS.slider);
+  const dotsNav = document.querySelector<HTMLElement>(SELECTORS.dotsNav);
+
+  if (!wrapper || !slider || !dotsNav) return;
+
+  const dots = Array.from(
+    dotsNav.querySelectorAll<HTMLButtonElement>(SELECTORS.dot)
+  );
+  const pages = Array.from(
+    slider.querySelectorAll<HTMLElement>(SELECTORS.page)
+  );
+  const totalPages = pages.length;
+
+  if (totalPages === 0) return;
+
+  // ─── State ───────────────────────────────────────────────
+  let currentPageIndex = 0;
   let isAnimating = false;
-  let autoRotate: number | null = null;
+  let autoRotateTimer: ReturnType<typeof setInterval> | null = null;
 
-  // Touch detection
-  const isTouchDevice =
-    "ontouchstart" in window || navigator.maxTouchPoints > 0;
-
-  // Drag threshold (similar to Embla Carousel's approach)
-  const DRAG_THRESHOLD = 5; // pixels
+  // Touch tracking for drag-vs-tap detection
   let touchStartX = 0;
   let touchStartY = 0;
   let isDragging = false;
 
-  function animateTransition(fromIndex: number, toIndex: number) {
-    if (isAnimating || fromIndex === toIndex) return;
+  // ─── Page transition ─────────────────────────────────────
+  /**
+   * Transition from one page to another with a smooth fade-slide.
+   * The entire page (group of cards) animates as a unit,
+   * with individual cards getting a subtle staggered reveal via CSS.
+   */
+  function goToPage(targetIndex: number): void {
+    if (isAnimating || targetIndex === currentPageIndex) return;
+    if (targetIndex < 0 || targetIndex >= totalPages) return;
+
     isAnimating = true;
 
-    // Immediate visual feedback on dots (best practice from documentation)
-    updateDotsUI(toIndex);
+    const currentPage = pages[currentPageIndex];
+    const nextPage = pages[targetIndex];
 
-    cards.forEach((card, i) => {
-      (card as HTMLElement).style.animationDelay = `${i * 100}ms`;
-      card.classList.add("slide-out-left");
-    });
+    // 1. Update dots immediately for responsive UX
+    updateDots(targetIndex);
 
-    const exitDuration = 600;
+    // 2. Animate current page out
+    currentPage.classList.add(CSS_CLASSES.pageExit);
 
+    // 3. After exit animation completes, swap visibility
     setTimeout(() => {
-      cards.forEach((card, i) => {
-        card.classList.remove("slide-out-left", "highlighted");
-        (card as HTMLElement).style.animationDelay = "0ms";
+      currentPage.classList.remove(CSS_CLASSES.active, CSS_CLASSES.pageExit);
+      currentPage.setAttribute("aria-hidden", "true");
 
-        (card as HTMLElement).style.animationDelay = `${i * 75}ms`;
-        card.classList.add("slide-in-right");
+      // 4. Animate next page in
+      nextPage.classList.add(CSS_CLASSES.active, CSS_CLASSES.pageEnter);
+      nextPage.removeAttribute("aria-hidden");
 
-        if (i === toIndex) {
-          card.classList.add("highlighted");
-        }
-      });
-
+      // 5. Clean up entrance animation classes
       setTimeout(() => {
-        cards.forEach((card) => {
-          card.classList.remove("slide-in-right");
-          (card as HTMLElement).style.animationDelay = "0ms";
-        });
+        nextPage.classList.remove(CSS_CLASSES.pageEnter);
+        currentPageIndex = targetIndex;
         isAnimating = false;
-      }, 600);
-    }, exitDuration - 100);
-
-    currentIndex = toIndex;
+      }, ANIMATION.enterDuration);
+    }, ANIMATION.exitDuration);
   }
 
-  /**
-   * Update dots UI immediately (separate from animation for better UX)
-   */
-  function updateDotsUI(index: number) {
+  // ─── Dots UI ─────────────────────────────────────────────
+  function updateDots(activeIndex: number): void {
     dots.forEach((dot, i) => {
-      dot.classList.toggle("active", i === index);
+      const isActive = i === activeIndex;
+      dot.classList.toggle(CSS_CLASSES.active, isActive);
+      dot.setAttribute("aria-current", isActive ? "true" : "false");
     });
   }
 
-  /**
-   * Stop auto rotation
-   */
-  function stopAutoRotate() {
-    if (autoRotate !== null) {
-      clearInterval(autoRotate);
-      autoRotate = null;
+  // ─── Auto-rotation ──────────────────────────────────────
+  function startAutoRotate(): void {
+    stopAutoRotate();
+    autoRotateTimer = setInterval(() => {
+      if (!isAnimating) {
+        const nextIndex = (currentPageIndex + 1) % totalPages;
+        goToPage(nextIndex);
+      }
+    }, ANIMATION.autoRotateInterval);
+  }
+
+  function stopAutoRotate(): void {
+    if (autoRotateTimer !== null) {
+      clearInterval(autoRotateTimer);
+      autoRotateTimer = null;
     }
   }
 
-  /**
-   * Start auto rotation
-   */
-  function startAutoRotate() {
-    stopAutoRotate();
-    autoRotate = window.setInterval(() => {
-      if (!isAnimating) {
-        const nextIndex = (currentIndex + 1) % dots.length;
-        animateTransition(currentIndex, nextIndex);
-      }
-    }, 6000);
-  }
-
-  /**
-   * Handle touch start (track position for drag detection)
-   */
-  function handleTouchStart(e: Event) {
-    const touchEvent = e as TouchEvent;
-    const touch = touchEvent.touches[0];
+  // ─── Touch helpers ──────────────────────────────────────
+  function handleTouchStart(e: TouchEvent): void {
+    const touch = e.touches[0];
     touchStartX = touch.clientX;
     touchStartY = touch.clientY;
     isDragging = false;
   }
 
-  /**
-   * Handle touch move (detect if user is dragging)
-   */
-  function handleTouchMove(e: Event) {
-    const touchEvent = e as TouchEvent;
-    if (!isDragging) {
-      const touch = touchEvent.touches[0];
-      const deltaX = Math.abs(touch.clientX - touchStartX);
-      const deltaY = Math.abs(touch.clientY - touchStartY);
-
-      // If movement exceeds threshold, mark as dragging
-      if (deltaX > DRAG_THRESHOLD || deltaY > DRAG_THRESHOLD) {
-        isDragging = true;
-      }
+  function handleTouchMove(e: TouchEvent): void {
+    if (isDragging) return;
+    const touch = e.touches[0];
+    const dx = Math.abs(touch.clientX - touchStartX);
+    const dy = Math.abs(touch.clientY - touchStartY);
+    if (dx > ANIMATION.dragThreshold || dy > ANIMATION.dragThreshold) {
+      isDragging = true;
     }
   }
 
-  /**
-   * Handle dot click/tap
-   */
-  function handleDotInteraction(e: Event) {
+  // ─── Dot interaction ────────────────────────────────────
+  function handleDotInteraction(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
 
-    // If dragging, ignore the click
     if (isDragging) {
       isDragging = false;
       return;
     }
 
     const target = e.currentTarget as HTMLElement;
-    const index = parseInt(target.getAttribute("data-index") || "0", 10);
+    const pageIndex = parseInt(target.dataset.pageIndex ?? "0", 10);
 
-    if (!isAnimating && !isNaN(index) && index !== currentIndex) {
+    if (!isNaN(pageIndex) && pageIndex !== currentPageIndex) {
       stopAutoRotate();
-      animateTransition(currentIndex, index);
+      goToPage(pageIndex);
+      startAutoRotate();
     }
   }
 
-  /**
-   * Handle card tap on mobile (toggle flip)
-   */
-  function handleCardTap(e: Event) {
-    // Only for touch devices
-    if (!isTouchDevice) return;
+  // ─── Mobile card flip ──────────────────────────────────
+  function handleCardTap(e: Event): void {
+    if (!isTouchDevice()) return;
+
+    if (isDragging) {
+      isDragging = false;
+      return;
+    }
 
     e.preventDefault();
     e.stopPropagation();
 
-    const card = e.currentTarget as HTMLElement;
-    const isFlipped = card.classList.contains("mobile-flipped");
+    const card = (e.currentTarget as HTMLElement).closest(
+      SELECTORS.card
+    ) as HTMLElement | null;
+    if (!card) return;
 
-    // Remove flip from all other cards
-    cards.forEach((c) => {
-      if (c !== card) {
-        c.classList.remove("mobile-flipped");
-      }
-    });
+    const activePage = pages[currentPageIndex];
+    const pageCards = Array.from(
+      activePage.querySelectorAll<HTMLElement>(SELECTORS.card)
+    );
 
-    // Toggle current card
-    if (isFlipped) {
-      card.classList.remove("mobile-flipped");
-    } else {
-      card.classList.add("mobile-flipped");
+    const wasFlipped = card.classList.contains(CSS_CLASSES.mobileFlipped);
 
-      // Auto-remove flip after 4 seconds
+    // Unflip all cards in the current page
+    pageCards.forEach((c) => c.classList.remove(CSS_CLASSES.mobileFlipped));
+
+    // Toggle the tapped card
+    if (!wasFlipped) {
+      card.classList.add(CSS_CLASSES.mobileFlipped);
+
+      // Auto-revert after timeout
       setTimeout(() => {
-        card.classList.remove("mobile-flipped");
-      }, 4000);
+        card.classList.remove(CSS_CLASSES.mobileFlipped);
+      }, ANIMATION.mobileFlipRevert);
     }
   }
 
-  /**
-   * Initialize event listeners
-   */
-  function initEventListeners() {
-    // Dots navigation
+  // ─── Event binding ──────────────────────────────────────
+  function bindEvents(): void {
+    // Dot navigation
     dots.forEach((dot) => {
-      // Add both touch and click events for maximum compatibility
-      dot.addEventListener("touchstart", handleTouchStart, { passive: true });
-      dot.addEventListener("touchmove", handleTouchMove, { passive: true });
+      dot.addEventListener(
+        "touchstart",
+        handleTouchStart as EventListener,
+        { passive: true }
+      );
+      dot.addEventListener(
+        "touchmove",
+        handleTouchMove as EventListener,
+        { passive: true }
+      );
       dot.addEventListener("touchend", handleDotInteraction);
       dot.addEventListener("click", handleDotInteraction);
 
-      // Keyboard accessibility
-      dot.addEventListener("keydown", (e: Event) => {
-        const keyEvent = e as KeyboardEvent;
-        if (keyEvent.key === "Enter" || keyEvent.key === " ") {
+      // Keyboard: Enter / Space
+      dot.addEventListener("keydown", (e: KeyboardEvent) => {
+        if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           handleDotInteraction(e);
         }
       });
     });
 
-    // Cards interaction for mobile flip
-    if (isTouchDevice) {
-      cards.forEach((card) => {
-        card.addEventListener("touchend", handleCardTap);
-        // Also add click as fallback
-        card.addEventListener("click", handleCardTap);
+    // Mobile card flip
+    if (isTouchDevice()) {
+      pages.forEach((page) => {
+        const cards = page.querySelectorAll<HTMLElement>(SELECTORS.card);
+        cards.forEach((card) => {
+          card.addEventListener("touchend", handleCardTap);
+          card.addEventListener("click", handleCardTap);
+        });
       });
     }
 
-    // Auto-rotation pause on hover (desktop only)
-    if (!isTouchDevice && sliderContainer) {
-      sliderContainer.addEventListener("mouseenter", stopAutoRotate);
-      sliderContainer.addEventListener("mouseleave", startAutoRotate);
+    // Pause auto-rotation on hover (desktop only)
+    if (!isTouchDevice() && slider) {
+      slider.addEventListener("mouseenter", stopAutoRotate);
+      slider.addEventListener("mouseleave", startAutoRotate);
     }
   }
 
-  // Initialize
-  initEventListeners();
-  updateDotsUI(0);
-  cards[0]?.classList.add("highlighted");
+  // ─── Initialize ─────────────────────────────────────────
+  bindEvents();
+  updateDots(0);
   startAutoRotate();
 }
 
+// ─── Bootstrap ────────────────────────────────────────────
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initAccordeon);
 } else {
