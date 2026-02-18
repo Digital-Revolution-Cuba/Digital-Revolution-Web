@@ -3,7 +3,6 @@ import { colaboracionesData } from '../data/colaboracionesData';
 import ColaboracionCard from './ColaboracionCard.astro';
 
 const totalCards = colaboracionesData.length;
-const visibleCards = 3;
 ---
 
 <section id="colaboraciones" class="h-auto w-auto bg-gray-950">
@@ -176,136 +175,47 @@ const visibleCards = 3;
     z-index: 2;
   }
 
-  /* Estilos legacy para compatibilidad (no usados actualmente) */
-  .colaboraciones-section {
-    width: 100%;
-    min-height: 80vh;
-    background: #030712; /* gray-950 */
-  }
-
-  .colaboraciones-background {
-    position: relative;
-    z-index: 30;
-    min-height: 37.5rem; /* h-150 = 600px */
-  }
-
-  .background-clip-orange {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-height: 37.5rem;
-    width: 100%;
-    max-width: 100%;
-    background: var(--color-accent-orange);
-    clip-path: polygon(100% 0%, 0 100%, 100% 100%);
-    z-index: 1;
-  }
-
-  .background-clip-teal {
-    position: relative;
-    z-index: 30;
-    background: #5eead4; /* teal-300 */
-    clip-path: polygon(0 0%, 100% 28%, 100% 100%, 0 100%);
-    min-height: 37.5rem;
-  }
-
-  /* ===================================
-     Header Section
-     =================================== */
-  .colaboraciones-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding: var(--space-xl) var(--space-md);
-    align-items: flex-start;
-  }
-
-  .colab-title-section {
-    width: 100%;
-  }
-
   .heading-colab {
     text-align: start;
     padding: 0;
     margin: 0;
   }
 
-  .btn-suggest {
-    padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
-    min-height: var(--touch-target-comfortable);
-
-    background: var(--color-accent-blue);
-    border: none;
-    border-radius: 9999px;
-
-    color: white;
-    font-size: var(--text-base);
-    font-weight: 700;
-
-    box-shadow: 0 10px 25px rgba(25, 206, 238, 0.3);
-    cursor: pointer;
-
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .btn-suggest:hover,
-  .btn-suggest:focus {
-    background: var(--color-accent-cyan);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(52, 223, 222, 0.4);
-  }
-
-  .btn-suggest:focus-visible {
-    outline: 2px solid var(--color-accent-cyan);
-    outline-offset: 2px;
-  }
-
   /* ===================================
-     Gallery Section con Container Queries
+     Slider Section (Concursos-style)
      =================================== */
   .colaboraciones-gallery-wrapper {
-    /* Mobile first: use container queries for component-level responsiveness */
-    container-type: inline-size;
-    container-name: colaboraciones;
     width: 100%;
-    padding: var(--space-md);
-
-    /* Layout variables (tweakable) */
-    --nav-w: 44px; /* base nav button width */
-    --gap: 0.75rem; /* base gap between cards */
-    --gutter: 1rem; /* horizontal padding inside wrapper */
+    padding: 1.5rem 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
   }
 
   .colaboraciones-navigation {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--gap);
+    gap: 1rem;
     width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
+    max-width: 1200px;
   }
 
   .cards-viewport {
     flex: 1;
-    max-width: 100%;
     overflow: hidden;
+    max-width: 100%;
   }
 
   .cards-track {
     display: flex;
-    gap: var(--gap);
+    gap: 1rem;
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    min-width: max-content;
-    align-items: flex-start;
-    flex-wrap: nowrap; /* Never wrap — keep horizontal layout */
   }
 
   .card-item {
-    /* Allow cards to shrink if necessary but prefer specified width via clamp */
-    flex: 0 1 auto;
-    width: clamp(140px, 30vw, 280px);
-    box-sizing: border-box;
+    flex-shrink: 0;
   }
 
   /* ===================================
@@ -316,9 +226,9 @@ const visibleCards = 3;
     align-items: center;
     justify-content: center;
 
-    min-width: var(--touch-target-comfortable);
-    min-height: var(--touch-target-comfortable);
-    padding: 0.75rem;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem;
 
     background: #030712;
     border: 2px solid transparent;
@@ -332,13 +242,13 @@ const visibleCards = 3;
 
   .nav-btn:hover,
   .nav-btn:focus {
-    background: var(--color-accent-cyan);
-    border-color: var(--color-accent-cyan);
+    background: var(--color-accent-cyan, #34dfde);
+    border-color: var(--color-accent-cyan, #34dfde);
     transform: scale(1.1);
   }
 
   .nav-btn:focus-visible {
-    outline: 2px solid var(--color-accent-cyan);
+    outline: 2px solid var(--color-accent-cyan, #34dfde);
     outline-offset: 4px;
   }
 
@@ -354,9 +264,9 @@ const visibleCards = 3;
   }
 
   .nav-arrow {
-    width: 1.5rem;
-    height: 1.5rem;
-    stroke: var(--color-accent-cyan);
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke: var(--color-accent-cyan, #34dfde);
     transition: stroke 0.3s ease;
   }
 
@@ -367,50 +277,6 @@ const visibleCards = 3;
 
   .nav-btn:disabled .nav-arrow {
     stroke: rgba(70, 236, 213, 0.5);
-  }
-
-  /* ===================================
-     Container Query: Tiny mobile (very narrow screens)
-     =================================== */
-  @container colaboraciones (max-width: 420px) {
-    .colaboraciones-navigation {
-      gap: calc(var(--gap) * 0.75);
-    }
-    .nav-btn {
-      min-width: 36px;
-      min-height: 36px;
-    }
-    .cards-track {
-      gap: calc(var(--gap) * 0.75);
-    }
-    /* Cards get very compact but remain usable */
-    .card-item {
-      width: clamp(120px, 28vw, 220px);
-    }
-  }
-
-  /* ===================================
-     Container Query: Mobile
-     =================================== */
-  @container colaboraciones (min-width: 421px) and (max-width: 639px) {
-    .colaboraciones-navigation {
-      gap: calc(var(--gap) * 0.9);
-    }
-    .nav-btn {
-      min-width: 40px;
-      min-height: 40px;
-    }
-    .cards-track {
-      gap: var(--gap);
-    }
-    /* Try to fit 2 cards when space allows */
-    .card-item {
-      width: calc(
-        (100% - (2 * var(--nav-w)) - (1 * var(--gap)) - (2 * var(--gutter))) / 2
-      );
-      min-width: 140px;
-      max-width: 260px;
-    }
   }
 
   /* ===================================
@@ -441,56 +307,23 @@ const visibleCards = 3;
   }
 
   .pagination-dots-colab :global(.pagination-dot.active) {
-    background: var(--color-accent-orange);
+    background: var(--color-accent-orange, #f49624);
     opacity: 1;
   }
 
   /* ===================================
-     Container Query: Tablet
+     Responsive — matches Concursos pattern
      =================================== */
-  @container colaboraciones (min-width: 640px) and (max-width: 1023px) {
+  @media (max-width: 640px) {
     .colaboraciones-navigation {
-      gap: calc(var(--gap) * 1.15);
+      gap: 0.5rem;
     }
     .nav-btn {
-      min-width: 48px;
-      min-height: 48px;
+      min-width: 36px;
+      min-height: 36px;
     }
     .cards-track {
-      gap: 1.25rem;
-    }
-    /* Attempt to fit 3 cards */
-    .card-item {
-      width: calc(
-        (100% - (2 * var(--nav-w)) - (2 * 1.25rem) - (2 * var(--gutter))) / 3
-      );
-      min-width: 140px;
-      max-width: 300px;
-    }
-  }
-
-  /* ===================================
-     Container Query: Desktop
-     =================================== */
-  @container colaboraciones (min-width: 1024px) {
-    .colaboraciones-navigation {
-      max-width: 1140px;
-      gap: 1.5rem;
-    }
-    .cards-track {
-      gap: 1.5rem;
-    }
-    /* Fit more cards; keep them readable */
-    .card-item {
-      width: clamp(
-        160px,
-        calc(
-          (100% - (2 * var(--nav-w)) - (4 * 1.5rem) - (2 * var(--gutter))) / 6
-        ),
-        320px
-      );
-      min-width: 160px;
-      max-width: 320px;
+      gap: 1rem;
     }
   }
 
@@ -499,8 +332,7 @@ const visibleCards = 3;
      =================================== */
   @media (prefers-reduced-motion: reduce) {
     .cards-track,
-    .nav-btn,
-    .btn-suggest {
+    .nav-btn {
       transition: none;
     }
   }
