@@ -22,13 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
-
-.prettierignore
-
-.prettierrc
-
 .agent
-docs
 .github
 .claude
 .astro
