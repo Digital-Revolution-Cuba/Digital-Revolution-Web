@@ -2,9 +2,7 @@
 import { concursosData } from '../data/concursosData';
 import ConcursoCard from './ConcursoCard.astro';
 
-// Configuración del slider de cards
 const totalCards = concursosData.length;
-const visibleCards = 3; // Cards visibles a la vez en desktop
 ---
 
 <section id="concursos" class="bg-brand-backgroundGlobal h-auto w-auto">
@@ -106,6 +104,12 @@ const visibleCards = 3; // Cards visibles a la vez en desktop
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+  }
+
+  @media (max-width: 768px) {
+    .general {
+      background-attachment: scroll;
+    }
   }
 
   .heading-impact {

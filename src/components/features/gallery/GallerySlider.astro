@@ -4,19 +4,19 @@
  * Main slider with navigation buttons and gallery items
  */
 import type {
-  CategoryConfig,
-  GalleryItem,
-  ArteGalleryItem,
-  MusicGalleryItem,
-  FotografiaGalleryItem,
+ArteGalleryItem,
+CategoryConfig,
+FotografiaGalleryItem,
+GalleryItem,
+MusicGalleryItem,
 } from '../../../types/gallery.types';
+import FotografiaCard from '../../gallery/FotografiaCard.astro';
 import GalleryItemComponent from '../../gallery/GalleryItem.astro';
 import MusicCard from '../../gallery/MusicCard.astro';
-import FotografiaCard from '../../gallery/FotografiaCard.astro';
 import NavigationButton from '../../gallery/NavigationButton.astro';
 
 interface Props {
-  categories: CategoryConfig[];
+  categories: readonly CategoryConfig[];
 }
 
 const { categories } = Astro.props;
