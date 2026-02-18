@@ -22,6 +22,8 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
       src={imageUrl}
       alt={altText}
       class="colaboracion-image"
+      width="400"
+      height="300"
       loading="lazy"
     />
   </div>
@@ -43,7 +45,7 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: none;
+    max-width: 320px;
     background: var(--palette-brand-dark, #011822);
     border-radius: 1rem;
     overflow: hidden;
@@ -59,7 +61,7 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
 
   .colaboracion-image-wrapper {
     width: 100%;
-    height: clamp(120px, 22vw, 200px);
+    aspect-ratio: 4 / 3;
     overflow: hidden;
   }
 
