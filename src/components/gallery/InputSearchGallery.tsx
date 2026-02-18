@@ -1,20 +1,25 @@
-import { Search, X } from 'lucide-react';
-import { useMemo } from 'react';
+import { Search, X } from "lucide-react";
+import { useMemo } from "react";
+import type { GalleryItem } from "../../data/gallery";
 
-export function InputSearchGallery({ images, searchAuthor, setSearchAuthor, filteredImages, handleClearSearch }: {
-    images: Array<any>;
-    searchAuthor: string;
-    setSearchAuthor: (author: string) => void;
-    filteredImages: Array<any>;
-    handleClearSearch: () => void;
+export function InputSearchGallery({
+  images,
+  searchAuthor,
+  setSearchAuthor,
+  filteredImages,
+  handleClearSearch,
+}: {
+  images: readonly GalleryItem[];
+  searchAuthor: string;
+  setSearchAuthor: (author: string) => void;
+  filteredImages: GalleryItem[];
+  handleClearSearch: () => void;
 }) {
+  const uniqueAuthors = useMemo(() => {
+    return Array.from(new Set(images.map((img) => img.creator.name)));
+  }, [images]);
 
-  
-    const uniqueAuthors = useMemo(() => {
-        return Array.from(new Set(images.map((img) => img.author)));
-    }, [images]);
-
-    return (
+  return (
     <>
       <div className="mb-16 text-center">
         <h1 className="font-impact section-title mb-6 text-5xl font-black italic md:text-6xl lg:text-7xl">
@@ -67,16 +72,16 @@ export function InputSearchGallery({ images, searchAuthor, setSearchAuthor, filt
         </div>
 
         <div
-          className={`mt-8 overflow-hidden transition-all duration-500 ease-out ${searchAuthor ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'}`}
+          className={`mt-8 overflow-hidden transition-all duration-500 ease-out ${searchAuthor ? "max-h-20 opacity-100" : "max-h-0 opacity-0"}`}
         >
           <div className="animate-fade-in flex flex-col justify-center gap-4 text-center sm:flex-row sm:items-center sm:text-left">
             <span className="text-base text-gray-300">
-              Mostrando{' '}
+              Mostrando{" "}
               <span className="font-bold text-orange-500">
                 {filteredImages.length}
-              </span>{' '}
-              de{' '}
-              <span className="font-bold text-cyan-400">{images.length}</span>{' '}
+              </span>{" "}
+              de{" "}
+              <span className="font-bold text-cyan-400">{images.length}</span>{" "}
               obras
             </span>
             <span className="bg-opacity-20 border-opacity-50 rounded-full border-2 border-orange-500 bg-orange-500 px-4 py-2 text-base font-medium text-orange-300">
@@ -117,6 +122,6 @@ export function InputSearchGallery({ images, searchAuthor, setSearchAuthor, filt
 
         `}</style>
       </div>
-      </>
-    )
+    </>
+  );
 }
