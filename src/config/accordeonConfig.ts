@@ -1,4 +1,4 @@
-import type { AccordeonConfig } from '../types/accordeon.types';
+import type { AccordeonConfig } from "../types/accordeon.types";
 
 /**
  * Default configuration for the Accordion Slider.
