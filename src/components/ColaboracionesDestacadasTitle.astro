@@ -36,6 +36,22 @@
     font-size: 96px;
     line-height: 1.1;
     text-align: right;
-    text-shadow: 3px 3px 0px var(--color-accent-orange); /* #F49624 */
+    text-shadow: 3px 3px 0px var(--color-accent-orange);
+  }
+
+  @media (max-width: 768px) {
+    .text-content-colab {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      bottom: 80px;
+      right: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .text-content-colab {
+      font-size: clamp(1.75rem, 7vw, 2.5rem);
+      bottom: 60px;
+      right: 12px;
+    }
   }
 </style>

@@ -134,9 +134,9 @@ const visibleCards = 3;
   /* Soporte para clases Tailwind usadas en el HTML */
   .second-clip {
     clip-path: polygon(100% 0%, 0 100%, 100% 100%);
-    /* Usar altura controlada para evitar que sobresalga debajo del clip azul */
-    min-height: 37.5rem; /* Coincide con .background-clip-orange */
-    width: 125rem; /* Ajusta según el diseño */
+    min-height: 37.5rem;
+    width: 100%;
+    max-width: 100%;
     top: 0;
     right: 0;
     z-index: 1;
@@ -194,7 +194,8 @@ const visibleCards = 3;
     top: 0;
     right: 0;
     min-height: 37.5rem;
-    width: 125rem; /* w-2000 */
+    width: 100%;
+    max-width: 100%;
     background: var(--color-accent-orange);
     clip-path: polygon(100% 0%, 0 100%, 100% 100%);
     z-index: 1;
