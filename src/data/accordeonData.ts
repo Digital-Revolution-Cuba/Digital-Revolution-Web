@@ -1,4 +1,4 @@
-import type { AccordeonCard } from '../types/accordeon.types';
+import type { AccordeonCard } from "../types/accordeon.types";
 
 /**
  * Accordion card data.
@@ -17,56 +17,56 @@ import type { AccordeonCard } from '../types/accordeon.types';
 export const accordeonCards: readonly AccordeonCard[] = [
   {
     id: 1,
-    image: '/images/talents/avatars/artist-01.jpg',
-    alt: 'Artista Digital - Ilustración creativa',
-    backText: 'Artista Digital',
+    image: "/images/talents/avatars/artist-01.jpg",
+    alt: "Artista Digital - Ilustración creativa",
+    backText: "Artista Digital",
   },
   {
     id: 2,
-    image: '/images/talents/avatars/artist-02.jpg',
-    alt: 'Ilustrador - Arte conceptual',
-    backText: 'Ilustrador',
+    image: "/images/talents/avatars/artist-02.jpg",
+    alt: "Ilustrador - Arte conceptual",
+    backText: "Ilustrador",
   },
   {
     id: 3,
-    image: '/images/talents/avatars/artist-03.jpg',
-    alt: 'Diseñador - Diseño gráfico moderno',
-    backText: 'Diseñador',
+    image: "/images/talents/avatars/artist-03.jpg",
+    alt: "Diseñador - Diseño gráfico moderno",
+    backText: "Diseñador",
   },
   {
     id: 4,
-    image: '/images/talents/avatars/artist-04.jpg',
-    alt: 'Fotógrafo - Fotografía artística',
-    backText: 'Fotógrafo',
+    image: "/images/talents/avatars/artist-04.jpg",
+    alt: "Fotógrafo - Fotografía artística",
+    backText: "Fotógrafo",
   },
   {
     id: 5,
-    image: '/images/talents/avatars/artist-05.jpg',
-    alt: 'Animador - Animación 2D',
-    backText: 'Animador',
+    image: "/images/talents/avatars/artist-05.jpg",
+    alt: "Animador - Animación 2D",
+    backText: "Animador",
   },
   {
     id: 6,
-    image: '/images/talents/avatars/artist-06.jpg',
-    alt: 'Músico - Producción musical',
-    backText: 'Músico',
+    image: "/images/talents/avatars/artist-06.jpg",
+    alt: "Músico - Producción musical",
+    backText: "Músico",
   },
   {
     id: 7,
-    image: '/images/talents/avatars/artist-07.jpg',
-    alt: 'Escritor - Narrativa creativa',
-    backText: 'Escritor',
+    image: "/images/talents/avatars/artist-07.jpg",
+    alt: "Escritor - Narrativa creativa",
+    backText: "Escritor",
   },
   {
     id: 8,
-    image: '/images/talents/avatars/artist-08.jpg',
-    alt: 'Cineasta - Producción audiovisual',
-    backText: 'Cineasta',
+    image: "/images/talents/avatars/artist-08.jpg",
+    alt: "Cineasta - Producción audiovisual",
+    backText: "Cineasta",
   },
   {
     id: 9,
-    image: '/images/talents/avatars/artist-09.jpg',
-    alt: 'Escultor - Arte tridimensional',
-    backText: 'Escultor',
+    image: "/images/talents/avatars/artist-09.jpg",
+    alt: "Escultor - Arte tridimensional",
+    backText: "Escultor",
   },
 ] as const;
