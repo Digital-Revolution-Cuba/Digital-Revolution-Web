@@ -1,34 +1,31 @@
 ---
 /**
  * DinamycGallery Component
- * Main gallery component with category switching and slider navigation
- * Refactored for maintainability, clean architecture, and responsive design
- * Uses container queries for true component-based responsiveness
+ *
+ * Main gallery with category switching and slider navigation.
+ * Renders items dynamically from local data arrays — no API calls.
+ *
+ * Each category's items are rendered through the appropriate card
+ * component determined by the item's `type` discriminant.
  */
 
 // Import data
-import { arteGallery, musicaGallery, fotografiaGallery } from '../data';
+import { arteGallery, fotografiaGallery, musicaGallery } from '../data';
 import type { CategoryConfig } from '../data/types';
 
 // Import UI components
-import GalleryItem from './gallery/GalleryItem.astro';
-import MusicCard from './gallery/MusicCard.astro';
-import FotografiaCard from './gallery/FotografiaCard.astro';
 import CategoryButton from './gallery/CategoryButton.astro';
+import FotografiaCard from './gallery/FotografiaCard.astro';
+import GalleryItemCard from './gallery/GalleryItem.astro';
+import MusicCard from './gallery/MusicCard.astro';
 import NavigationButton from './gallery/NavigationButton.astro';
 
-// Import configuration
-import { GALLERY_CONFIG, DATA_ATTRIBUTES } from '../config/galleryConfig';
-
-// Gallery configuration
-const categories: CategoryConfig[] = [
+// Gallery categories — single source of truth
+const categories: readonly CategoryConfig[] = [
   { id: 'arte', label: 'Arte', items: arteGallery },
   { id: 'musica', label: 'Música', items: musicaGallery },
   { id: 'fotografia', label: 'Fotografía', items: fotografiaGallery },
-];
-
-const totalImages = arteGallery.length;
-const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
+] as const;
 ---
 
 <section id="galeria" class="gallery-section">
@@ -62,14 +59,20 @@ const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
       <div class="gallery-container">
         <div class="gallery-viewport">
           <div id="imageSlider" class="gallery-track">
-            <!-- Arte items -->
-            {arteGallery.map((item) => <GalleryItem item={item} />)}
-
-            <!-- Música items -->
-            {musicaGallery.map((item) => <MusicCard item={item} />)}
-
-            <!-- Fotografía items -->
-            {fotografiaGallery.map((item) => <FotografiaCard item={item} />)}
+            {
+              categories.flatMap((category) =>
+                category.items.map((item) => {
+                  switch (item.type) {
+                    case 'arte':
+                      return <GalleryItemCard item={item} />;
+                    case 'musica':
+                      return <MusicCard item={item} />;
+                    case 'fotografia':
+                      return <FotografiaCard item={item} />;
+                  }
+                }),
+              )
+            }
           </div>
         </div>
       </div>
