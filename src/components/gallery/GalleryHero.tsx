@@ -1,5 +1,5 @@
-import { Sparkles, Camera, Palette, Music } from 'lucide-react';
-import '../../styles/components/gallery.css';
+import { Camera, Music, Palette } from "lucide-react";
+import "../../styles/components/gallery.css";
 export function HeroSection() {
   return (
     <section className="hero">
@@ -31,9 +31,7 @@ export function HeroSection() {
         <div className="hero__layout">
           {/* Left */}
           <div className="hero__left">
-            <h1 className="hero__title hero__title-primary">
-              GALERÍA
-            </h1>
+            <h1 className="hero__title hero__title-primary">GALERÍA</h1>
 
             <p className="hero__description">
               Descubre obras únicas de creativos excepcionales. Conecta con
@@ -57,7 +55,7 @@ export function HeroSection() {
               <div className="hero__media-main">
                 <div className="hero__media-content">
                   <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaGVoMYgexcg0ul46xRd4XBTsxD8vq9qmMuQ&s?height=400&width=320"
+                    src="/images/gallery/hero/hero-main.svg"
                     alt="Artista destacado"
                     width={320}
                     height={400}
@@ -73,7 +71,7 @@ export function HeroSection() {
               <div className="hero__media-secondary">
                 <div className="hero__media-content secondary">
                   <img
-                    src="https://www.shutterstock.com/shutterstock/photos/2607564367/display_1500/stock-photo-inner-world-of-women-creative-digital-collage-artwork-mixed-media-graphic-design-elements-2607564367.jpg?height=200&width=180"
+                    src="/images/gallery/hero/hero-secondary.svg"
                     alt="Ilustración digital"
                     width={180}
                     height={200}
@@ -89,7 +87,7 @@ export function HeroSection() {
               <div className="hero__media-tertiary">
                 <div className="hero__media-content tertiary">
                   <img
-                    src="https://plus.unsplash.com/premium_photo-1661962387472-553d96ed01a3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?height=180&width=160"
+                    src="/images/gallery/hero/hero-tertiary.svg"
                     alt="Música"
                     width={160}
                     height={180}
@@ -109,59 +107,59 @@ export function HeroSection() {
               {/* Geometric Decorative Elements */}
               <div
                 className="hero__decorative"
-                style={{ top: '15%', left: '10%', width: '200px' }}
+                style={{ top: "15%", left: "10%", width: "200px" }}
               >
                 <div
                   className="hero__line-horizontal"
-                  style={{ width: '200px' }}
+                  style={{ width: "200px" }}
                 />
               </div>
 
               <div
                 className="hero__decorative"
                 style={{
-                  top: '35%',
-                  right: '5%',
-                  width: '3px',
-                  height: '100px',
+                  top: "35%",
+                  right: "5%",
+                  width: "3px",
+                  height: "100px",
                 }}
               >
                 <div
                   className="hero__line-vertical"
-                  style={{ height: '100px' }}
+                  style={{ height: "100px" }}
                 />
               </div>
 
               <div
                 className="hero__decorative"
-                style={{ top: '20%', right: '15%' }}
+                style={{ top: "20%", right: "15%" }}
               >
                 <div
                   className="hero__circle-outline accent"
-                  style={{ width: '80px', height: '80px' }}
+                  style={{ width: "80px", height: "80px" }}
                 />
               </div>
 
               <div
                 className="hero__decorative"
-                style={{ bottom: '10%', left: '5%' }}
+                style={{ bottom: "10%", left: "5%" }}
               >
                 <div
                   className="hero__circle-outline primary"
-                  style={{ width: '60px', height: '60px' }}
+                  style={{ width: "60px", height: "60px" }}
                 />
               </div>
 
               <div
                 className="hero__decorative"
-                style={{ top: '40%', left: '8%' }}
+                style={{ top: "40%", left: "8%" }}
               >
                 <div className="hero__triangle accent" />
               </div>
 
               <div
                 className="hero__decorative"
-                style={{ bottom: '25%', right: '12%' }}
+                style={{ bottom: "25%", right: "12%" }}
               >
                 <div className="hero__triangle primary" />
               </div>
