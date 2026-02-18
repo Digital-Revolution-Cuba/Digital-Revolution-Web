@@ -6,3 +6,4 @@ export * from './types';
 export { arteGallery } from './arteGallery';
 export { musicaGallery } from './musicaGallery';
 export { fotografiaGallery } from './fotografiaGallery';
+export { accordeonCards } from './accordeonData';
