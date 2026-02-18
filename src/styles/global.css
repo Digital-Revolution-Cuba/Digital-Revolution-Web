@@ -180,7 +180,16 @@ html,
 body {
   background-color: var(--color-brand-background-global);
   color: var(--color-text-primary);
+  overflow-x: hidden;
   font-family: var(--default-font-family);
+  @apply  [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:rounded-none
+  [&::-webkit-scrollbar-track]:bg-brand-dark
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  [&::-webkit-scrollbar-thumb]:cursor-pointer
+  [&::-webkit-scrollbar-thumb]:bg-accent-orange 
+  dark:[&::-webkit-scrollbar-track]:bg-brand-dark
+  dark:[&::-webkit-scrollbar-thumb]:bg-accent-orange ;
 }
 
 /* ===========================
@@ -397,7 +406,7 @@ body {
   }
 
   .btn-primary {
-    @apply border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark font-roboto font-medium rounded-lg border px-6 py-2.5 text-base transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)];
+    @apply border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark font-roboto font-medium rounded-lg border cursor-pointer px-6 py-2.5 text-base transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)];
   }
 
   .cta-btn:hover::after {

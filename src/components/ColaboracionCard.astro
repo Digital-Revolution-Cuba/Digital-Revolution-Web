@@ -30,7 +30,7 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
     <h3 class="colaboracion-title">{title}</h3>
     <p class="colaboracion-description">{description}</p>
     <div class="colaboracion-footer">
-      <a href={ctaLink} class="colaboracion-cta">
+      <a href={ctaLink} class="btn-primary text-sm px-3">
         {ctaText}
       </a>
     </div>
@@ -82,49 +82,27 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
   }
 
   .colaboracion-title {
-    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-family: 'Impact', 'Arial Black', sans-serif;
     color: var(--palette-accent-orange, #f49624);
-    font-size: 1.25rem;
     font-weight: 400;
+    font-size:1.4rem;
     margin: 0;
     line-height: 1.2;
   }
 
   .colaboracion-description {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.875rem;
+    color: var(--palette-accent-orange);
+    opacity:0.6;
+    font-family:'Roboto';
+    font-weight: 400;
+    font-size: 0.625rem;
     margin: 0;
-    line-height: 1.4;
   }
 
   .colaboracion-footer {
     display: flex;
     justify-content: flex-end;
     margin-top: 0.5rem;
-  }
-
-  .colaboracion-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1.25rem;
-    background: transparent;
-    border: 2px solid var(--palette-accent-cyan, #34dfde);
-    border-radius: 0.5rem;
-    color: var(--palette-accent-cyan, #34dfde);
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-
-  .colaboracion-cta:hover {
-    background: var(--palette-accent-cyan, #34dfde);
-    color: var(--palette-brand-dark, #011822);
-  }
-
-  .colaboracion-title {
-    font-size: clamp(1rem, 4vw, 1.25rem);
   }
 
   .colaboracion-description {

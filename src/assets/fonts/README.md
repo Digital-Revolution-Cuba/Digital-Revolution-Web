@@ -6,26 +6,16 @@ This folder contains self-hosted web fonts for the Digital Revolution Web projec
 
 Download these font files from [google-webfonts-helper](https://gwfh.mranftl.com/fonts) and place them in `public/fonts/`:
 
-### Barlow Semi Condensed
+### Roboto
+- `roboto-regular.woff2` (400) 
+- `roboto-medium.woff2` (500)
+- `roboto-bold.woff2` (700)
 
-- `barlow-semi-condensed-v15-latin-regular.woff2` (400)
-- `barlow-semi-condensed-v15-latin-regular.woff` (400)
-- `barlow-semi-condensed-v15-latin-600.woff2` (600)
-- `barlow-semi-condensed-v15-latin-600.woff` (600)
-- `barlow-semi-condensed-v15-latin-700.woff2` (700)
-- `barlow-semi-condensed-v15-latin-700.woff` (700)
+### Inter
+- `inter-variable-font-slnt-wght.woff2` (100-900)
 
-### Rubik
-
-- `rubik-v28-latin-regular.woff2` (400)
-- `rubik-v28-latin-regular.woff` (400)
-- `rubik-v28-latin-700.woff2` (700)
-- `rubik-v28-latin-700.woff` (700)
-
-### Saira Stencil One
-
-- `saira-stencil-one-v16-latin-regular.woff2` (400)
-- `saira-stencil-one-v16-latin-regular.woff` (400)
+### Impact
+- `Impact.woff2`
 
 ## Instructions
 
