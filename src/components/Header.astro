@@ -138,12 +138,11 @@ const navLinks = [
     --header-radius: clamp(1.5rem, 3vw, 2.5rem);
     --header-top: clamp(1rem, 2vw, 2rem);
 
-    position: fixed;
+    position: sticky;
     top: var(--header-top);
-    left: 50%;
-    transform: translateX(-50%);
     z-index: 50;
     width: min(95%, 1450px);
+    margin:auto;
     transition: transform 0.5s ease-in-out;
   }
 
