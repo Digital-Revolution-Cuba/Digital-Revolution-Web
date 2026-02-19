@@ -406,7 +406,7 @@ body {
   }
 
   .btn-primary {
-    @apply border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark font-roboto font-medium rounded-lg border cursor-pointer px-6 py-2.5 text-base transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)];
+    @apply text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark font-roboto font-medium rounded-lg cursor-pointer px-6 py-2.5 text-base transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)];
   }
 
   .cta-btn:hover::after {

@@ -50,14 +50,14 @@ const formatDate = (date: Date) => {
     {/* Section 1: Header/Intro - Dark Background */}
     <section class="collab-hero py-24 md:py-32">
       <div class="container mx-auto px-6">
-        <div class="animate-fade-in max-w-4xl opacity-0">
+        <div class="animate-fade-in max-w-4xl flex flex-col gap-6 opacity-0">
           <h1
-            class="mb-8 text-6xl leading-none font-black tracking-tighter text-white md:text-8xl"
+            class="hero-title"
           >
-            COLABORACIONES <span class="text-stroke-cyan">DESTACADAS</span>
+          Colaboraciones <br/><span class="text-stroke-cyan">Destacadas</span>
           </h1>
           <p
-            class="max-w-2xl text-xl leading-relaxed font-light text-gray-400 md:text-2xl"
+            class="hero-description"
           >
             Descubre proyectos innovadores y únete a nuestra comunidad creativa.
             Explora colaboraciones activas y pasadas que transforman ideas en
@@ -75,14 +75,12 @@ const formatDate = (date: Date) => {
       <div class="container mx-auto px-6">
         {/* Section Header */}
         <div class="mb-16">
-          <div class="mb-4 flex items-center gap-4">
             <h2
-              class="text-4xl font-black tracking-tight text-black uppercase md:text-6xl"
+              class="text-2xl font-impact! text-black "
             >
               Colaboraciones Activas
             </h2>
-          </div>
-          <p class="text-xl font-medium text-black/70">
+          <p class="text-md text-black/70!">
             Proyectos en curso donde puedes participar ahora
           </p>
         </div>
@@ -119,21 +117,19 @@ const formatDate = (date: Date) => {
 
     {/* Section 3: Finished Collaborations - Dark Background */}
     <section class="collab-section-finished bg-brand-background-global py-24">
-      <div class="container mx-auto px-6">
+      <div class="container mx-auto px-3">
         <button
           id="toggle-finished"
-          class="group bg-brand-navy/50 hover:bg-brand-navy flex w-full items-center justify-between rounded-3xl border border-white/5 p-10 text-left transition-all duration-500"
+          class="group bg-brand-navy/50 hover:bg-brand-navy flex w-full items-center justify-between rounded-3xl border border-white/5 p-5 md:p-8 text-left transition-all duration-500"
           aria-expanded="false"
         >
           <div>
-            <div class="mb-3 flex items-center gap-5">
               <h2
-                class="text-4xl font-black tracking-tight text-white uppercase md:text-5xl"
+                class="text-white font-impact! text-2xl"
               >
                 Colaboraciones Finalizadas
               </h2>
-            </div>
-            <p class="ml-16 text-lg font-light text-gray-400">
+            <p class="text-md text-gray-400">
               Proyectos completados que inspiraron a nuestra comunidad
             </p>
           </div>
@@ -190,14 +186,14 @@ const formatDate = (date: Date) => {
 
     {/* Section 4: CTA - Orange Background */}
     <section class="collab-cta bg-accent-orange px-6 py-32">
-      <div class="container mx-auto max-w-4xl text-center">
+      <div class="container flex flex-col gap-4 mx-auto max-w-3xl md:items-center md:text-center">
         <h2
-          class="mb-8 text-5xl leading-none font-black tracking-tighter text-black uppercase md:text-7xl"
+          class="text-2xl font-impact! font-black text-black"
         >
           ¿Quieres colaborar con nosotros?
         </h2>
         <p
-          class="mx-auto mb-12 max-w-2xl text-xl font-medium text-black/80 md:text-2xl"
+          class="text-md font-normal text-black/70"
         >
           Tenemos oportunidades emocionantes para creadores, desarrolladores,
           diseñadores y emprendedores. Únete a nuestra comunidad y haz que tu
@@ -205,7 +201,7 @@ const formatDate = (date: Date) => {
         </p>
         <a
           href="/contacto"
-          class="inline-block rounded-2xl bg-black px-12 py-5 text-xl font-black tracking-widest text-white uppercase transition-all duration-300 hover:scale-105 hover:bg-gray-900 hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
+          class="btn-primary w-fit"
         >
           Proponer Colaboración
         </a>
@@ -235,6 +231,29 @@ const formatDate = (date: Date) => {
 </script>
 
 <style>
+
+  .hero-title {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--color-text-primary, #ffffff);
+    /* Fluid scale: controlled range 48px - 80px */
+    font-size: clamp(3rem, 2rem + 4vw, 5rem);
+    text-shadow: 0px 4px 4px #00000040;
+    display: inline-block;
+    transform: scaleX(1.15);
+    transform-origin: left;
+  }
+
+  .hero-description {
+    color: var(--color-text-secondary, #a0a0a0);
+    line-height: 1.5;
+    /* Fluid text size */
+    font-size: clamp(1rem, 0.6rem + 0.5vw, 1.375rem);
+    max-width: 500px;
+  }
+
+
   .collab-page-container {
     background: #001018;
     overflow-x: hidden;
@@ -243,6 +262,7 @@ const formatDate = (date: Date) => {
   .text-stroke-cyan {
     -webkit-text-stroke: 1.5px #34dfde;
     color: transparent;
+    font-family:'Impact';
   }
 
   @keyframes fadeIn {
@@ -287,5 +307,22 @@ const formatDate = (date: Date) => {
         rgba(151, 71, 255, 0.05),
         transparent 40%
       );
+  }
+  @media (min-width: 1024px) {
+
+    .hero-title {
+      font-size: clamp(3.5rem, 3rem + 2vw, 5rem);
+    }
+  }
+
+  @media (max-width: 767px) {
+
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 3.5rem);
+    }
+
+    .hero-description {
+      font-size: clamp(0.9rem, 3.5vw, 1.125rem);
+    }
   }
 </style>
