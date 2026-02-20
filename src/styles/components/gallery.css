@@ -106,6 +106,7 @@
 /* Responsive breakpoints */
 
 /* Mobile: 1 card visible, nearly full viewport minus nav buttons */
+/* nav offset: 2 × 48px buttons + 2 × 4px gaps + 2 × 8px section padding = 120px */
 @media (max-width: 640px) {
   .gallery-section {
     min-height: 70dvh;
@@ -123,12 +124,12 @@
   }
 
   .gallery-container {
-    max-width: calc(100vw - 5rem);
+    max-width: calc(100vw - 120px);
   }
 
-  /* Card fills container: 9rem = 2×nav-btn + gaps + wrapper-padding */
+  /* 1 card per view: full width minus both nav buttons + gaps + padding */
   .gallery-item {
-    width: calc(100dvw - 9rem);
+    width: calc(100dvw - 120px);
     max-width: 285px;
     padding: 0 4px;
   }
@@ -145,12 +146,12 @@
   }
 
   .gallery-container {
-    max-width: calc(100vw - 6rem);
+    max-width: calc(100vw - 120px);
   }
 
   /* 2 cards per view: share the available space minus nav + gaps */
   .gallery-item {
-    width: calc((100dvw - 9rem) / 2);
+    width: calc((100dvw - 120px) / 2);
     max-width: 285px;
   }
 }
@@ -158,16 +159,44 @@
 /* Tablets: 3 cards visible */
 @media (min-width: 769px) and (max-width: 1023px) {
   .gallery-inner-container {
-    max-width: min(900px, calc(100vw - 2rem));
+    max-width: min(960px, calc(100vw - 2rem));
   }
 
   .gallery-container {
-    max-width: calc(100% - 6rem);
+    max-width: calc(100vw - 120px);
   }
 
   /* 3 cards per view */
   .gallery-item {
-    width: calc((100dvw - 9rem) / 3);
+    width: calc((100dvw - 120px) / 3);
+    max-width: 285px;
+  }
+}
+
+/* Landscape phones (e.g. 390×852 rotated → 852×390): show 3 cards */
+@media (orientation: landscape) and (max-height: 500px) {
+  .gallery-section {
+    min-height: 90dvh;
+    padding: 2rem 0.5rem;
+  }
+
+  .category-controls {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+
+  .gallery-inner-container {
+    max-width: calc(100vw - 2rem);
+    gap: 0.25rem;
+  }
+
+  .gallery-container {
+    max-width: calc(100vw - 120px);
+  }
+
+  /* 3 cards per view in landscape */
+  .gallery-item {
+    width: calc((100dvw - 120px) / 3);
     max-width: 285px;
   }
 }
