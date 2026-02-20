@@ -8,10 +8,10 @@ import Footer from '../components/Footer.astro';
 import Hero from '../components/Hero.astro';
 import JoinOurCommunity from '../components/JoinOurCommunity.astro';
 import { arteGallery, fotografiaGallery, musicaGallery } from '../data';
-
-export const prerender = true;
 import Layout from '../layouts/Layout.astro';
 import type { CategoryConfig } from '../types/gallery.types';
+
+export const prerender = true;
 
 // Gallery configuration
 const galleryCategories: CategoryConfig[] = [
