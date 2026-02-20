@@ -3,8 +3,8 @@
  * Handles slider state, navigation, and keyboard controls
  */
 
-import type { CategoryType } from '../data/types';
-import { debounce } from '../utils/debounce';
+import type { CategoryType } from "../data/types";
+import { debounce } from "../utils/debounce";
 
 export interface SliderState {
   currentIndex: number;
@@ -24,7 +24,7 @@ export function createGallerySlider(
 ) {
   const state: SliderState = {
     currentIndex: 0,
-    currentCategory: 'arte',
+    currentCategory: "arte",
     isAnimating: false,
   };
 
@@ -47,21 +47,33 @@ export function createGallerySlider(
 
   /**
    * Get responsive values based on viewport width
+   * nav offset = 2×48px buttons + 2×4px gaps + 2×8px section padding = 120px
+   * Matches the CSS calc() formulas in gallery.css and card components.
    */
   function getResponsiveValues() {
     const width = window.innerWidth;
+    const height = window.innerHeight;
 
-    if (width < 640) {
+    // Landscape phones (e.g. 390×852 rotated → 852×390): 3 cards
+    const isLandscapePhone = height <= 500 && width > height;
+
+    if (isLandscapePhone) {
+      return {
+        itemWidth: Math.min(285, (width - 120) / 3),
+        visibleImages: 3,
+        imagesPerPage: 3,
+      };
+    } else if (width < 640) {
       // Mobile: 1 card
       return {
-        itemWidth: Math.min(285, width - 80),
+        itemWidth: Math.min(285, width - 120),
         visibleImages: 1,
         imagesPerPage: 1,
       };
     } else if (width < 768) {
       // Small tablet: 2 cards
       return {
-        itemWidth: Math.min(285, (width - 100) / 2),
+        itemWidth: Math.min(285, (width - 120) / 2),
         visibleImages: 2,
         imagesPerPage: 2,
       };
@@ -108,16 +120,16 @@ export function createGallerySlider(
     // Update button states
     prevButton.disabled = state.currentIndex <= 0;
     nextButton.disabled = state.currentIndex >= maxIndex;
-    prevButton.style.opacity = state.currentIndex <= 0 ? '0.5' : '1';
-    nextButton.style.opacity = state.currentIndex >= maxIndex ? '0.5' : '1';
+    prevButton.style.opacity = state.currentIndex <= 0 ? "0.5" : "1";
+    nextButton.style.opacity = state.currentIndex >= maxIndex ? "0.5" : "1";
 
     // Update dots if pagination is present
     if (paginationElement) {
       const dots = Array.from(
-        paginationElement.querySelectorAll('.pagination-dot'),
+        paginationElement.querySelectorAll(".pagination-dot"),
       );
       dots.forEach((dot, i) =>
-        dot.classList.toggle('active', i === state.currentIndex),
+        dot.classList.toggle("active", i === state.currentIndex),
       );
     }
   }
@@ -125,7 +137,7 @@ export function createGallerySlider(
   function calculateLayout() {
     // Prefer DOM measurements when available so sizing matches rendered cards
     const firstItem = sliderElement.querySelector(
-      '.card-item, .gallery-item',
+      ".card-item, .gallery-item",
     ) as HTMLElement | null;
     if (firstItem && viewportElement) {
       itemWidthFromDom = firstItem.offsetWidth;
@@ -142,7 +154,7 @@ export function createGallerySlider(
       itemWidthFromDom = 0;
       gapFromDom = 0;
       if (viewportElement) {
-        viewportElement.style.maxWidth = '';
+        viewportElement.style.maxWidth = "";
       }
     }
   }
@@ -155,21 +167,21 @@ export function createGallerySlider(
     // Update active item count
     activeTotalImages = getVisibleItemCount();
 
-    paginationElement.innerHTML = '';
+    paginationElement.innerHTML = "";
     const { imagesPerPage } = getResponsiveValues();
     const numPages = Math.max(1, Math.ceil(activeTotalImages / imagesPerPage));
 
     for (let i = 0; i < numPages; i++) {
-      const dot = document.createElement('button');
-      dot.className = `pagination-dot ${i === state.currentIndex ? 'active' : ''}`;
-      dot.setAttribute('aria-label', `Ir a página ${i + 1}`);
+      const dot = document.createElement("button");
+      dot.className = `pagination-dot ${i === state.currentIndex ? "active" : ""}`;
+      dot.setAttribute("aria-label", `Ir a página ${i + 1}`);
       const onClick = () => {
         state.currentIndex = i;
         updateSlider();
       };
-      dot.addEventListener('click', onClick);
+      dot.addEventListener("click", onClick);
       paginationElement.appendChild(dot);
-      dotCleanups.push(() => dot.removeEventListener('click', onClick));
+      dotCleanups.push(() => dot.removeEventListener("click", onClick));
     }
   }
 
@@ -222,17 +234,17 @@ export function createGallerySlider(
         Math.ceil(activeTotalImages / imagesPerPage) - 1,
       );
 
-      if (e.key === 'ArrowLeft' && state.currentIndex > 0) {
+      if (e.key === "ArrowLeft" && state.currentIndex > 0) {
         navigatePrevious();
-      } else if (e.key === 'ArrowRight' && state.currentIndex < maxIndex) {
+      } else if (e.key === "ArrowRight" && state.currentIndex < maxIndex) {
         navigateNext();
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }
 
@@ -248,10 +260,10 @@ export function createGallerySlider(
       updateSlider();
     }, 250);
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }
 
@@ -263,15 +275,15 @@ export function createGallerySlider(
     generateDots();
     updateSlider();
 
-    prevButton.addEventListener('click', navigatePrevious);
-    nextButton.addEventListener('click', navigateNext);
+    prevButton.addEventListener("click", navigatePrevious);
+    nextButton.addEventListener("click", navigateNext);
 
     const cleanupKeyboard = setupKeyboardNavigation();
     const cleanupResize = setupResizeHandler();
 
     return () => {
-      prevButton.removeEventListener('click', navigatePrevious);
-      nextButton.removeEventListener('click', navigateNext);
+      prevButton.removeEventListener("click", navigatePrevious);
+      nextButton.removeEventListener("click", navigateNext);
       cleanupKeyboard();
       cleanupResize();
       dotCleanups.forEach((cleanup) => cleanup());
