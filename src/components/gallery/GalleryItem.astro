@@ -152,9 +152,10 @@ const { item } = Astro.props;
   }
 
   /* Responsive sizing - mantener proporciones */
+  /* nav offset = 120px; gap between cards = 1rem (16px) */
   @media (max-width: 640px) {
     .gallery-item {
-      width: calc(100dvw - 80px) !important;
+      width: calc(100dvw - 120px) !important;
       max-width: 285px !important;
     }
     .gallery-item img {
@@ -169,8 +170,9 @@ const { item } = Astro.props;
   }
 
   @media (min-width: 641px) and (max-width: 768px) {
+    /* 2 cards: (available - 1 gap) / 2 */
     .gallery-item {
-      width: calc((100dvw - 100px) / 2) !important;
+      width: calc((100dvw - 120px - 1rem) / 2) !important;
       max-width: 285px !important;
     }
     .artist-name {
@@ -179,12 +181,30 @@ const { item } = Astro.props;
   }
 
   @media (min-width: 769px) and (max-width: 1023px) {
+    /* 3 cards: (available - 2 gaps) / 3 */
     .gallery-item {
-      width: calc((100dvw - 120px) / 3) !important;
+      width: calc((100dvw - 120px - 2rem) / 3) !important;
       max-width: 285px !important;
     }
     .artist-name {
       font-size: 2.25rem;
+    }
+  }
+
+  /* Landscape phones (e.g. 390×852 rotated → 852×390): 3 cards */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .gallery-item {
+      width: calc((100dvw - 120px - 2rem) / 3) !important;
+      max-width: 285px !important;
+    }
+    .gallery-item img {
+      min-height: 220px;
+    }
+    .artist-name {
+      font-size: 1.5rem;
+    }
+    .artist-role {
+      font-size: 0.8rem;
     }
   }
 

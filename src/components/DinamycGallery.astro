@@ -149,7 +149,7 @@ const categories: readonly CategoryConfig[] = [
       /* Gallery viewport */
       .gallery-viewport {
         width: 100%;
-        overflow: hidden;
+        overflow: visible;
         position: relative;
         /* add bottom padding so card bottoms and shadows are visible and not clipped */
         padding-bottom: 1.25rem;
@@ -199,7 +199,7 @@ const categories: readonly CategoryConfig[] = [
         }
 
         .gallery-container {
-          max-width: calc(100vw - 5rem);
+          max-width: calc(100vw - 120px);
         }
       }
 
@@ -214,30 +214,30 @@ const categories: readonly CategoryConfig[] = [
         }
 
         .gallery-container {
-          max-width: calc(100vw - 6rem);
+          max-width: calc(100vw - 120px);
         }
       }
 
       /* Tablets: 3 cards visible (769px - 1023px) */
       @media (min-width: 769px) and (max-width: 1023px) {
         .gallery-inner-container {
-          max-width: min(900px, calc(100vw - 2rem));
+          max-width: min(960px, calc(100vw - 2rem));
         }
 
         .gallery-container {
-          max-width: calc(100% - 6rem);
+          max-width: calc(100vw - 120px);
         }
       }
 
       /* Desktop: 4 cards visible (1024px+) */
       @media (min-width: 1024px) {
         .gallery-inner-container {
-          max-width: 1240px;
+          max-width: 1280px;
         }
 
         .gallery-container {
-          width: 1140px;
-          max-width: 1140px;
+          width: calc(4 * 285px + 3 * 1rem + 4px);
+          max-width: calc(4 * 285px + 3 * 1rem + 4px);
         }
       }
 

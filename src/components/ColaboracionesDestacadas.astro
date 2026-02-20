@@ -59,7 +59,7 @@ const totalCards = colaboracionesData.length;
           </button>
 
           <!-- Cards viewport -->
-          <div class="cards-viewport">
+          <div class="cards-viewport" id="cardsViewportColab">
             <div
               id="cardSliderColab"
               class="cards-track"
@@ -214,7 +214,14 @@ const totalCards = colaboracionesData.length;
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Card wrapper — explicit width prevents w-full on card resolving
+     against an unsized flex parent. flex-shrink: 0 is also required
+     (default is 1, which allows shrinking below the declared width). */
   .card-item {
+    /* Mobile-first: nearly full viewport minus nav buttons + padding */
+    width: calc(100dvw - 9rem);
+    max-width: 300px;
+    min-width: 0;
     flex-shrink: 0;
   }
 
@@ -312,7 +319,7 @@ const totalCards = colaboracionesData.length;
   }
 
   /* ===================================
-     Responsive — matches Concursos pattern
+     Responsive — mobile-first, expand outward
      =================================== */
   @media (max-width: 640px) {
     .colaboraciones-navigation {
@@ -324,6 +331,21 @@ const totalCards = colaboracionesData.length;
     }
     .cards-track {
       gap: 1rem;
+    }
+  }
+
+  /* Tablet: 2 cards */
+  @media (min-width: 641px) and (max-width: 1023px) {
+    .card-item {
+      width: calc((100dvw - 5rem) / 2);
+      max-width: 300px;
+    }
+  }
+
+  /* Desktop: fixed 300 px cards */
+  @media (min-width: 1024px) {
+    .card-item {
+      width: 300px;
     }
   }
 

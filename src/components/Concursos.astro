@@ -151,7 +151,16 @@ const totalCards = concursosData.length;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Card wrapper — explicit width is the source of truth.
+     JS reads offsetWidth from this element; without it, w-full
+     on the child card resolves against an unstable flex parent.
+     9rem = 2 × nav-btn (~44px each) + 2 × gap (0.5rem each) + wrapper-padding (0.8rem × 2)
+     This matches the ColaboracionesDestacadas formula exactly. */
   .card-item-concursos {
+    /* Mobile-first: nearly full viewport minus nav buttons + padding */
+    width: calc(100dvw - 9rem);
+    max-width: 300px;
+    min-width: 0; /* prevent flex blow-out */
     flex-shrink: 0;
   }
 
@@ -221,7 +230,7 @@ const totalCards = concursosData.length;
     opacity: 1;
   }
 
-  /* Responsive */
+  /* Responsive — mobile-first, expand outward */
   @media (max-width: 640px) {
     .concursos-navigation {
       gap: 0.5rem;
@@ -232,6 +241,27 @@ const totalCards = concursosData.length;
     }
     .cards-track-concursos {
       gap: 1rem;
+    }
+  }
+
+  /* Tablet: 2 cards — each takes half the available space */
+  @media (min-width: 641px) and (max-width: 1023px) {
+    .card-item-concursos {
+      width: calc((100dvw - 9rem) / 2);
+      max-width: 300px;
+    }
+  }
+
+  /* Desktop: fixed 300 px cards */
+  @media (min-width: 1024px) {
+    .card-item-concursos {
+      width: 300px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cards-track-concursos {
+      transition: none;
     }
   }
 </style>
