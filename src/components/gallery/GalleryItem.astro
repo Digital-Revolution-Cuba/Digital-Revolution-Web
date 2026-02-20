@@ -1,5 +1,5 @@
 ---
-import type { ArteGalleryItem } from '../../data/types';
+import type { ArteGalleryItem } from "../../data/types";
 
 interface Props {
   item: ArteGalleryItem;
@@ -89,9 +89,7 @@ const { item } = Astro.props;
   .gallery-item img {
     display: block;
     width: 100%;
-    height: calc(
-
-    ); /* Let image determine its own height based on aspect ratio */
+    height: calc(); /* Let image determine its own height based on aspect ratio */
     min-height: 440px; /* Maintain minimum height */
     object-fit: cover;
   }

@@ -35,7 +35,7 @@ const talents = defineCollection({
         z.object({
           title: z.string(),
           link: z.string().url().optional(),
-        }),
+        })
       )
       .default([]),
     externalLink: z.string().url().optional(),
@@ -68,9 +68,7 @@ const concursos = defineCollection({
       "video",
       "escritura",
     ]),
-    status: z
-      .enum(["activo", "proximo", "finalizado", "cerrado"])
-      .default("activo"),
+    status: z.enum(["activo", "proximo", "finalizado", "cerrado"]).default("activo"),
 
     // Visual
     image: z.string(),
@@ -89,13 +87,13 @@ const concursos = defineCollection({
         position: z.number(),
         prize: z.string(),
         value: z.string().optional(),
-      }),
+      })
     ),
     requisitos: z.array(
       z.object({
         id: z.string(),
         description: z.string(),
-      }),
+      })
     ),
 
     // Participation
@@ -125,19 +123,9 @@ const colaboraciones = defineCollection({
     descriptionLong: z.string().optional(),
 
     // Classification
-    status: z
-      .enum(["activa", "finalizada", "pausada", "planificada"])
-      .default("activa"),
+    status: z.enum(["activa", "finalizada", "pausada", "planificada"]).default("activa"),
     areas: z.array(
-      z.enum([
-        "arte",
-        "musica",
-        "tecnologia",
-        "educacion",
-        "contenido",
-        "eventos",
-        "investigacion",
-      ]),
+      z.enum(["arte", "musica", "tecnologia", "educacion", "contenido", "eventos", "investigacion"])
     ),
 
     // Partner Information
@@ -165,7 +153,7 @@ const colaboraciones = defineCollection({
           name: z.string(),
           role: z.string(),
           avatar: z.string().optional(),
-        }),
+        })
       )
       .default([]),
     impacto: z
@@ -173,7 +161,7 @@ const colaboraciones = defineCollection({
         z.object({
           metric: z.string(),
           value: z.string(),
-        }),
+        })
       )
       .default([]),
     objetivos: z.array(z.string()).default([]),

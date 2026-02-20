@@ -58,12 +58,6 @@
   ],
   "externalLink": "https://example.com/hackathon-2025",
   "caseStudyLink": "https://example.com/hackathon-case-study",
-  "tags": [
-    "hackathon",
-    "desarrollo",
-    "innovación",
-    "emprendimiento",
-    "networking"
-  ],
+  "tags": ["hackathon", "desarrollo", "innovación", "emprendimiento", "networking"],
   "featured": false
 }

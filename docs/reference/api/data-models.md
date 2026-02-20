@@ -49,12 +49,12 @@ interface Talent {
 ```typescript
 const talent: Talent = {
   id: 1,
-  name: 'María García',
-  role: 'Fotógrafa de Retratos',
-  location: 'Madrid, España',
-  image: 'https://example.com/maria.jpg',
+  name: "María García",
+  role: "Fotógrafa de Retratos",
+  location: "Madrid, España",
+  image: "https://example.com/maria.jpg",
   rating: 4.9,
-  skills: ['Fotografía', 'Retrato', 'Edición'],
+  skills: ["Fotografía", "Retrato", "Edición"],
   followers: 12500,
   views: 45000,
   featured: true,
@@ -85,7 +85,7 @@ interface GalleryItem {
   image: string;
 
   /** Category/type */
-  category: 'arte' | 'musica' | 'fotografia';
+  category: "arte" | "musica" | "fotografia";
 }
 ```
 
@@ -95,7 +95,7 @@ Extends `GalleryItem` for music content.
 
 ```typescript
 interface MusicItem extends GalleryItem {
-  category: 'musica';
+  category: "musica";
 
   /** Audio file URL */
   audioUrl: string;
@@ -113,14 +113,14 @@ interface MusicItem extends GalleryItem {
 ```typescript
 const musicItem: MusicItem = {
   id: 1,
-  title: 'Melodía Nocturna',
-  artist: 'Carlos Mendoza',
-  description: 'Una composición tranquila para piano y cuerdas',
-  image: '/covers/melodia-nocturna.jpg',
-  category: 'musica',
-  audioUrl: '/audio/melodia-nocturna.mp3',
+  title: "Melodía Nocturna",
+  artist: "Carlos Mendoza",
+  description: "Una composición tranquila para piano y cuerdas",
+  image: "/covers/melodia-nocturna.jpg",
+  category: "musica",
+  audioUrl: "/audio/melodia-nocturna.mp3",
   duration: 245, // 4:05
-  genre: 'Clásica',
+  genre: "Clásica",
 };
 ```
 
@@ -130,7 +130,7 @@ Extends `GalleryItem` for photography.
 
 ```typescript
 interface FotografiaItem extends GalleryItem {
-  category: 'fotografia';
+  category: "fotografia";
 
   /** Photo location */
   location: string;
@@ -167,13 +167,13 @@ interface Contest {
   backgroundImage: string;
 
   /** Contest status */
-  status: 'active' | 'upcoming' | 'ended';
+  status: "active" | "upcoming" | "ended";
 
   /** Submission deadline */
   deadline: Date;
 
   /** Contest category */
-  category: 'arte' | 'musica' | 'fotografia' | 'escritura' | 'codigo';
+  category: "arte" | "musica" | "fotografia" | "escritura" | "codigo";
 
   /** Prize information */
   prize?: string;
@@ -188,13 +188,13 @@ interface Contest {
 ```typescript
 const contest: Contest = {
   id: 1,
-  title: 'Concurso de Fotografía Urbana',
-  description: 'Captura la esencia de la ciudad',
-  backgroundImage: '/contests/urban-photo-bg.jpg',
-  status: 'active',
-  deadline: new Date('2026-02-28'),
-  category: 'fotografia',
-  prize: 'Cámara profesional + exposición',
+  title: "Concurso de Fotografía Urbana",
+  description: "Captura la esencia de la ciudad",
+  backgroundImage: "/contests/urban-photo-bg.jpg",
+  status: "active",
+  deadline: new Date("2026-02-28"),
+  category: "fotografia",
+  prize: "Cámara profesional + exposición",
   participants: 156,
 };
 ```
@@ -223,7 +223,7 @@ interface Collaboration {
   url?: string;
 
   /** Collaboration status */
-  status?: 'active' | 'completed' | 'upcoming';
+  status?: "active" | "completed" | "upcoming";
 
   /** Project technologies/skills */
   technologies?: string[];
@@ -238,12 +238,12 @@ interface Collaboration {
 ```typescript
 const collaboration: Collaboration = {
   id: 1,
-  name: 'Empresa Alpha',
-  description: 'Plataforma web escalable para gestión empresarial.',
-  logo: '/logos/alpha.svg',
-  url: 'https://alpha.example.com',
-  status: 'active',
-  technologies: ['React', 'Node.js', 'PostgreSQL'],
+  name: "Empresa Alpha",
+  description: "Plataforma web escalable para gestión empresarial.",
+  logo: "/logos/alpha.svg",
+  url: "https://alpha.example.com",
+  status: "active",
+  technologies: ["React", "Node.js", "PostgreSQL"],
   collaborators: 8,
 };
 ```
@@ -278,7 +278,7 @@ interface FilterParams {
   category?: string;
   search?: string;
   sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: "asc" | "desc";
 }
 ```
 
@@ -293,7 +293,7 @@ interface FilterParams {
 interface BaseProps {
   className?: string;
   id?: string;
-  'aria-label'?: string;
+  "aria-label"?: string;
 }
 
 /** Props for card-like components */
@@ -306,17 +306,17 @@ interface CardProps extends BaseProps {
 
 /** Props for button components */
 interface ButtonProps extends BaseProps {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: "primary" | "secondary" | "ghost" | "danger";
+  size?: "sm" | "md" | "lg";
   disabled?: boolean;
   loading?: boolean;
   onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
 }
 
 /** Props for form input components */
 interface InputProps extends BaseProps {
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel';
+  type?: "text" | "email" | "password" | "number" | "tel";
   placeholder?: string;
   value?: string;
   onChange?: (value: string) => void;
@@ -334,25 +334,20 @@ interface InputProps extends BaseProps {
 
 ```typescript
 /** Valid gallery categories */
-type GalleryCategory = 'arte' | 'musica' | 'fotografia';
+type GalleryCategory = "arte" | "musica" | "fotografia";
 
 /** Valid contest categories */
-type ContestCategory =
-  | 'arte'
-  | 'musica'
-  | 'fotografia'
-  | 'escritura'
-  | 'codigo';
+type ContestCategory = "arte" | "musica" | "fotografia" | "escritura" | "codigo";
 
 /** Valid talent roles */
 type TalentRole =
-  | 'Fotógrafo'
-  | 'Músico'
-  | 'Artista Digital'
-  | 'Desarrollador'
-  | 'Escritor'
-  | 'Diseñador'
-  | 'Game Developer';
+  | "Fotógrafo"
+  | "Músico"
+  | "Artista Digital"
+  | "Desarrollador"
+  | "Escritor"
+  | "Diseñador"
+  | "Game Developer";
 ```
 
 ### Category Configuration
@@ -375,18 +370,18 @@ interface CategoryConfig {
 ```typescript
 const categories: CategoryConfig[] = [
   {
-    id: 'arte',
-    label: 'Arte',
+    id: "arte",
+    label: "Arte",
     items: arteGallery,
   },
   {
-    id: 'musica',
-    label: 'Música',
+    id: "musica",
+    label: "Música",
     items: musicaGallery,
   },
   {
-    id: 'fotografia',
-    label: 'Fotografía',
+    id: "fotografia",
+    label: "Fotografía",
     items: fotografiaGallery,
   },
 ];
@@ -414,7 +409,7 @@ interface SearchContext {
   /** Sort configuration */
   sort: {
     field: string;
-    order: 'asc' | 'desc';
+    order: "asc" | "desc";
   };
 
   /** Pagination */
@@ -464,19 +459,19 @@ interface ResponsiveImageProps {
   aspectRatio?: string;
 
   /** Loading strategy */
-  loading?: 'lazy' | 'eager';
+  loading?: "lazy" | "eager";
 
   /** Decode strategy */
-  decoding?: 'async' | 'sync' | 'auto';
+  decoding?: "async" | "sync" | "auto";
 
   /** Fetch priority */
-  fetchpriority?: 'high' | 'low' | 'auto';
+  fetchpriority?: "high" | "low" | "auto";
 
   /** CSS class */
   class?: string;
 
   /** Object fit */
-  objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
+  objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
 
   /** Image quality (0-100) */
   quality?: number;
@@ -501,7 +496,7 @@ interface FormField<T = string> {
   value: T;
 
   /** Field type */
-  type: 'text' | 'email' | 'password' | 'textarea' | 'select' | 'checkbox';
+  type: "text" | "email" | "password" | "textarea" | "select" | "checkbox";
 
   /** Whether field is required */
   required?: boolean;
@@ -582,7 +577,7 @@ type FilterHandler = (filters: Record<string, any>) => void;
 // src/data/talents.ts
 
 /** Import types */
-import type { Talent } from './types';
+import type { Talent } from "./types";
 
 /** Export data array */
 export const talents: Talent[] = [
@@ -600,13 +595,13 @@ export function getTalentsBySkill(skill: string): Talent[] {
 
 /** Export constants */
 export const TALENT_CATEGORIES = [
-  'Fotografía',
-  'Diseño',
-  'Música',
-  'Video',
-  'Ilustración',
-  '3D',
-  'UI/UX',
+  "Fotografía",
+  "Diseño",
+  "Música",
+  "Video",
+  "Ilustración",
+  "3D",
+  "UI/UX",
 ] as const;
 ```
 

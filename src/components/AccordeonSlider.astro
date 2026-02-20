@@ -1,7 +1,7 @@
 ---
-import { accordeonConfig } from '../config/accordeonConfig';
-import { accordeonCards } from '../data/accordeonData';
-import type { AccordeonCard, AccordeonPage } from '../types/accordeon.types';
+import { accordeonConfig } from "../config/accordeonConfig";
+import { accordeonCards } from "../data/accordeonData";
+import type { AccordeonCard, AccordeonPage } from "../types/accordeon.types";
 
 /**
  * AccordeonSlider.astro
@@ -35,26 +35,22 @@ for (let i = 0; i < cards.length; i += cardsPerPage) {
 const totalPages = pages.length;
 
 // Card layout helpers — position 0, 1, 2 within each page
-const CARD_WIDTHS = ['15.5rem', '12.5rem', '13.75rem'] as const;
-const CARD_HEIGHT = '21.25rem';
+const CARD_WIDTHS = ["15.5rem", "12.5rem", "13.75rem"] as const;
+const CARD_HEIGHT = "21.25rem";
 
 function isEvenPosition(positionInPage: number): boolean {
   return positionInPage % 2 === 0;
 }
 ---
 
-<div
-  class="acordeon-wrapper"
-  data-cards-per-page={cardsPerPage}
-  data-total-pages={totalPages}
->
+<div class="acordeon-wrapper" data-cards-per-page={cardsPerPage} data-total-pages={totalPages}>
   <div class="acordeon-container" id="acordeonSlider">
     {
       pages.map((page, pageIndex) => (
         <div
-          class={`acordeon-page ${pageIndex === 0 ? 'active' : ''}`}
+          class={`acordeon-page ${pageIndex === 0 ? "active" : ""}`}
           data-page-index={pageIndex}
-          aria-hidden={pageIndex !== 0 ? 'true' : undefined}
+          aria-hidden={pageIndex !== 0 ? "true" : undefined}
         >
           {page.cards.map((card, posInPage) => {
             const even = isEvenPosition(posInPage);
@@ -63,8 +59,8 @@ function isEvenPosition(positionInPage: number): boolean {
               <div
                 class={`acordeon-item group relative transform transition-all duration-500 ${
                   even
-                    ? 'origin-left -translate-y-7 skew-y-18 hover:translate-y-14 hover:-skew-y-18'
-                    : 'origin-right -skew-y-25 hover:translate-y-24 hover:skew-y-25'
+                    ? "origin-left -translate-y-7 skew-y-18 hover:translate-y-14 hover:-skew-y-18"
+                    : "origin-right -skew-y-25 hover:translate-y-24 hover:skew-y-25"
                 } hover:z-50 hover:rotate-y-0 hover:rotate-z-0`}
                 style={`height: ${CARD_HEIGHT}; width: ${CARD_WIDTHS[posInPage] ?? CARD_WIDTHS[2]};`}
                 data-slide-index={globalIndex}
@@ -72,7 +68,7 @@ function isEvenPosition(positionInPage: number): boolean {
               >
                 <div
                   class={`flip-inner relative h-full w-full transition-transform duration-700 ${
-                    even ? 'group-hover:-rotate-y-180' : 'group-hover:rotate-y-180'
+                    even ? "group-hover:-rotate-y-180" : "group-hover:rotate-y-180"
                   }`}
                 >
                   {/* Front face — unique image */}
@@ -82,12 +78,12 @@ function isEvenPosition(positionInPage: number): boolean {
                       alt={card.alt}
                       width="248"
                       height="340"
-                      loading={pageIndex === 0 ? 'eager' : 'lazy'}
+                      loading={pageIndex === 0 ? "eager" : "lazy"}
                       decoding="async"
                       class={`h-full w-full border border-white object-cover shadow-2xl ${
                         even
-                          ? 'rounded-4xl rounded-tr-2xl rounded-bl-2xl'
-                          : 'rounded-4xl rounded-tl-2xl rounded-br-2xl'
+                          ? "rounded-4xl rounded-tr-2xl rounded-bl-2xl"
+                          : "rounded-4xl rounded-tl-2xl rounded-br-2xl"
                       }`}
                     />
                   </div>
@@ -96,8 +92,8 @@ function isEvenPosition(positionInPage: number): boolean {
                   <div
                     class={`flip-back bg-brand-navy absolute inset-0 flex h-full w-full rotate-y-180 items-center justify-center border border-white shadow-2xl backface-hidden ${
                       even
-                        ? 'rounded-4xl rounded-tr-2xl rounded-bl-2xl'
-                        : 'rounded-4xl rounded-tl-2xl rounded-br-2xl'
+                        ? "rounded-4xl rounded-tr-2xl rounded-bl-2xl"
+                        : "rounded-4xl rounded-tl-2xl rounded-br-2xl"
                     }`}
                   >
                     <span class="text-xl font-bold text-white">{card.backText}</span>
@@ -116,11 +112,11 @@ function isEvenPosition(positionInPage: number): boolean {
     {
       pages.map((page, pageIndex) => (
         <button
-          class={`acordeon-dot ${pageIndex === 0 ? 'active' : ''}`}
+          class={`acordeon-dot ${pageIndex === 0 ? "active" : ""}`}
           data-page-index={pageIndex}
           type="button"
           aria-label={`Ver página ${pageIndex + 1} de ${totalPages}`}
-          aria-current={pageIndex === 0 ? 'true' : undefined}
+          aria-current={pageIndex === 0 ? "true" : undefined}
         />
       ))
     }
@@ -206,7 +202,7 @@ function isEvenPosition(positionInPage: number): boolean {
 
   /* 44×44 px touch target (WCAG best practice) */
   .acordeon-dot::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -233,12 +229,12 @@ function isEvenPosition(positionInPage: number): boolean {
     }
 
     /* Even-positioned cards flip the opposite direction */
-    .acordeon-item.mobile-flipped[data-pos-in-page='0'] .flip-inner,
-    .acordeon-item.mobile-flipped[data-pos-in-page='2'] .flip-inner {
+    .acordeon-item.mobile-flipped[data-pos-in-page="0"] .flip-inner,
+    .acordeon-item.mobile-flipped[data-pos-in-page="2"] .flip-inner {
       transform: rotateY(-180deg) !important;
     }
 
-    .acordeon-item.mobile-flipped[data-pos-in-page='1'] .flip-inner {
+    .acordeon-item.mobile-flipped[data-pos-in-page="1"] .flip-inner {
       transform: rotateY(180deg) !important;
     }
   }
@@ -249,7 +245,7 @@ function isEvenPosition(positionInPage: number): boolean {
   }
 
   .acordeon-page.page-enter {
-    animation: pageFadeIn 0.4s cubic-bezier(0.0, 0, 0.2, 1) forwards;
+    animation: pageFadeIn 0.4s cubic-bezier(0, 0, 0.2, 1) forwards;
   }
 
   @keyframes pageFadeOut {
@@ -276,7 +272,7 @@ function isEvenPosition(positionInPage: number): boolean {
 
   /* Staggered card entrance within a page */
   .acordeon-page.page-enter .acordeon-item {
-    animation: cardReveal 0.4s cubic-bezier(0.0, 0, 0.2, 1) both;
+    animation: cardReveal 0.4s cubic-bezier(0, 0, 0.2, 1) both;
   }
 
   .acordeon-page.page-enter .acordeon-item:nth-child(1) {

@@ -73,6 +73,7 @@ pnpm install
 pnpm reads `package.json` and installs all required dependencies into `node_modules/`. This may take 1-2 minutes depending on your internet connection.
 
 **Expected output:**
+
 ```
 Progress: resolved 569, reused 479, downloaded 0, added 0, done
 ```
@@ -86,6 +87,7 @@ pnpm dev
 ```
 
 **Expected output:**
+
 ```
 astro  v5.16.6 ready in 1444 ms
 
@@ -115,17 +117,15 @@ Let's make a small change to verify everything works:
 4. Change the text to add "¡Hola!"
 
 **Before:**
+
 ```astro
-<h1 class="hero__title">
-  DIGITAL REVOLUTION
-</h1>
+<h1 class="hero__title">DIGITAL REVOLUTION</h1>
 ```
 
 **After:**
+
 ```astro
-<h1 class="hero__title">
-  ¡HOLA! DIGITAL REVOLUTION
-</h1>
+<h1 class="hero__title">¡HOLA! DIGITAL REVOLUTION</h1>
 ```
 
 5. Save the file
@@ -153,6 +153,7 @@ Digital-Revolution-Web/
 ```
 
 **Try exploring:**
+
 - Open `src/components/Header.astro` — This is the site header
 - Open `src/styles/global.css` — Global styles
 - Open `public/images/` — Image assets
@@ -164,11 +165,13 @@ Digital-Revolution-Web/
 ### Port 4321 Already in Use
 
 **Error:**
+
 ```
 Error: listen EADDRINUSE: address already in use :::4321
 ```
 
 **Solution:**
+
 ```bash
 # Kill the process using port 4321
 # Windows PowerShell:
@@ -181,11 +184,13 @@ pnpm dev
 ### Module Not Found Errors
 
 **Error:**
+
 ```
 Error: Cannot find module 'astro'
 ```
 
 **Solution:**
+
 ```bash
 # Re-install dependencies
 rm -rf node_modules
@@ -195,11 +200,13 @@ pnpm install
 ### Build Fails
 
 **Error:**
+
 ```
 [ERROR] Build failed
 ```
 
 **Solution:**
+
 ```bash
 # Clear cache and rebuild
 rm -rf .astro node_modules
@@ -229,7 +236,7 @@ In this tutorial, you:
 ✅ Installed dependencies  
 ✅ Ran the development server  
 ✅ Made your first code change  
-✅ Learned basic project structure  
+✅ Learned basic project structure
 
 **You're now ready to start developing!** 🚀
 

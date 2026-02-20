@@ -12,15 +12,19 @@
 ## 🎯 Quick Navigation by Need
 
 ### 🎓 I want to learn the basics
+
 → **[Tutorials](./tutorials/)** — Step-by-step lessons
 
 ### 🔧 I need to accomplish a specific task
+
 → **[How-To Guides](./how-to/)** — Practical solutions
 
 ### 📖 I need to look up technical details
+
 → **[Reference](./reference/)** — API documentation
 
 ### 💡 I want to understand concepts
+
 → **[Explanation](./explanation/)** — Architecture & design decisions
 
 ---
@@ -91,15 +95,15 @@ docs/
 
 ## 🛠️ Tech Stack Overview
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **Framework** | Astro 5.16+ | SSG with Islands Architecture |
-| **UI Components** | React 19 | Interactive islands only |
-| **Styling** | Tailwind CSS 4.1 | Utility-first CSS |
-| **Language** | TypeScript (strict) | Type-safe development |
-| **Content** | Content Collections | Type-safe content management |
-| **Images** | Astro Assets + Sharp | Optimized image processing |
-| **Package Manager** | pnpm 10+ | Fast, efficient installs |
+| Layer               | Technology           | Purpose                       |
+| ------------------- | -------------------- | ----------------------------- |
+| **Framework**       | Astro 5.16+          | SSG with Islands Architecture |
+| **UI Components**   | React 19             | Interactive islands only      |
+| **Styling**         | Tailwind CSS 4.1     | Utility-first CSS             |
+| **Language**        | TypeScript (strict)  | Type-safe development         |
+| **Content**         | Content Collections  | Type-safe content management  |
+| **Images**          | Astro Assets + Sharp | Optimized image processing    |
+| **Package Manager** | pnpm 10+             | Fast, efficient installs      |
 
 ---
 

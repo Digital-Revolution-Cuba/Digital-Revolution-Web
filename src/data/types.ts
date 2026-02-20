@@ -32,10 +32,7 @@ export interface FotografiaGalleryItem extends BaseGalleryItem {
   readonly date?: string;
 }
 
-export type GalleryItem =
-  | ArteGalleryItem
-  | MusicGalleryItem
-  | FotografiaGalleryItem;
+export type GalleryItem = ArteGalleryItem | MusicGalleryItem | FotografiaGalleryItem;
 
 export type CategoryType = "arte" | "musica" | "fotografia";
 

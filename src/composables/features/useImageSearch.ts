@@ -12,7 +12,7 @@ export function useImageSearch(images: readonly GalleryItem[]) {
   const filteredImages = useMemo(() => {
     if (!searchAuthor.trim()) return [...images];
     return images.filter((img) =>
-      img.creator.name.toLowerCase().includes(searchAuthor.toLowerCase()),
+      img.creator.name.toLowerCase().includes(searchAuthor.toLowerCase())
     );
   }, [images, searchAuthor]);
 

@@ -35,23 +35,24 @@ src/
 ### Principios de Diseño del Proyecto
 
 **Paleta de Colores (Design Tokens CSS)**:
+
 ```css
---palette-background: #001018        /* Fondo oscuro principal */
---palette-brand-navy: #002b38        /* Contenedores/Cards */
---palette-brand-dark: #011822        /* Elementos secundarios */
---palette-accent-cyan: #34dfde       /* Acento principal (CTAs) */
---palette-accent-purple: #9747ff     /* Categorías/Badges */
---palette-accent-orange: #f49624     /* Destacados/Warnings */
---palette-accent-yellow: #ffc943     /* Premios/Éxitos */
---palette-accent-blue: #19ceee       /* Links/Info */
+--palette-background: #001018 /* Fondo oscuro principal */ --palette-brand-navy: #002b38
+  /* Contenedores/Cards */ --palette-brand-dark: #011822 /* Elementos secundarios */
+  --palette-accent-cyan: #34dfde /* Acento principal (CTAs) */ --palette-accent-purple: #9747ff
+  /* Categorías/Badges */ --palette-accent-orange: #f49624 /* Destacados/Warnings */
+  --palette-accent-yellow: #ffc943 /* Premios/Éxitos */ --palette-accent-blue: #19ceee
+  /* Links/Info */;
 ```
 
 **Tipografía**:
+
 - **Headings**: Saira Stencil One (futurista/tech)
 - **Body**: Rubik (legible, moderna)
 - **UI Elements**: Barlow Semi Condensed (compacta, eficiente)
 
 **Efectos Visuales**:
+
 - Glass-morphism con `backdrop-filter: blur(10px)`
 - Gradientes sutiles con opacidades controladas
 - Animaciones CSS suaves (transformaciones, fade-ins)
@@ -66,6 +67,7 @@ src/
 **Objetivo**: Capturar atención inmediata y comunicar valor.
 
 **Elementos requeridos**:
+
 - Badge/etiqueta superior ("Concursos Creativos" con icono)
 - Título impactante con palabra destacada en gradiente
 - Descripción breve (2 líneas máx)
@@ -76,6 +78,7 @@ src/
 - Elementos decorativos (círculos/formas geométricas animadas)
 
 **Consideraciones**:
+
 - Altura: ~70vh en desktop, adaptable en mobile
 - Animaciones de entrada (fade-in, slide-up)
 - Fondo con gradiente sutil desde `--palette-background`
@@ -83,6 +86,7 @@ src/
 ### 2. Sistema de Filtrado y Búsqueda
 
 **Funcionalidad requerida**:
+
 - Filtro por categorías (fotografia, música, arte-digital, ilustración, diseño-gráfico, video, escritura)
 - Filtro por estado (activo, próximo, finalizado, cerrado)
 - Búsqueda por texto (título, descripción, tags)
@@ -90,12 +94,14 @@ src/
 - Botón "Limpiar filtros"
 
 **Implementación**:
+
 - Componente React interactivo (`ConcursosFilters.tsx`)
 - Estado gestionado con nanostores o React state
 - Animaciones de transición entre estados filtrados
 - Diseño sticky en scroll (desktop)
 
 **Accesibilidad**:
+
 - Roles ARIA apropiados (`role="search"`, `role="group"`)
 - Labels descriptivos para lectores de pantalla
 - Navegación por teclado completa (Tab, Enter, Escape)
@@ -104,11 +110,13 @@ src/
 ### 3. Grid de Concursos
 
 **Diseño responsive**:
+
 - Desktop (≥1024px): 3 columnas
 - Tablet (768px-1023px): 2 columnas
 - Mobile (<768px): 1 columna
 
 **Características de las tarjetas**:
+
 - Imagen destacada con lazy loading y aspect ratio 16:9
 - Badge de categoría con color temático
 - Badge de estado (activo, próximo, finalizado, cerrado)
@@ -120,6 +128,7 @@ src/
 - CTA "Ver detalles" con ícono de flecha
 
 **Efectos interactivos**:
+
 - Hover: elevación con `transform: translateY(-8px)`
 - Hover: glow effect con `box-shadow`
 - Transición suave de 300ms con `ease-out`
@@ -128,6 +137,7 @@ src/
 ### 4. Estado Vacío y Carga
 
 **Estados a considerar**:
+
 - Loading: Skeleton loaders con animación shimmer
 - Sin resultados: Mensaje amigable con ilustración/icono
 - Error: Mensaje de error con opción de reintentar
@@ -137,6 +147,7 @@ src/
 **Ubicación**: Después del grid, antes del footer
 
 **Contenido**:
+
 - Título: "¿Tienes una idea para un concurso?"
 - Descripción breve sobre cómo proponer concursos
 - Botón primario "Proponer Concurso"
@@ -149,27 +160,15 @@ src/
 ### Componentes Astro
 
 ```astro
-// src/pages/concursos/index.astro
----
-import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import ConcursosHero from '../../components/concursos/ConcursosHero.astro';
-import ConcursosFiltersIsland from '../../components/concursos/ConcursosFiltersIsland.astro';
-import ConcursosCTA from '../../components/concursos/ConcursosCTA.astro';
-
-const allConcursos = await getCollection('concursos');
-
-// Calcular estadísticas
-const concursosActivos = allConcursos.filter(c => 
-  c.data.status === 'activo' || c.data.status === 'proximo'
-);
-const totalParticipantes = allConcursos.reduce(
-  (sum, c) => sum + (c.data.currentParticipants || 0), 0
-);
-const totalPremios = allConcursos.reduce(
-  (sum, c) => sum + calcularValorPremios(c.data.premios), 0
-);
----
+// src/pages/concursos/index.astro import {getCollection} from 'astro:content'; import Layout from
+'../../layouts/Layout.astro'; import ConcursosHero from
+'../../components/concursos/ConcursosHero.astro'; import ConcursosFiltersIsland from
+'../../components/concursos/ConcursosFiltersIsland.astro'; import ConcursosCTA from
+'../../components/concursos/ConcursosCTA.astro'; const allConcursos = await
+getCollection('concursos'); // Calcular estadísticas const concursosActivos = allConcursos.filter(c
+=> c.data.status === 'activo' || c.data.status === 'proximo' ); const totalParticipantes =
+allConcursos.reduce( (sum, c) => sum + (c.data.currentParticipants || 0), 0 ); const totalPremios =
+allConcursos.reduce( (sum, c) => sum + calcularValorPremios(c.data.premios), 0 );
 
 <Layout
   title="Concursos Creativos — Digital Revolution"
@@ -180,12 +179,9 @@ const totalPremios = allConcursos.reduce(
     totalParticipants={totalParticipantes}
     totalPrizes={totalPremios}
   />
-  
-  <ConcursosFiltersIsland 
-    concursos={allConcursos} 
-    client:load 
-  />
-  
+
+  <ConcursosFiltersIsland concursos={allConcursos} client:load />
+
   <ConcursosCTA />
 </Layout>
 ```
@@ -215,7 +211,7 @@ export default function ConcursosFiltersIsland({ concursos }: Props) {
       const matchesSearch = /* ... */;
       const matchesCategory = /* ... */;
       const matchesStatus = /* ... */;
-      
+
       return matchesSearch && matchesCategory && matchesStatus;
     });
   }, [concursos, searchQuery, selectedCategory, selectedStatus]);
@@ -229,7 +225,7 @@ export default function ConcursosFiltersIsland({ concursos }: Props) {
           placeholder="Buscar concursos..."
           aria-label="Buscar concursos por título o descripción"
         />
-        
+
         <FilterButtons
           categories={CATEGORIES}
           statuses={STATUSES}
@@ -238,8 +234,8 @@ export default function ConcursosFiltersIsland({ concursos }: Props) {
           onCategoryChange={setSelectedCategory}
           onStatusChange={setSelectedStatus}
         />
-        
-        <div 
+
+        <div
           className="concursos-grid"
           role="region"
           aria-live="polite"
@@ -274,11 +270,11 @@ interface SearchBarProps {
   'aria-label': string;
 }
 
-export default function SearchBar({ 
-  value, 
-  onChange, 
+export default function SearchBar({
+  value,
+  onChange,
   placeholder,
-  'aria-label': ariaLabel 
+  'aria-label': ariaLabel
 }: SearchBarProps) {
   return (
     <div className="search-bar" role="search">
@@ -307,12 +303,13 @@ export default function SearchBar({
 ### Astro Content Collections
 
 ✅ **DO**:
+
 ```typescript
 // Usar getCollection en componentes Astro
 const concursos = await getCollection('concursos');
 
 // Filtrar en build time cuando sea posible
-const activos = await getCollection('concursos', ({ data }) => 
+const activos = await getCollection('concursos', ({ data }) =>
   data.status === 'activo'
 );
 
@@ -321,6 +318,7 @@ const activos = await getCollection('concursos', ({ data }) =>
 ```
 
 ❌ **DON'T**:
+
 ```typescript
 // No hacer fetch en runtime para contenido estático
 // No llamar getCollection dentro de React components
@@ -330,6 +328,7 @@ const activos = await getCollection('concursos', ({ data }) =>
 ### React Islands (Interactividad)
 
 ✅ **DO**:
+
 ```typescript
 // Usar client:load para contenido above-the-fold interactivo
 <ConcursosFiltersIsland client:load />
@@ -345,6 +344,7 @@ export type { ConcursoCardProps };
 ```
 
 ❌ **DON'T**:
+
 ```typescript
 // No usar client:only (rompe SSG)
 // No hidratar todo (usar Astro components cuando sea posible)
@@ -354,11 +354,12 @@ export type { ConcursoCardProps };
 ### TypeScript
 
 ✅ **DO**:
+
 ```typescript
 // Usar tipos de Astro Content Collections
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
 
-type Concurso = CollectionEntry<'concursos'>;
+type Concurso = CollectionEntry<"concursos">;
 
 // Interfaces explícitas para Props
 interface ConcursoCardProps {
@@ -369,10 +370,11 @@ interface ConcursoCardProps {
 }
 
 // Tipos estrictos para enums
-type ConcursoStatus = 'activo' | 'proximo' | 'finalizado' | 'cerrado';
+type ConcursoStatus = "activo" | "proximo" | "finalizado" | "cerrado";
 ```
 
 ❌ **DON'T**:
+
 ```typescript
 // No usar 'any'
 // No ignorar errores de tipo con @ts-ignore sin justificación
@@ -382,6 +384,7 @@ type ConcursoStatus = 'activo' | 'proximo' | 'finalizado' | 'cerrado';
 ### Estilos
 
 ✅ **DO**:
+
 ```css
 /* Usar CSS Variables del proyecto */
 .concurso-card {
@@ -397,12 +400,19 @@ type ConcursoStatus = 'activo' | 'proximo' | 'finalizado' | 'cerrado';
 
 /* Animaciones CSS modulares */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 ```
 
 ❌ **DON'T**:
+
 ```css
 /* No hardcodear colores hex directamente */
 background: #34dfde; /* ❌ */
@@ -414,25 +424,21 @@ background: #34dfde; /* ❌ */
 ### Accesibilidad (WCAG 2.1 AA)
 
 ✅ **DO**:
+
 ```astro
 <!-- Estructura semántica -->
 <main id="main-content">
   <section aria-labelledby="concursos-heading">
     <h1 id="concursos-heading">Concursos Creativos</h1>
-    
+
     <!-- Skip links -->
-    <a href="#concursos-grid" class="sr-only focus:not-sr-only">
-      Ir al listado de concursos
-    </a>
-    
+    <a href="#concursos-grid" class="sr-only focus:not-sr-only"> Ir al listado de concursos </a>
+
     <!-- ARIA en elementos interactivos -->
-    <button 
-      aria-label="Filtrar por categoría Fotografía"
-      aria-pressed={selected}
-    >
+    <button aria-label="Filtrar por categoría Fotografía" aria-pressed={selected}>
       Fotografía
     </button>
-    
+
     <!-- Live regions para cambios dinámicos -->
     <div aria-live="polite" aria-atomic="true">
       Mostrando {count} concursos
@@ -442,12 +448,15 @@ background: #34dfde; /* ❌ */
 ```
 
 ❌ **DON'T**:
+
 ```html
 <!-- No usar divs clickeables sin roles -->
-<div onclick="...">Click me</div> <!-- ❌ -->
+<div onclick="...">Click me</div>
+<!-- ❌ -->
 
 <!-- No olvidar alt text en imágenes -->
-<img src="..." /> <!-- ❌ -->
+<img src="..." />
+<!-- ❌ -->
 
 <!-- No usar color como único indicador -->
 ```
@@ -455,14 +464,15 @@ background: #34dfde; /* ❌ */
 ### Performance
 
 ✅ **DO**:
+
 ```astro
 ---
-import { Image } from 'astro:assets';
-import concursoImage from '../assets/concurso.jpg';
+import { Image } from "astro:assets";
+import concursoImage from "../assets/concurso.jpg";
 ---
 
 <!-- Imágenes optimizadas automáticamente -->
-<Image 
+<Image
   src={concursoImage}
   alt="Concurso de Fotografía Urbana 2026"
   loading="lazy"
@@ -476,9 +486,11 @@ import concursoImage from '../assets/concurso.jpg';
 ```
 
 ❌ **DON'T**:
+
 ```html
 <!-- No cargar imágenes grandes sin optimizar -->
-<img src="/images/huge-image.jpg" /> <!-- ❌ -->
+<img src="/images/huge-image.jpg" />
+<!-- ❌ -->
 
 <!-- No hidratar todo con client:only -->
 ```
@@ -488,6 +500,7 @@ import concursoImage from '../assets/concurso.jpg';
 ## 📊 Criterios de Éxito
 
 ### Funcionales
+
 - [x] Filtrado por categoría funciona correctamente
 - [x] Filtrado por estado funciona correctamente
 - [x] Búsqueda por texto busca en título, descripción y tags
@@ -496,6 +509,7 @@ import concursoImage from '../assets/concurso.jpg';
 - [x] Estados vacíos y de error manejados
 
 ### Diseño
+
 - [x] Hero section impactante y clara
 - [x] Grid responsive en 3/2/1 columnas
 - [x] Tarjetas con hover effects suaves
@@ -504,6 +518,7 @@ import concursoImage from '../assets/concurso.jpg';
 - [x] Animaciones sutiles y performantes
 
 ### Accesibilidad
+
 - [x] Lighthouse Accessibility Score ≥ 90
 - [x] Navegación completa por teclado
 - [x] Lectores de pantalla funcionan correctamente
@@ -512,6 +527,7 @@ import concursoImage from '../assets/concurso.jpg';
 - [x] Estructura semántica HTML5
 
 ### Performance
+
 - [x] Lighthouse Performance Score ≥ 90
 - [x] First Contentful Paint < 1.5s
 - [x] Largest Contentful Paint < 2.5s
@@ -520,6 +536,7 @@ import concursoImage from '../assets/concurso.jpg';
 - [x] JavaScript bundle < 50KB (gzipped)
 
 ### SEO
+
 - [x] Meta tags correctos (title, description, OG)
 - [x] Estructura de headings jerárquica (h1 → h2 → h3)
 - [x] URLs semánticas (/concursos/slug-descriptivo)
@@ -566,11 +583,13 @@ pnpm type-check
 ## 🎨 Inspiración de Diseño
 
 **Referencias visuales para el rediseño**:
+
 - Dribbble: "dark theme competition cards"
 - Awwwards: Páginas de eventos y concursos
 - Behance: "contest platform UI"
 
 **Elementos clave a incorporar**:
+
 - Minimalismo con detalles sofisticados
 - Jerarquía visual clara (featured > activo > próximo > finalizado)
 - Microinteracciones que deleitan
@@ -584,6 +603,7 @@ pnpm type-check
 Antes de considerar completado el rediseño:
 
 ### Código
+
 - [ ] Todos los tipos TypeScript definidos sin `any`
 - [ ] Componentes documentados con comentarios JSDoc
 - [ ] Código formateado con Prettier (`pnpm format`)
@@ -591,18 +611,21 @@ Antes de considerar completado el rediseño:
 - [ ] Sin warnings de Astro check (`pnpm check`)
 
 ### Funcionalidad
+
 - [ ] Filtros funcionan en combinación (categoría + estado + búsqueda)
 - [ ] Transiciones suaves entre estados filtrados
 - [ ] Carga inicial optimizada (< 2s en 3G)
 - [ ] Estados edge cases manejados (0 resultados, error de red, etc.)
 
 ### Diseño
+
 - [ ] Responsive en todos los breakpoints (320px - 2560px)
 - [ ] Hover states en todos los elementos interactivos
 - [ ] Loading states con skeletons o spinners
 - [ ] Consistencia visual con el resto del sitio
 
 ### Accesibilidad
+
 - [ ] Navegación completa con Tab/Shift+Tab
 - [ ] Enter/Space activan botones
 - [ ] Escape cierra modales/dropdowns
@@ -610,12 +633,14 @@ Antes de considerar completado el rediseño:
 - [ ] Contraste verificado con herramientas (axe DevTools)
 
 ### Performance
+
 - [ ] Imágenes lazy loading
 - [ ] JavaScript code splitting
 - [ ] CSS crítico inline (automático con Astro)
 - [ ] Lighthouse CI passing (>90 en todas las métricas)
 
 ### SEO
+
 - [ ] Meta description única (<160 caracteres)
 - [ ] Open Graph images optimizadas (1200x630)
 - [ ] JSON-LD structured data para Event schema

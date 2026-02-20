@@ -180,11 +180,11 @@ interface CardProps {
   title: string;
   description?: string;
   imageUrl?: string;
-  variant?: 'default' | 'featured';
+  variant?: "default" | "featured";
 }
 
 // Destructure with defaults
-const { title, description, imageUrl, variant = 'default' } = Astro.props;
+const { title, description, imageUrl, variant = "default" } = Astro.props;
 ```
 
 ### Type Guards
@@ -192,7 +192,7 @@ const { title, description, imageUrl, variant = 'default' } = Astro.props;
 ```typescript
 // Use type guards for narrowing
 function isString(value: unknown): value is string {
-  return typeof value === 'string';
+  return typeof value === "string";
 }
 
 // Use in code
@@ -200,7 +200,7 @@ function processValue(value: unknown) {
   if (isString(value)) {
     return value.toUpperCase(); // TypeScript knows it's a string
   }
-  return '';
+  return "";
 }
 ```
 
@@ -217,8 +217,8 @@ function processValue(value: unknown) {
  */
 
 // 1. Imports
-import { Image } from 'astro:assets';
-import Button from './Button.astro';
+import { Image } from "astro:assets";
+import Button from "./Button.astro";
 
 // 2. Type definitions
 interface Props {
@@ -259,12 +259,11 @@ function formatText(text: string): string {
   // Client-side JavaScript
 </script>
 
-### Presentational Components & Client Initializers (Recommended) Keep Astro
-components focused on markup and style. Move DOM wiring and event listeners to
-`src/client/initializers/` and pure logic to `src/composables/`. This keeps
-components small and testable. Example: 1. `src/components/MyGallery.astro` —
-markup + styles only 2. `src/composables/useGallerySlider.ts` — slider logic 3.
-`src/client/initializers/gallery.ts` — finds DOM nodes and calls the composable
+### Presentational Components & Client Initializers (Recommended) Keep Astro components focused on
+markup and style. Move DOM wiring and event listeners to `src/client/initializers/` and pure logic
+to `src/composables/`. This keeps components small and testable. Example: 1.
+`src/components/MyGallery.astro` — markup + styles only 2. `src/composables/useGallerySlider.ts` —
+slider logic 3. `src/client/initializers/gallery.ts` — finds DOM nodes and calls the composable
 Include the initializer in the page or `Layout` via: ```astro
 <script type="module" src="/src/client/initializers/gallery.ts"></script>
 ````
@@ -352,29 +351,29 @@ export default function SearchBar({
 
 ```typescript
 // 1. External dependencies
-import { useState, useEffect } from 'react';
-import { Search, X } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Search, X } from "lucide-react";
 
 // 2. Astro imports
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
 
 // 3. Internal components
-import Header from '../components/Header.astro';
-import Button from '../components/ui/Button.astro';
+import Header from "../components/Header.astro";
+import Button from "../components/ui/Button.astro";
 
 // 4. Internal utilities
-import { formatDate } from '../utils/dateFormatter';
-import { API_URL } from '../config/constants';
+import { formatDate } from "../utils/dateFormatter";
+import { API_URL } from "../config/constants";
 
 // 5. Data and types
-import { talents } from '../data/talents';
-import type { Talent } from '../data/types';
+import { talents } from "../data/talents";
+import type { Talent } from "../data/types";
 
 // 6. Styles (if needed)
-import '../styles/custom.css';
+import "../styles/custom.css";
 
 // 7. Assets
-import heroImage from '../assets/hero.jpg';
+import heroImage from "../assets/hero.jpg";
 ```
 
 ### Named vs Default Exports
@@ -389,7 +388,7 @@ export default function SearchBar() {}
 
 // ✅ Named exports for types
 export interface User {}
-export type Status = 'active' | 'inactive';
+export type Status = "active" | "inactive";
 ```
 
 ---
@@ -405,7 +404,7 @@ setTimeout(() => initializePlayer(), 100);
 
 // ❌ Bad: Stating the obvious
 // Set the name to 'John'
-const name = 'John';
+const name = "John";
 
 // ✅ Good: Complex logic explanation
 // Calculate discount based on user tier and total purchase amount
@@ -445,8 +444,8 @@ const discount = calculateDiscount(user.tier, totalAmount);
  */
 export function formatDate(
   date: Date,
-  locale: string = 'es-ES',
-  options: Intl.DateTimeFormatOptions = {},
+  locale: string = "es-ES",
+  options: Intl.DateTimeFormatOptions = {}
 ): string {
   return new Intl.DateTimeFormat(locale, options).format(date);
 }
@@ -460,9 +459,7 @@ export function formatDate(
 
 ```astro
 <!-- ✅ Good: Tailwind utilities -->
-<button
-  class="rounded-lg bg-cyan-500 px-6 py-3 text-white transition-colors hover:bg-cyan-600"
->
+<button class="rounded-lg bg-cyan-500 px-6 py-3 text-white transition-colors hover:bg-cyan-600">
   Click Me
 </button>
 
@@ -474,9 +471,7 @@ export function formatDate(
 
 ```astro
 <!-- Mobile-first approach -->
-<div
-  class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8"
->
+<div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
   <!-- Items -->
 </div>
 ```

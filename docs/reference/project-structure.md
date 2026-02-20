@@ -78,8 +78,8 @@ assets/
 
 ```astro
 ---
-import { Image } from 'astro:assets';
-import heroImage from '../assets/hero.jpg';
+import { Image } from "astro:assets";
+import heroImage from "../assets/hero.jpg";
 ---
 
 <Image src={heroImage} alt="Hero" />
@@ -216,14 +216,14 @@ export interface Talent {
 }
 
 // 2. Create data in separate file
-import type { Talent } from './types';
+import type { Talent } from "./types";
 
-export const talents: Talent[] = [{ id: 1, name: 'María', role: 'Fotógrafa' }];
+export const talents: Talent[] = [{ id: 1, name: "María", role: "Fotógrafa" }];
 
 // 3. Re-export in index.ts for convenience
-export { talents } from './talents';
-export { arteGallery } from './arteGallery';
-export type { Talent } from './types';
+export { talents } from "./talents";
+export { arteGallery } from "./arteGallery";
+export type { Talent } from "./types";
 ```
 
 ---
@@ -326,7 +326,7 @@ styles/
 
 ```css
 /* Import Tailwind */
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* Define design tokens */
 @theme {
@@ -338,7 +338,7 @@ styles/
 
 /* Global styles */
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
   background: var(--color-brand-background-global);
 }
 
@@ -368,9 +368,9 @@ utils/
 
 ```typescript
 // src/utils/dateFormatter.ts
-export function formatDate(date: Date, locale = 'es-ES'): string {
+export function formatDate(date: Date, locale = "es-ES"): string {
   return new Intl.DateTimeFormat(locale, {
-    dateStyle: 'long',
+    dateStyle: "long",
   }).format(date);
 }
 ```
@@ -439,9 +439,9 @@ docs/
 Astro framework configuration.
 
 ```javascript
-import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
-import react from '@astrojs/react';
+import { defineConfig } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
+import react from "@astrojs/react";
 
 export default defineConfig({
   vite: {

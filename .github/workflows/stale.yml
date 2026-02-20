@@ -1,0 +1,54 @@
+name: Stale — Close Inactive Issues & PRs
+
+on:
+  schedule:
+    # Run every day at 01:00 UTC
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  stale:
+    name: Mark and Close Stale Items
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+          # ── Issues ──────────────────────────────────────────────────────
+          days-before-issue-stale: 30
+          days-before-issue-close: 14
+          stale-issue-label: 'stale'
+          stale-issue-message: |
+            👋 This issue has been inactive for **30 days**.
+            It will be closed in 14 days unless there is new activity.
+            If this is still relevant, please leave a comment or remove the `stale` label.
+          close-issue-message: |
+            🔒 Closing due to inactivity. Feel free to reopen if this is still relevant.
+          close-issue-reason: not_planned
+
+          # ── Pull Requests ────────────────────────────────────────────────
+          days-before-pr-stale: 21
+          days-before-pr-close: 7
+          stale-pr-label: 'stale'
+          stale-pr-message: |
+            👋 This PR has been inactive for **21 days**.
+            It will be closed in 7 days unless there is new activity.
+            Please rebase, update, or comment to keep it open.
+          close-pr-message: |
+            🔒 Closing due to inactivity. The branch can be restored if needed.
+
+          # ── Exemptions ──────────────────────────────────────────────────
+          exempt-issue-labels: 'pinned,security,in-progress,blocked'
+          exempt-pr-labels: 'pinned,security,in-progress,blocked,do-not-merge'
+          exempt-all-milestones: true
+          exempt-draft-pr: true
+
+          # ── Limits ──────────────────────────────────────────────────────
+          operations-per-run: 100

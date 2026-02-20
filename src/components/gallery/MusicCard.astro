@@ -1,5 +1,5 @@
 ---
-import type { MusicGalleryItem } from '../../data/types';
+import type { MusicGalleryItem } from "../../data/types";
 
 interface Props {
   item: MusicGalleryItem;
@@ -24,11 +24,7 @@ const { item } = Astro.props;
         loading="lazy"
       />
       <div class="music-info">
-        <button
-          class="play-button"
-          aria-label={`Play ${item.title}`}
-          aria-pressed="false"
-        >
+        <button class="play-button" aria-label={`Play ${item.title}`} aria-pressed="false">
           <svg
             width="36"
             height="36"
@@ -45,9 +41,7 @@ const { item } = Astro.props;
           <h3 class="music-title">{item.title}</h3>
           <p class="music-artist">{item.artist}</p>
         </div>
-        <span class="music-duration" aria-label={`Duration ${item.duration}`}
-          >{item.duration}</span
-        >
+        <span class="music-duration" aria-label={`Duration ${item.duration}`}>{item.duration}</span>
       </div>
     </div>
   </div>

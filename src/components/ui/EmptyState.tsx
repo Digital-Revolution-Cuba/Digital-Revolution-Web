@@ -3,7 +3,7 @@
  * Provides friendly feedback and suggestions
  */
 
-import { Search } from 'lucide-react';
+import { Search } from "lucide-react";
 
 interface EmptyStateProps {
   query?: string;
@@ -17,7 +17,7 @@ export default function EmptyState({ query }: EmptyStateProps) {
       </div>
 
       <h3 className="empty-state-title">
-        {query ? 'No se encontraron concursos' : 'No hay concursos disponibles'}
+        {query ? "No se encontraron concursos" : "No hay concursos disponibles"}
       </h3>
 
       <p className="empty-state-description">
@@ -27,7 +27,7 @@ export default function EmptyState({ query }: EmptyStateProps) {
             ". Intenta con otros términos de búsqueda o ajusta los filtros.
           </>
         ) : (
-          'Actualmente no hay concursos disponibles. Vuelve pronto para ver nuevas convocatorias.'
+          "Actualmente no hay concursos disponibles. Vuelve pronto para ver nuevas convocatorias."
         )}
       </p>
     </div>

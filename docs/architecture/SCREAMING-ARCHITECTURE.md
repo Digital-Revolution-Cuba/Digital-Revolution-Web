@@ -287,10 +287,10 @@ Features (pages/) → Shared (components/, composables/) → Core (config/, type
 // src/pages/concursos/components/ConcursoCard.astro
 
 // ✅ Imports correctos desde feature component
-import { CATEGORY_LABELS } from '../../../config/concursosConfig';
-import type { Concurso } from '../../../types/concursos.types';
-import { formatDate } from '../../../utils/concursosUtils';
-import Badge from '../../../components/ui/Badge.astro';
+import { CATEGORY_LABELS } from "../../../config/concursosConfig";
+import type { Concurso } from "../../../types/concursos.types";
+import { formatDate } from "../../../utils/concursosUtils";
+import Badge from "../../../components/ui/Badge.astro";
 
 interface Props {
   concurso: Concurso;
@@ -331,12 +331,12 @@ export function useGalleryModal() {
 // src/pages/index.astro
 
 // ✅ Imports de layout y shared components
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/layout/Header.astro';
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/layout/Header.astro";
 
 // ✅ Imports de page-level components
-import ConcursosSection from './components/ConcursosSection.astro';
-import ColaboracionesDestacadas from './components/ColaboracionesDestacadas.astro';
+import ConcursosSection from "./components/ConcursosSection.astro";
+import ColaboracionesDestacadas from "./components/ColaboracionesDestacadas.astro";
 ---
 
 <Layout title="Digital Revolution">

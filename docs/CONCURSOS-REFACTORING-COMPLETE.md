@@ -13,13 +13,15 @@ Se ha completado una refactorización exhaustiva del módulo de concursos siguie
 #### Archivo Creado: `src/config/concursosConfig.ts`
 
 **Constantes exportadas:**
+
 - `CATEGORIES`: Array de categorías con valores y etiquetas
-- `STATUSES`: Array de estados con valores y etiquetas  
+- `STATUSES`: Array de estados con valores y etiquetas
 - `CATEGORY_LABELS`: Mapeo de categorías a etiquetas en español
 - `STATUS_CONFIG`: Configuración de estados con labels y clases CSS
 - `STATUS_PRIORITY`: Prioridad de estados para ordenamiento
 
 **Beneficios:**
+
 - ✅ Fuente única de verdad para constantes
 - ✅ Fácil actualización de categorías/estados
 - ✅ Consistencia en toda la aplicación
@@ -62,6 +64,7 @@ Se ha completado una refactorización exhaustiva del módulo de concursos siguie
    - Manejo de casos edge
 
 **Beneficios:**
+
 - ✅ Reutilización de lógica compleja
 - ✅ Facilita testing unitario
 - ✅ Reduce acoplamiento
@@ -74,6 +77,7 @@ Se ha completado una refactorización exhaustiva del módulo de concursos siguie
 #### Movimientos Realizados:
 
 **ANTES:**
+
 ```
 src/components/
   ├── ConcursoCardModern.astro ❌ (duplicado, en raíz)
@@ -81,6 +85,7 @@ src/components/
 ```
 
 **DESPUÉS:**
+
 ```
 src/components/
   ├── concursos/
@@ -92,9 +97,11 @@ src/components/
 ```
 
 **Archivos Eliminados:**
+
 - ✅ `src/components/ConcursoCardModern.astro` (duplicado eliminado)
 
 **Archivos Mantenidos:**
+
 - ✅ `src/components/ConcursoCard.astro` - Usada por `Concursos.astro` (home)
 - ✅ `src/components/Concursos.astro` - Slider de home page
 
@@ -105,6 +112,7 @@ src/components/
 #### `src/components/concursos/ConcursoCard.astro`
 
 **Cambios aplicados:**
+
 ```typescript
 // ANTES: Constantes y funciones inline duplicadas
 const formatDate = (date: Date) => { ... };
@@ -123,6 +131,7 @@ import { formatDate } from '../../utils/concursosUtils';
 #### `src/components/concursos/ConcursosFiltersIsland.tsx`
 
 **Cambios aplicados:**
+
 ```typescript
 // ANTES: Lógica de filtrado inline (>100 líneas)
 const filteredConcursos = useMemo(() => {
@@ -132,13 +141,13 @@ const filteredConcursos = useMemo(() => {
 }, [concursos, searchQuery, selectedCategory, selectedStatus]);
 
 // DESPUÉS: Uso de funciones utilitarias
-import { 
-  filterBySearch, 
-  filterByCategory, 
-  filterByStatus, 
-  formatDate, 
-  sortConcursos 
-} from '../../utils/concursosUtils';
+import {
+  filterBySearch,
+  filterByCategory,
+  filterByStatus,
+  formatDate,
+  sortConcursos,
+} from "../../utils/concursosUtils";
 
 const filteredAndSortedConcursos = useMemo(() => {
   let filtered = concursos;
@@ -150,6 +159,7 @@ const filteredAndSortedConcursos = useMemo(() => {
 ```
 
 **Beneficios:**
+
 - ✅ Lógica más clara y declarativa
 - ✅ Fácil de testear individualmente
 - ✅ Más fácil de extender con nuevos filtros
@@ -162,15 +172,17 @@ const filteredAndSortedConcursos = useMemo(() => {
 #### `src/pages/concursos/index.astro`
 
 **Cambios:**
+
 ```typescript
 // ANTES
-import ConcursoCardModern from '../../components/ConcursoCardModern.astro';
+import ConcursoCardModern from "../../components/ConcursoCardModern.astro";
 
 // DESPUÉS
-import ConcursoCard from '../../components/concursos/ConcursoCard.astro';
+import ConcursoCard from "../../components/concursos/ConcursoCard.astro";
 ```
 
 **Todos los usos actualizados:**
+
 ```tsx
 // ANTES
 <ConcursoCardModern ... />
@@ -185,13 +197,13 @@ import ConcursoCard from '../../components/concursos/ConcursoCard.astro';
 
 ### Reducción de Código Duplicado
 
-| Métrica | Antes | Después | Mejora |
-|---------|-------|---------|--------|
-| Definiciones de `formatDate` | 3+ | 1 | -67% |
-| Definiciones de `categoryLabels` | 3+ | 1 | -67% |
-| Definiciones de `statusConfig` | 3+ | 1 | -67% |
-| Lógica de filtrado inline | 3 lugares | 1 módulo | -67% |
-| Archivos componentes concursos | 5 dispersos | 4 en carpeta | +25% organización |
+| Métrica                          | Antes       | Después      | Mejora            |
+| -------------------------------- | ----------- | ------------ | ----------------- |
+| Definiciones de `formatDate`     | 3+          | 1            | -67%              |
+| Definiciones de `categoryLabels` | 3+          | 1            | -67%              |
+| Definiciones de `statusConfig`   | 3+          | 1            | -67%              |
+| Lógica de filtrado inline        | 3 lugares   | 1 módulo     | -67%              |
+| Archivos componentes concursos   | 5 dispersos | 4 en carpeta | +25% organización |
 
 ### Mejoras de Mantenibilidad
 
@@ -234,17 +246,20 @@ src/
 ## ✅ Validaciones Realizadas
 
 ### 1. Type-Checking
+
 ```bash
 pnpm type-check
 ✅ Sin errores de TypeScript
 ```
 
 ### 2. Imports Verificados
+
 - ✅ Todas las importaciones actualizadas
 - ✅ Rutas relativas correctas
 - ✅ Extensiones .astro incluidas (requerido por Astro)
 
 ### 3. Eliminación de Duplicados
+
 - ✅ `ConcursoCardModern.astro` eliminado
 - ✅ Sin definiciones duplicadas de constantes
 - ✅ Sin funciones duplicadas
@@ -254,16 +269,19 @@ pnpm type-check
 ## 📋 Próximos Pasos Recomendados
 
 ### Testing
+
 - [ ] Agregar tests unitarios para `concursosUtils.ts`
 - [ ] Agregar tests de integración para filtros
 - [ ] Validar accessibility con herramientas automatizadas
 
 ### Performance
+
 - [ ] Implementar lazy loading de imágenes optimizado
 - [ ] Considerar virtualización para listas muy largas
 - [ ] Medir performance de filtrado con datasets grandes
 
 ### Features
+
 - [ ] Implementar persistencia de filtros en URL (query params)
 - [ ] Agregar más opciones de ordenamiento (fecha, popularidad)
 - [ ] Implementar paginación para mejor UX con muchos concursos

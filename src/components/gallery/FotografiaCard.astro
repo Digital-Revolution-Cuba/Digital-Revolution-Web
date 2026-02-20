@@ -1,5 +1,5 @@
 ---
-import type { FotografiaGalleryItem } from '../../data/types';
+import type { FotografiaGalleryItem } from "../../data/types";
 
 interface Props {
   item: FotografiaGalleryItem;
@@ -16,7 +16,7 @@ const { item } = Astro.props;
   <div class="photo-card h-110 w-full rounded-[25px]">
     <img
       src={item.image}
-      alt={`${item.title}${item.photographer ? ` by ${item.photographer}` : ''}`}
+      alt={`${item.title}${item.photographer ? ` by ${item.photographer}` : ""}`}
       width="285"
       height="380"
       class="photo-image h-full w-full rounded-[25px] object-cover shadow-md transition duration-300"
@@ -25,11 +25,7 @@ const { item } = Astro.props;
     <div class="photo-overlay">
       <div class="photo-info">
         <h3 class="photo-title">{item.title}</h3>
-        {
-          item.photographer && (
-            <p class="photo-photographer">{item.photographer}</p>
-          )
-        }
+        {item.photographer && <p class="photo-photographer">{item.photographer}</p>}
         {item.date && <p class="photo-date">{item.date}</p>}
       </div>
     </div>

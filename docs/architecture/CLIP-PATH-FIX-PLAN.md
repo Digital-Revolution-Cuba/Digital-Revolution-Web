@@ -3,34 +3,41 @@
 ## 🎯 Análisis del Problema
 
 ### Contexto Actual
+
 El proyecto usa extensivamente `clip-path: polygon()` para crear diseños diagonales y angulares que definen la identidad visual de Digital Revolution. Sin embargo, existen problemas de recorte en diferentes viewports.
 
 ### Componentes Afectados
 
 #### 1. **ConcursosHero.astro** (Principal - Alta Prioridad)
+
 - `.hero-dark` - clip-path superior
 - `.hero-cyan` - banda diagonal
 - `.hero-yellow` - sección inferior
 - **Problema**: Los clips se solapan incorrectamente en mobile/tablet
 
 #### 2. **ColaboracionesDestacadas.astro**
+
 - `.general` - clip-path diagonal superior
 - `.second-clip` - triángulo decorativo
 - **Problema**: Overlap y z-index issues
 
 #### 3. **DinamycGalleryTitle.astro**
+
 - `.azul` - sección superior
 - `.amarillo` - sección inferior
 - **Problema**: Espaciado negativo causa gaps
 
 #### 4. **Footer.astro**
+
 - `.footer-bar` - diagonal superior
 - **Problema**: Inconsistente en diferentes breakpoints
 
 ## 📚 Best Practices Identificadas (Basado en Context7 & Web Research)
 
 ### 1. **Usar Porcentajes Relativos**
+
 ✅ Ya implementado - Todos usan porcentajes
+
 ```css
 /* BIEN */
 clip-path: polygon(0 0, 100% 28.5%, 100% 100%, 0 100%);
@@ -40,7 +47,9 @@ clip-path: polygon(0 0, 1920px 200px, 1920px 1080px, 0 1080px);
 ```
 
 ### 2. **Evitar Negative Margins con Clips Complejos**
+
 ❌ Problema actual: Uso excesivo de `margin-top: -XXpx`
+
 ```css
 /* PROBLEMÁTICO */
 .hero-cyan {
@@ -51,11 +60,15 @@ clip-path: polygon(0 0, 1920px 200px, 1920px 1080px, 0 1080px);
 ```
 
 ### 3. **Coordenadas de Polígono Consistentes**
+
 Los clips deben seguir orden horario consistente:
+
 - **Top-left** → **Top-right** → **Bottom-right** → **Bottom-left**
 
 ### 4. **Anti-aliasing Issues**
+
 ✅ Ya implementado:
+
 ```css
 .clip-path-parallelogram-* {
   overflow: hidden;
@@ -65,7 +78,9 @@ Los clips deben seguir orden horario consistente:
 ```
 
 ### 5. **Responsive Breakpoints**
+
 Ajustar clips en breakpoints clave:
+
 - Desktop: 1024px+
 - Tablet: 768px - 1023px
 - Mobile Large: 481px - 767px
@@ -77,6 +92,7 @@ Ajustar clips en breakpoints clave:
 ### Problema 1: ConcursosHero - Solapamiento de Clips
 
 **Situación Actual:**
+
 ```css
 .hero-dark {
   clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
@@ -97,12 +113,14 @@ Ajustar clips en breakpoints clave:
 ```
 
 **Problema:**
+
 - Los negative margins causan gaps en ciertos viewports
 - Los porcentajes de diagonal no son progresivos
 - Mobile tiene valores diferentes que no escalan proporcionalmente
 
 **Causa Raíz:**
 Los ángulos de diagonal no están coordinados:
+
 - `.hero-dark` termina en 88% (diagonal suave)
 - `.hero-cyan` empieza en 0% pero clip a 50% (diagonal agresiva)
 - `.hero-yellow` empieza en 25% (no alinea con cyan)
@@ -110,27 +128,49 @@ Los ángulos de diagonal no están coordinados:
 ### Problema 2: Inconsistencia entre Breakpoints
 
 **Mobile (480px):**
+
 ```css
-.hero-dark { clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%); }
-.hero-cyan { clip-path: polygon(0 0, 100% 70%, 100% 100%, 0 100%); }
-.hero-yellow { clip-path: polygon(0 35%, 100% 0, 100% 100%, 0 100%); }
+.hero-dark {
+  clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%);
+}
+.hero-cyan {
+  clip-path: polygon(0 0, 100% 70%, 100% 100%, 0 100%);
+}
+.hero-yellow {
+  clip-path: polygon(0 35%, 100% 0, 100% 100%, 0 100%);
+}
 ```
 
 **Tablet (768px):**
+
 ```css
-.hero-dark { clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%); }
-.hero-cyan { clip-path: polygon(0 0, 100% 60%, 100% 100%, 0 100%); }
-.hero-yellow { clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%); }
+.hero-dark {
+  clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+}
+.hero-cyan {
+  clip-path: polygon(0 0, 100% 60%, 100% 100%, 0 100%);
+}
+.hero-yellow {
+  clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+}
 ```
 
 **Desktop (>768px):**
+
 ```css
-.hero-dark { clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%); }
-.hero-cyan { clip-path: polygon(0 0, 100% 50%, 100% 100%, 0 100%); }
-.hero-yellow { clip-path: polygon(0 25%, 100% 0, 100% 100%, 0 100%); }
+.hero-dark {
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+}
+.hero-cyan {
+  clip-path: polygon(0 0, 100% 50%, 100% 100%, 0 100%);
+}
+.hero-yellow {
+  clip-path: polygon(0 25%, 100% 0, 100% 100%, 0 100%);
+}
 ```
 
 **Análisis:**
+
 - Los ángulos NO son proporcionales
 - Falta progresión lógica entre breakpoints
 - No hay fórmula matemática clara
@@ -144,7 +184,7 @@ Definir un sistema de coordenadas basado en **progresión angular**:
 ```
 DESKTOP (>1024px):
   dark  → 88%  (12% de diagonal)
-  cyan  → 45%  (55% de diagonal) 
+  cyan  → 45%  (55% de diagonal)
   yellow → 22% (78% de diagonal - empieza a 22% desde arriba)
 
 TABLET (768-1023px):
@@ -164,6 +204,7 @@ MOBILE SM (360-480px):
 ```
 
 **Fórmula:**
+
 - Diagonal % = 100% - clip-end-y
 - Cada breakpoint reduce la diagonal en ~2-3%
 - Mantener consistencia visual sin gaps
@@ -171,6 +212,7 @@ MOBILE SM (360-480px):
 ### Estrategia 2: Eliminar Negative Margins
 
 **Reemplazar:**
+
 ```css
 .hero-cyan {
   margin-top: -80px;
@@ -179,6 +221,7 @@ MOBILE SM (360-480px):
 ```
 
 **Con:**
+
 ```css
 .hero-cyan {
   position: relative;
@@ -212,17 +255,17 @@ Crear **custom CSS properties** para mantener coherencia:
 ```css
 :root {
   /* Desktop clip angles */
-  --clip-angle-subtle: 88%;  /* 12% diagonal */
-  --clip-angle-medium: 70%;  /* 30% diagonal */
-  --clip-angle-strong: 50%;  /* 50% diagonal */
-  
+  --clip-angle-subtle: 88%; /* 12% diagonal */
+  --clip-angle-medium: 70%; /* 30% diagonal */
+  --clip-angle-strong: 50%; /* 50% diagonal */
+
   /* Tablet */
   @media (max-width: 1023px) {
     --clip-angle-subtle: 90%;
     --clip-angle-medium: 75%;
     --clip-angle-strong: 60%;
   }
-  
+
   /* Mobile */
   @media (max-width: 767px) {
     --clip-angle-subtle: 92%;
@@ -232,23 +275,20 @@ Crear **custom CSS properties** para mantener coherencia:
 }
 
 .hero-dark {
-  clip-path: polygon(
-    0 0, 
-    100% 0, 
-    100% var(--clip-angle-subtle), 
-    0 100%
-  );
+  clip-path: polygon(0 0, 100% 0, 100% var(--clip-angle-subtle), 0 100%);
 }
 ```
 
 ### Estrategia 4: Testing & Validation
 
 **Herramientas:**
+
 1. [Clippy](https://bennettfeely.com/clippy/) - Visualización en tiempo real
 2. Browser DevTools - Editar en vivo y copiar resultado
 3. Responsive Design Mode - Verificar todos los breakpoints
 
 **Checklist de Validación:**
+
 - [ ] No hay gaps blancos entre secciones
 - [ ] Los clips se ven suaves en todos los viewports
 - [ ] No hay flickering en transiciones
@@ -258,17 +298,20 @@ Crear **custom CSS properties** para mantener coherencia:
 ## 📋 Plan de Implementación
 
 ### Fase 1: Auditoría Completa ✅ COMPLETADO
+
 1. ✅ Documentar todos los clip-paths actuales
 2. ✅ Identificar problemas visuales en cada breakpoint
 3. ✅ Crear este documento de plan
 
 ### Fase 2: Diseño de Sistema ✅ COMPLETADO
+
 1. ✅ Definir custom properties CSS para ángulos
 2. ✅ Calcular fórmula de progresión entre breakpoints
 3. ✅ Diseñar estructura sin negative margins
 4. ✅ Crear documentación visual (diagramas)
 
 ### Fase 3: Implementación ConcursosHero ✅ COMPLETADO
+
 1. ✅ Refactorizar `.hero-dark`, `.hero-cyan`, `.hero-yellow`
 2. ✅ Implementar custom properties
 3. ✅ Eliminar negative margins
@@ -303,18 +346,21 @@ Crear **custom CSS properties** para mantener coherencia:
    - Clip-paths coherentes y predecibles
 
 ### Fase 4: Aplicar a Otros Componentes (Pendiente)
+
 1. ColaboracionesDestacadas.astro
 2. DinamycGalleryTitle.astro
 3. Footer.astro
 4. Concursos.astro (sección principal)
 
 ### Fase 5: Testing & QA (Estimado: 45 min)
+
 1. Visual regression testing
 2. Performance profiling
 3. Accessibility check (WCAG 2.1 AA)
 4. Cross-browser testing (Chrome, Firefox, Safari, Edge)
 
 ### Fase 6: Documentación (Estimado: 30 min)
+
 1. Actualizar docs/guides/clip-shapes.md
 2. Crear ejemplos visuales
 3. Documentar sistema de custom properties
@@ -327,6 +373,7 @@ Crear **custom CSS properties** para mantener coherencia:
 ### ConcursosHero.astro - ANTES vs DESPUÉS
 
 #### ANTES (Problemático):
+
 ```css
 .hero-dark {
   clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
@@ -345,13 +392,14 @@ Crear **custom CSS properties** para mantener coherencia:
 ```
 
 #### DESPUÉS (Solucionado):
+
 ```css
 :root {
   /* Clip angle system - mantiene coherencia visual */
   --hero-clip-dark-end: 88%;
   --hero-clip-cyan-mid: 70%;
   --hero-clip-yellow-start: 25%;
-  
+
   /* Heights - usa unidades relativas */
   --hero-cyan-height: clamp(60px, 8vw, 100px);
 }
@@ -364,12 +412,7 @@ Crear **custom CSS properties** para mantener coherencia:
 .hero-dark {
   position: relative;
   z-index: 3;
-  clip-path: polygon(
-    0 0, 
-    100% 0, 
-    100% var(--hero-clip-dark-end), 
-    0 100%
-  );
+  clip-path: polygon(0 0, 100% 0, 100% var(--hero-clip-dark-end), 0 100%);
   padding-bottom: calc(var(--hero-cyan-height) * 0.5);
 }
 
@@ -379,12 +422,7 @@ Crear **custom CSS properties** para mantener coherencia:
   height: var(--hero-cyan-height);
   /* Eliminar margin-top negativo */
   transform: translateY(-2px); /* Solo anti-aliasing */
-  clip-path: polygon(
-    0 0, 
-    100% var(--hero-clip-cyan-mid), 
-    100% 100%, 
-    0 100%
-  );
+  clip-path: polygon(0 0, 100% var(--hero-clip-cyan-mid), 100% 100%, 0 100%);
 }
 
 .hero-yellow {
@@ -392,12 +430,7 @@ Crear **custom CSS properties** para mantener coherencia:
   z-index: 1;
   /* Eliminar margin-top negativo */
   transform: translateY(-2px);
-  clip-path: polygon(
-    0 var(--hero-clip-yellow-start), 
-    100% 0, 
-    100% 100%, 
-    0 100%
-  );
+  clip-path: polygon(0 var(--hero-clip-yellow-start), 100% 0, 100% 100%, 0 100%);
   padding-top: calc(var(--hero-cyan-height) * 0.4);
 }
 
@@ -435,21 +468,25 @@ Crear **custom CSS properties** para mantener coherencia:
 ## 🚀 Beneficios de la Solución
 
 ### 1. **Mantenibilidad**
+
 - Valores centralizados en custom properties
 - Fácil ajustar ángulos sin romper layout
 - Sistema coherente y predecible
 
 ### 2. **Responsividad**
+
 - Progresión suave entre breakpoints
 - No más gaps o overlaps
 - Escalado proporcional
 
 ### 3. **Performance**
+
 - Elimina negative margins problemáticos
 - Mejor rendering en GPU
 - Reduce layout shifts (mejora CLS)
 
 ### 4. **Consistencia Visual**
+
 - Ángulos siguen progresión lógica
 - Mantiene identidad visual en todos los tamaños
 - Fácil replicar en nuevos componentes
@@ -457,6 +494,7 @@ Crear **custom CSS properties** para mantener coherencia:
 ## 📝 Notas Adicionales
 
 ### Testing Checklist
+
 ```markdown
 - [ ] Desktop 1920px - Chrome
 - [ ] Desktop 1440px - Firefox
@@ -472,6 +510,7 @@ Crear **custom CSS properties** para mantener coherencia:
 ### Known Issues & Workarounds
 
 **Issue 1: Safari clip-path flickering**
+
 ```css
 /* Workaround */
 -webkit-backface-visibility: hidden;
@@ -479,12 +518,14 @@ Crear **custom CSS properties** para mantener coherencia:
 ```
 
 **Issue 2: Firefox negative margin rendering**
+
 ```css
 /* Solución: Usar transform en lugar de margin */
 transform: translateY(-2px);
 ```
 
 **Issue 3: Edge anti-aliasing gaps**
+
 ```css
 /* Overlap mínimo para cerrar gaps */
 transform: translateY(-1px);
@@ -510,6 +551,7 @@ transform: translateY(-1px);
 ### ✅ Completado - ConcursosHero.astro
 
 **Problemas Resueltos:**
+
 - ✅ Eliminados negative margins (-80px, -40px)
 - ✅ Implementado sistema de custom properties
 - ✅ Progresión angular coherente en todos los breakpoints
@@ -532,6 +574,7 @@ transform: translateY(-1px);
 ```
 
 **Beneficios Obtenidos:**
+
 1. **Mantenibilidad**: Un solo lugar para ajustar ángulos
 2. **Consistencia**: Progresión lógica entre breakpoints
 3. **Performance**: Mejor rendering sin negative margins

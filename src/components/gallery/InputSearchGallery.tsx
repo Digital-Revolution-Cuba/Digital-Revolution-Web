@@ -57,7 +57,7 @@ export function InputSearchGallery({
                 <button
                   key={author}
                   onClick={() => setSearchAuthor(author)}
-                  className="border-opacity-50 hover:border-opacity-100 rounded-full border-2 border-orange-500 bg-transparent px-3 py-1.5 text-xs font-medium text-orange-500 transition-all duration-300 hover:border-orange-500 hover:bg-orange-500/20 hover:text-orange-100 cursor-pointer sm:px-5 sm:py-2.5 sm:text-base"
+                  className="border-opacity-50 hover:border-opacity-100 cursor-pointer rounded-full border-2 border-orange-500 bg-transparent px-3 py-1.5 text-xs font-medium text-orange-500 transition-all duration-300 hover:border-orange-500 hover:bg-orange-500/20 hover:text-orange-100 sm:px-5 sm:py-2.5 sm:text-base"
                   style={{
                     animation: `fadeInUp 0.5s ease-out forwards`,
                     animationDelay: `${index * 0.05}s`,
@@ -76,13 +76,8 @@ export function InputSearchGallery({
         >
           <div className="animate-fade-in flex flex-col justify-center gap-3 text-center sm:flex-row sm:items-center sm:gap-4 sm:text-left">
             <span className="text-sm text-gray-300 sm:text-base">
-              Mostrando{" "}
-              <span className="font-bold text-orange-500">
-                {filteredImages.length}
-              </span>{" "}
-              de{" "}
-              <span className="font-bold text-cyan-400">{images.length}</span>{" "}
-              obras
+              Mostrando <span className="font-bold text-orange-500">{filteredImages.length}</span>{" "}
+              de <span className="font-bold text-cyan-400">{images.length}</span> obras
             </span>
             <span className="bg-opacity-20 border-opacity-50 rounded-full border-2 border-orange-500 bg-orange-500 px-3 py-1.5 text-sm font-medium text-orange-300 sm:px-4 sm:py-2 sm:text-base">
               {searchAuthor}

@@ -57,12 +57,8 @@ function initAccordeon(): void {
 
   if (!wrapper || !slider || !dotsNav) return;
 
-  const dots = Array.from(
-    dotsNav.querySelectorAll<HTMLButtonElement>(SELECTORS.dot),
-  );
-  const pages = Array.from(
-    slider.querySelectorAll<HTMLElement>(SELECTORS.page),
-  );
+  const dots = Array.from(dotsNav.querySelectorAll<HTMLButtonElement>(SELECTORS.dot));
+  const pages = Array.from(slider.querySelectorAll<HTMLElement>(SELECTORS.page));
   const totalPages = pages.length;
 
   if (totalPages === 0) return;
@@ -193,15 +189,11 @@ function initAccordeon(): void {
     e.preventDefault();
     e.stopPropagation();
 
-    const card = (e.currentTarget as HTMLElement).closest(
-      SELECTORS.card,
-    ) as HTMLElement | null;
+    const card = (e.currentTarget as HTMLElement).closest(SELECTORS.card) as HTMLElement | null;
     if (!card) return;
 
     const activePage = pages[currentPageIndex];
-    const pageCards = Array.from(
-      activePage.querySelectorAll<HTMLElement>(SELECTORS.card),
-    );
+    const pageCards = Array.from(activePage.querySelectorAll<HTMLElement>(SELECTORS.card));
 
     const wasFlipped = card.classList.contains(CSS_CLASSES.mobileFlipped);
 

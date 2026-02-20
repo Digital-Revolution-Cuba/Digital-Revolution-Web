@@ -49,6 +49,7 @@ This document explains the architectural decisions, patterns, and design philoso
 ### What are Islands?
 
 Islands Architecture is a pattern where:
+
 - **Most of the page is static HTML** (fast, SEO-friendly)
 - **Small "islands" of interactivity** hydrate independently
 - **JavaScript loads only for interactive components**
@@ -76,21 +77,22 @@ Islands Architecture:
 ```astro
 ---
 // src/pages/talentos/index.astro
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';  // ← Static
-import TalentsSearch from '../../components/TalentsSearch.astro';  // ← Island
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro"; // ← Static
+import TalentsSearch from "../../components/TalentsSearch.astro"; // ← Island
 ---
 
 <Layout>
   <!-- Static: Renders to HTML at build time -->
   <Header />
-  
+
   <!-- Island: Hydrates with React on client -->
-  <TalentsSearch client:visible />  
+  <TalentsSearch client:visible />
 </Layout>
 ```
 
 **Result:**
+
 - Header: Static HTML, no JS
 - TalentsSearch: Hydrates when visible (lazy loading)
 - Total JS: ~60KB instead of ~500KB
@@ -102,6 +104,7 @@ import TalentsSearch from '../../components/TalentsSearch.astro';  // ← Island
 ### Why Astro?
 
 **Chosen for:**
+
 - ✅ Islands Architecture out of the box
 - ✅ Framework-agnostic (React, Vue, Svelte all supported)
 - ✅ Excellent performance by default
@@ -109,6 +112,7 @@ import TalentsSearch from '../../components/TalentsSearch.astro';  // ← Island
 - ✅ Built-in image optimization
 
 **Trade-offs:**
+
 - ❌ Less mature than Next.js/Gatsby
 - ❌ Smaller ecosystem
 - ✅ But simpler for content-focused sites
@@ -116,17 +120,20 @@ import TalentsSearch from '../../components/TalentsSearch.astro';  // ← Island
 ### Why React for Islands?
 
 **Chosen for:**
+
 - ✅ Team familiarity
 - ✅ Largest ecosystem
 - ✅ Best TypeScript support
 - ✅ Excellent dev tools
 
 **Used only for:**
+
 - Interactive search/filters
 - Dynamic galleries
 - Form handling
 
 **NOT used for:**
+
 - Static content
 - Navigation
 - SEO-critical elements
@@ -134,12 +141,14 @@ import TalentsSearch from '../../components/TalentsSearch.astro';  // ← Island
 ### Why Tailwind CSS?
 
 **Chosen for:**
+
 - ✅ Utility-first approach (rapid development)
 - ✅ Small bundle size with PurgeCSS
 - ✅ Consistent design system
 - ✅ Responsive design made easy
 
 **Trade-offs:**
+
 - ❌ HTML can look verbose
 - ✅ But faster than writing custom CSS
 - ✅ Component extraction for reuse
@@ -147,18 +156,20 @@ import TalentsSearch from '../../components/TalentsSearch.astro';  // ← Island
 ### Why TypeScript (Strict)?
 
 **Chosen for:**
+
 - ✅ Type safety catches bugs early
 - ✅ Better IDE autocomplete
 - ✅ Self-documenting code
 - ✅ Refactoring confidence
 
 **Strict mode ensures:**
+
 ```typescript
 // ❌ Not allowed:
-const items: any[] = [];  // 'any' not allowed
+const items: any[] = []; // 'any' not allowed
 
 // ✅ Required:
-const items: GalleryItem[] = [];  // Explicit types
+const items: GalleryItem[] = []; // Explicit types
 ```
 
 ---
@@ -168,11 +179,13 @@ const items: GalleryItem[] = [];  // Explicit types
 ### Static Site Generation (SSG)
 
 **How it works:**
+
 1. Build time: Generate HTML for all pages
 2. Deploy: Upload static files to CDN
 3. Request: Serve cached HTML instantly
 
 **Benefits:**
+
 - ⚡ Lightning fast (TTFB < 100ms)
 - 💰 Cheap hosting (static files)
 - 🔒 Secure (no server-side code)
@@ -181,21 +194,18 @@ const items: GalleryItem[] = [];  // Explicit types
 ### Image Optimization
 
 **Strategy:**
+
 ```astro
 ---
-import { Image } from 'astro:assets';
-import heroImage from '../assets/hero.jpg';
+import { Image } from "astro:assets";
+import heroImage from "../assets/hero.jpg";
 ---
 
-<Image 
-  src={heroImage}
-  alt="Hero"
-  widths={[400, 800, 1200]}  
-  formats={['avif', 'webp', 'jpg']}
-/>
+<Image src={heroImage} alt="Hero" widths={[400, 800, 1200]} formats={["avif", "webp", "jpg"]} />
 ```
 
 **Result:**
+
 - Generates 9 image variants (3 sizes × 3 formats)
 - Browser picks optimal format
 - Lazy loads by default
@@ -204,6 +214,7 @@ import heroImage from '../assets/hero.jpg';
 ### Bundle Optimization
 
 **Code splitting strategy:**
+
 ```
 Entry point (index.astro):
 ├── Critical CSS: Inlined
@@ -214,6 +225,7 @@ Entry point (index.astro):
 ```
 
 **Key metrics:**
+
 - Total JS: <100KB gzip
 - First Contentful Paint: <1.5s
 - Time to Interactive: <2.5s
@@ -229,15 +241,16 @@ Entry point (index.astro):
 // src/data/arteGallery.ts
 export const arteGallery: ArteGalleryItem[] = [
   {
-    type: 'arte',
-    image: '/images/gallery/arte/gloria-abstract-01.jpg',
-    title: 'Abstract 01',
-    artistName: 'Gloria',
+    type: "arte",
+    image: "/images/gallery/arte/gloria-abstract-01.jpg",
+    title: "Abstract 01",
+    artistName: "Gloria",
   },
 ];
 ```
 
 **Limitations:**
+
 - Manual updates required
 - Rebuild needed for content changes
 - Not scalable for 100s of items
@@ -245,6 +258,7 @@ export const arteGallery: ArteGalleryItem[] = [
 ### Future: Headless CMS
 
 **Planned architecture:**
+
 ```
 ┌─────────────┐
 │   Strapi    │ ← Content management
@@ -266,6 +280,7 @@ export const arteGallery: ArteGalleryItem[] = [
 ```
 
 **Benefits:**
+
 - Non-technical editors can update content
 - Still static site performance
 - Incremental builds (only rebuild changed pages)
@@ -273,16 +288,20 @@ export const arteGallery: ArteGalleryItem[] = [
 ### Database Integration (Future)
 
 For features requiring real-time data:
+
 - User authentication
 - Comments/reactions
 - Analytics
 
 **Approach:**
+
 ```astro
 <!-- Static page with dynamic island -->
 <Layout>
-  <StaticContent />  <!-- Pre-rendered -->
-  <CommentSection client:visible />  <!-- API calls -->
+  <StaticContent />
+  <!-- Pre-rendered -->
+  <CommentSection client:visible />
+  <!-- API calls -->
 </Layout>
 ```
 
@@ -293,11 +312,13 @@ For features requiring real-time data:
 ### Current: No Backend = Secure by Default
 
 **Attack surface:**
+
 - ✅ No database (no SQL injection)
 - ✅ No server code (no RCE)
 - ✅ Static files only (no SSRF)
 
 **Security measures:**
+
 - HTTPS enforced (Vercel)
 - CSP headers configured
 - No sensitive data in client code
@@ -305,6 +326,7 @@ For features requiring real-time data:
 ### Future: API Security
 
 When adding backend:
+
 - JWT authentication
 - Rate limiting
 - Input validation
@@ -319,7 +341,7 @@ Digital Revolution Web uses Islands Architecture to achieve:
 ✅ **Fast**: Static HTML with selective hydration  
 ✅ **Scalable**: Prepared for CMS/API integration  
 ✅ **Maintainable**: Clear patterns, type-safe code  
-✅ **Performant**: Lighthouse score 95+  
+✅ **Performant**: Lighthouse score 95+
 
 **Key takeaway**: Choose static first, add interactivity only where needed.
 
