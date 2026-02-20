@@ -239,9 +239,15 @@
 ----------------------------------------------------------------- */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: auto;
   overflow: hidden;
   font-family: system-ui, sans-serif;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    min-height: 100vh;
+  }
 }
 
 /* --------------------------------------------------------------
@@ -279,8 +285,12 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 55%;
+  height: 45%;
+  /* Must stay below all content (z-index: 10 on .hero__content) */
+  z-index: 0;
   background: var(--primary);
+  /* Prevent the cyan band from overflowing over the media images */
+  pointer-events: none;
 }
 
 .hero__bg-diagonal {
@@ -300,7 +310,13 @@
   z-index: 10;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 96px 16px 64px;
+  padding: 64px 16px 32px;
+}
+
+@media (min-width: 480px) {
+  .hero__content {
+    padding: 72px 16px 48px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -313,10 +329,26 @@
    Layout (left + right)
 ----------------------------------------------------------------- */
 .hero__layout {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 24px;
   align-items: center;
+  /* Prevent the row from collapsing images */
+  align-items: stretch;
+}
+
+@media (min-width: 480px) {
+  .hero__layout {
+    gap: 28px;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero__layout {
+    gap: 40px;
+    align-items: center;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -330,6 +362,30 @@
 .hero__left,
 .hero__right {
   flex: 1;
+}
+
+.hero__left {
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+}
+
+.hero__right {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+}
+
+/* Mobile: left column centers its content and adds minimal spacing */
+@media (max-width: 1023px) {
+  .hero__left {
+    padding-bottom: 0;
+    text-align: center;
+  }
+  .hero__right {
+    /* Center the image grid on mobile */
+    margin: 0 auto;
+  }
 }
 
 /* Badge animations */
@@ -360,17 +416,18 @@
    Title
 ----------------------------------------------------------------- */
 .hero__title {
-  margin-top: 100px;
-  margin-bottom: 24px;
+  margin-top: 40px;
+  margin-bottom: 16px;
   font-weight: 900;
   line-height: 0.9;
-  font-size: 58px;
+  font-size: clamp(36px, 10vw, 58px);
   text-align: center;
 }
 
 @media (min-width: 768px) {
   .hero__title {
     margin-top: 0;
+    margin-bottom: 24px;
     font-size: 72px;
   }
 }
@@ -402,11 +459,20 @@
 ----------------------------------------------------------------- */
 .hero__description {
   max-width: 480px;
-  margin: 0 auto 32px;
+  margin: 0 auto 20px;
   color: #ffffff;
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: clamp(14px, 3.5vw, 18px);
+  line-height: 1.5;
   text-align: center;
+  padding: 0 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .hero__description {
+    margin: 0 auto 32px;
+    line-height: 1.6;
+    padding: 0;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -421,16 +487,18 @@
 ----------------------------------------------------------------- */
 .hero__actions {
   display: flex;
-  margin-bottom: 20px;
-  flex-direction: row;
-  gap: 16px;
+  margin-bottom: 16px;
+  flex-direction: column;
+  gap: 12px;
   justify-content: center;
-  margin-bottom: 24px;
+  align-items: center;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 400px) {
   .hero__actions {
     flex-direction: row;
+    gap: 16px;
+    margin-bottom: 24px;
   }
 }
 
@@ -508,80 +576,159 @@
 
 /* --------------------------------------------------------------
    Media (right-floating images)
+   ─────────────────────────────────────────────────────────────
+   RESPONSIVE STRATEGY:
+   · < 1024px  → CSS Grid 2×2 (main spans 2 cols, secondary &
+                 tertiary each take 1 col below) — no absolutes,
+                 no overflow issues.
+   · ≥ 1024px  → Original absolute-positioned layout.
 ----------------------------------------------------------------- */
+
+/* Right column: never clip images */
 .hero__right {
-  position: relative;
-  height: 500px;
-  max-width: 480px;
   width: 100%;
+  max-width: 480px;
+  /* Enough room for the grid on mobile */
+  min-height: clamp(280px, 60vw, 420px);
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+}
+
+@media (min-width: 480px) {
+  .hero__right {
+    min-height: clamp(320px, 55vw, 460px);
+  }
 }
 
 @media (min-width: 768px) {
   .hero__right {
-    height: 600px;
+    min-height: 500px;
   }
 }
 
+@media (min-width: 1024px) {
+  .hero__right {
+    height: 600px;
+    min-height: unset;
+    max-width: 480px;
+  }
+}
+
+/* ── Media wrapper ───────────────────────────────────────────── */
 .hero__media {
   position: relative;
-  margin-top: 40px;
   width: 100%;
   height: 100%;
-  z-index: -2;
+  z-index: 1;
+  /* Mobile/tablet: CSS Grid layout so images are always visible */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 12px;
+  align-items: start;
+  padding: 0 4px;
 }
 
-/* Main image centered */
+@media (min-width: 480px) {
+  .hero__media {
+    gap: 16px;
+    padding: 0 8px;
+  }
+}
+
+/* Desktop: revert to absolute positioning */
+@media (min-width: 1024px) {
+  .hero__media {
+    display: block; /* back to absolute layout */
+    position: absolute;
+    inset: 0;
+    margin-top: 40px;
+    padding: 0;
+    gap: unset;
+  }
+}
+
+/* ── Main image ──────────────────────────────────────────────── */
+/* Mobile/tablet: spans both columns, full width */
 .hero__media-main {
-  position: absolute;
-  z-index: -2;
-  top: 50%;
-  left: 50%;
-  width: 256px;
-  transform: translate(-50%, -50%);
+  grid-column: 1 / -1; /* full width in grid */
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  /* Intrinsic sizing via aspect-ratio → no fixed heights needed */
+  aspect-ratio: 4 / 3;
 }
 
-/* Secondary top right */
+/* Desktop: revert to absolute centered layout */
+@media (min-width: 1024px) {
+  .hero__media-main {
+    grid-column: unset;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 256px;
+    aspect-ratio: unset;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ── Secondary image (top-right) ─────────────────────────────── */
 .hero__media-secondary {
-  position: absolute;
-  top: 16px;
-  z-index: -2;
-  right: 0;
-  width: 192px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 1 / 1;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .hero__media-secondary {
+    position: absolute;
     top: 32px;
     right: 0;
     width: 224px;
+    aspect-ratio: unset;
   }
 }
 
-/* Tertiary bottom left */
+/* ── Tertiary image (bottom-left) ────────────────────────────── */
 .hero__media-tertiary {
-  position: absolute;
-  bottom: 32px;
-  left: 16px;
-  width: 176px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 1 / 1;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .hero__media-tertiary {
+    position: absolute;
     bottom: 48px;
     left: 32px;
     width: 192px;
+    aspect-ratio: unset;
   }
 }
 
 .hero__media-content {
   position: relative;
   overflow: hidden;
-  border-radius: 24px;
-  border: 4px solid var(--border);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border-radius: 16px;
+  border: 2px solid var(--border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   width: 100%;
+  /* height follows aspect-ratio of parent on mobile; 100% on desktop */
   height: 100%;
+  min-height: 120px;
   transition: all 0.4s ease;
+}
+
+@media (min-width: 768px) {
+  .hero__media-content {
+    border-radius: 24px;
+    border-width: 4px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .hero__media-content img {
@@ -599,8 +746,15 @@
 .hero__media-content.secondary {
   border-width: 2px;
   border-color: rgba(249, 115, 22, 0.3);
-  transform: rotate(6deg);
+  /* No rotation on mobile — rotated items overflow the grid cell */
+  transform: none;
   transition: all 0.4s ease;
+}
+
+@media (min-width: 1024px) {
+  .hero__media-content.secondary {
+    transform: rotate(6deg);
+  }
 }
 
 .hero__media-content.secondary:hover {
@@ -611,8 +765,15 @@
 .hero__media-content.tertiary {
   border-width: 2px;
   border-color: rgba(6, 182, 212, 0.3);
-  transform: rotate(-6deg);
+  /* No rotation on mobile — keeps images visible within grid cells */
+  transform: none;
   transition: all 0.4s ease;
+}
+
+@media (min-width: 1024px) {
+  .hero__media-content.tertiary {
+    transform: rotate(-6deg);
+  }
 }
 
 .hero__media-content.tertiary:hover {
@@ -645,34 +806,66 @@
   position: absolute;
   border-radius: 50%;
   animation: pulse 2s ease-in-out infinite;
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .hero__dot-accent,
+  .hero__dot-primary,
+  .hero__dot-neutral {
+    display: block;
+  }
 }
 
 .hero__dot-accent {
   top: 80px;
   left: 32px;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   background: var(--accent);
   box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
 }
 
+@media (min-width: 768px) {
+  .hero__dot-accent {
+    width: 16px;
+    height: 16px;
+  }
+}
+
 .hero__dot-primary {
-  bottom: 128px;
-  right: 48px;
-  width: 12px;
-  height: 12px;
+  bottom: 80px;
+  right: 32px;
+  width: 10px;
+  height: 10px;
   background: var(--primary);
   box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
   animation: pulse 2s ease-in-out infinite 0.3s;
 }
 
+@media (min-width: 768px) {
+  .hero__dot-primary {
+    bottom: 128px;
+    right: 48px;
+    width: 12px;
+    height: 12px;
+  }
+}
+
 .hero__dot-neutral {
   top: 33%;
   right: 25%;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   background: var(--foreground);
   animation: pulse 2s ease-in-out infinite 0.6s;
+}
+
+@media (min-width: 768px) {
+  .hero__dot-neutral {
+    width: 8px;
+    height: 8px;
+  }
 }
 
 /* --------------------------------------------------------------
@@ -772,6 +965,13 @@
 .hero__decorative {
   position: absolute;
   pointer-events: none;
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .hero__decorative {
+    display: block;
+  }
 }
 
 .hero__line-horizontal {
