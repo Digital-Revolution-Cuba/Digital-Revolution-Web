@@ -7,14 +7,17 @@ This folder contains self-hosted web fonts for the Digital Revolution Web projec
 Download these font files from [google-webfonts-helper](https://gwfh.mranftl.com/fonts) and place them in `public/fonts/`:
 
 ### Roboto
-- `roboto-regular.woff2` (400) 
+
+- `roboto-regular.woff2` (400)
 - `roboto-medium.woff2` (500)
 - `roboto-bold.woff2` (700)
 
 ### Inter
+
 - `inter-variable-font-slnt-wght.woff2` (100-900)
 
 ### Impact
+
 - `Impact.woff2`
 
 ## Instructions

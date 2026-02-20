@@ -52,18 +52,13 @@ const formatDate = (date: Date) => {
     {/* Section 1: Header/Intro - Dark Background */}
     <section class="collab-hero py-24 md:py-32">
       <div class="container mx-auto px-6">
-        <div class="animate-fade-in max-w-4xl flex flex-col gap-6 opacity-0">
-          <h1
-            class="hero-title"
-          >
-          Colaboraciones <br/><span class="text-stroke-cyan">Destacadas</span>
+        <div class="animate-fade-in flex max-w-4xl flex-col gap-6 opacity-0">
+          <h1 class="hero-title">
+            Colaboraciones <br /><span class="text-stroke-cyan">Destacadas</span>
           </h1>
-          <p
-            class="hero-description"
-          >
-            Descubre proyectos innovadores y únete a nuestra comunidad creativa.
-            Explora colaboraciones activas y pasadas que transforman ideas en
-            realidad.
+          <p class="hero-description">
+            Descubre proyectos innovadores y únete a nuestra comunidad creativa. Explora
+            colaboraciones activas y pasadas que transforman ideas en realidad.
           </p>
         </div>
       </div>
@@ -77,14 +72,8 @@ const formatDate = (date: Date) => {
       <div class="container mx-auto px-6">
         {/* Section Header */}
         <div class="mb-16">
-            <h2
-              class="text-2xl font-impact! text-black "
-            >
-              Colaboraciones Activas
-            </h2>
-          <p class="text-md text-black/70!">
-            Proyectos en curso donde puedes participar ahora
-          </p>
+          <h2 class="font-impact! text-2xl text-black">Colaboraciones Activas</h2>
+          <p class="text-md text-black/70!">Proyectos en curso donde puedes participar ahora</p>
         </div>
 
         {/* Grid Layout */}
@@ -122,15 +111,11 @@ const formatDate = (date: Date) => {
       <div class="container mx-auto px-3">
         <button
           id="toggle-finished"
-          class="group bg-brand-navy/50 hover:bg-brand-navy flex w-full items-center justify-between rounded-3xl border border-white/5 p-5 md:p-8 text-left transition-all duration-500"
+          class="group bg-brand-navy/50 hover:bg-brand-navy flex w-full items-center justify-between rounded-3xl border border-white/5 p-5 text-left transition-all duration-500 md:p-8"
           aria-expanded="false"
         >
           <div>
-              <h2
-                class="text-white font-impact! text-2xl"
-              >
-                Colaboraciones Finalizadas
-              </h2>
+            <h2 class="font-impact! text-2xl text-white">Colaboraciones Finalizadas</h2>
             <p class="text-md text-gray-400">
               Proyectos completados que inspiraron a nuestra comunidad
             </p>
@@ -185,25 +170,15 @@ const formatDate = (date: Date) => {
 
     {/* Section 4: CTA - Orange Background */}
     <section class="collab-cta bg-accent-orange px-6 py-32">
-      <div class="container flex flex-col gap-4 mx-auto max-w-3xl md:items-center md:text-center">
-        <h2
-          class="text-2xl font-impact! font-black text-black"
-        >
+      <div class="container mx-auto flex max-w-3xl flex-col gap-4 md:items-center md:text-center">
+        <h2 class="font-impact! text-2xl font-black text-black">
           ¿Quieres colaborar con nosotros?
         </h2>
-        <p
-          class="text-md font-normal text-black/70"
-        >
-          Tenemos oportunidades emocionantes para creadores, desarrolladores,
-          diseñadores y emprendedores. Únete a nuestra comunidad y haz que tu
-          idea sea realidad.
+        <p class="text-md font-normal text-black/70">
+          Tenemos oportunidades emocionantes para creadores, desarrolladores, diseñadores y
+          emprendedores. Únete a nuestra comunidad y haz que tu idea sea realidad.
         </p>
-        <a
-          href="/contacto"
-          class="btn-primary w-fit"
-        >
-          Proponer Colaboración
-        </a>
+        <a href="/contacto" class="btn-primary w-fit"> Proponer Colaboración </a>
       </div>
     </section>
   </div>
@@ -230,9 +205,8 @@ const formatDate = (date: Date) => {
 </script>
 
 <style>
-
   .hero-title {
-    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-family: "Impact", "Arial Black", sans-serif;
     line-height: 0.95;
     letter-spacing: 0.02em;
     color: var(--color-text-primary, #ffffff);
@@ -252,7 +226,6 @@ const formatDate = (date: Date) => {
     max-width: 500px;
   }
 
-
   .collab-page-container {
     background: #001018;
     overflow-x: hidden;
@@ -261,7 +234,7 @@ const formatDate = (date: Date) => {
   .text-stroke-cyan {
     -webkit-text-stroke: 1.5px #34dfde;
     color: transparent;
-    font-family:'Impact';
+    font-family: "Impact";
   }
 
   @keyframes fadeIn {
@@ -300,14 +273,12 @@ const formatDate = (date: Date) => {
       radial-gradient(circle at 20% 80%, rgba(151, 71, 255, 0.05), transparent 40%);
   }
   @media (min-width: 1024px) {
-
     .hero-title {
       font-size: clamp(3.5rem, 3rem + 2vw, 5rem);
     }
   }
 
   @media (max-width: 767px) {
-
     .hero-title {
       font-size: clamp(2.5rem, 8vw, 3.5rem);
     }

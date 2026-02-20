@@ -9,7 +9,7 @@ const { item } = Astro.props;
 ---
 
 <div
-  class="gallery-item arte-item w-[285px] relative shrink-0 overflow-hidden rounded-[25px shadow-none]"
+  class="gallery-item arte-item rounded-[25px shadow-none] relative w-[285px] shrink-0 overflow-hidden"
   data-category="arte"
 >
   <img
@@ -61,14 +61,14 @@ const { item } = Astro.props;
   }
 
   .gallery-item:before {
-    content: '';
-    position:absolute;
-    bottom:-0.3rem;
-    right:-0.3rem;
-    background:var(--color-accent-yellow);
-    border-radius:25px;
-    width:100%;
-    height:100%;
+    content: "";
+    position: absolute;
+    bottom: -0.3rem;
+    right: -0.3rem;
+    background: var(--color-accent-yellow);
+    border-radius: 25px;
+    width: 100%;
+    height: 100%;
   }
 
   .image-overlay {
@@ -90,7 +90,7 @@ const { item } = Astro.props;
 
   /* ensure sizing includes borders/padding and images fill the card cleanly */
   .gallery-item {
-    position:relative;
+    position: relative;
     box-sizing: border-box;
     /* Make container height match the image's rendered height */
     display: flex;
@@ -103,7 +103,7 @@ const { item } = Astro.props;
     height: calc(); /* Let image determine its own height based on aspect ratio */
     min-height: 440px; /* Maintain minimum height */
     object-fit: cover;
-    background:var(--palette-brand-dark);
+    background: var(--palette-brand-dark);
   }
 
   .artist-overlay {

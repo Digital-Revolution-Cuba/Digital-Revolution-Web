@@ -32,7 +32,7 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
     <h3 class="colaboracion-title">{title}</h3>
     <p class="colaboracion-description">{description}</p>
     <div class="colaboracion-footer">
-      <a href={ctaLink} class="btn-primary text-sm px-3">
+      <a href={ctaLink} class="btn-primary px-3 text-sm">
         {ctaText}
       </a>
     </div>
@@ -84,18 +84,18 @@ const { title, description, imageUrl, altText, ctaLink, ctaText } = Astro.props;
   }
 
   .colaboracion-title {
-    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-family: "Impact", "Arial Black", sans-serif;
     color: var(--palette-accent-orange, #f49624);
     font-weight: 400;
-    font-size:1.4rem;
+    font-size: 1.4rem;
     margin: 0;
     line-height: 1.2;
   }
 
   .colaboracion-description {
     color: var(--palette-accent-orange);
-    opacity:0.6;
-    font-family:'Roboto';
+    opacity: 0.6;
+    font-family: "Roboto";
     font-weight: 400;
     font-size: 0.625rem;
     margin: 0;

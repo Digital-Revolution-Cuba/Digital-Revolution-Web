@@ -545,11 +545,7 @@
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 800;
   font-family: var(--font-impact);
-  background: linear-gradient(
-    135deg,
-    rgba(var(--jc-cyan-rgb), 1),
-    rgba(var(--jc-purple-rgb), 1)
-  );
+  background: linear-gradient(135deg, rgba(var(--jc-cyan-rgb), 1), rgba(var(--jc-purple-rgb), 1));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -770,7 +766,6 @@
 
 .jc-title-word {
   display: inline-flex;
-  
 }
 
 .jc-title-letter {

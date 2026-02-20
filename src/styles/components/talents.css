@@ -81,7 +81,7 @@
 
 /* ===== Section Styles ===== */
 .section-title {
-  font-family: 'Impact', 'Arial Black', sans-serif;
+  font-family: "Impact", "Arial Black", sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
   font-style: italic;
@@ -185,7 +185,7 @@
   transform: translate3d(0, -50%, 0);
   padding: 0.5rem;
   border-radius: 5px;
-  cursor:pointer;
+  cursor: pointer;
   background: var(--muted);
   color: var(--muted-foreground);
   transition: all 0.3s;
@@ -217,7 +217,7 @@
 
 .filter-pill {
   padding: 0.5rem 1.25rem;
-  cursor:pointer;
+  cursor: pointer;
   border-radius: 9999px;
   font-weight: 500;
   border: 2px solid;
@@ -447,7 +447,7 @@
 /* Aggressive CTA Button */
 .cta-profile-btn {
   display: flex;
-  margin-top:auto;
+  margin-top: auto;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
