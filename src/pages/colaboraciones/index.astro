@@ -4,6 +4,8 @@ import Layout from '../../layouts/Layout.astro';
 import DiagonalDivider from '../../components/DiagonalDivider.astro';
 import CollaborationCard from '../../components/CollaborationCard.astro';
 
+export const prerender = true;
+
 // Get all colaboraciones from content collection
 const allColaboraciones = await getCollection('colaboraciones');
 

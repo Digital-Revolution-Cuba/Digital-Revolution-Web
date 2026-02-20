@@ -2,6 +2,8 @@
 import { getCollection, getEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
+export const prerender = true;
+
 // Type utilities for stronger typing
 export async function getStaticPaths() {
   const talents = await getCollection('talents');
