@@ -114,11 +114,13 @@ function initConcursosSlider() {
     }, resizeDebounce);
   });
 
-  setTimeout(() => {
+  // Use requestAnimationFrame so layout is calculated after the browser
+  // completes its first paint — eliminates the 100ms race condition.
+  requestAnimationFrame(() => {
     calculateLayout();
     generateDots();
     updateSlider();
-  }, 100);
+  });
 }
 
 if (document.readyState === "loading") {

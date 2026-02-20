@@ -17,7 +17,7 @@
   min-height: 80dvh;
   width: 100%;
   background: var(--gallery-bg);
-  overflow: hidden;
+  overflow: clip;
   padding: 4rem 1rem;
 }
 
@@ -64,8 +64,9 @@
 /* Gallery viewport and track */
 .gallery-viewport {
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
+  /* padding-bottom keeps card shadows from being clipped by .gallery-container */
   padding-bottom: 1.25rem;
 
   /* Hide scrollbars */
@@ -94,13 +95,17 @@
 /* Gallery items base styles */
 .gallery-item {
   flex-shrink: 0;
+  /* Default (desktop) width — overridden by breakpoints below for smaller screens */
   width: 285px;
+  /* Padding that was previously inline on each card element */
+  padding: 0 8px;
+  box-sizing: border-box;
   transition: transform 0.3s ease;
 }
 
 /* Responsive breakpoints */
 
-/* Mobile: 1 card visible */
+/* Mobile: 1 card visible, nearly full viewport minus nav buttons */
 @media (max-width: 640px) {
   .gallery-section {
     min-height: 70dvh;
@@ -120,6 +125,13 @@
   .gallery-container {
     max-width: calc(100vw - 5rem);
   }
+
+  /* Card fills container: 9rem = 2×nav-btn + gaps + wrapper-padding */
+  .gallery-item {
+    width: calc(100dvw - 9rem);
+    max-width: 285px;
+    padding: 0 4px;
+  }
 }
 
 /* Small tablets: 2 cards visible */
@@ -135,6 +147,12 @@
   .gallery-container {
     max-width: calc(100vw - 6rem);
   }
+
+  /* 2 cards per view: share the available space minus nav + gaps */
+  .gallery-item {
+    width: calc((100dvw - 9rem) / 2);
+    max-width: 285px;
+  }
 }
 
 /* Tablets: 3 cards visible */
@@ -146,25 +164,33 @@
   .gallery-container {
     max-width: calc(100% - 6rem);
   }
+
+  /* 3 cards per view */
+  .gallery-item {
+    width: calc((100dvw - 9rem) / 3);
+    max-width: 285px;
+  }
 }
 
 /* Desktop: 4 cards visible */
 @media (min-width: 1024px) {
   .gallery-inner-container {
-    max-width: 1240px;
+    max-width: 1280px;
   }
 
   .gallery-container {
-    width: 1140px;
-    max-width: 1140px;
+    /* 4 cards × 285px + 3 gaps × 1rem = 1188px; add 4px safety buffer */
+    width: calc(4 * 285px + 3 * 1rem + 4px);
+    max-width: calc(4 * 285px + 3 * 1rem + 4px);
   }
 }
 
 /* Reduced motion */
-@media (prefers-reduced-motion: reduce) {}  
+@media (prefers-reduced-motion: reduce) {
   .gallery-track {
     transition: none;
   }
+}
 /* --------------------------------------------------------------
    Root design tokens (puedes vincularlos a tu tema Shadcn/Tailwind)
 ----------------------------------------------------------------- */
@@ -287,8 +313,6 @@
   animation: slideUp 0.8s ease-out 0.2s both;
 }
 
-
-
 /* Description animations */
 .hero__description {
   animation: slideUp 0.8s ease-out 0.3s both;
@@ -396,7 +420,7 @@
 }
 
 .hero__btn-primary::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
