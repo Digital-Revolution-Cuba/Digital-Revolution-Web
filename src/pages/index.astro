@@ -6,7 +6,6 @@ import DinamycGalleryTitle from "../components/DinamycGalleryTitle.astro";
 import Gallery from "../components/features/gallery/Gallery.astro";
 import Footer from "../components/Footer.astro";
 import Hero from "../components/Hero.astro";
-import JoinOurCommunity from "../components/JoinOurCommunity.astro";
 import { arteGallery, fotografiaGallery, musicaGallery } from "../data";
 import Layout from "../layouts/Layout.astro";
 import type { CategoryConfig } from "../types/gallery.types";
@@ -32,7 +31,6 @@ const galleryCategories: CategoryConfig[] = [
   <Gallery categories={galleryCategories} />
   <ColaboracionesDestacadasTitle />
   <ColaboracionesDestacadas />
-  <JoinOurCommunity />
   <Footer />
   <script>
     import "../client/initializers/colaboraciones.ts";
