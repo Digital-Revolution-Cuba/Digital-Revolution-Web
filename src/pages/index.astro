@@ -11,6 +11,8 @@ import { arteGallery, fotografiaGallery, musicaGallery } from '../data';
 import Layout from '../layouts/Layout.astro';
 import type { CategoryConfig } from '../types/gallery.types';
 
+export const prerender = true;
+
 // Gallery configuration
 const galleryCategories: CategoryConfig[] = [
   { id: 'arte', label: 'Arte', items: arteGallery },

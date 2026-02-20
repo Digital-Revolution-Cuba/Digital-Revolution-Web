@@ -6,6 +6,8 @@ import ConcursosHero from '../../components/concursos/ConcursosHero.astro';
 import Layout from '../../layouts/Layout.astro';
 import '../../styles/components/concursos.css';
 
+export const prerender = true;
+
 // Get all contests from the collection
 const allConcursos = await getCollection('concursos');
 

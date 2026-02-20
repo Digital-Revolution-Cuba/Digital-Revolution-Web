@@ -39,10 +39,10 @@ export function HeroSection() {
             </p>
 
             <div className="hero__actions">
-              <button className="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark z-10 rounded-lg border px-8 py-3 text-base font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)]">
+              <button className="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark z-10 rounded-lg border px-5 py-2.5 text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)] sm:px-8 sm:py-3 sm:text-base">
                 Ver Galeria
               </button>
-              <button className="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark rounded-lg border px-8 py-3 text-base font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)]">
+              <button className="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark rounded-lg border px-5 py-2.5 text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)] sm:px-8 sm:py-3 sm:text-base">
                 Subir Otra
               </button>
             </div>

@@ -32,7 +32,7 @@ export const concursosData: readonly ConcursoItem[] = [
     date: "15 de Mayo",
     imageUrl: "/images/concursos/concurso-fotografia.svg",
     altText: "Concurso de Fotografía",
-    ctaLink: "#",
+    ctaLink: "/concursos/fotografia-urbana-2026",
     ctaText: "Ver Más",
   },
   {
@@ -41,7 +41,7 @@ export const concursosData: readonly ConcursoItem[] = [
     date: "30 de Abril",
     imageUrl: "/images/concursos/concurso-arte-digital.svg",
     altText: "Concurso de Arte Digital",
-    ctaLink: "#",
+    ctaLink: "/concursos/arte-digital-futurista",
     ctaText: "Ver Más",
   },
   {
@@ -77,7 +77,7 @@ export const concursosData: readonly ConcursoItem[] = [
     date: "25 de Agosto",
     imageUrl: "/images/concursos/concurso-musica.svg",
     altText: "Concurso de Música",
-    ctaLink: "#",
+    ctaLink: "/concursos/musica-electronica-",
     ctaText: "Ver Más",
   },
 ] as const;
