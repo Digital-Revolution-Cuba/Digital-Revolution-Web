@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # pnpm version is read from the `packageManager` field in package.json
       # cache:true stores ~/.local/share/pnpm/store automatically
