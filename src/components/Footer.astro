@@ -1,6 +1,6 @@
 ---
-import LogoRevolucionDigital from '../assets/LogoFooter.svg';
-import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
+import LogoRevolucionDigital from "../assets/LogoFooter.svg";
+import RevolucionDigitalText from "../assets/RevolucionDigitalFooter.svg";
 ---
 
 <footer class="footer" role="contentinfo" aria-label="Footer">
@@ -13,13 +13,7 @@ import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
         height="80"
         class="footer-logo"
       />
-      <img
-        src={RevolucionDigitalText.src}
-        alt=""
-        width="200"
-        height="50"
-        class="footer-text"
-      />
+      <img src={RevolucionDigitalText.src} alt="" width="200" height="50" class="footer-text" />
     </div>
   </div>
 </footer>
@@ -51,14 +45,10 @@ import RevolucionDigitalText from '../assets/RevolucionDigitalFooter.svg';
   }
 
   .footer-bar::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.03) 1px,
-      transparent 1px
-    );
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 16px 16px;
     opacity: 0.4;
     pointer-events: none;

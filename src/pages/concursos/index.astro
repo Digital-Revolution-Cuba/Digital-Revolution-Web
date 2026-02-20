@@ -1,24 +1,23 @@
 ---
-import { getCollection } from 'astro:content';
-import ConcursosCTA from '../../components/concursos/ConcursosCTA.astro';
-import ConcursosFiltersIsland from '../../components/concursos/ConcursosFiltersIsland.tsx';
-import ConcursosHero from '../../components/concursos/ConcursosHero.astro';
-import Layout from '../../layouts/Layout.astro';
-import '../../styles/components/concursos.css';
+import { getCollection } from "astro:content";
+import ConcursosCTA from "../../components/concursos/ConcursosCTA.astro";
+import ConcursosFiltersIsland from "../../components/concursos/ConcursosFiltersIsland.tsx";
+import ConcursosHero from "../../components/concursos/ConcursosHero.astro";
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/components/concursos.css";
+
+export const prerender = true;
 
 // Get all contests from the collection
-const allConcursos = await getCollection('concursos');
+const allConcursos = await getCollection("concursos");
 
 // Calculate statistics
-const activeCount = allConcursos.filter(
-  (c) => c.data.status === 'activo',
-).length;
+const activeCount = allConcursos.filter((c) => c.data.status === "activo").length;
 const totalParticipants = allConcursos.reduce(
   (acc, c) => acc + (c.data.currentParticipants || 0),
-  0,
+  0
 );
-const totalCategories = [...new Set(allConcursos.map((c) => c.data.category))]
-  .length;
+const totalCategories = [...new Set(allConcursos.map((c) => c.data.category))].length;
 ---
 
 <Layout

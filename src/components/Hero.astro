@@ -1,6 +1,6 @@
 ---
-import Accordeon from '../components/AccordeonSlider.astro';
-import '../styles/glass-card.css';
+import Accordeon from "../components/AccordeonSlider.astro";
+import "../styles/glass-card.css";
 ---
 
 <section
@@ -15,14 +15,13 @@ import '../styles/glass-card.css';
         Descubre <br /> Talentos
       </h2>
       <p class="hero-description">
-        Encuentra y conecta con personas creativas para intercambiar ideas y
-        colaborar en proyectos innovadores. Explora eventos locales, talleres y
-        conferencias donde puedas conocer a individuos con intereses similares
-        de diversas disciplinas.
+        Encuentra y conecta con personas creativas para intercambiar ideas y colaborar en proyectos
+        innovadores. Explora eventos locales, talleres y conferencias donde puedas conocer a
+        individuos con intereses similares de diversas disciplinas.
       </p>
 
       <div class="flex justify-start">
-        <button class="btn-primary"> Explora Talentos </button>
+        <a href="/talentos" class="btn-primary"> Explora Talentos </a>
       </div>
     </div>
 
@@ -112,10 +111,13 @@ import '../styles/glass-card.css';
 
     .hero-title {
       font-size: clamp(2.5rem, 8vw, 3.5rem);
+      transform: scaleX(1);
+      max-width: 100%;
     }
 
     .hero-description {
       font-size: clamp(0.9rem, 3.5vw, 1.125rem);
+      max-width: 100%;
     }
   }
 </style>

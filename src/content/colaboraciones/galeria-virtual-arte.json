@@ -11,7 +11,7 @@
     "type": "ONG",
     "website": "https://example.com/artecuba"
   },
-  "image": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=80",
+  "image": "/images/colaboraciones/galeria-virtual-arte.svg",
   "imageAlt": "Galería de arte moderna con pinturas abstractas iluminadas",
   "fechas": {
     "inicio": "2025-06-15T00:00:00.000Z"

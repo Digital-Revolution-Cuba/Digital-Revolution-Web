@@ -11,7 +11,7 @@
     "type": "Institución",
     "website": "https://example.com/imc"
   },
-  "image": "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800&q=80",
+  "image": "/images/colaboraciones/proyecto-sonoro-2025.svg",
   "imageAlt": "Estudio de grabación profesional con equipos de audio analógicos y digitales",
   "fechas": {
     "inicio": "2025-03-01T00:00:00.000Z",

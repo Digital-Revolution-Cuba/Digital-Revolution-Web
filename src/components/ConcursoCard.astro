@@ -55,3 +55,13 @@ const { title, date, imageUrl, altText, ctaLink, ctaText } = Astro.props;
     </div>
   </div>
 </article>
+
+<style>
+  /* Ensure the card always fills its .card-item-concursos wrapper.
+     The wrapper controls the responsive width; the card must not cap itself. */
+  article {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+</style>

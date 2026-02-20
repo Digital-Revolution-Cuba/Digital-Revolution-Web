@@ -14,8 +14,8 @@
   --accent-foreground: hsl(195, 35%, 8%);
   --border: hsl(195, 20%, 20%);
   --radius: 0.75rem;
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'Inter', sans-serif;
+  --font-display: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
 }
 
 .button-cta {
@@ -343,15 +343,10 @@
 }
 
 .talent-card-image::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    var(--background),
-    rgba(0, 0, 0, 0.2),
-    transparent
-  );
+  background: linear-gradient(to top, var(--background), rgba(0, 0, 0, 0.2), transparent);
 }
 
 .featured-badge {

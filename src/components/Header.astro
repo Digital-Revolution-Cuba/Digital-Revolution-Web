@@ -1,28 +1,21 @@
 ---
-import logo from '../assets/LogoRevolucionDigital.svg';
-import RevolucionDigitalText from '../assets/RevolucionDigital.svg';
+import logo from "../assets/LogoRevolucionDigital.svg";
+import RevolucionDigitalText from "../assets/RevolucionDigital.svg";
 
 const navLinks = [
-  { href: '/concursos', label: 'Concursos' },
-  { href: '/galeria', label: 'Galeria' },
-  { href: '/perfiles', label: 'Perfiles' },
-  { href: '/colaboraciones', label: 'Colaboraciones' },
+  { href: "/concursos", label: "Concursos" },
+  { href: "/galeria", label: "Galeria" },
+  { href: "/perfiles", label: "Perfiles" },
+  { href: "/colaboraciones", label: "Colaboraciones" },
 ];
---- 
+---
 
 <header id="main-header" class="header-wrapper" role="banner">
   <div class="header-container">
     <!-- Logo -->
 
     <a href="/" class="header-logo" aria-label="Ir al inicio">
-      <img
-        src={logo.src}
-        alt=""
-        width="60"
-        height="60"
-        class="logo-icon"
-        aria-hidden="true"
-      />
+      <img src={logo.src} alt="" width="60" height="60" class="logo-icon" aria-hidden="true" />
       <img
         src={RevolucionDigitalText.src}
         alt="Revolución Digital"
@@ -38,12 +31,7 @@ const navLinks = [
       class="text-text-secondary hover:text-accent-cyan focus:outline-none lg:hidden"
       aria-label="Abrir menú"
     >
-      <svg
-        class="h-8 w-8"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
+      <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -92,30 +80,21 @@ const navLinks = [
       <nav aria-label="Navegación móvil">
         <ul class="flex flex-col items-center gap-6">
           <li>
-            <a
-              href="/concursos"
-              class="text-text-secondary hover:text-accent-cyan text-lg"
+            <a href="/concursos" class="text-text-secondary hover:text-accent-cyan text-lg"
               >Concursos</a
             >
           </li>
           <li>
-            <a
-              href="/galeria"
-              class="text-text-secondary hover:text-accent-cyan text-lg"
-              >Galeria</a
+            <a href="/galeria" class="text-text-secondary hover:text-accent-cyan text-lg">Galeria</a
             >
           </li>
           <li>
-            <a
-              href="/perfiles"
-              class="text-text-secondary hover:text-accent-cyan text-lg"
+            <a href="/perfiles" class="text-text-secondary hover:text-accent-cyan text-lg"
               >Perfiles</a
             >
           </li>
           <li>
-            <a
-              href="/colaboraciones"
-              class="text-text-secondary hover:text-accent-cyan text-lg"
+            <a href="/colaboraciones" class="text-text-secondary hover:text-accent-cyan text-lg"
               >Colaboraciones</a
             >
           </li>
@@ -208,11 +187,11 @@ const navLinks = [
     display: none;
   }
 
-  .menu-toggle[aria-expanded='true'] .menu-icon-open {
+  .menu-toggle[aria-expanded="true"] .menu-icon-open {
     display: none;
   }
 
-  .menu-toggle[aria-expanded='true'] .menu-icon-close {
+  .menu-toggle[aria-expanded="true"] .menu-icon-close {
     display: block;
   }
 
@@ -240,7 +219,7 @@ const navLinks = [
       transform 0.3s ease;
   }
 
-  .mobile-menu[aria-hidden='false'] {
+  .mobile-menu[aria-hidden="false"] {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -342,7 +321,7 @@ const navLinks = [
     }
 
     .nav-link::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: 0;
       left: 0;

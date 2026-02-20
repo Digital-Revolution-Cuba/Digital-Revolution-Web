@@ -1,10 +1,12 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
+import { getCollection, getEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export const prerender = true;
 
 // Type utilities for stronger typing
 export async function getStaticPaths() {
-  const talents = await getCollection('talents');
+  const talents = await getCollection("talents");
   // Return only params - fetch entry per-page with getEntry() for better typing
   return talents.map((entry) => ({
     params: { slug: entry.id },
@@ -15,51 +17,49 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 
 if (!slug) {
-  return Astro.redirect('/talentos');
+  return Astro.redirect("/talentos");
 }
 
-const entry = await getEntry('talents', slug);
+const entry = await getEntry("talents", slug);
 
 // Handle missing entry with proper error handling
 if (!entry) {
-  return Astro.redirect('/talentos');
+  return Astro.redirect("/talentos");
 }
 
 const { data } = entry;
 
 // Type-safe destructuring with safe defaults
 const {
-  name = 'Talento Anónimo',
-  role = 'Miembro de la Comunidad',
-  location = '',
-  image = '/placeholder.jpg',
+  name = "Talento Anónimo",
+  role = "Miembro de la Comunidad",
+  location = "",
+  image = "/placeholder.jpg",
   communityRole = role,
-  status = 'colaborador',
+  status = "colaborador",
   rating = 0,
   followers = 0,
   views = 0,
   skills = [],
-  currentFocus = '',
+  currentFocus = "",
   recentActivity = [],
-  externalLink = '',
+  externalLink = "",
   featured = false,
 } = data;
 
 const statusStyles = {
-  core: 'text-(--color-accent-yellow) border-(--color-accent-yellow)/30',
-  activo: 'text-(--color-accent-cyan) border-(--color-accent-cyan)/30',
-  colaborador: 'text-(--color-accent-purple) border-(--color-accent-purple)/30',
+  core: "text-(--color-accent-yellow) border-(--color-accent-yellow)/30",
+  activo: "text-(--color-accent-cyan) border-(--color-accent-cyan)/30",
+  colaborador: "text-(--color-accent-purple) border-(--color-accent-purple)/30",
 };
 
 const formatStat = (num: number) => {
-  return num >= 1000 ? (num / 1000).toFixed(1) + 'k' : num;
+  return num >= 1000 ? (num / 1000).toFixed(1) + "k" : num;
 };
 ---
 
-<Layout title={name ? `${name} — Perfil Profesional` : 'Perfil de Talento'}>
-  <main
-    class="selection:bg-accent-cyan/30 mt-[8rem] px-(--space-md) py-(--space-xl)"
-  >
+<Layout title={name ? `${name} — Perfil Profesional` : "Perfil de Talento"}>
+  <main class="selection:bg-accent-cyan/30 mt-[8rem] px-(--space-md) py-(--space-xl)">
     <article class="mx-auto max-w-(--container-md)">
       <header
         class="mb-(--space-xl) flex flex-col items-center gap-(--space-lg) md:flex-row md:items-start"
@@ -97,9 +97,7 @@ const formatStat = (num: number) => {
         </div>
 
         <div class="flex-1 pt-2 text-center md:text-left">
-          <div
-            class="mb-4 flex flex-wrap justify-center gap-3 md:justify-start"
-          >
+          <div class="mb-4 flex flex-wrap justify-center gap-3 md:justify-start">
             {
               status && (
                 <span
@@ -136,7 +134,7 @@ const formatStat = (num: number) => {
                   >
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                     <circle cx="12" cy="10" r="3" />
-                  </svg>{' '}
+                  </svg>{" "}
                   {location}
                 </span>
               )
@@ -160,12 +158,10 @@ const formatStat = (num: number) => {
                     >
                       <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                       <circle cx="12" cy="12" r="3" />
-                    </svg>{' '}
+                    </svg>{" "}
                     Views
                   </span>
-                  <span class="text-xl font-bold text-white/90">
-                    {formatStat(views)}
-                  </span>
+                  <span class="text-xl font-bold text-white/90">{formatStat(views)}</span>
                 </div>
               )
             }
@@ -187,12 +183,10 @@ const formatStat = (num: number) => {
                       <circle cx="9" cy="7" r="4" />
                       <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
                       <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                    </svg>{' '}
+                    </svg>{" "}
                     Followers
                   </span>
-                  <span class="text-xl font-bold text-white/90">
-                    {formatStat(followers)}
-                  </span>
+                  <span class="text-xl font-bold text-white/90">{formatStat(followers)}</span>
                 </div>
               )
             }
@@ -211,12 +205,10 @@ const formatStat = (num: number) => {
                       stroke-linejoin="round"
                     >
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                    </svg>{' '}
+                    </svg>{" "}
                     Rating
                   </span>
-                  <span class="text-accent-yellow text-xl font-bold">
-                    {rating}
-                  </span>
+                  <span class="text-accent-yellow text-xl font-bold">{rating}</span>
                 </div>
               )
             }

@@ -1,11 +1,8 @@
-import type { CollectionEntry } from 'astro:content';
-import { useInfiniteScroll } from '../../composables/features/useInfiniteScroll';
-import { useTalentsFilter } from '../../composables/features/useTalentsFilter';
-import {
-  useTalentsSort,
-  type SortOption,
-} from '../../composables/features/useTalentsSort';
-import { INFINITE_SCROLL_CONFIG } from '../../config/galleryConfig';
+import type { CollectionEntry } from "astro:content";
+import { useInfiniteScroll } from "../../composables/features/useInfiniteScroll";
+import { useTalentsFilter } from "../../composables/features/useTalentsFilter";
+import { useTalentsSort, type SortOption } from "../../composables/features/useTalentsSort";
+import { INFINITE_SCROLL_CONFIG } from "../../config/galleryConfig";
 
 // SVG Icons inline (reemplazo de lucide-react para reducir bundle)
 const SearchIcon = () => (
@@ -55,13 +52,7 @@ const MapPinIcon = ({ size = 16 }: { size?: number }) => (
   </svg>
 );
 
-const StarIcon = ({
-  size = 12,
-  fill = 'currentColor',
-}: {
-  size?: number;
-  fill?: string;
-}) => (
+const StarIcon = ({ size = 12, fill = "currentColor" }: { size?: number; fill?: string }) => (
   <svg
     width={size}
     height={size}
@@ -77,39 +68,28 @@ const StarIcon = ({
 );
 
 interface Props {
-  initialTalents: CollectionEntry<'talents'>[];
+  initialTalents: CollectionEntry<"talents">[];
   categories: string[];
 }
 
 export default function TalentSearch({ initialTalents, categories }: Props) {
   // Use custom hooks for business logic
-  const {
-    searchQuery,
-    setSearchQuery,
-    activeCategory,
-    setActiveCategory,
-    filteredTalents,
-  } = useTalentsFilter(initialTalents);
+  const { searchQuery, setSearchQuery, activeCategory, setActiveCategory, filteredTalents } =
+    useTalentsFilter(initialTalents);
 
   const { sortBy, setSortBy, sortedTalents } = useTalentsSort(filteredTalents);
 
-  const { visibleItems, hasMore, isLoading, observerTarget } =
-    useInfiniteScroll(sortedTalents, {
-      initialItems: INFINITE_SCROLL_CONFIG.INITIAL_ITEMS,
-      itemsPerPage: INFINITE_SCROLL_CONFIG.ITEMS_PER_PAGE,
-      threshold: INFINITE_SCROLL_CONFIG.THRESHOLD,
-      rootMargin: INFINITE_SCROLL_CONFIG.ROOT_MARGIN,
-    });
+  const { visibleItems, hasMore, isLoading, observerTarget } = useInfiniteScroll(sortedTalents, {
+    initialItems: INFINITE_SCROLL_CONFIG.INITIAL_ITEMS,
+    itemsPerPage: INFINITE_SCROLL_CONFIG.ITEMS_PER_PAGE,
+    threshold: INFINITE_SCROLL_CONFIG.THRESHOLD,
+    rootMargin: INFINITE_SCROLL_CONFIG.ROOT_MARGIN,
+  });
 
   return (
     <>
       <div className="talents-search-bar">
-        <button
-          type="button"
-          className="search-icon"
-          aria-label="Buscar talentos"
-          title="Buscar"
-        >
+        <button type="button" className="search-icon" aria-label="Buscar talentos" title="Buscar">
           <SearchIcon />
         </button>
 
@@ -122,12 +102,7 @@ export default function TalentSearch({ initialTalents, categories }: Props) {
           aria-label="Buscar talentos, habilidades o roles"
         />
 
-        <button
-          type="button"
-          className="filter-btn"
-          aria-label="Abrir filtros"
-          title="Filtros"
-        >
+        <button type="button" className="filter-btn" aria-label="Abrir filtros" title="Filtros">
           <FilterIcon />
         </button>
       </div>
@@ -137,9 +112,7 @@ export default function TalentSearch({ initialTalents, categories }: Props) {
           <button
             key={cat}
             className={`filter-pill ${
-              cat === activeCategory
-                ? 'filter-pill-active'
-                : 'filter-pill-inactive'
+              cat === activeCategory ? "filter-pill-active" : "filter-pill-inactive"
             }`}
             onClick={() => setActiveCategory(cat)}
           >
@@ -154,10 +127,7 @@ export default function TalentSearch({ initialTalents, categories }: Props) {
         </p>
         <div className="sort-dropdown">
           <span>Ordenar por:</span>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as SortOption)}
-          >
+          <select value={sortBy} onChange={(e) => setSortBy(e.target.value as SortOption)}>
             <option value="profesion">Profesión</option>
             <option value="ciudad">Ciudad</option>
             <option value="rating">Rating</option>
@@ -169,19 +139,15 @@ export default function TalentSearch({ initialTalents, categories }: Props) {
         {visibleItems.map((talent, index) => {
           const { data, id } = talent;
           const {
-            name = '',
-            image = '/placeholder.jpg',
+            name = "",
+            image = "/placeholder.jpg",
             rating,
-            location = '',
+            location = "",
             skills = [],
           } = data;
 
           return (
-            <div
-              key={id}
-              className="talent-card"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
+            <div key={id} className="talent-card" style={{ animationDelay: `${index * 0.1}s` }}>
               <div className="talent-card-image">
                 <img src={image} alt={name} />
               </div>
@@ -240,9 +206,7 @@ export default function TalentSearch({ initialTalents, categories }: Props) {
       {hasMore && (
         <div ref={observerTarget} className="load-more">
           {isLoading ? (
-            <div className="animate-pulse text-cyan-400">
-              Cargando más talentos...
-            </div>
+            <div className="animate-pulse text-cyan-400">Cargando más talentos...</div>
           ) : (
             <button className="button-cta">Ver Más Talentos</button>
           )}

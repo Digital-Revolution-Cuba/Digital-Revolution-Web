@@ -3,23 +3,23 @@
  * Accessible search input with clear functionality
  */
 
-import { Search, X } from 'lucide-react';
+import { Search, X } from "lucide-react";
 
 interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
-  'aria-label': string;
+  "aria-label": string;
 }
 
 export default function SearchBar({
   value,
   onChange,
-  placeholder = 'Buscar...',
-  'aria-label': ariaLabel,
+  placeholder = "Buscar...",
+  "aria-label": ariaLabel,
 }: SearchBarProps) {
   const handleClear = () => {
-    onChange('');
+    onChange("");
   };
 
   return (

@@ -1,9 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export const prerender = true;
 
 export async function getStaticPaths() {
-  const concursos = (await (getCollection as any)('concursos')) as any[];
+  const concursos = (await (getCollection as any)("concursos")) as any[];
 
   return concursos.map((concurso) => ({
     params: { slug: concurso.data.slug },
@@ -20,20 +22,20 @@ const { data } = concurso as any;
 
 // Format dates
 const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat('es-ES', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   }).format(date);
 };
 
 const formatShortDate = (date: Date) => {
-  return new Intl.DateTimeFormat('es-ES', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
   }).format(date);
 };
 
@@ -44,21 +46,21 @@ const daysRemaining = Math.ceil(
 
 // Category labels
 const categoryLabels: Record<string, string> = {
-  'fotografia': 'Fotografía',
-  'musica': 'Música',
-  'arte-digital': 'Arte Digital',
-  'ilustracion': 'Ilustración',
-  'diseno-grafico': 'Diseño Gráfico',
-  'video': 'Video',
-  'escritura': 'Escritura',
+  fotografia: "Fotografía",
+  musica: "Música",
+  "arte-digital": "Arte Digital",
+  ilustracion: "Ilustración",
+  "diseno-grafico": "Diseño Gráfico",
+  video: "Video",
+  escritura: "Escritura",
 };
 
 // Status configuration
 const statusConfig: Record<string, { label: string; color: string }> = {
-  'activo': { label: 'Activo Ahora', color: 'var(--palette-accent-cyan)' },
-  'proximo': { label: 'Próximamente', color: 'var(--palette-accent-purple)' },
-  'finalizado': { label: 'Finalizado', color: 'var(--palette-accent-yellow)' },
-  'cerrado': { label: 'Cerrado', color: 'rgba(255, 255, 255, 0.5)' },
+  activo: { label: "Activo Ahora", color: "var(--palette-accent-cyan)" },
+  proximo: { label: "Próximamente", color: "var(--palette-accent-purple)" },
+  finalizado: { label: "Finalizado", color: "var(--palette-accent-yellow)" },
+  cerrado: { label: "Cerrado", color: "rgba(255, 255, 255, 0.5)" },
 };
 
 const currentStatus = statusConfig[data.status];
@@ -76,7 +78,7 @@ const currentStatus = statusConfig[data.status];
         <img src={data.image} alt={data.imageAlt} class="hero-bg-image" />
         <div class="hero-overlay"></div>
       </div>
-      
+
       <div class="hero-content-wrapper">
         <div class="hero-content">
           <!-- Breadcrumb -->
@@ -87,7 +89,7 @@ const currentStatus = statusConfig[data.status];
             <span class="separator">/</span>
             <span class="current">{data.title}</span>
           </nav>
-          
+
           <!-- Category & Status -->
           <div class="meta-badges">
             <span class="category-badge">
@@ -98,22 +100,29 @@ const currentStatus = statusConfig[data.status];
               {currentStatus.label}
             </span>
           </div>
-          
+
           <!-- Title -->
           <h1 class="hero-title">{data.title}</h1>
-          
+
           <!-- Description -->
           <p class="hero-description">{data.description}</p>
-          
+
           <!-- Key Info Cards -->
           <div class="info-cards">
             <div class="info-card">
               <div class="info-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                  <line x1="16" y1="2" x2="16" y2="6"/>
-                  <line x1="8" y1="2" x2="8" y2="6"/>
-                  <line x1="3" y1="10" x2="21" y2="10"/>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
               </div>
               <div class="info-content">
@@ -121,61 +130,100 @@ const currentStatus = statusConfig[data.status];
                 <span class="info-value">{formatShortDate(data.fechas.cierre)}</span>
               </div>
             </div>
-            
-            {daysRemaining > 0 && data.status === 'activo' && (
-              <div class="info-card highlight">
-                <div class="info-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <polyline points="12 6 12 12 16 14"/>
-                  </svg>
+
+            {
+              daysRemaining > 0 && data.status === "activo" && (
+                <div class="info-card highlight">
+                  <div class="info-icon">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Tiempo restante</span>
+                    <span class="info-value">{daysRemaining} días</span>
+                  </div>
                 </div>
-                <div class="info-content">
-                  <span class="info-label">Tiempo restante</span>
-                  <span class="info-value">{daysRemaining} días</span>
+              )
+            }
+
+            {
+              data.maxParticipants && (
+                <div class="info-card">
+                  <div class="info-icon">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                  </div>
+                  <div class="info-content">
+                    <span class="info-label">Participantes</span>
+                    <span class="info-value">
+                      {data.currentParticipants} / {data.maxParticipants}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            )}
-            
-            {data.maxParticipants && (
-              <div class="info-card">
-                <div class="info-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                  </svg>
-                </div>
-                <div class="info-content">
-                  <span class="info-label">Participantes</span>
-                  <span class="info-value">
-                    {data.currentParticipants} / {data.maxParticipants}
-                  </span>
-                </div>
-              </div>
-            )}
+              )
+            }
           </div>
-          
+
           <!-- CTA Button -->
-          {data.participationLink && data.status === 'activo' && (
-            <div class="hero-cta">
-              <a href={data.participationLink} class="cta-button primary" target="_blank" rel="noopener noreferrer">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-                </svg>
-                Participar Ahora
-              </a>
-              <button class="cta-button secondary">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-                  <polyline points="16 6 12 2 8 6"/>
-                  <line x1="12" y1="2" x2="12" y2="15"/>
-                </svg>
-                Compartir
-              </button>
-            </div>
-          )}
+          {
+            data.participationLink && data.status === "activo" && (
+              <div class="hero-cta">
+                <a
+                  href={data.participationLink}
+                  class="cta-button primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                  </svg>
+                  Participar Ahora
+                </a>
+                <button class="cta-button secondary">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                    <polyline points="16 6 12 2 8 6" />
+                    <line x1="12" y1="2" x2="12" y2="15" />
+                  </svg>
+                  Compartir
+                </button>
+              </div>
+            )
+          }
         </div>
       </div>
     </section>
@@ -188,20 +236,20 @@ const currentStatus = statusConfig[data.status];
           <span class="title-icon">🏆</span>
           Premios
         </h2>
-        
+
         <div class="prizes-grid">
-          {data.premios.map((premio: { position: number; prize: string; value?: string }) => (
-            <div class={`prize-card position-${premio.position}`}>
-              <div class="prize-position">
-                <span class="position-number">#{premio.position}</span>
-                {premio.position === 1 && <span class="crown">👑</span>}
+          {
+            data.premios.map((premio: { position: number; prize: string; value?: string }) => (
+              <div class={`prize-card position-${premio.position}`}>
+                <div class="prize-position">
+                  <span class="position-number">#{premio.position}</span>
+                  {premio.position === 1 && <span class="crown">👑</span>}
+                </div>
+                <h3 class="prize-title">{premio.prize}</h3>
+                {premio.value && <p class="prize-value">{premio.value}</p>}
               </div>
-              <h3 class="prize-title">{premio.prize}</h3>
-              {premio.value && (
-                <p class="prize-value">{premio.value}</p>
-              )}
-            </div>
-          ))}
+            ))
+          }
         </div>
       </section>
 
@@ -211,14 +259,16 @@ const currentStatus = statusConfig[data.status];
           <span class="title-icon">📋</span>
           Requisitos de Participación
         </h2>
-        
+
         <div class="requirements-list">
-          {data.requisitos.map((req: { id: string; description: string }, index: number) => (
-            <div class="requirement-item">
-              <div class="requirement-number">{index + 1}</div>
-              <p class="requirement-text">{req.description}</p>
-            </div>
-          ))}
+          {
+            data.requisitos.map((req: { id: string; description: string }, index: number) => (
+              <div class="requirement-item">
+                <div class="requirement-number">{index + 1}</div>
+                <p class="requirement-text">{req.description}</p>
+              </div>
+            ))
+          }
         </div>
       </section>
 
@@ -228,7 +278,7 @@ const currentStatus = statusConfig[data.status];
           <span class="title-icon">📅</span>
           Cronograma
         </h2>
-        
+
         <div class="timeline">
           <div class="timeline-item">
             <div class="timeline-marker"></div>
@@ -237,7 +287,7 @@ const currentStatus = statusConfig[data.status];
               <p class="timeline-date">{formatDate(data.fechas.inicio)}</p>
             </div>
           </div>
-          
+
           <div class="timeline-item">
             <div class="timeline-marker"></div>
             <div class="timeline-content">
@@ -245,67 +295,92 @@ const currentStatus = statusConfig[data.status];
               <p class="timeline-date">{formatDate(data.fechas.cierre)}</p>
             </div>
           </div>
-          
-          {data.fechas.resultados && (
-            <div class="timeline-item">
-              <div class="timeline-marker special"></div>
-              <div class="timeline-content">
-                <h3 class="timeline-title">Anuncio de Resultados</h3>
-                <p class="timeline-date">{formatDate(data.fechas.resultados)}</p>
+
+          {
+            data.fechas.resultados && (
+              <div class="timeline-item">
+                <div class="timeline-marker special" />
+                <div class="timeline-content">
+                  <h3 class="timeline-title">Anuncio de Resultados</h3>
+                  <p class="timeline-date">{formatDate(data.fechas.resultados)}</p>
+                </div>
               </div>
-            </div>
-          )}
+            )
+          }
         </div>
       </section>
 
       <!-- Organizer Info -->
-      {data.organizer && (
-        <section class="content-section organizer-section">
-          <div class="organizer-card">
-            <div class="organizer-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
+      {
+        data.organizer && (
+          <section class="content-section organizer-section">
+            <div class="organizer-card">
+              <div class="organizer-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </div>
+              <div>
+                <p class="organizer-label">Organizado por</p>
+                <h3 class="organizer-name">{data.organizer}</h3>
+              </div>
             </div>
-            <div>
-              <p class="organizer-label">Organizado por</p>
-              <h3 class="organizer-name">{data.organizer}</h3>
-            </div>
-          </div>
-        </section>
-      )}
+          </section>
+        )
+      }
 
       <!-- Tags -->
-      {data.tags && data.tags.length > 0 && (
-        <div class="tags-section">
-          {(data.tags as string[]).map((tag) => (
-            <span class="tag">{tag}</span>
-          ))}
-        </div>
-      )}
+      {
+        data.tags && data.tags.length > 0 && (
+          <div class="tags-section">
+            {(data.tags as string[]).map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        )
+      }
     </div>
 
     <!-- Bottom CTA -->
-    {data.participationLink && data.status === 'activo' && (
-      <section class="bottom-cta">
-        <div class="bottom-cta-content">
-          <h2 class="bottom-cta-title">¿Listo para participar?</h2>
-          <p class="bottom-cta-text">
-            No dejes pasar esta oportunidad. ¡Inscríbete ahora!
-          </p>
-          <a href={data.participationLink} class="cta-button primary large" target="_blank" rel="noopener noreferrer">
-            Participar en el Concurso
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </a>
-        </div>
-      </section>
-    )}
+    {
+      data.participationLink && data.status === "activo" && (
+        <section class="bottom-cta">
+          <div class="bottom-cta-content">
+            <h2 class="bottom-cta-title">¿Listo para participar?</h2>
+            <p class="bottom-cta-text">No dejes pasar esta oportunidad. ¡Inscríbete ahora!</p>
+            <a
+              href={data.participationLink}
+              class="cta-button primary large"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Participar en el Concurso
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          </div>
+        </section>
+      )
+    }
   </div>
 </Layout>
 
@@ -434,8 +509,15 @@ const currentStatus = statusConfig[data.status];
   }
 
   @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(0.8);
+    }
   }
 
   /* Hero Title */
@@ -538,11 +620,7 @@ const currentStatus = statusConfig[data.status];
   }
 
   .cta-button.primary {
-    background: linear-gradient(
-      135deg,
-      var(--palette-accent-cyan),
-      var(--palette-accent-blue)
-    );
+    background: linear-gradient(135deg, var(--palette-accent-cyan), var(--palette-accent-blue));
     color: var(--palette-brand-dark);
     box-shadow: 0 8px 20px rgba(var(--palette-accent-cyan-rgb), 0.3);
   }
@@ -708,17 +786,13 @@ const currentStatus = statusConfig[data.status];
   }
 
   .timeline::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 16px;
     top: 12px;
     bottom: 12px;
     width: 2px;
-    background: linear-gradient(
-      180deg,
-      var(--palette-accent-cyan),
-      var(--palette-accent-purple)
-    );
+    background: linear-gradient(180deg, var(--palette-accent-cyan), var(--palette-accent-purple));
   }
 
   .timeline-item {
