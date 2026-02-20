@@ -47,19 +47,20 @@ export function createGallerySlider(
 
   /**
    * Get responsive values based on viewport width
-   * nav offset = 2×48px buttons + 2×4px gaps + 2×8px section padding = 120px
-   * Matches the CSS calc() formulas in gallery.css and card components.
+   * nav offset = 120px; track gap = 1rem = 16px
+   * Card width mirrors CSS: (available - nav_offset - (N-1)*gap) / N
    */
   function getResponsiveValues() {
     const width = window.innerWidth;
     const height = window.innerHeight;
+    const gap = 16; // 1rem — matches .gallery-track gap: var(--gallery-gap)
 
     // Landscape phones (e.g. 390×852 rotated → 852×390): 3 cards
     const isLandscapePhone = height <= 500 && width > height;
 
     if (isLandscapePhone) {
       return {
-        itemWidth: Math.min(285, (width - 120) / 3),
+        itemWidth: Math.min(285, (width - 120 - 2 * gap) / 3),
         visibleImages: 3,
         imagesPerPage: 3,
       };
@@ -73,14 +74,14 @@ export function createGallerySlider(
     } else if (width < 768) {
       // Small tablet: 2 cards
       return {
-        itemWidth: Math.min(285, (width - 120) / 2),
+        itemWidth: Math.min(285, (width - 120 - gap) / 2),
         visibleImages: 2,
         imagesPerPage: 2,
       };
     } else if (width < 1024) {
       // Tablet: 3 cards
       return {
-        itemWidth: Math.min(285, (width - 120) / 3),
+        itemWidth: Math.min(285, (width - 120 - 2 * gap) / 3),
         visibleImages: 3,
         imagesPerPage: 3,
       };
@@ -135,27 +136,24 @@ export function createGallerySlider(
   }
 
   function calculateLayout() {
-    // Prefer DOM measurements when available so sizing matches rendered cards
+    // Read actual rendered card width and track gap from DOM for accurate offset calculation.
+    // Do NOT set maxWidth on the viewport — .gallery-container overflow:hidden is the clip boundary.
     const firstItem = sliderElement.querySelector(
       ".card-item, .gallery-item",
     ) as HTMLElement | null;
-    if (firstItem && viewportElement) {
+    if (firstItem) {
       itemWidthFromDom = firstItem.offsetWidth;
 
       const computedStyle = window.getComputedStyle(sliderElement);
       gapFromDom = parseFloat(computedStyle.gap) || 0;
-
-      const { imagesPerPage } = getResponsiveValues();
-      const requiredViewportWidth =
-        itemWidthFromDom * imagesPerPage + gapFromDom * (imagesPerPage - 1);
-      viewportElement.style.maxWidth = `${requiredViewportWidth}px`;
     } else {
       // Reset DOM-based measurements
       itemWidthFromDom = 0;
       gapFromDom = 0;
-      if (viewportElement) {
-        viewportElement.style.maxWidth = "";
-      }
+    }
+    // Always clear any previously set maxWidth so CSS controls the viewport
+    if (viewportElement) {
+      viewportElement.style.maxWidth = "";
     }
   }
 
