@@ -20,7 +20,7 @@ export function createGallerySlider(
   options?: {
     paginationElement?: HTMLElement | null;
     viewportElement?: HTMLElement | null;
-  },
+  }
 ) {
   const state: SliderState = {
     currentIndex: 0,
@@ -40,7 +40,7 @@ export function createGallerySlider(
    */
   function getVisibleItemCount(): number {
     const visibleItems = sliderElement.querySelectorAll(
-      '.gallery-item:not([style*="display: none"]), .card-item:not([style*="display: none"])',
+      '.gallery-item:not([style*="display: none"]), .card-item:not([style*="display: none"])'
     );
     return visibleItems.length || totalImages;
   }
@@ -114,8 +114,7 @@ export function createGallerySlider(
     state.currentIndex = Math.max(0, Math.min(state.currentIndex, maxIndex));
 
     // Calculate offset based on cards per page
-    const offset =
-      -state.currentIndex * imagesPerPage * (usedItemWidth + usedGap);
+    const offset = -state.currentIndex * imagesPerPage * (usedItemWidth + usedGap);
     sliderElement.style.transform = `translateX(${offset}px)`;
 
     // Update button states
@@ -126,12 +125,8 @@ export function createGallerySlider(
 
     // Update dots if pagination is present
     if (paginationElement) {
-      const dots = Array.from(
-        paginationElement.querySelectorAll(".pagination-dot"),
-      );
-      dots.forEach((dot, i) =>
-        dot.classList.toggle("active", i === state.currentIndex),
-      );
+      const dots = Array.from(paginationElement.querySelectorAll(".pagination-dot"));
+      dots.forEach((dot, i) => dot.classList.toggle("active", i === state.currentIndex));
     }
   }
 
@@ -139,7 +134,7 @@ export function createGallerySlider(
     // Read actual rendered card width and track gap from DOM for accurate offset calculation.
     // Do NOT set maxWidth on the viewport — .gallery-container overflow:hidden is the clip boundary.
     const firstItem = sliderElement.querySelector(
-      ".card-item, .gallery-item",
+      ".card-item, .gallery-item"
     ) as HTMLElement | null;
     if (firstItem) {
       itemWidthFromDom = firstItem.offsetWidth;
@@ -227,10 +222,7 @@ export function createGallerySlider(
       activeTotalImages = getVisibleItemCount();
 
       const { imagesPerPage } = getResponsiveValues();
-      const maxIndex = Math.max(
-        0,
-        Math.ceil(activeTotalImages / imagesPerPage) - 1,
-      );
+      const maxIndex = Math.max(0, Math.ceil(activeTotalImages / imagesPerPage) - 1);
 
       if (e.key === "ArrowLeft" && state.currentIndex > 0) {
         navigatePrevious();

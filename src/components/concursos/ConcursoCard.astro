@@ -4,12 +4,9 @@
  * Displays contest information with image, category, status, and dates
  */
 
-import { CATEGORY_LABELS, STATUS_CONFIG } from '../../config/concursosConfig';
-import type {
-  ConcursoCategory,
-  ConcursoStatus,
-} from '../../types/concursos.types';
-import { formatDate } from '../../utils/concursosUtils';
+import { CATEGORY_LABELS, STATUS_CONFIG } from "../../config/concursosConfig";
+import type { ConcursoCategory, ConcursoStatus } from "../../types/concursos.types";
+import { formatDate } from "../../utils/concursosUtils";
 
 interface Props {
   id: string;
@@ -38,7 +35,7 @@ const {
 const statusInfo = STATUS_CONFIG[status];
 ---
 
-<article class={`concurso-card ${featured ? 'featured' : ''}`} data-id={id}>
+<article class={`concurso-card ${featured ? "featured" : ""}`} data-id={id}>
   <a href={`/concursos/${slug}`} class="card-link">
     <div class="card-image-wrapper">
       <img src={image} alt={imageAlt} class="card-image" loading="lazy" />
@@ -177,11 +174,7 @@ const statusInfo = STATUS_CONFIG[status];
     top: 16px;
     left: 16px;
     padding: 6px 14px;
-    background: linear-gradient(
-      135deg,
-      var(--palette-accent-orange),
-      var(--palette-accent-yellow)
-    );
+    background: linear-gradient(135deg, var(--palette-accent-orange), var(--palette-accent-yellow));
     color: var(--palette-brand-dark);
     font-size: 0.75rem;
     font-weight: 700;

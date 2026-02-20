@@ -7,21 +7,13 @@ export function HeroSection() {
       <div className="hero__bg">
         <div className="hero__bg-base" />
 
-        <svg
-          className="hero__bg-orange"
-          viewBox="0 0 500 400"
-          preserveAspectRatio="none"
-        >
+        <svg className="hero__bg-orange" viewBox="0 0 500 400" preserveAspectRatio="none">
           <polygon points="500,0 500,400 100,0" />
         </svg>
 
         <div className="hero__bg-cyan" />
 
-        <svg
-          className="hero__bg-diagonal"
-          viewBox="0 0 1000 600"
-          preserveAspectRatio="none"
-        >
+        <svg className="hero__bg-diagonal" viewBox="0 0 1000 600" preserveAspectRatio="none">
           <polygon points="0,0 850,0 0,450" />
         </svg>
       </div>
@@ -34,8 +26,8 @@ export function HeroSection() {
             <h1 className="hero__title hero__title-primary">GALERÍA</h1>
 
             <p className="hero__description">
-              Descubre obras únicas de creativos excepcionales. Conecta con
-              artistas y encuentra inspiración para tus proyectos.
+              Descubre obras únicas de creativos excepcionales. Conecta con artistas y encuentra
+              inspiración para tus proyectos.
             </p>
 
             <div className="hero__actions">
@@ -105,14 +97,8 @@ export function HeroSection() {
               <div className="hero__dot-neutral" />
 
               {/* Geometric Decorative Elements */}
-              <div
-                className="hero__decorative"
-                style={{ top: "15%", left: "10%", width: "200px" }}
-              >
-                <div
-                  className="hero__line-horizontal"
-                  style={{ width: "200px" }}
-                />
+              <div className="hero__decorative" style={{ top: "15%", left: "10%", width: "200px" }}>
+                <div className="hero__line-horizontal" style={{ width: "200px" }} />
               </div>
 
               <div
@@ -124,43 +110,28 @@ export function HeroSection() {
                   height: "100px",
                 }}
               >
-                <div
-                  className="hero__line-vertical"
-                  style={{ height: "100px" }}
-                />
+                <div className="hero__line-vertical" style={{ height: "100px" }} />
               </div>
 
-              <div
-                className="hero__decorative"
-                style={{ top: "20%", right: "15%" }}
-              >
+              <div className="hero__decorative" style={{ top: "20%", right: "15%" }}>
                 <div
                   className="hero__circle-outline accent"
                   style={{ width: "80px", height: "80px" }}
                 />
               </div>
 
-              <div
-                className="hero__decorative"
-                style={{ bottom: "10%", left: "5%" }}
-              >
+              <div className="hero__decorative" style={{ bottom: "10%", left: "5%" }}>
                 <div
                   className="hero__circle-outline primary"
                   style={{ width: "60px", height: "60px" }}
                 />
               </div>
 
-              <div
-                className="hero__decorative"
-                style={{ top: "40%", left: "8%" }}
-              >
+              <div className="hero__decorative" style={{ top: "40%", left: "8%" }}>
                 <div className="hero__triangle accent" />
               </div>
 
-              <div
-                className="hero__decorative"
-                style={{ bottom: "25%", right: "12%" }}
-              >
+              <div className="hero__decorative" style={{ bottom: "25%", right: "12%" }}>
                 <div className="hero__triangle primary" />
               </div>
             </div>

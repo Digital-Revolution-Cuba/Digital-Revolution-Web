@@ -1,23 +1,23 @@
 ---
-import ColaboracionesDestacadas from '../components/ColaboracionesDestacadas.astro';
-import ColaboracionesDestacadasTitle from '../components/ColaboracionesDestacadasTitle.astro';
-import Concursos from '../components/Concursos.astro';
-import DinamycGalleryTitle from '../components/DinamycGalleryTitle.astro';
-import Gallery from '../components/features/gallery/Gallery.astro';
-import Footer from '../components/Footer.astro';
-import Hero from '../components/Hero.astro';
-import JoinOurCommunity from '../components/JoinOurCommunity.astro';
-import { arteGallery, fotografiaGallery, musicaGallery } from '../data';
-import Layout from '../layouts/Layout.astro';
-import type { CategoryConfig } from '../types/gallery.types';
+import ColaboracionesDestacadas from "../components/ColaboracionesDestacadas.astro";
+import ColaboracionesDestacadasTitle from "../components/ColaboracionesDestacadasTitle.astro";
+import Concursos from "../components/Concursos.astro";
+import DinamycGalleryTitle from "../components/DinamycGalleryTitle.astro";
+import Gallery from "../components/features/gallery/Gallery.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import JoinOurCommunity from "../components/JoinOurCommunity.astro";
+import { arteGallery, fotografiaGallery, musicaGallery } from "../data";
+import Layout from "../layouts/Layout.astro";
+import type { CategoryConfig } from "../types/gallery.types";
 
 export const prerender = true;
 
 // Gallery configuration
 const galleryCategories: CategoryConfig[] = [
-  { id: 'arte', label: 'Arte', items: arteGallery },
-  { id: 'musica', label: 'Música', items: musicaGallery },
-  { id: 'fotografia', label: 'Fotografía', items: fotografiaGallery },
+  { id: "arte", label: "Arte", items: arteGallery },
+  { id: "musica", label: "Música", items: musicaGallery },
+  { id: "fotografia", label: "Fotografía", items: fotografiaGallery },
 ];
 ---
 
@@ -35,15 +35,15 @@ const galleryCategories: CategoryConfig[] = [
   <JoinOurCommunity />
   <Footer />
   <script>
-    import '../client/initializers/colaboraciones.ts';
+    import "../client/initializers/colaboraciones.ts";
   </script>
   <script>
-    import '../client/initializers/galeria.ts';
+    import "../client/initializers/galeria.ts";
   </script>
   <script>
-    import '../client/initializers/concursos.ts';
+    import "../client/initializers/concursos.ts";
   </script>
   <script>
-    import '../client/initializers/accordeon.ts';
+    import "../client/initializers/accordeon.ts";
   </script>
 </Layout>

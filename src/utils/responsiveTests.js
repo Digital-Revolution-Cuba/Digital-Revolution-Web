@@ -4,7 +4,7 @@
  * Provides tools for testing responsive design, accessibility, and performance
  */
 
-import { logger } from './logger.ts';
+import { logger } from "./logger.ts";
 
 // ========================================
 // Breakpoint Definitions
@@ -16,23 +16,23 @@ export const BREAKPOINTS = {
   md: 768,
   lg: 1024,
   xl: 1280,
-  '2xl': 1536,
-  '4k': 2560,
-  '8k': 4320,
+  "2xl": 1536,
+  "4k": 2560,
+  "8k": 4320,
 };
 
 export const DEVICES = {
-  'iPhone SE': { width: 375, height: 667, touch: true, pixelRatio: 2 },
-  'iPhone 14': { width: 390, height: 844, touch: true, pixelRatio: 3 },
-  'iPhone 14 Pro Max': { width: 430, height: 932, touch: true, pixelRatio: 3 },
-  'iPad Mini': { width: 768, height: 1024, touch: true, pixelRatio: 2 },
-  'iPad Pro 11': { width: 834, height: 1194, touch: true, pixelRatio: 2 },
-  'iPad Pro 12.9': { width: 1024, height: 1366, touch: true, pixelRatio: 2 },
-  'MacBook Air 13': { width: 1440, height: 900, touch: false, pixelRatio: 2 },
-  'Desktop 1080p': { width: 1920, height: 1080, touch: false, pixelRatio: 1 },
-  'Desktop 1440p': { width: 2560, height: 1440, touch: false, pixelRatio: 1 },
-  'Desktop 4K': { width: 3840, height: 2160, touch: false, pixelRatio: 1 },
-  'Desktop 8K': { width: 7680, height: 4320, touch: false, pixelRatio: 1 },
+  "iPhone SE": { width: 375, height: 667, touch: true, pixelRatio: 2 },
+  "iPhone 14": { width: 390, height: 844, touch: true, pixelRatio: 3 },
+  "iPhone 14 Pro Max": { width: 430, height: 932, touch: true, pixelRatio: 3 },
+  "iPad Mini": { width: 768, height: 1024, touch: true, pixelRatio: 2 },
+  "iPad Pro 11": { width: 834, height: 1194, touch: true, pixelRatio: 2 },
+  "iPad Pro 12.9": { width: 1024, height: 1366, touch: true, pixelRatio: 2 },
+  "MacBook Air 13": { width: 1440, height: 900, touch: false, pixelRatio: 2 },
+  "Desktop 1080p": { width: 1920, height: 1080, touch: false, pixelRatio: 1 },
+  "Desktop 1440p": { width: 2560, height: 1440, touch: false, pixelRatio: 1 },
+  "Desktop 4K": { width: 3840, height: 2160, touch: false, pixelRatio: 1 },
+  "Desktop 8K": { width: 7680, height: 4320, touch: false, pixelRatio: 1 },
 };
 
 // ========================================
@@ -44,10 +44,8 @@ export const DEVICES = {
  * @returns {boolean} Whether container queries are supported
  */
 export function testContainerQueries() {
-  const hasSupport = CSS.supports('container-type', 'inline-size');
-  logger.log(
-    `Container Queries: ${hasSupport ? '✅ Supported' : '❌ Not supported'}`,
-  );
+  const hasSupport = CSS.supports("container-type", "inline-size");
+  logger.log(`Container Queries: ${hasSupport ? "✅ Supported" : "❌ Not supported"}`);
   return hasSupport;
 }
 
@@ -56,10 +54,8 @@ export function testContainerQueries() {
  * @returns {boolean} Whether clamp() is supported
  */
 export function testClamp() {
-  const hasSupport = CSS.supports('width', 'clamp(1rem, 2vw, 3rem)');
-  logger.log(
-    `CSS clamp(): ${hasSupport ? '✅ Supported' : '❌ Not supported'}`,
-  );
+  const hasSupport = CSS.supports("width", "clamp(1rem, 2vw, 3rem)");
+  logger.log(`CSS clamp(): ${hasSupport ? "✅ Supported" : "❌ Not supported"}`);
   return hasSupport;
 }
 
@@ -69,11 +65,11 @@ export function testClamp() {
  */
 export function testHasSelector() {
   try {
-    document.querySelector(':has(*)');
-    logger.log('CSS :has(): ✅ Supported');
+    document.querySelector(":has(*)");
+    logger.log("CSS :has(): ✅ Supported");
     return true;
   } catch {
-    logger.log('CSS :has(): ❌ Not supported');
+    logger.log("CSS :has(): ❌ Not supported");
     return false;
   }
 }
@@ -83,30 +79,22 @@ export function testHasSelector() {
  * @returns {Object} Object with all test results
  */
 export function runFeatureTests() {
-  logger.group('🔍 CSS Feature Detection');
+  logger.group("🔍 CSS Feature Detection");
   const results = {
     containerQueries: testContainerQueries(),
     clamp: testClamp(),
     hasSelector: testHasSelector(),
-    prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)')
-      .matches,
-    prefersColorScheme: window.matchMedia('(prefers-color-scheme: dark)')
-      .matches
-      ? 'dark'
-      : 'light',
-    touchDevice: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
-    hoverDevice: window.matchMedia('(hover: hover)').matches,
+    prefersReducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    prefersColorScheme: window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light",
+    touchDevice: "ontouchstart" in window || navigator.maxTouchPoints > 0,
+    hoverDevice: window.matchMedia("(hover: hover)").matches,
   };
-  logger.log(
-    'Prefers Reduced Motion:',
-    results.prefersReducedMotion ? '⚡ Yes' : '🎬 No',
-  );
-  logger.log(
-    'Color Scheme:',
-    results.prefersColorScheme === 'dark' ? '🌙 Dark' : '☀️ Light',
-  );
-  logger.log('Touch Device:', results.touchDevice ? '👆 Yes' : '🖱️ No');
-  logger.log('Hover Device:', results.hoverDevice ? '🖱️ Yes' : '👆 No');
+  logger.log("Prefers Reduced Motion:", results.prefersReducedMotion ? "⚡ Yes" : "🎬 No");
+  logger.log("Color Scheme:", results.prefersColorScheme === "dark" ? "🌙 Dark" : "☀️ Light");
+  logger.log("Touch Device:", results.touchDevice ? "👆 Yes" : "🖱️ No");
+  logger.log("Hover Device:", results.hoverDevice ? "🖱️ Yes" : "👆 No");
   logger.groupEnd();
   return results;
 }
@@ -123,7 +111,7 @@ export function runFeatureTests() {
 export function auditTouchTargets() {
   const minSize = 44; // WCAG 2.2 minimum
   const interactiveElements = document.querySelectorAll(
-    'a, button, input, select, textarea, [role="button"], [role="link"], [tabindex]:not([tabindex="-1"])',
+    'a, button, input, select, textarea, [role="button"], [role="link"], [tabindex]:not([tabindex="-1"])'
   );
 
   const violations = [];
@@ -133,11 +121,7 @@ export function auditTouchTargets() {
     const styles = window.getComputedStyle(el);
 
     // Skip hidden elements
-    if (
-      styles.display === 'none' ||
-      styles.visibility === 'hidden' ||
-      rect.width === 0
-    ) {
+    if (styles.display === "none" || styles.visibility === "hidden" || rect.width === 0) {
       return;
     }
 
@@ -159,7 +143,7 @@ export function auditTouchTargets() {
       logger.log(`${i + 1}. ${v.selector}: ${v.issue}`);
     });
   } else {
-    logger.log('✅ All touch targets meet WCAG 2.2 requirements');
+    logger.log("✅ All touch targets meet WCAG 2.2 requirements");
   }
   logger.groupEnd();
 
@@ -172,44 +156,44 @@ export function auditTouchTargets() {
  */
 export function auditFocusIndicators() {
   const focusableElements = document.querySelectorAll(
-    'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
   );
 
   const violations = [];
 
   focusableElements.forEach((el) => {
     const styles = window.getComputedStyle(el);
-    const focusStyles = window.getComputedStyle(el, ':focus-visible');
+    const focusStyles = window.getComputedStyle(el, ":focus-visible");
 
     // Skip hidden elements
-    if (styles.display === 'none' || styles.visibility === 'hidden') {
+    if (styles.display === "none" || styles.visibility === "hidden") {
       return;
     }
 
     // Check if outline is explicitly removed without alternative
-    if (styles.outline === 'none' || styles.outlineWidth === '0px') {
+    if (styles.outline === "none" || styles.outlineWidth === "0px") {
       // Check for alternative focus indicators
-      const hasBoxShadow = styles.boxShadow !== 'none';
-      const hasBorder = styles.borderWidth !== '0px';
+      const hasBoxShadow = styles.boxShadow !== "none";
+      const hasBorder = styles.borderWidth !== "0px";
 
       if (!hasBoxShadow && !hasBorder) {
         violations.push({
           element: el,
           selector: generateSelector(el),
-          issue: 'No visible focus indicator detected',
+          issue: "No visible focus indicator detected",
         });
       }
     }
   });
 
-  logger.group('🎯 Focus Indicator Audit');
+  logger.group("🎯 Focus Indicator Audit");
   if (violations.length > 0) {
     logger.warn(`⚠️ Found ${violations.length} potential issues:`);
     violations.forEach((v, i) => {
       logger.log(`${i + 1}. ${v.selector}: ${v.issue}`);
     });
   } else {
-    logger.log('✅ Focus indicators appear to be present');
+    logger.log("✅ Focus indicators appear to be present");
   }
   logger.groupEnd();
 
@@ -221,16 +205,16 @@ export function auditFocusIndicators() {
  * @returns {Array} Images without proper alt text
  */
 export function auditImageAlt() {
-  const images = document.querySelectorAll('img');
+  const images = document.querySelectorAll("img");
   const violations = [];
 
   images.forEach((img) => {
-    const alt = img.getAttribute('alt');
-    const ariaHidden = img.getAttribute('aria-hidden');
-    const role = img.getAttribute('role');
+    const alt = img.getAttribute("alt");
+    const ariaHidden = img.getAttribute("aria-hidden");
+    const role = img.getAttribute("role");
 
     // Skip decorative images (aria-hidden or role="presentation")
-    if (ariaHidden === 'true' || role === 'presentation' || role === 'none') {
+    if (ariaHidden === "true" || role === "presentation" || role === "none") {
       return;
     }
 
@@ -239,21 +223,20 @@ export function auditImageAlt() {
         element: img,
         selector: generateSelector(img),
         src: img.src,
-        issue: 'Missing alt attribute',
+        issue: "Missing alt attribute",
       });
-    } else if (alt === '' && ariaHidden !== 'true') {
+    } else if (alt === "" && ariaHidden !== "true") {
       // Empty alt without aria-hidden might be an issue
       violations.push({
         element: img,
         selector: generateSelector(img),
         src: img.src,
-        issue:
-          'Empty alt attribute (should have aria-hidden="true" if decorative)',
+        issue: 'Empty alt attribute (should have aria-hidden="true" if decorative)',
       });
     }
   });
 
-  logger.group('🖼️ Image Alt Text Audit');
+  logger.group("🖼️ Image Alt Text Audit");
   if (violations.length > 0) {
     logger.warn(`❌ Found ${violations.length} issues:`);
     violations.forEach((v, i) => {
@@ -261,7 +244,7 @@ export function auditImageAlt() {
       logger.log(`   Source: ${v.src.substring(0, 50)}...`);
     });
   } else {
-    logger.log('✅ All images have proper alt text');
+    logger.log("✅ All images have proper alt text");
   }
   logger.groupEnd();
 
@@ -272,7 +255,7 @@ export function auditImageAlt() {
  * Run full accessibility audit
  */
 export function runAccessibilityAudit() {
-  logger.group('♿ Accessibility Audit');
+  logger.group("♿ Accessibility Audit");
   auditTouchTargets();
   auditFocusIndicators();
   auditImageAlt();
@@ -291,21 +274,19 @@ export function logViewportInfo() {
   const height = window.innerHeight;
   const pixelRatio = window.devicePixelRatio;
 
-  let breakpoint = 'xs';
+  let breakpoint = "xs";
   for (const [name, value] of Object.entries(BREAKPOINTS)) {
     if (width >= value) {
       breakpoint = name;
     }
   }
 
-  logger.group('📱 Viewport Info');
+  logger.group("📱 Viewport Info");
   logger.log(`Size: ${width}x${height}px`);
   logger.log(`Pixel Ratio: ${pixelRatio}x`);
-  logger.log(
-    `Active Breakpoint: ${breakpoint} (≥${BREAKPOINTS[breakpoint]}px)`,
-  );
-  logger.log(`Touch: ${'ontouchstart' in window ? 'Yes' : 'No'}`);
-  logger.log(`Orientation: ${width > height ? 'Landscape' : 'Portrait'}`);
+  logger.log(`Active Breakpoint: ${breakpoint} (≥${BREAKPOINTS[breakpoint]}px)`);
+  logger.log(`Touch: ${"ontouchstart" in window ? "Yes" : "No"}`);
+  logger.log(`Orientation: ${width > height ? "Landscape" : "Portrait"}`);
   logger.groupEnd();
 }
 
@@ -314,11 +295,11 @@ export function logViewportInfo() {
  */
 export function showBreakpointIndicator() {
   // Remove existing indicator
-  const existing = document.getElementById('breakpoint-indicator');
+  const existing = document.getElementById("breakpoint-indicator");
   if (existing) existing.remove();
 
-  const indicator = document.createElement('div');
-  indicator.id = 'breakpoint-indicator';
+  const indicator = document.createElement("div");
+  indicator.id = "breakpoint-indicator";
   indicator.style.cssText = `
     position: fixed;
     top: 0;
@@ -334,7 +315,7 @@ export function showBreakpointIndicator() {
 
   function updateIndicator() {
     const width = window.innerWidth;
-    let breakpoint = 'xs';
+    let breakpoint = "xs";
     for (const [name, value] of Object.entries(BREAKPOINTS)) {
       if (width >= value) {
         breakpoint = name;
@@ -345,15 +326,13 @@ export function showBreakpointIndicator() {
 
   document.body.appendChild(indicator);
   updateIndicator();
-  window.addEventListener('resize', updateIndicator);
+  window.addEventListener("resize", updateIndicator);
 
-  logger.log(
-    '📐 Breakpoint indicator added. Call hideBreakpointIndicator() to remove.',
-  );
+  logger.log("📐 Breakpoint indicator added. Call hideBreakpointIndicator() to remove.");
 
   return () => {
     indicator.remove();
-    window.removeEventListener('resize', updateIndicator);
+    window.removeEventListener("resize", updateIndicator);
   };
 }
 
@@ -361,10 +340,10 @@ export function showBreakpointIndicator() {
  * Remove breakpoint indicator
  */
 export function hideBreakpointIndicator() {
-  const indicator = document.getElementById('breakpoint-indicator');
+  const indicator = document.getElementById("breakpoint-indicator");
   if (indicator) {
     indicator.remove();
-    logger.log('📐 Breakpoint indicator removed');
+    logger.log("📐 Breakpoint indicator removed");
   }
 }
 
@@ -375,8 +354,8 @@ export function hideBreakpointIndicator() {
  * @returns {Function} Cleanup function to remove the iframe
  */
 export function simulateViewport(width, height) {
-  const iframe = document.createElement('iframe');
-  iframe.id = 'viewport-simulator';
+  const iframe = document.createElement("iframe");
+  iframe.id = "viewport-simulator";
   iframe.style.cssText = `
     width: ${width}px;
     height: ${height}px;
@@ -396,7 +375,7 @@ export function simulateViewport(width, height) {
 
   return () => {
     iframe.remove();
-    logger.log('📱 Viewport simulation removed');
+    logger.log("📱 Viewport simulation removed");
   };
 }
 
@@ -409,7 +388,7 @@ export function simulateDevice(deviceName) {
   const device = DEVICES[deviceName];
   if (!device) {
     logger.error(`Unknown device: ${deviceName}`);
-    logger.log('Available devices:', Object.keys(DEVICES).join(', '));
+    logger.log("Available devices:", Object.keys(DEVICES).join(", "));
     return () => {};
   }
 
@@ -425,33 +404,31 @@ export function simulateDevice(deviceName) {
  * Get Core Web Vitals metrics
  */
 export function getWebVitals() {
-  logger.group('⚡ Core Web Vitals');
+  logger.group("⚡ Core Web Vitals");
 
   // LCP (Largest Contentful Paint)
-  if ('PerformanceObserver' in window) {
+  if ("PerformanceObserver" in window) {
     try {
       const lcpObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         const lastEntry = entries[entries.length - 1];
         logger.log(`LCP: ${Math.round(lastEntry.startTime)}ms`);
       });
-      lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+      lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
     } catch (e) {
-      logger.log('LCP: Not available');
+      logger.log("LCP: Not available");
     }
   }
 
   // FCP (First Contentful Paint)
-  const paintEntries = performance.getEntriesByType('paint');
-  const fcp = paintEntries.find(
-    (entry) => entry.name === 'first-contentful-paint',
-  );
+  const paintEntries = performance.getEntriesByType("paint");
+  const fcp = paintEntries.find((entry) => entry.name === "first-contentful-paint");
   if (fcp) {
     logger.log(`FCP: ${Math.round(fcp.startTime)}ms`);
   }
 
   // CLS (Cumulative Layout Shift)
-  if ('PerformanceObserver' in window) {
+  if ("PerformanceObserver" in window) {
     try {
       let clsValue = 0;
       const clsObserver = new PerformanceObserver((list) => {
@@ -462,14 +439,14 @@ export function getWebVitals() {
         }
         logger.log(`CLS: ${clsValue.toFixed(3)}`);
       });
-      clsObserver.observe({ entryTypes: ['layout-shift'] });
+      clsObserver.observe({ entryTypes: ["layout-shift"] });
     } catch (e) {
-      logger.log('CLS: Not available');
+      logger.log("CLS: Not available");
     }
   }
 
   // Navigation timing
-  const navTiming = performance.getEntriesByType('navigation')[0];
+  const navTiming = performance.getEntriesByType("navigation")[0];
   if (navTiming) {
     logger.log(`DOM Interactive: ${Math.round(navTiming.domInteractive)}ms`);
     logger.log(`DOM Complete: ${Math.round(navTiming.domComplete)}ms`);
@@ -495,13 +472,13 @@ function generateSelector(el) {
 
   let selector = el.tagName.toLowerCase();
 
-  if (el.className && typeof el.className === 'string') {
+  if (el.className && typeof el.className === "string") {
     const classes = el.className
-      .split(' ')
+      .split(" ")
       .filter((c) => c.trim())
       .slice(0, 2);
     if (classes.length > 0) {
-      selector += `.${classes.join('.')}`;
+      selector += `.${classes.join(".")}`;
     }
   }
 
@@ -512,22 +489,22 @@ function generateSelector(el) {
  * Run all tests
  */
 export function runAllTests() {
-  logger.log('=== Test Suite Started ===');
-  logger.log('🚀 Running Responsive Design Tests\n');
+  logger.log("=== Test Suite Started ===");
+  logger.log("🚀 Running Responsive Design Tests\n");
 
   runFeatureTests();
-  logger.log('');
+  logger.log("");
   logViewportInfo();
-  logger.log('');
+  logger.log("");
   runAccessibilityAudit();
-  logger.log('');
+  logger.log("");
   getWebVitals();
 
-  logger.log('\n✨ Tests complete!');
+  logger.log("\n✨ Tests complete!");
 }
 
 // Export for use in browser console
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   window.responsiveTests = {
     BREAKPOINTS,
     DEVICES,
@@ -548,7 +525,5 @@ if (typeof window !== 'undefined') {
     runAllTests,
   };
 
-  logger.log(
-    '📦 Responsive testing utilities loaded! Use window.responsiveTests to access.',
-  );
+  logger.log("📦 Responsive testing utilities loaded! Use window.responsiveTests to access.");
 }

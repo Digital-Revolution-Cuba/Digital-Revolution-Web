@@ -1,10 +1,7 @@
 import { useGalleryModal } from "../../composables/features/useGalleryModal";
 import { useImageSearch } from "../../composables/features/useImageSearch";
 import { useInfiniteScroll } from "../../composables/features/useInfiniteScroll";
-import {
-  INFINITE_SCROLL_CONFIG,
-  MASONRY_CONFIG,
-} from "../../config/galleryConfig";
+import { INFINITE_SCROLL_CONFIG, MASONRY_CONFIG } from "../../config/galleryConfig";
 import type { GalleryItem } from "../../data/gallery";
 import { InputSearchGallery } from "./InputSearchGallery";
 
@@ -34,16 +31,14 @@ export function GalleryGrid({ images }: Gallery) {
   const { searchAuthor, setSearchAuthor, filteredImages, handleClearSearch } =
     useImageSearch(images);
 
-  const { selectedImage, isModalVisible, openModal, closeModal } =
-    useGalleryModal();
+  const { selectedImage, isModalVisible, openModal, closeModal } = useGalleryModal();
 
-  const { visibleItems, hasMore, isLoading, observerTarget } =
-    useInfiniteScroll(filteredImages, {
-      initialItems: INFINITE_SCROLL_CONFIG.INITIAL_ITEMS,
-      itemsPerPage: INFINITE_SCROLL_CONFIG.ITEMS_PER_PAGE,
-      threshold: INFINITE_SCROLL_CONFIG.THRESHOLD,
-      rootMargin: INFINITE_SCROLL_CONFIG.ROOT_MARGIN,
-    });
+  const { visibleItems, hasMore, isLoading, observerTarget } = useInfiniteScroll(filteredImages, {
+    initialItems: INFINITE_SCROLL_CONFIG.INITIAL_ITEMS,
+    itemsPerPage: INFINITE_SCROLL_CONFIG.ITEMS_PER_PAGE,
+    threshold: INFINITE_SCROLL_CONFIG.THRESHOLD,
+    rootMargin: INFINITE_SCROLL_CONFIG.ROOT_MARGIN,
+  });
 
   return (
     <div className="w-full px-3 py-4 sm:px-5 sm:py-5">
@@ -76,9 +71,7 @@ export function GalleryGrid({ images }: Gallery) {
                     <span className="text-xs font-medium text-white sm:text-sm">
                       {img.creator.name}
                     </span>
-                    <span className="text-[10px] text-gray-300 sm:text-xs">
-                      {img.category}
-                    </span>
+                    <span className="text-[10px] text-gray-300 sm:text-xs">{img.category}</span>
                   </div>
                 </div>
               </div>
@@ -87,10 +80,7 @@ export function GalleryGrid({ images }: Gallery) {
 
           {/* Infinite Scroll Trigger */}
           {hasMore && (
-            <div
-              ref={observerTarget}
-              className="flex justify-center py-6 sm:py-8"
-            >
+            <div ref={observerTarget} className="flex justify-center py-6 sm:py-8">
               {isLoading && (
                 <div className="animate-pulse text-sm text-cyan-400 sm:text-base">
                   Cargando más imágenes...
@@ -101,12 +91,8 @@ export function GalleryGrid({ images }: Gallery) {
         </>
       ) : (
         <div className="flex flex-col items-center justify-center px-4 py-12 sm:py-16">
-          <p className="mb-2 text-base text-gray-400 sm:text-lg">
-            No se encontraron obras
-          </p>
-          <p className="text-xs text-gray-500 sm:text-sm">
-            Intenta con otro nombre de autor
-          </p>
+          <p className="mb-2 text-base text-gray-400 sm:text-lg">No se encontraron obras</p>
+          <p className="text-xs text-gray-500 sm:text-sm">Intenta con otro nombre de autor</p>
           <button
             onClick={handleClearSearch}
             className="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark z-10 mt-3 rounded-lg border px-6 py-2.5 text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)] sm:px-8 sm:py-3 sm:text-base"
@@ -132,7 +118,7 @@ export function GalleryGrid({ images }: Gallery) {
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="absolute top-0 right-0 left-0 z-10 flex items-center justify-between bg-brand-background-global px-4 py-3 backdrop-blur-sm sm:px-6 sm:py-4">
+            <div className="bg-brand-background-global absolute top-0 right-0 left-0 z-10 flex items-center justify-between px-4 py-3 backdrop-blur-sm sm:px-6 sm:py-4">
               <h2 className="text-sm font-semibold text-white sm:text-lg">
                 {selectedImage.creator.name}
               </h2>

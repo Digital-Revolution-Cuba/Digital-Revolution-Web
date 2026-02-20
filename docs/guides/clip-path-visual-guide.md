@@ -8,7 +8,7 @@
 ┌─────────────────────────────────┐ 100% width
 │ (0, 0)              (100%, 0)   │
 │   ┌──────────────────────────┐  │
-│   │                          │  │ 
+│   │                          │  │
 │   │  CONTENIDO VISIBLE       │  │
 │   │                        ╱ │  │
 │   │                      ╱   │  │ <- Clip diagonal
@@ -24,6 +24,7 @@
 ```
 
 **Fórmula del ángulo:**
+
 ```
 clip-path: polygon(
   0 0,          /* Top-left */
@@ -109,13 +110,14 @@ Ejemplo:
 ### Tabla de Valores
 
 | Breakpoint | Dark End | Cyan Mid | Yellow Start | Diagonal Intensity |
-|------------|----------|----------|--------------|-------------------|
+| ---------- | -------- | -------- | ------------ | ------------------ |
 | Desktop    | 88%      | 70%      | 25%          | 🔥🔥🔥 Agresiva    |
-| Tablet     | 90%      | 75%      | 28%          | 🔥🔥 Moderada     |
-| Mobile     | 92%      | 78%      | 32%          | 🔥 Suave          |
-| Mobile SM  | 94%      | 80%      | 36%          | 🔸 Muy Suave      |
+| Tablet     | 90%      | 75%      | 28%          | 🔥🔥 Moderada      |
+| Mobile     | 92%      | 78%      | 32%          | 🔥 Suave           |
+| Mobile SM  | 94%      | 80%      | 36%          | 🔸 Muy Suave       |
 
 **Nota:** En mobile, los ángulos se suavizan para:
+
 - Evitar que el clip corte contenido importante
 - Mantener legibilidad en pantallas pequeñas
 - Reducir impacto visual que puede ser abrumador
@@ -140,6 +142,7 @@ Ejemplo:
 ```
 
 **Problemas:**
+
 1. En algunos viewports, aparecen **gaps blancos**
 2. El overlap no es predecible
 3. Cambios en padding rompen el layout
@@ -164,6 +167,7 @@ Ejemplo:
 ```
 
 **Beneficios:**
+
 1. ✅ No gaps entre secciones
 2. ✅ Control preciso del overlap
 3. ✅ Responsive predecible
@@ -179,13 +183,13 @@ Ejemplo:
   --hero-clip-dark-end: 88%;
   --hero-clip-cyan-mid: 70%;
   --hero-clip-yellow-start: 25%;
-  
+
   /* === HEIGHTS === */
   --hero-cyan-height: clamp(60px, 8vw, 100px);
-  
+
   /* === OVERLAP (anti-aliasing) === */
   --hero-overlap: -2px;
-  
+
   /* === SPACING === */
   --hero-dark-padding-bottom: calc(var(--hero-cyan-height) * 0.5);
   --hero-yellow-padding-top: calc(var(--hero-cyan-height) * 0.4);
@@ -196,33 +200,18 @@ Ejemplo:
 
 ```css
 .hero-dark {
-  clip-path: polygon(
-    0 0, 
-    100% 0, 
-    100% var(--hero-clip-dark-end), 
-    0 100%
-  );
+  clip-path: polygon(0 0, 100% 0, 100% var(--hero-clip-dark-end), 0 100%);
   padding-bottom: var(--hero-dark-padding-bottom);
 }
 
 .hero-cyan {
   height: var(--hero-cyan-height);
-  clip-path: polygon(
-    0 0, 
-    100% var(--hero-clip-cyan-mid), 
-    100% 100%, 
-    0 100%
-  );
+  clip-path: polygon(0 0, 100% var(--hero-clip-cyan-mid), 100% 100%, 0 100%);
   transform: translateY(var(--hero-overlap));
 }
 
 .hero-yellow {
-  clip-path: polygon(
-    0 var(--hero-clip-yellow-start), 
-    100% 0, 
-    100% 100%, 
-    0 100%
-  );
+  clip-path: polygon(0 var(--hero-clip-yellow-start), 100% 0, 100% 100%, 0 100%);
   transform: translateY(var(--hero-overlap));
   padding-top: var(--hero-yellow-padding-top);
 }
@@ -263,6 +252,7 @@ Ejemplo:
 ```
 
 **Ventajas:**
+
 - ✅ Un solo lugar para ajustar valores
 - ✅ Cambios consistentes en todos los componentes
 - ✅ Fácil de testear diferentes ángulos
@@ -276,10 +266,10 @@ Ejemplo:
 /* Diagonal que corta desde arriba-derecha */
 .section-top-diagonal {
   clip-path: polygon(
-    0 0,          /* Top-left (sin cortar) */
-    100% 0,       /* Top-right (sin cortar) */
-    100% 88%,     /* Bottom-right (cortado) */
-    0 100%        /* Bottom-left (sin cortar) */
+    0 0,
+    /* Top-left (sin cortar) */ 100% 0,
+    /* Top-right (sin cortar) */ 100% 88%,
+    /* Bottom-right (cortado) */ 0 100% /* Bottom-left (sin cortar) */
   );
 }
 ```
@@ -300,10 +290,10 @@ Ejemplo:
 /* Diagonal que corta desde arriba-izquierda */
 .section-bottom-diagonal {
   clip-path: polygon(
-    0 25%,        /* Top-left (cortado) */
-    100% 0,       /* Top-right (sin cortar) */
-    100% 100%,    /* Bottom-right (sin cortar) */
-    0 100%        /* Bottom-left (sin cortar) */
+    0 25%,
+    /* Top-left (cortado) */ 100% 0,
+    /* Top-right (sin cortar) */ 100% 100%,
+    /* Bottom-right (sin cortar) */ 0 100% /* Bottom-left (sin cortar) */
   );
 }
 ```
@@ -323,10 +313,10 @@ Ejemplo:
 /* Banda con diagonales arriba y abajo */
 .section-band-diagonal {
   clip-path: polygon(
-    0 20%,        /* Top-left (cortado) */
-    100% 0,       /* Top-right (sin cortar) */
-    100% 80%,     /* Bottom-right (cortado) */
-    0 100%        /* Bottom-left (sin cortar) */
+    0 20%,
+    /* Top-left (cortado) */ 100% 0,
+    /* Top-right (sin cortar) */ 100% 80%,
+    /* Bottom-right (cortado) */ 0 100% /* Bottom-left (sin cortar) */
   );
 }
 ```
@@ -345,10 +335,10 @@ Ejemplo:
 ```css
 .section-rhombus {
   clip-path: polygon(
-    25% 0%,       /* Top-left (cortado) */
-    100% 0%,      /* Top-right (sin cortar) */
-    75% 100%,     /* Bottom-right (cortado) */
-    0% 100%       /* Bottom-left (sin cortar) */
+    25% 0%,
+    /* Top-left (cortado) */ 100% 0%,
+    /* Top-right (sin cortar) */ 75% 100%,
+    /* Bottom-right (cortado) */ 0% 100% /* Bottom-left (sin cortar) */
   );
 }
 ```
@@ -401,6 +391,7 @@ Ejemplo:
 ### Problema 1: Gap Blanco Entre Secciones
 
 **Síntoma:**
+
 ```
 ┌───────────────────────────┐
 │   section-1             ╱ │
@@ -411,6 +402,7 @@ Ejemplo:
 ```
 
 **Solución:**
+
 ```css
 /* Añadir pequeño overlap con transform */
 .section-2 {
@@ -430,6 +422,7 @@ Ejemplo:
 El texto o imágenes se cortan por el clip-path
 
 **Solución:**
+
 ```css
 /* Añadir padding interno */
 .section {
@@ -446,6 +439,7 @@ El texto o imágenes se cortan por el clip-path
 Parpadeo o artifacts visuales al animar clip-path
 
 **Solución:**
+
 ```css
 .animated-clip {
   /* Anti-aliasing fixes */
@@ -463,6 +457,7 @@ Parpadeo o artifacts visuales al animar clip-path
 Los clips se ven muy agresivos o muy suaves en mobile
 
 **Solución:**
+
 ```css
 /* Usar clamp() para transición suave */
 :root {

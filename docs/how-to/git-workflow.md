@@ -44,15 +44,15 @@ main                    # Production-ready code
 
 Format: `<type>/<short-description>`
 
-| Type | Purpose | Example |
-|------|---------|---------|
-| `feat/` | New feature | `feat/talents-search` |
-| `fix/` | Bug fix | `fix/header-mobile-menu` |
-| `docs/` | Documentation | `docs/update-readme` |
+| Type        | Purpose          | Example                      |
+| ----------- | ---------------- | ---------------------------- |
+| `feat/`     | New feature      | `feat/talents-search`        |
+| `fix/`      | Bug fix          | `fix/header-mobile-menu`     |
+| `docs/`     | Documentation    | `docs/update-readme`         |
 | `refactor/` | Code refactoring | `refactor/gallery-component` |
-| `chore/` | Maintenance | `chore/update-dependencies` |
-| `test/` | Tests | `test/add-gallery-tests` |
-| `style/` | Styling only | `style/button-hover-effects` |
+| `chore/`    | Maintenance      | `chore/update-dependencies`  |
+| `test/`     | Tests            | `test/add-gallery-tests`     |
+| `style/`    | Styling only     | `style/button-hover-effects` |
 
 ---
 
@@ -70,6 +70,7 @@ git checkout -b feat/your-feature-name
 ```
 
 **Example:**
+
 ```bash
 git checkout -b feat/add-music-player
 ```
@@ -108,6 +109,7 @@ We follow **Conventional Commits**:
 ```
 
 **Types:**
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation
@@ -155,6 +157,7 @@ git push origin feat/your-feature-name
 
 **First time pushing this branch?**
 Git will show:
+
 ```bash
 git push --set-upstream origin feat/your-feature-name
 ```
@@ -171,15 +174,18 @@ Copy and run that command.
 
 ```markdown
 ## Description
+
 Brief description of changes
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Documentation update
 - [ ] Refactoring
 
 ## Checklist
+
 - [ ] Code follows coding standards
 - [ ] Self-review completed
 - [ ] Comments added for complex code

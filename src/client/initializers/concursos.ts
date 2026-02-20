@@ -37,17 +37,13 @@ function initConcursosSlider() {
     const computedStyle = window.getComputedStyle(slider);
     gap = parseFloat(computedStyle.gap) || 0;
 
-    const requiredViewportWidth =
-      itemWidth * activeCardsPerPage + gap * (activeCardsPerPage - 1);
+    const requiredViewportWidth = itemWidth * activeCardsPerPage + gap * (activeCardsPerPage - 1);
     (viewport as HTMLElement).style.maxWidth = `${requiredViewportWidth}px`;
   }
 
   function getMaxIndex() {
     if (!slider) return 0;
-    return Math.max(
-      0,
-      Math.ceil(Number(slider.dataset.total || 0) / activeCardsPerPage) - 1,
-    );
+    return Math.max(0, Math.ceil(Number(slider.dataset.total || 0) / activeCardsPerPage) - 1);
   }
 
   function generateDots() {
@@ -83,9 +79,7 @@ function initConcursosSlider() {
 
     if (!pagination) return;
     const dots = pagination.querySelectorAll(".pagination-dot");
-    dots.forEach((dot, i) =>
-      dot.classList.toggle("active", i === currentIndex),
-    );
+    dots.forEach((dot, i) => dot.classList.toggle("active", i === currentIndex));
   }
 
   prevBtn.addEventListener("click", () => {

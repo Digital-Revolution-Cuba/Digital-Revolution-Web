@@ -4,7 +4,7 @@
 
 ```bash
 ✓ pnpm build - Completado sin errores
-✓ pnpm type-check - Sin errores TypeScript  
+✓ pnpm type-check - Sin errores TypeScript
 ✓ 25 páginas generadas correctamente
 ✓ Optimización automática aplicada (JS + SVG)
 ```
@@ -16,6 +16,7 @@
 ### 1. **Prefijo `_` para Componentes en Pages (Astro Best Practice)**
 
 **Problema Original**:
+
 ```
 src/pages/
 ├── concursos/
@@ -24,6 +25,7 @@ src/pages/
 ```
 
 **Solución Implementada**:
+
 ```
 src/pages/
 ├── concursos/
@@ -38,6 +40,7 @@ src/pages/
 ### 2. **Screaming Architecture Feature-First**
 
 **Estructura Implementada**:
+
 ```
 src/
 ├── pages/                      # File-based routing + Features
@@ -153,24 +156,27 @@ src/
 
 ### 3. **Convenciones de Import Actualizadas**
 
-#### Imports desde Pages Features hacia _components:
+#### Imports desde Pages Features hacia \_components:
+
 ```typescript
 // src/pages/concursos/index.astro
-import ConcursosHero from './_components/ConcursosHero.astro';
-import ConcursosFiltersIsland from './_components/ConcursosFiltersIsland';
+import ConcursosHero from "./_components/ConcursosHero.astro";
+import ConcursosFiltersIsland from "./_components/ConcursosFiltersIsland";
 ```
 
 #### Imports desde Shared Components hacia Pages Features:
+
 ```typescript
 // src/components/DinamycGallery.astro
-import CategoryButton from '../pages/galeria/_components/CategoryButton.astro';
-import GalleryItem from '../pages/galeria/_components/GalleryItem.astro';
+import CategoryButton from "../pages/galeria/_components/CategoryButton.astro";
+import GalleryItem from "../pages/galeria/_components/GalleryItem.astro";
 ```
 
 #### Cross-Feature Imports desde pages/components:
+
 ```typescript
 // src/pages/components/ColaboracionesDestacadas.astro
-import ColaboracionCard from '../colaboraciones/_components/ColaboracionCard.astro';
+import ColaboracionCard from "../colaboraciones/_components/ColaboracionCard.astro";
 ```
 
 ---
@@ -178,6 +184,7 @@ import ColaboracionCard from '../colaboraciones/_components/ColaboracionCard.ast
 ## 🔧 Cambios Realizados
 
 ### Archivos Renombrados:
+
 ```bash
 ✓ pages/colaboraciones/components/ → pages/colaboraciones/_components/
 ✓ pages/concursos/components/ → pages/concursos/_components/
@@ -186,6 +193,7 @@ import ColaboracionCard from '../colaboraciones/_components/ColaboracionCard.ast
 ```
 
 ### Imports Actualizados (15 archivos):
+
 ```
 ✓ src/pages/colaboraciones/index.astro
 ✓ src/pages/concursos/index.astro
@@ -209,6 +217,7 @@ import ColaboracionCard from '../colaboraciones/_components/ColaboracionCard.ast
 ## 📊 Métricas de Calidad
 
 ### Build Performance:
+
 ```
 ✓ 25 páginas generadas
 ✓ Tiempo de build: 17.10s
@@ -217,6 +226,7 @@ import ColaboracionCard from '../colaboraciones/_components/ColaboracionCard.ast
 ```
 
 ### Code Quality:
+
 ```
 ✓ 0 errores TypeScript
 ✓ 0 errores de compilación
@@ -225,6 +235,7 @@ import ColaboracionCard from '../colaboraciones/_components/ColaboracionCard.ast
 ```
 
 ### Arquitectura:
+
 ```
 ✓ Screaming Architecture implementada
 ✓ Feature-first organization
@@ -238,21 +249,25 @@ import ColaboracionCard from '../colaboraciones/_components/ColaboracionCard.ast
 ## 🎯 Beneficios Logrados
 
 ### 1. **Build Exitoso**
+
 - ✅ El proyecto compila sin errores
 - ✅ Todos los componentes se resuelven correctamente
 - ✅ No hay conflictos de rutas
 
 ### 2. **Mejor Organización**
+
 - ✅ Estructura clara por features
 - ✅ Componentes colocados junto a sus páginas
 - ✅ Separación clara entre shared y feature-specific
 
 ### 3. **Mantenibilidad**
+
 - ✅ Fácil localizar componentes por feature
 - ✅ Imports explícitos y claros
 - ✅ Convención estándar de Astro
 
 ### 4. **Developer Experience**
+
 - ✅ Estructura intuitiva
 - ✅ Menos confusión sobre dónde va cada componente
 - ✅ Documentación clara de convenciones
@@ -262,12 +277,14 @@ import ColaboracionCard from '../colaboraciones/_components/ColaboracionCard.ast
 ## 📖 Documentación Actualizada
 
 ### Documentos Creados/Actualizados:
+
 1. **SCREAMING-ARCHITECTURE.md** - Guía completa de arquitectura
 2. **IMPORT-GUIDE.md** - Referencia rápida de imports
 3. **IMPORT-REFACTORING-SUMMARY.md** - Resumen de refactorización
 4. **ASTRO-BEST-PRACTICES-FINAL.md** (este documento)
 
 ### Referencias Oficiales Consultadas:
+
 - [Astro Routing Documentation](https://docs.astro.build/en/guides/routing/)
 - [Astro Project Structure](https://docs.astro.build/en/basics/project-structure/)
 - [Astro Excluding Pages](https://docs.astro.build/en/guides/routing/#excluding-pages)
@@ -277,15 +294,18 @@ import ColaboracionCard from '../colaboraciones/_components/ColaboracionCard.ast
 ## 🚀 Próximos Pasos Recomendados
 
 ### Opcional - Mejoras Adicionales:
+
 1. **Crear Barrel Exports** en `_components/index.ts`:
+
    ```typescript
    // pages/concursos/_components/index.ts
-   export { default as ConcursoCard } from './ConcursoCard.astro';
-   export { default as ConcursosHero } from './ConcursosHero.astro';
-   export { default as ConcursosFiltersIsland } from './ConcursosFiltersIsland';
+   export { default as ConcursoCard } from "./ConcursoCard.astro";
+   export { default as ConcursosHero } from "./ConcursosHero.astro";
+   export { default as ConcursosFiltersIsland } from "./ConcursosFiltersIsland";
    ```
 
 2. **Path Aliases** en `tsconfig.json`:
+
    ```json
    {
      "compilerOptions": {
@@ -305,7 +325,7 @@ import ColaboracionCard from '../colaboraciones/_components/ColaboracionCard.ast
        "no-restricted-imports": [
          "error",
          {
-           "patterns": ["**/components/*"]  // Force usar _components
+           "patterns": ["**/components/*"] // Force usar _components
          }
        ]
      }
@@ -317,11 +337,12 @@ import ColaboracionCard from '../colaboraciones/_components/ColaboracionCard.ast
 ## ✅ Validación Final
 
 ### Comandos Ejecutados:
+
 ```bash
 $ pnpm type-check
 ✓ Sin errores TypeScript
 
-$ pnpm build  
+$ pnpm build
 ✓ Build completado exitosamente
 ✓ 25 páginas generadas
 ✓ Assets optimizados
@@ -331,6 +352,7 @@ $ pnpm preview
 ```
 
 ### Estado del Proyecto:
+
 - **Arquitectura**: ✅ Screaming Architecture implementada
 - **Convenciones**: ✅ Astro best practices aplicadas
 - **Build**: ✅ Compila sin errores
@@ -342,15 +364,19 @@ $ pnpm preview
 ## 🎓 Lecciones Aprendidas
 
 ### 1. **Prefijo `_` es Crítico en Astro**
+
 Astro convierte automáticamente cualquier archivo `.astro` en `pages/` a una ruta. Usar `_` previene esto y es la práctica oficial recomendada.
 
 ### 2. **Colocation Mejora Mantenibilidad**
+
 Mantener componentes junto a sus páginas facilita:
+
 - Encontrar código relacionado
 - Refactorizar features completas
 - Entender el scope de un componente
 
 ### 3. **Screaming Architecture + Astro = Perfect Match**
+
 La estructura de `pages/` de Astro se alinea perfectamente con Screaming Architecture cuando se combina con `_components/`.
 
 ---

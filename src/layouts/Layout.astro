@@ -1,6 +1,6 @@
 ---
-import Header from '../components/Header.astro';
-import '../styles/global.css';
+import Header from "../components/Header.astro";
+import "../styles/global.css";
 
 interface Props {
   title?: string;
@@ -9,18 +9,18 @@ interface Props {
 }
 
 const {
-  title = 'Digital Revolution Web | Comunidad de Talentos',
-  description = 'La plataforma oficial de la comunidad de talentos de Cuba. Descubre y conecta con creadores en arte, música, desarrollo y escritura.',
-  image = '/favicon.svg',
+  title = "Digital Revolution Web | Comunidad de Talentos",
+  description = "La plataforma oficial de la comunidad de talentos de Cuba. Descubre y conecta con creadores en arte, música, desarrollo y escritura.",
+  image = "/favicon.svg",
 } = Astro.props;
 
 const canonicalURL = new URL(
   Astro.url.pathname,
-  Astro.site || 'https://digital-revolution-web.vercel.app/',
+  Astro.site || "https://digital-revolution-web.vercel.app/"
 );
 const absImage = new URL(
   image,
-  Astro.site || 'https://digital-revolution-web.vercel.app/',
+  Astro.site || "https://digital-revolution-web.vercel.app/"
 ).toString();
 ---
 
@@ -33,18 +33,9 @@ const absImage = new URL(
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Favicon -->
-    <link
-      rel="icon"
-      type="image/png"
-      href="/favicon/favicon-96x96.png"
-      sizes="96x96"
-    />
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="shortcut icon" href="/favicon/favicon.ico" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/favicon/apple-touch-icon.png"
-    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Digital Revolution Web" />
     <link rel="manifest" href="/favicon/site.webmanifest" />
 
@@ -95,23 +86,20 @@ const absImage = new URL(
         "name": "Digital Revolution Web",
         "url": "${(Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}",
         "logo": "${new URL('/favicon.svg', Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}",
-        "sameAs": [
-          "https://twitter.com/digitalrev",
-          "https://instagram.com/digitalrev"
-        ]
+        "sameAs": ["https://twitter.com/digitalrev", "https://instagram.com/digitalrev"]
       }
     </script>
   </head>
   <body>
     <Header />
     <script>
-      import '../client/initializers/header.ts';
+      import "../client/initializers/header.ts";
     </script>
     <script>
-      import '../client/initializers/responsive-images.ts';
+      import "../client/initializers/responsive-images.ts";
     </script>
     <script>
-      import '../client/initializers/join-community.ts';
+      import "../client/initializers/join-community.ts";
     </script>
     <slot />
   </body>

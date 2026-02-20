@@ -55,34 +55,34 @@ docs/
 
 **Learning-oriented**: Step-by-step lessons that teach concepts through practice
 
-| Document | Description | Time | Level |
-|----------|-------------|------|-------|
+| Document                                          | Description            | Time   | Level    |
+| ------------------------------------------------- | ---------------------- | ------ | -------- |
 | [Getting Started](./tutorials/getting-started.md) | Set up dev environment | 15 min | Beginner |
 
 ### I need to solve a problem → How-To Guides
 
 **Task-oriented**: Practical steps to accomplish specific goals
 
-| Document | Description |
-|----------|-------------|
+| Document                                 | Description                      |
+| ---------------------------------------- | -------------------------------- |
 | [Git Workflow](./how-to/git-workflow.md) | Branching and commit conventions |
 
 ### I need to look something up → Reference
 
 **Information-oriented**: Technical details, APIs, configurations
 
-| Category | Documents |
-|----------|-----------|
-| **Project** | [Project Structure](./reference/project-structure.md) |
-| **Code Quality** | [Coding Standards](./reference/coding-standards.md) |
-| **API** | [Data Models](./reference/api/data-models.md) |
+| Category         | Documents                                             |
+| ---------------- | ----------------------------------------------------- |
+| **Project**      | [Project Structure](./reference/project-structure.md) |
+| **Code Quality** | [Coding Standards](./reference/coding-standards.md)   |
+| **API**          | [Data Models](./reference/api/data-models.md)         |
 
 ### I want to understand → Explanation
 
 **Understanding-oriented**: Concepts, design decisions, architecture
 
-| Document | Description |
-|----------|-------------|
+| Document                                      | Description                |
+| --------------------------------------------- | -------------------------- |
 | [Architecture](./explanation/architecture.md) | System design and patterns |
 
 ---
@@ -93,57 +93,36 @@ docs/
 
 **Start here:**
 
-
-
-
 1. [Getting Started Tutorial](./tutorials/getting-started.md)
 2. [Architecture Explanation](./explanation/architecture.md)
 3. [Project Structure Reference](./reference/project-structure.md)
 4. [Coding Standards Reference](./reference/coding-standards.md)
 
-
 ### Contributor
 
-
-
 **Making a PR:**
-
 
 1. [Git Workflow How-To](./how-to/git-workflow.md)
 2. [Coding Standards Reference](./reference/coding-standards.md)
 
-
 ### AI Assistant (Copilot/Claude/etc.)
 
-
 **Context for code generation:**
-
 
 1. [Data Models Reference](./reference/api/data-models.md)
 2. [Architecture Explanation](./explanation/architecture.md)
 
-
-
 ---
-
-
-
 
 ## 📚 Documentation by Topic
 
-
-
 ### Setup & Configuration
 
-
 - [Getting Started Tutorial](./tutorials/getting-started.md)
-
-
 
 ### Architecture & Design
 
 - [Architecture Explanation](./explanation/architecture.md)
-
 
 ### Development
 

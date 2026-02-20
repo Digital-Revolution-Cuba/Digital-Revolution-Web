@@ -8,17 +8,15 @@ export interface Props {
 }
 
 const {
-  title = 'Concurso de Fotografía',
-  ctaText = 'Ver Más',
-  imageUrl = '',
-  altText = 'Imagen del concurso de fotografía',
-  ctaLink = '#',
+  title = "Concurso de Fotografía",
+  ctaText = "Ver Más",
+  imageUrl = "",
+  altText = "Imagen del concurso de fotografía",
+  ctaLink = "#",
 } = Astro.props;
 ---
 
-<article
-  class="card-container overflow-hidden rounded-2xl bg-[#0D1433] shadow-md"
->
+<article class="card-container overflow-hidden rounded-2xl bg-[#0D1433] shadow-md">
   <div class="card-image-wrapper overflow-hidden">
     <img
       src={imageUrl}

@@ -10,21 +10,21 @@
  */
 
 // Import data
-import { arteGallery, fotografiaGallery, musicaGallery } from '../data';
-import type { CategoryConfig } from '../data/types';
+import { arteGallery, fotografiaGallery, musicaGallery } from "../data";
+import type { CategoryConfig } from "../data/types";
 
 // Import UI components
-import CategoryButton from './gallery/CategoryButton.astro';
-import FotografiaCard from './gallery/FotografiaCard.astro';
-import GalleryItemCard from './gallery/GalleryItem.astro';
-import MusicCard from './gallery/MusicCard.astro';
-import NavigationButton from './gallery/NavigationButton.astro';
+import CategoryButton from "./gallery/CategoryButton.astro";
+import FotografiaCard from "./gallery/FotografiaCard.astro";
+import GalleryItemCard from "./gallery/GalleryItem.astro";
+import MusicCard from "./gallery/MusicCard.astro";
+import NavigationButton from "./gallery/NavigationButton.astro";
 
 // Gallery categories — single source of truth
 const categories: readonly CategoryConfig[] = [
-  { id: 'arte', label: 'Arte', items: arteGallery },
-  { id: 'musica', label: 'Música', items: musicaGallery },
-  { id: 'fotografia', label: 'Fotografía', items: fotografiaGallery },
+  { id: "arte", label: "Arte", items: arteGallery },
+  { id: "musica", label: "Música", items: musicaGallery },
+  { id: "fotografia", label: "Fotografía", items: fotografiaGallery },
 ] as const;
 ---
 
@@ -36,11 +36,7 @@ const categories: readonly CategoryConfig[] = [
   <div class="category-controls" data-category-buttons>
     {
       categories.map((category, index) => (
-        <CategoryButton
-          category={category.id}
-          label={category.label}
-          isActive={index === 0}
-        />
+        <CategoryButton category={category.id} label={category.label} isActive={index === 0} />
       ))
     }
   </div>
@@ -49,11 +45,7 @@ const categories: readonly CategoryConfig[] = [
   <div class="gallery-outer-wrapper">
     <div class="gallery-inner-container">
       <!-- Previous button -->
-      <NavigationButton
-        id="prevBtn"
-        direction="prev"
-        ariaLabel="Previous gallery page"
-      />
+      <NavigationButton id="prevBtn" direction="prev" ariaLabel="Previous gallery page" />
 
       <!-- Gallery slider -->
       <div class="gallery-container">
@@ -63,14 +55,14 @@ const categories: readonly CategoryConfig[] = [
               categories.flatMap((category) =>
                 category.items.map((item) => {
                   switch (item.type) {
-                    case 'arte':
+                    case "arte":
                       return <GalleryItemCard item={item} />;
-                    case 'musica':
+                    case "musica":
                       return <MusicCard item={item} />;
-                    case 'fotografia':
+                    case "fotografia":
                       return <FotografiaCard item={item} />;
                   }
-                }),
+                })
               )
             }
           </div>
@@ -78,11 +70,7 @@ const categories: readonly CategoryConfig[] = [
       </div>
 
       <!-- Next button -->
-      <NavigationButton
-        id="nextBtn"
-        direction="next"
-        ariaLabel="Next gallery page"
-      />
+      <NavigationButton id="nextBtn" direction="next" ariaLabel="Next gallery page" />
     </div>
 
     <!-- Behaviour is initialized from a centralized client initializer -->
