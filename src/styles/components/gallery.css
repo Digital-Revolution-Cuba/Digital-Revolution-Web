@@ -149,9 +149,9 @@
     max-width: calc(100vw - 120px);
   }
 
-  /* 2 cards per view: share the available space minus nav + gaps */
+  /* 2 cards: subtract 1 gap (1rem) from available space before dividing */
   .gallery-item {
-    width: calc((100dvw - 120px) / 2);
+    width: calc((100dvw - 120px - 1rem) / 2);
     max-width: 285px;
   }
 }
@@ -166,9 +166,9 @@
     max-width: calc(100vw - 120px);
   }
 
-  /* 3 cards per view */
+  /* 3 cards: subtract 2 gaps (2rem) from available space before dividing */
   .gallery-item {
-    width: calc((100dvw - 120px) / 3);
+    width: calc((100dvw - 120px - 2rem) / 3);
     max-width: 285px;
   }
 }
@@ -194,9 +194,9 @@
     max-width: calc(100vw - 120px);
   }
 
-  /* 3 cards per view in landscape */
+  /* 3 cards in landscape: subtract 2 gaps (2rem) before dividing */
   .gallery-item {
-    width: calc((100dvw - 120px) / 3);
+    width: calc((100dvw - 120px - 2rem) / 3);
     max-width: 285px;
   }
 }
