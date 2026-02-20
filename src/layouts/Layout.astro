@@ -104,11 +104,15 @@ const absImage = new URL(
   </head>
   <body>
     <Header />
-    <script type="module" src="/src/client/initializers/header.ts"></script>
-    <script type="module" src="/src/client/initializers/responsive-images.ts"
-    ></script>
-    <script type="module" src="/src/client/initializers/join-community.ts"
-    ></script>
+    <script>
+      import '../client/initializers/header.ts';
+    </script>
+    <script>
+      import '../client/initializers/responsive-images.ts';
+    </script>
+    <script>
+      import '../client/initializers/join-community.ts';
+    </script>
     <slot />
   </body>
 </html>
