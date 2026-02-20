@@ -6,8 +6,8 @@ function initColaboraciones() {
   const prevBtn = document.getElementById("prevBtnColab");
   const nextBtn = document.getElementById("nextBtnColab");
   const slider = document.getElementById("cardSliderColab");
-  const viewport = document.querySelector(
-    ".cards-viewport",
+  const viewport = document.getElementById(
+    "cardsViewportColab",
   ) as HTMLElement | null;
   const pagination = document.getElementById("paginationColab");
 
@@ -117,11 +117,13 @@ function initColaboraciones() {
     }, resizeDebounce);
   });
 
-  setTimeout(() => {
+  // Use requestAnimationFrame so layout is calculated after the browser
+  // completes its first paint — eliminates the 100ms race condition.
+  requestAnimationFrame(() => {
     calculateLayout();
     generateDots();
     updateSlider();
-  }, 100);
+  });
 }
 
 if (document.readyState === "loading") {
