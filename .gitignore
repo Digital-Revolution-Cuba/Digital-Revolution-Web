@@ -23,7 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .agent
-.github
+# .github — workflows must be tracked by git (CI/CD)
 .claude
 .astro
 .vscode
