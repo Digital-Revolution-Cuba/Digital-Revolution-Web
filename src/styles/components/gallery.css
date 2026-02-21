@@ -418,7 +418,7 @@
 .hero__title {
   margin-top: 40px;
   margin-bottom: 16px;
-  font-weight: 900;
+  font-family: var(--font-impact);
   line-height: 0.9;
   font-size: clamp(36px, 10vw, 58px);
   text-align: center;
@@ -460,7 +460,7 @@
 .hero__description {
   max-width: 480px;
   margin: 0 auto 20px;
-  color: #ffffff;
+  color: var(--color-text-secondary, #a0a0a0);
   font-size: clamp(14px, 3.5vw, 18px);
   line-height: 1.5;
   text-align: center;

@@ -67,7 +67,7 @@ export function GalleryGrid({ images }: Gallery) {
                     className="h-auto w-full rounded-lg transition-transform duration-300 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 flex items-end justify-between rounded-lg bg-linear-to-t from-black/60 via-transparent to-transparent p-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:p-3">
+                  <div className="absolute inset-0 flex items-end justify-between bg-linear-to-t from-black/60 via-transparent to-transparent p-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:p-3">
                     <span className="text-xs font-medium text-white sm:text-sm">
                       {img.creator.name}
                     </span>
