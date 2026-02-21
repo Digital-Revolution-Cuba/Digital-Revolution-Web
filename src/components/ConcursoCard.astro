@@ -17,7 +17,7 @@ const { title, date, imageUrl, altText, ctaLink, ctaText } = Astro.props;
 ---
 
 <article
-  class="group bg-brand-dark flex w-full flex-col overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+  class="group bg-brand-dark flex h-full w-full max-w-[320px] flex-col overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
 >
   <!-- Imagen -->
   <div class="relative h-40 overflow-hidden sm:h-48">
@@ -30,24 +30,19 @@ const { title, date, imageUrl, altText, ctaLink, ctaText } = Astro.props;
   </div>
 
   <!-- Contenido -->
-  <div class="flex flex-col gap-3 p-4">
-    <h3 class="line-clamp-2 text-base leading-snug font-semibold text-white sm:text-lg">
+  <div class="flex flex-1 flex-col justify-between gap-3 p-6">
+    <h3 class="font-roboto line-clamp-2 text-sm leading-6 font-bold text-white sm:text-lg">
       {title}
     </h3>
 
-    <div class="mt-auto flex items-center justify-between gap-2">
+    <div class="mt-auto flex items-start justify-between gap-2">
       <!-- Fecha -->
-      <span
-        class="rounded-full bg-orange-400/20 px-3 py-1 text-xs font-medium whitespace-nowrap text-orange-400"
-      >
+      <span class="text-accent-orange bg-accent-orange/20 rounded-lg p-2 text-xs">
         {date}
       </span>
 
       <!-- CTA -->
-      <a
-        href={ctaLink}
-        class="hover:text-brand-dark focus-visible:ring-offset-brand-dark inline-flex items-center justify-center rounded-lg border-2 border-orange-400 px-4 py-2 text-sm font-semibold text-orange-400 transition-all duration-300 hover:bg-orange-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2"
-      >
+      <a href={ctaLink} class="btn-primary px-4">
         {ctaText}
       </a>
     </div>

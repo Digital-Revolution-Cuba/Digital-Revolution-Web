@@ -171,7 +171,7 @@ export default function TalentSearch({ initialTalents, categories }: Props) {
                   <div className="talent-rating">
                     <StarIcon size={14} fill="currentColor" />
                     <span>{rating.toFixed(1)}</span>
-                    <span className="rating-label">Rating</span>
+                    <span className="rating-label">Calificación</span>
                   </div>
                 )}
               </div>

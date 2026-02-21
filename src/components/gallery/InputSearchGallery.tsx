@@ -21,9 +21,9 @@ export function InputSearchGallery({
 
   return (
     <>
-      <div className="mb-8 text-center sm:mb-16">
-        <h1 className="font-impact section-title mb-4 text-3xl font-black italic sm:mb-6 sm:text-5xl md:text-6xl lg:text-7xl">
-          <span className="text-white">Descubre </span>
+      <div className="my-8 text-center sm:my-16">
+        <h1 className="font-impact section-title text-3xl font-black italic sm:text-5xl md:text-6xl lg:text-6xl">
+          <span className="font-impact! text-white">Descubre </span>
           <span className="text-cyan-400">Trabajos</span>
         </h1>
       </div>
@@ -57,7 +57,7 @@ export function InputSearchGallery({
                 <button
                   key={author}
                   onClick={() => setSearchAuthor(author)}
-                  className="border-opacity-50 hover:border-opacity-100 cursor-pointer rounded-full border-2 border-orange-500 bg-transparent px-3 py-1.5 text-xs font-medium text-orange-500 transition-all duration-300 hover:border-orange-500 hover:bg-orange-500/20 hover:text-orange-100 sm:px-5 sm:py-2.5 sm:text-base"
+                  className="border-opacity-50 hover:border-opacity-100 cursor-pointer rounded-full border-2 border-orange-500/50 bg-transparent px-3 py-1.5 text-xs font-medium text-orange-500 transition-all duration-300 hover:border-orange-500 hover:bg-orange-500/20 hover:text-orange-100 sm:px-5 sm:py-2.5 sm:text-sm"
                   style={{
                     animation: `fadeInUp 0.5s ease-out forwards`,
                     animationDelay: `${index * 0.05}s`,
