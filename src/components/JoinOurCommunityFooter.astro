@@ -8,7 +8,7 @@ import image5 from "../assets/footer-images/image (5).webp";
 
 const footerImages = {
   top: [image0, image1, image2],
-  bottom: [image3, image4, image5],
+  bottom: [image3, image5, image4],
 };
 
 ---
@@ -86,11 +86,12 @@ const footerImages = {
 
   /* Mobile: flex-like flow - top row, center (in flow), bottom row */
   @media (max-width: 767px) {
+
     .items-container {
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(5, auto);
-      column-gap: clamp(1.5rem, 4vw, 2.5rem);
-      row-gap: clamp(2rem, 5vw, 3rem);
+      column-gap: clamp(0.3rem, 2vw, 2.5rem);
+      row-gap: clamp(1rem, 2vw, 3rem);
     }
 
     .footer-image-wrapper--top:nth-child(1) {
@@ -98,33 +99,32 @@ const footerImages = {
       grid-row: 1;
     }
     .footer-image-wrapper--top:nth-child(2) {
+      display:none;
+    }
+    .footer-image-wrapper--top:nth-child(3) {
       grid-column: 2;
       grid-row: 1;
     }
-    .footer-image-wrapper--top:nth-child(3) {
-      grid-column: 1;
-      grid-row: 2;
-    }
     .center-container-footer--mobile {
       grid-column: 1 / -1;
-      grid-row: 3;
+      grid-row: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
+      text-align:center;
       gap: 20px;
       padding: 1.5rem 0;
     }
     .footer-image-wrapper--bottom:nth-child(5) {
       grid-column: 1;
-      grid-row: 4;
+      grid-row: 3;
     }
     .footer-image-wrapper--bottom:nth-child(6) {
-      grid-column: 2;
-      grid-row: 4;
+      display:none;
     }
     .footer-image-wrapper--bottom:nth-child(7) {
-      grid-column: 1;
-      grid-row: 5;
+      grid-column: 2;
+      grid-row: 3;
     }
     .center-container-footer--desktop {
       display: none;
