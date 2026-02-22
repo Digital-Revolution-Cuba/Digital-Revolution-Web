@@ -132,7 +132,9 @@ function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
     }
 
     .gallery-container {
-      max-width: calc(100vw - 5rem - 2.3rem);
+      max-width: calc(
+        100vw - 5rem - 2.3rem
+      ); /*Me quiero matar, el -2.3 rem era la causa de todo en el responsive de la galeria */
     }
   }
 
