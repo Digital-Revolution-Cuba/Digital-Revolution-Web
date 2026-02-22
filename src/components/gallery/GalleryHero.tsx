@@ -1,5 +1,6 @@
 import { Camera, Music, Palette } from "lucide-react";
-import "../../styles/components/gallery.css";
+import "../../styles/components/gallery-carousel.css";
+import "../../styles/components/hero.css";
 export function HeroSection() {
   return (
     <section className="hero">
@@ -23,7 +24,7 @@ export function HeroSection() {
         <div className="hero__layout">
           {/* Left */}
           <div className="hero__left">
-            <h1 className="hero__title hero__title-primary">GALERÍA</h1>
+            <h1 className="hero__title hero__title-primary">Galería</h1>
 
             <p className="hero__description">
               Descubre obras únicas de creativos excepcionales. Conecta con artistas y encuentra
@@ -31,12 +32,8 @@ export function HeroSection() {
             </p>
 
             <div className="hero__actions">
-              <button className="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark z-10 rounded-lg border px-5 py-2.5 text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)] sm:px-8 sm:py-3 sm:text-base">
-                Ver Galeria
-              </button>
-              <button className="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark rounded-lg border px-5 py-2.5 text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)] sm:px-8 sm:py-3 sm:text-base">
-                Subir Otra
-              </button>
+              <button className="btn-primary">Ver Galería</button>
+              <button className="btn-primary">Subir Otra</button>
             </div>
           </div>
 

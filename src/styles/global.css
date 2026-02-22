@@ -10,10 +10,10 @@
    =========================== */
 @theme {
   /* Fonts */
-  --font-saira: "Saira Stencil One", sans-serif;
-  --font-barlow: "Barlow Semi Condensed", sans-serif;
-  --font-rubik: "Rubik", sans-serif;
-  --default-font-family: var(--font-rubik);
+  --font-inter: "Inter", sans-serif;
+  --font-roboto: "Roboto", sans-serif;
+  --font-impact: "Impact", sans-serif;
+  --default-font-family: var(--font-inter);
 
   /* ---------------------------
      Palette (base colors + RGB)
@@ -59,6 +59,9 @@
   --color-brand-navy: var(--palette-brand-navy);
   --color-brand-background-global: var(--palette-background);
   --color-text-dark: #041421;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.7);
+  --color-text-muted: rgba(255, 255, 255, 0.5);
 
   --color-accent-orange: var(--palette-accent-orange);
   --color-accent-orange-rgb: var(--palette-accent-orange-rgb);
@@ -164,46 +167,54 @@
      --------------------------- */
   --touch-target-min: 44px;
   --touch-target-comfortable: 48px;
+
+  /* ---------------------------
+     Animation & Transition Tokens
+     --------------------------- */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --flip-swap-duration: 70ms;
+  --card-transition-duration: 100ms;
+
+  /* ---------------------------
+     Surface & Glass Tokens
+     --------------------------- */
+  --surface-glass: rgba(var(--palette-brand-navy-rgb), 0.4);
+  --surface-glass-hover: rgba(var(--palette-brand-navy-rgb), 0.6);
+  --glass-blur: 10px;
+  --glass-border: rgba(var(--palette-accent-cyan-rgb), 0.2);
+  --glass-border-hover: rgba(var(--palette-accent-cyan-rgb), 0.5);
+
+  /* ---------------------------
+     Border Radius Tokens
+     --------------------------- */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
 }
 
 /* ===========================
    Global base styles
    =========================== */
+
 html,
 body {
   background-color: var(--color-brand-background-global);
-  color: var(--color-text-primary);
+  color: #fff;
+  overflow-x: hidden;
   font-family: var(--default-font-family);
+  @apply [&::-webkit-scrollbar-track]:bg-brand-dark [&::-webkit-scrollbar-thumb]:bg-accent-orange [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:cursor-pointer [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-none;
 }
 
 /* ===========================
    Component utilities / layer
    =========================== */
 @layer components {
-  /* DEPRECATED: Use .heading-lg instead */
-  .heading-impact {
-    /* Alias para compatibilidad - usar .heading-lg en nuevos componentes */
-    font-family: Impact, "Impact", "Arial Black", sans-serif;
-    font-weight: 400;
-    line-height: 1;
-    letter-spacing: 0;
-    color: var(--color-text-dark);
-    /* Escala fluida: 28px → 64px */
-    font-size: clamp(1.75rem, 1rem + 3vw, 4rem);
-  }
-
-  /* DEPRECATED: Use .heading-xl instead */
-  .descubre-talentos {
-    /* Alias para compatibilidad - usar .heading-xl en nuevos componentes */
-    font-family: Impact, "Impact", "Arial Black", sans-serif;
-    font-weight: 400;
-    line-height: 0.95;
-    letter-spacing: -0.01em;
-    color: var(--color-text-primary);
-    /* Escala fluida: 36px → 96px */
-    font-size: clamp(2.25rem, 1.5rem + 3.75vw, 6rem);
-  }
-
   .heading-colab {
     font-family: Impact, "Impact", "Arial Black", sans-serif;
     font-weight: 400;
@@ -327,7 +338,7 @@ body {
   }
 
   .community-subtitle {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--color-text-secondary);
   }
 
   .cta-decor {
@@ -397,6 +408,10 @@ body {
     transform: skewX(-20deg);
     transition: left 650ms ease;
     pointer-events: none;
+  }
+
+  .btn-primary {
+    @apply text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark font-roboto cursor-pointer rounded-lg px-6 py-2.5 text-base font-medium transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)];
   }
 
   .cta-btn:hover::after {
@@ -505,7 +520,7 @@ body {
 }
 
 .clip-path-parallelogram-center-bottom {
-  clip-path: polygon(0 0, 100%, 100% 100%, 0 75%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 75%);
 }
 
 /* === RESPONSIVE CLIP-PATH SYSTEM === */

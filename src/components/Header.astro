@@ -62,10 +62,7 @@ const navLinks = [
         class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
         >Colaboraciones</a
       >
-      <button
-        onclick="window.location.href = '/talentos'"
-        class="border-brand-navy text-accent-orange hover:bg-accent-cyan bg-brand-navy hover:text-brand-dark rounded-lg border px-6 py-2.5 text-base font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(52,223,222,0.4)]"
-      >
+      <button onclick="window.location.href = '/talentos'" class="btn-primary">
         Descubre Talentos
       </button>
     </nav>
@@ -117,12 +114,11 @@ const navLinks = [
     --header-radius: clamp(1.5rem, 3vw, 2.5rem);
     --header-top: clamp(1rem, 2vw, 2rem);
 
-    position: fixed;
+    position: sticky;
     top: var(--header-top);
-    left: 50%;
-    transform: translateX(-50%);
     z-index: 50;
     width: min(95%, 1450px);
+    margin: auto;
     transition: transform 0.5s ease-in-out;
   }
 

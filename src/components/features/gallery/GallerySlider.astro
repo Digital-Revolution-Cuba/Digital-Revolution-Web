@@ -82,7 +82,8 @@ function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
 
   .gallery-container {
     position: relative;
-    overflow: hidden;
+    /* No overflow:hidden here — it clips the ::before yellow shadow on arte cards */
+    overflow: visible;
     width: 100%;
     flex: 1;
     max-width: 100%;
@@ -90,9 +91,15 @@ function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
 
   .gallery-viewport {
     width: 100%;
-    overflow: visible;
+    /* overflow:hidden clips lateral scroll but we compensate with padding so the shadow bleeds through */
+    overflow: hidden;
     position: relative;
-    padding-bottom: 1.25rem;
+    /* Extra padding at bottom+right to give room to the yellow ::before shadow (0.3rem offset) */
+    padding-bottom: 0.6rem;
+    padding-right: 0.6rem;
+    /* Pull it back so it doesn't add visual space */
+    margin-bottom: -0.6rem;
+    margin-right: -0.6rem;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -107,6 +114,9 @@ function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
     gap: 1rem;
+    /* Allow the yellow shadow to be visible below and to the right */
+    padding-bottom: 0.6rem;
+    padding-right: 0.6rem;
   }
 
   .gallery-container::before,
@@ -122,7 +132,9 @@ function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
     }
 
     .gallery-container {
-      max-width: calc(100vw - 5rem);
+      max-width: calc(
+        100vw - 5rem - 2.3rem
+      ); /*Me quiero matar, el -2.3 rem era la causa de todo en el responsive de la galeria */
     }
   }
 

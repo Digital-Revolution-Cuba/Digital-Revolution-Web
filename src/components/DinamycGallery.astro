@@ -78,7 +78,21 @@ const categories: readonly CategoryConfig[] = [
     <!-- <script type="module" src="/src/client/initializers/galeria.ts"></script> -->
 
     <style>
-      /* Base gallery section */
+      /*
+       * ─── DESIGN TOKENS ──────────────────────────────────────────────
+       * Single source of truth for values used across multiple rules.
+       * Change here → propagates everywhere automatically.
+       * --shadow-bleed : how far the yellow ::before card shadow escapes
+       *                  outside the card boundary (must match GalleryItem)
+       * --nav-w        : width each nav button occupies in the flex row
+       *                  (mobile/tablet: relative; desktop: absolute -50px)
+       */
+      .gallery-section {
+        --shadow-bleed: 0.4rem;
+        --nav-w: 56px; /* matches rendered size of nav-btn (p-3 + icon 24px) */
+      }
+
+      /* ─── SECTION ───────────────────────────────────────────────────── */
       .gallery-section {
         position: relative;
         display: flex;
@@ -88,11 +102,20 @@ const categories: readonly CategoryConfig[] = [
         min-height: 80dvh;
         width: 100%;
         background: #030712;
-        overflow: hidden;
-        padding: 4rem 1rem;
+        /*
+         * overflow-x: clip  → hides the slider track that extends beyond
+         *                      the section while NOT creating a scroll
+         *                      container (unlike overflow:hidden), so
+         *                      position:absolute children still work.
+         * overflow-y: visible → lets the ::before yellow shadow paint
+         *                       below the last card row without clipping.
+         */
+        overflow-x: clip;
+        overflow-y: visible;
+        padding: 4rem 1rem calc(4rem + var(--shadow-bleed));
       }
 
-      /* Category controls */
+      /* ─── CATEGORY CONTROLS ─────────────────────────────────────────── */
       .category-controls {
         position: absolute;
         top: 0;
@@ -104,17 +127,16 @@ const categories: readonly CategoryConfig[] = [
         flex-wrap: wrap;
       }
 
-      /* Outer wrapper - controls overall layout */
+      /* ─── OUTER WRAPPER ─────────────────────────────────────────────── */
       .gallery-outer-wrapper {
         width: 100%;
-        max-width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
         margin-top: 3rem;
       }
 
-      /* Inner container - holds buttons and gallery */
+      /* ─── INNER CONTAINER (flex row: [prev] [gallery] [next]) ───────── */
       .gallery-inner-container {
         position: relative;
         display: flex;
@@ -122,38 +144,38 @@ const categories: readonly CategoryConfig[] = [
         justify-content: center;
         gap: 0.5rem;
         width: 100%;
+        /*
+         * Reserve --shadow-bleed on the right so the rightmost card's
+         * ::before never gets clipped by the section's overflow-x:clip.
+         * This is the single padding that fixes the right-side shadow on
+         * ALL breakpoints — no need to tweak every max-width individually.
+         */
+        padding-right: var(--shadow-bleed);
         max-width: calc(100vw - 2rem);
       }
 
-      /* Gallery container - the visible area */
+      /* ─── GALLERY CONTAINER ─────────────────────────────────────────── */
+      /*
+       * overflow: visible — the track must slide freely; clipping is
+       * handled by the section's overflow-x: clip above, not here.
+       */
       .gallery-container {
         position: relative;
-        overflow: hidden;
-        width: 100%;
+        overflow: visible;
         flex: 1;
-        max-width: 100%;
+        min-width: 0; /* prevent flex child from overflowing its parent */
       }
 
-      /* Gallery viewport */
+      /* ─── GALLERY VIEWPORT ──────────────────────────────────────────── */
+      /*
+       * overflow: visible — cards and their ::before shadows must escape.
+       * padding-bottom    — space for the ::before bottom shadow offset.
+       * No padding-right needed here: handled by inner-container above.
+       */
       .gallery-viewport {
-        width: 100%;
         overflow: visible;
         position: relative;
-        /* add bottom padding so card bottoms and shadows are visible and not clipped */
-        padding-bottom: 1.25rem;
-      }
-
-      /* Gallery track - the moving strip */
-      .gallery-track {
-        display: flex;
-        align-items: flex-start; /* align cards to top so bottom corners are inside container */
-        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        will-change: transform;
-        gap: 1rem;
-      }
-
-      /* Hide scrollbars */
-      .gallery-viewport {
+        padding-bottom: var(--shadow-bleed);
         scrollbar-width: none;
         -ms-overflow-style: none;
       }
@@ -162,18 +184,22 @@ const categories: readonly CategoryConfig[] = [
         display: none;
       }
 
-      .gallery-container::before,
-      .gallery-container::after {
-        display: none !important;
+      /* ─── GALLERY TRACK ─────────────────────────────────────────────── */
+      .gallery-track {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
       }
 
-      /* RESPONSIVE BREAKPOINTS */
+      /* ─── RESPONSIVE ────────────────────────────────────────────────── */
 
-      /* Mobile: 1 card visible (320px - 640px) */
+      /* Mobile — 1 card (≤ 640px) */
       @media (max-width: 640px) {
         .gallery-section {
           min-height: 70dvh;
-          padding: 2rem 0.5rem;
+          padding: 2rem 0.5rem calc(2rem + var(--shadow-bleed));
         }
 
         .category-controls {
@@ -182,50 +208,38 @@ const categories: readonly CategoryConfig[] = [
         }
 
         .gallery-inner-container {
-          max-width: calc(100vw - 1rem);
           gap: 0.25rem;
         }
-
-        .gallery-container {
-          max-width: calc(100vw - 120px);
-        }
       }
 
-      /* Small tablets: 2 cards visible (641px - 768px) */
+      /* Small tablets — 2 cards (641px – 768px) */
       @media (min-width: 641px) and (max-width: 768px) {
         .gallery-section {
-          padding: 3rem 1rem;
-        }
-
-        .gallery-inner-container {
-          max-width: calc(100vw - 2rem);
-        }
-
-        .gallery-container {
-          max-width: calc(100vw - 120px);
+          padding: 3rem 1rem calc(3rem + var(--shadow-bleed));
         }
       }
 
-      /* Tablets: 3 cards visible (769px - 1023px) */
+      /* Tablets — 3 cards (769px – 1023px) */
       @media (min-width: 769px) and (max-width: 1023px) {
         .gallery-inner-container {
           max-width: min(960px, calc(100vw - 2rem));
         }
-
-        .gallery-container {
-          max-width: calc(100vw - 120px);
-        }
       }
 
-      /* Desktop: 4 cards visible (1024px+) */
+      /* Desktop — 4 cards (≥ 1024px) */
       @media (min-width: 1024px) {
         .gallery-inner-container {
           max-width: 1280px;
         }
 
+        /*
+         * Lock the container to exactly 4-card width so the track never
+         * shows a 5th partial card.  +shadow-bleed keeps the rightmost
+         * card's ::before visible without expanding the layout.
+         */
         .gallery-container {
-          width: calc(4 * 285px + 3 * 1rem + 4px);
-          max-width: calc(4 * 285px + 3 * 1rem + 4px);
+          flex: none;
+          width: calc(4 * 285px + 3 * 1rem + var(--shadow-bleed));
         }
       }
 

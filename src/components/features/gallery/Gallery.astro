@@ -33,13 +33,13 @@ const { categories, id = "galeria" } = Astro.props;
     width: 100%;
     background: #030712;
     overflow: clip;
-    padding: 4rem 1rem;
+    padding: 4rem 1rem calc(4rem + var(--shadow-bleed));
   }
 
   @media (max-width: 640px) {
     .gallery-section {
       min-height: 70dvh;
-      padding: 2rem 0.5rem;
+      padding: 2rem 0.5rem calc(2rem + var(--shadow-bleed));
     }
   }
 

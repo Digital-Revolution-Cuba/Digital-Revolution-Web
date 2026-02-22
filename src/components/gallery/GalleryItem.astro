@@ -9,8 +9,7 @@ const { item } = Astro.props;
 ---
 
 <div
-  class="gallery-item arte-item relative shrink-0 overflow-hidden rounded-[25px]"
-  style="width: 285px; padding-left: 8px; padding-right: 8px;"
+  class="gallery-item arte-item rounded-[25px shadow-none] relative w-[285px] shrink-0 overflow-hidden"
   data-category="arte"
 >
   <img
@@ -18,7 +17,7 @@ const { item } = Astro.props;
     alt={item.title}
     width="285"
     height="380"
-    class="min-h-110 w-full rounded-[25px] object-cover shadow-md transition duration-300"
+    class="gallery-img min-h-110 w-full rounded-[25px] object-cover shadow-md transition duration-300"
     loading="lazy"
   />
   <div class="artist-overlay">
@@ -61,6 +60,19 @@ const { item } = Astro.props;
     overflow: visible !important;
   }
 
+  .gallery-item:before {
+    content: "";
+    position: absolute;
+    bottom: -0.3rem;
+    right: -0.3rem;
+    background: var(--color-accent-yellow);
+    border-radius: 25px;
+    width: 100%;
+    height: 100%;
+    /* Behind the image so it acts as a shadow/offset */
+    z-index: -1;
+  }
+
   .image-overlay {
     position: absolute;
     top: 0;
@@ -80,6 +92,7 @@ const { item } = Astro.props;
 
   /* ensure sizing includes borders/padding and images fill the card cleanly */
   .gallery-item {
+    position: relative;
     box-sizing: border-box;
     /* Make container height match the image's rendered height */
     display: flex;
@@ -92,13 +105,14 @@ const { item } = Astro.props;
     height: calc(); /* Let image determine its own height based on aspect ratio */
     min-height: 440px; /* Maintain minimum height */
     object-fit: cover;
+    background: var(--palette-brand-dark);
   }
 
   .artist-overlay {
     position: absolute;
     /* Use inset to cover the exact area of the parent container */
     inset: 0;
-    background: rgba(255, 201, 67, 0.95);
+    background: var(--color-accent-yellow);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -121,7 +135,6 @@ const { item } = Astro.props;
   }
 
   .artist-name {
-    font-family: var(--font-barlow);
     font-size: 3rem;
     font-weight: 700;
     color: var(--palette-brand-dark);
@@ -131,7 +144,6 @@ const { item } = Astro.props;
   }
 
   .artist-role {
-    font-family: var(--font-rubik);
     font-size: 1rem;
     font-weight: 500;
     color: var(--palette-brand-dark);
@@ -153,7 +165,7 @@ const { item } = Astro.props;
   /* nav offset = 120px; gap between cards = 1rem (16px) */
   @media (max-width: 640px) {
     .gallery-item {
-      width: calc(100dvw - 120px) !important;
+      width: calc(100dvw - 120px - 0.6rem) !important;
       max-width: 285px !important;
     }
     .gallery-item img {

@@ -3,68 +3,48 @@
  * Reduces render-blocking requests and improves FCP/LCP
  */
 
-/* Barlow Semi Condensed - Regular 400 */
+/* ==== INTER ==== */
+
 @font-face {
-  font-family: "Barlow Semi Condensed";
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src:
+    url("/fonts/inter-variable-font-slnt-wght.woff2") format("woff2-variations"),
+    url("/fonts/inter-variable-font-slnt-wght.woff2") format("woff2");
+}
+
+/* ==== ROBOTO ==== */
+@font-face {
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src:
-    url("/fonts/barlow-semi-condensed-v15-latin-regular.woff2") format("woff2"),
-    url("/fonts/barlow-semi-condensed-v15-latin-regular.woff") format("woff");
+  src: url("/fonts/roboto-regular.woff2") format("woff2");
 }
 
-/* Barlow Semi Condensed - SemiBold 600 */
 @font-face {
-  font-family: "Barlow Semi Condensed";
+  font-family: "Roboto";
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-display: swap;
-  src:
-    url("/fonts/barlow-semi-condensed-v15-latin-600.woff2") format("woff2"),
-    url("/fonts/barlow-semi-condensed-v15-latin-600.woff") format("woff");
+  src: url("/fonts/roboto-medium.woff2") format("woff2");
 }
 
-/* Barlow Semi Condensed - Bold 700 */
 @font-face {
-  font-family: "Barlow Semi Condensed";
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src:
-    url("/fonts/barlow-semi-condensed-v15-latin-700.woff2") format("woff2"),
-    url("/fonts/barlow-semi-condensed-v15-latin-700.woff") format("woff");
+  src: url("/fonts/roboto-bold.woff2") format("woff2");
 }
 
-/* Rubik - Regular 400 */
+/* ===== IMPACT  ===== */
 @font-face {
-  font-family: "Rubik";
-  font-style: normal;
+  font-family: "Impact";
+  src: url("/fonts/Impact.woff2") format("woff2");
   font-weight: 400;
-  font-display: swap;
-  src:
-    url("/fonts/rubik-v28-latin-regular.woff2") format("woff2"),
-    url("/fonts/rubik-v28-latin-regular.woff") format("woff");
-}
-
-/* Rubik - Bold 700 */
-@font-face {
-  font-family: "Rubik";
   font-style: normal;
-  font-weight: 700;
   font-display: swap;
-  src:
-    url("/fonts/rubik-v28-latin-700.woff2") format("woff2"),
-    url("/fonts/rubik-v28-latin-700.woff") format("woff");
-}
-
-/* Saira Stencil One - Regular 400 */
-@font-face {
-  font-family: "Saira Stencil One";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src:
-    url("/fonts/saira-stencil-one-v16-latin-regular.woff2") format("woff2"),
-    url("/fonts/saira-stencil-one-v16-latin-regular.woff") format("woff");
 }

@@ -1,18 +1,33 @@
+/**
+ * Glass Card Component
+ * Glassmorphism card effect using design tokens
+ */
+
 .glass-card {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  background: rgba(255, 255, 255, var(--alpha-10));
+  border-radius: var(--radius-xl);
+  transition: all var(--duration-normal) ease-in-out;
   position: relative;
 }
 
 .glass-card:hover {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px rgba(0, 0, 0, var(--alpha-20));
   transform: scale(1.05);
 }
 
 .glass-card:hover img {
   transform: scale(1.05);
-  transition: transform 0.3s ease-in-out;
+  transition: transform var(--duration-normal) ease-in-out;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .glass-card,
+  .glass-card:hover,
+  .glass-card:hover img {
+    transition: none;
+    transform: none;
+  }
 }
