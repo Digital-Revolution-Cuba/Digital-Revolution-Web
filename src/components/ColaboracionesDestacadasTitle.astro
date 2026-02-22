@@ -13,13 +13,7 @@
     height: 100%;
     top: 0;
     right: 0;
-    background: linear-gradient(
-      135deg,
-      #ff8c00 0%,
-      #ff9a5a 30%,
-      #ffb07a 60%,
-      #ffcc99 100%
-    );
+    background: linear-gradient(135deg, #ff8c00 0%, #ff9a5a 30%, #ffb07a 60%, #ffcc99 100%);
     clip-path: polygon(100% 46%, 0% 100%, 100% 100%);
     z-index: -1;
   }
@@ -32,10 +26,26 @@
     bottom: 130px;
     right: 35px;
     padding: 0;
-    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-family: Impact, "Impact", "Arial Black", sans-serif;
     font-size: 96px;
     line-height: 1.1;
     text-align: right;
-    text-shadow: 3px 3px 0px var(--color-accent-orange); /* #F49624 */
+    text-shadow: 3px 3px 0px var(--color-accent-orange);
+  }
+
+  @media (max-width: 768px) {
+    .text-content-colab {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      bottom: 80px;
+      right: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .text-content-colab {
+      font-size: clamp(1.75rem, 7vw, 2.5rem);
+      bottom: 60px;
+      right: 12px;
+    }
   }
 </style>

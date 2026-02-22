@@ -12,44 +12,39 @@ function initImageLoading() {
         }
 
         // If image already loaded, mark as loaded
-        const handleLoad = () => img.classList.add('loaded');
+        const handleLoad = () => img.classList.add("loaded");
 
         if (img.complete) {
           handleLoad();
         } else {
-          img.addEventListener('load', handleLoad, { once: true });
+          img.addEventListener("load", handleLoad, { once: true });
         }
 
         observer.unobserve(img);
       });
     },
     {
-      rootMargin: '100px',
+      rootMargin: "100px",
       threshold: 0.01,
-    },
+    }
   );
 
-  document
-    .querySelectorAll('.optimized-image[loading="lazy"]')
-    .forEach((img) => {
-      imageObserver.observe(img);
-    });
+  document.querySelectorAll('.optimized-image[loading="lazy"]').forEach((img) => {
+    imageObserver.observe(img);
+  });
 
-  document
-    .querySelectorAll('.optimized-image[loading="eager"]')
-    .forEach((img) => {
-      const handleLoad = () =>
-        (img as HTMLImageElement).classList.add('loaded');
-      if ((img as HTMLImageElement).complete) {
-        handleLoad();
-      } else {
-        img.addEventListener('load', handleLoad, { once: true });
-      }
-    });
+  document.querySelectorAll('.optimized-image[loading="eager"]').forEach((img) => {
+    const handleLoad = () => (img as HTMLImageElement).classList.add("loaded");
+    if ((img as HTMLImageElement).complete) {
+      handleLoad();
+    } else {
+      img.addEventListener("load", handleLoad, { once: true });
+    }
+  });
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initImageLoading);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initImageLoading);
 } else {
   initImageLoading();
 }

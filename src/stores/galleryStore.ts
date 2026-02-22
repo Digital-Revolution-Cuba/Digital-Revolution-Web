@@ -3,7 +3,7 @@
  * Global state management for gallery using Nanostores
  */
 
-import { atom, map } from 'nanostores';
+import { atom, map } from "nanostores";
 
 export interface GalleryImage {
   download_url: string;
@@ -12,7 +12,7 @@ export interface GalleryImage {
 }
 
 // Search state
-export const searchAuthor = atom<string>('');
+export const searchAuthor = atom<string>("");
 
 // Gallery data
 export const allImages = atom<GalleryImage[]>([]);
@@ -28,7 +28,7 @@ export const hasMore = atom<boolean>(true);
 
 // Complex state object
 export const galleryState = map({
-  searchAuthor: '',
+  searchAuthor: "",
   selectedImage: null as GalleryImage | null,
   isModalVisible: false,
   currentPage: 0,

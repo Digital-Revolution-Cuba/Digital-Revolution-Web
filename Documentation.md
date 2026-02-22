@@ -288,7 +288,7 @@ git push origin feat/nueva-funcionalidad
 ```astro
 ---
 // 1. Imports
-import SomeComponent from './SomeComponent.astro';
+import SomeComponent from "./SomeComponent.astro";
 
 // 2. Props interface
 interface Props {
@@ -384,28 +384,25 @@ export interface BaseGalleryItem {
 }
 
 export interface ArteGalleryItem extends BaseGalleryItem {
-  type: 'arte';
+  type: "arte";
   artistName: string;
   artistRole: string;
 }
 
 export interface MusicGalleryItem extends BaseGalleryItem {
-  type: 'musica';
+  type: "musica";
   artist: string;
   duration: string;
 }
 
 export interface FotografiaGalleryItem extends BaseGalleryItem {
-  type: 'fotografia';
+  type: "fotografia";
   photographer?: string;
   date?: string;
 }
 
-export type GalleryItem =
-  | ArteGalleryItem
-  | MusicGalleryItem
-  | FotografiaGalleryItem;
-export type CategoryType = 'arte' | 'musica' | 'fotografia';
+export type GalleryItem = ArteGalleryItem | MusicGalleryItem | FotografiaGalleryItem;
+export type CategoryType = "arte" | "musica" | "fotografia";
 ```
 
 ### Archivos de Datos
@@ -478,9 +475,8 @@ src/styles/
 
 ```css
 /* TODO: Documentar paleta de colores en CSS variables */
---brand-dark: /* ... */ --brand-navy: /* ... */ --accent-cyan: /* ... */
-  --accent-orange: /* ... */ --text-primary: /* ... */
-  --text-secondary: /* ... */;
+--brand-dark: /* ... */ --brand-navy: /* ... */ --accent-cyan: /* ... */ --accent-orange: /* ... */
+  --text-primary: /* ... */ --text-secondary: /* ... */;
 ```
 
 ---
@@ -566,7 +562,7 @@ window.responsiveTests.auditTouchTargets();
 window.responsiveTests.getWebVitals();
 
 // Simular dispositivo
-window.responsiveTests.simulateDevice('iPhone 14');
+window.responsiveTests.simulateDevice("iPhone 14");
 ```
 
 ### Checklist de Testing

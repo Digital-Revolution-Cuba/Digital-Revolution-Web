@@ -1,7 +1,9 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import TalentsSearch from '../../components/talents/TalentsSearch.astro';
-import '../../styles/components/talents.css';
+import TalentsSearch from "../../components/talents/TalentsSearch.astro";
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/components/talents.css";
+
+export const prerender = true;
 ---
 
 <Layout

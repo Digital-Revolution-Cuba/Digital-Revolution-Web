@@ -3,15 +3,15 @@
  * GalleryControls Component
  * Category selection buttons for the gallery
  */
-import type { CategoryConfig } from '../../../types/gallery.types';
-import CategoryButton from '../../gallery/CategoryButton.astro';
+import type { CategoryConfig } from "../../../types/gallery.types";
+import CategoryButton from "../../gallery/CategoryButton.astro";
 
 interface Props {
-  categories: CategoryConfig[];
+  categories: readonly CategoryConfig[];
   activeCategory?: string;
 }
 
-const { categories, activeCategory = 'arte' } = Astro.props;
+const { categories, activeCategory = "arte" } = Astro.props;
 ---
 
 <div class="category-controls" data-category-buttons>

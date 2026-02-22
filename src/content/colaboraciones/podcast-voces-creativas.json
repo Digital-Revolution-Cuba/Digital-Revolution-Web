@@ -11,7 +11,7 @@
     "type": "Comunidad",
     "website": "https://example.com/mediosalternativos"
   },
-  "image": "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=800&q=80",
+  "image": "/images/colaboraciones/podcast-voces-creativas.svg",
   "imageAlt": "Micrófono profesional en estudio de podcast con auriculares",
   "fechas": {
     "inicio": "2025-01-10T00:00:00.000Z"

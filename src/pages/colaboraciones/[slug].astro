@@ -1,10 +1,12 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export const prerender = true;
 
 export async function getStaticPaths() {
-  const colaboraciones = await getCollection('colaboraciones');
+  const colaboraciones = await getCollection("colaboraciones");
 
   return colaboraciones.map((colaboracion) => ({
     params: { slug: colaboracion.data.slug },
@@ -13,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  colaboracion: CollectionEntry<'colaboraciones'>;
+  colaboracion: CollectionEntry<"colaboraciones">;
 }
 
 const { colaboracion } = Astro.props;
@@ -21,35 +23,35 @@ const { data } = colaboracion;
 
 // Import area and status labels
 const areaLabelsMap: Record<string, string> = {
-  arte: 'Arte',
-  musica: 'Música',
-  tecnologia: 'Tecnología',
-  educacion: 'Educación',
-  contenido: 'Contenido',
-  eventos: 'Eventos',
-  investigacion: 'Investigación',
+  arte: "Arte",
+  musica: "Música",
+  tecnologia: "Tecnología",
+  educacion: "Educación",
+  contenido: "Contenido",
+  eventos: "Eventos",
+  investigacion: "Investigación",
 };
 
 const statusLabelsMap: Record<string, string> = {
-  activa: 'Activa',
-  finalizada: 'Finalizada',
-  pausada: 'Pausada',
-  planificada: 'Planificada',
+  activa: "Activa",
+  finalizada: "Finalizada",
+  pausada: "Pausada",
+  planificada: "Planificada",
 };
 
 // Format dates
 const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat('es-ES', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
   }).format(date);
 };
 
 const formatMonthYear = (date: Date) => {
-  return new Intl.DateTimeFormat('es-ES', {
-    month: 'long',
-    year: 'numeric',
+  return new Intl.DateTimeFormat("es-ES", {
+    month: "long",
+    year: "numeric",
   }).format(date);
 };
 
@@ -59,17 +61,17 @@ const calculateDuration = () => {
   const months = Math.floor(
     (data.fechas.fin.getTime() - data.fechas.inicio.getTime()) / (1000 * 60 * 60 * 24 * 30)
   );
-  return months > 0 ? `${months} meses` : 'Menos de 1 mes';
+  return months > 0 ? `${months} meses` : "Menos de 1 mes";
 };
 
 const duration = calculateDuration();
 
 // Status color mapping
 const statusColors: Record<string, string> = {
-  activa: 'var(--palette-accent-cyan)',
-  finalizada: 'var(--palette-accent-purple)',
-  pausada: 'var(--palette-accent-yellow)',
-  planificada: 'var(--palette-accent-blue)',
+  activa: "var(--palette-accent-cyan)",
+  finalizada: "var(--palette-accent-purple)",
+  pausada: "var(--palette-accent-yellow)",
+  planificada: "var(--palette-accent-blue)",
 };
 
 const statusColor = statusColors[data.status];
@@ -98,11 +100,7 @@ const statusColor = statusColors[data.status];
           </nav>
 
           <div class="meta-badges">
-            {
-              data.areas.map((area) => (
-                  <span class="area-badge">{areaLabelsMap[area]}</span>
-                ))
-            }
+            {data.areas.map((area) => <span class="area-badge">{areaLabelsMap[area]}</span>)}
             <span class="status-badge" style={`--status-color: ${statusColor}`}>
               <span class="status-dot"></span>
               {statusLabelsMap[data.status]}
@@ -413,7 +411,7 @@ const statusColor = statusColors[data.status];
     </div>
 
     {
-      data.externalLink && data.status === 'activa' && (
+      data.externalLink && data.status === "activa" && (
         <section class="bottom-cta">
           <div class="bottom-cta-content">
             <h2 class="bottom-cta-title">Únete a esta colaboración</h2>
@@ -687,11 +685,7 @@ const statusColor = statusColors[data.status];
   }
 
   .cta-button.primary {
-    background: linear-gradient(
-      135deg,
-      var(--palette-accent-cyan),
-      var(--palette-accent-blue)
-    );
+    background: linear-gradient(135deg, var(--palette-accent-cyan), var(--palette-accent-blue));
     color: var(--palette-brand-dark);
     box-shadow: 0 8px 20px rgba(var(--palette-accent-cyan-rgb), 0.3);
   }

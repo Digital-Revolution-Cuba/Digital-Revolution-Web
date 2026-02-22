@@ -1,34 +1,31 @@
 ---
 /**
  * DinamycGallery Component
- * Main gallery component with category switching and slider navigation
- * Refactored for maintainability, clean architecture, and responsive design
- * Uses container queries for true component-based responsiveness
+ *
+ * Main gallery with category switching and slider navigation.
+ * Renders items dynamically from local data arrays — no API calls.
+ *
+ * Each category's items are rendered through the appropriate card
+ * component determined by the item's `type` discriminant.
  */
 
 // Import data
-import { arteGallery, musicaGallery, fotografiaGallery } from '../data';
-import type { CategoryConfig } from '../data/types';
+import { arteGallery, fotografiaGallery, musicaGallery } from "../data";
+import type { CategoryConfig } from "../data/types";
 
 // Import UI components
-import GalleryItem from './gallery/GalleryItem.astro';
-import MusicCard from './gallery/MusicCard.astro';
-import FotografiaCard from './gallery/FotografiaCard.astro';
-import CategoryButton from './gallery/CategoryButton.astro';
-import NavigationButton from './gallery/NavigationButton.astro';
+import CategoryButton from "./gallery/CategoryButton.astro";
+import FotografiaCard from "./gallery/FotografiaCard.astro";
+import GalleryItemCard from "./gallery/GalleryItem.astro";
+import MusicCard from "./gallery/MusicCard.astro";
+import NavigationButton from "./gallery/NavigationButton.astro";
 
-// Import configuration
-import { GALLERY_CONFIG, DATA_ATTRIBUTES } from '../config/galleryConfig';
-
-// Gallery configuration
-const categories: CategoryConfig[] = [
-  { id: 'arte', label: 'Arte', items: arteGallery },
-  { id: 'musica', label: 'Música', items: musicaGallery },
-  { id: 'fotografia', label: 'Fotografía', items: fotografiaGallery },
-];
-
-const totalImages = arteGallery.length;
-const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
+// Gallery categories — single source of truth
+const categories: readonly CategoryConfig[] = [
+  { id: "arte", label: "Arte", items: arteGallery },
+  { id: "musica", label: "Música", items: musicaGallery },
+  { id: "fotografia", label: "Fotografía", items: fotografiaGallery },
+] as const;
 ---
 
 <section id="galeria" class="gallery-section">
@@ -39,11 +36,7 @@ const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
   <div class="category-controls" data-category-buttons>
     {
       categories.map((category, index) => (
-        <CategoryButton
-          category={category.id}
-          label={category.label}
-          isActive={index === 0}
-        />
+        <CategoryButton category={category.id} label={category.label} isActive={index === 0} />
       ))
     }
   </div>
@@ -52,34 +45,32 @@ const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
   <div class="gallery-outer-wrapper">
     <div class="gallery-inner-container">
       <!-- Previous button -->
-      <NavigationButton
-        id="prevBtn"
-        direction="prev"
-        ariaLabel="Previous gallery page"
-      />
+      <NavigationButton id="prevBtn" direction="prev" ariaLabel="Previous gallery page" />
 
       <!-- Gallery slider -->
       <div class="gallery-container">
         <div class="gallery-viewport">
           <div id="imageSlider" class="gallery-track">
-            <!-- Arte items -->
-            {arteGallery.map((item) => <GalleryItem item={item} />)}
-
-            <!-- Música items -->
-            {musicaGallery.map((item) => <MusicCard item={item} />)}
-
-            <!-- Fotografía items -->
-            {fotografiaGallery.map((item) => <FotografiaCard item={item} />)}
+            {
+              categories.flatMap((category) =>
+                category.items.map((item) => {
+                  switch (item.type) {
+                    case "arte":
+                      return <GalleryItemCard item={item} />;
+                    case "musica":
+                      return <MusicCard item={item} />;
+                    case "fotografia":
+                      return <FotografiaCard item={item} />;
+                  }
+                })
+              )
+            }
           </div>
         </div>
       </div>
 
       <!-- Next button -->
-      <NavigationButton
-        id="nextBtn"
-        direction="next"
-        ariaLabel="Next gallery page"
-      />
+      <NavigationButton id="nextBtn" direction="next" ariaLabel="Next gallery page" />
     </div>
 
     <!-- Behaviour is initialized from a centralized client initializer -->
@@ -146,7 +137,7 @@ const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
       /* Gallery viewport */
       .gallery-viewport {
         width: 100%;
-        overflow: hidden;
+        overflow: visible;
         position: relative;
         /* add bottom padding so card bottoms and shadows are visible and not clipped */
         padding-bottom: 1.25rem;
@@ -196,7 +187,7 @@ const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
         }
 
         .gallery-container {
-          max-width: calc(100vw - 5rem);
+          max-width: calc(100vw - 120px);
         }
       }
 
@@ -211,30 +202,30 @@ const visibleImages = GALLERY_CONFIG.VISIBLE_IMAGES;
         }
 
         .gallery-container {
-          max-width: calc(100vw - 6rem);
+          max-width: calc(100vw - 120px);
         }
       }
 
       /* Tablets: 3 cards visible (769px - 1023px) */
       @media (min-width: 769px) and (max-width: 1023px) {
         .gallery-inner-container {
-          max-width: min(900px, calc(100vw - 2rem));
+          max-width: min(960px, calc(100vw - 2rem));
         }
 
         .gallery-container {
-          max-width: calc(100% - 6rem);
+          max-width: calc(100vw - 120px);
         }
       }
 
       /* Desktop: 4 cards visible (1024px+) */
       @media (min-width: 1024px) {
         .gallery-inner-container {
-          max-width: 1240px;
+          max-width: 1280px;
         }
 
         .gallery-container {
-          width: 1140px;
-          max-width: 1140px;
+          width: calc(4 * 285px + 3 * 1rem + 4px);
+          max-width: calc(4 * 285px + 3 * 1rem + 4px);
         }
       }
 

@@ -1,0 +1,96 @@
+{
+  "name": "@digitalrevolution/agent-system",
+  "version": "1.0.0",
+  "description": "Sistema de orquestación de agentes especializados",
+  "private": true,
+  "scripts": {
+    "agents:validate": "tsx scripts/validateAgents.ts",
+    "agents:list": "ls .github/agents/*.md",
+    "agents:count": "ls .github/agents/*.md | wc -l",
+    "agents:stats": "grep -r '❌ NO' .github/agents/ | wc -l"
+  },
+  "agents": {
+    "orchestrator": {
+      "file": ".github/agents/orchestrator.agent.md",
+      "role": "orchestrator",
+      "delegates": [
+        "architecture",
+        "component",
+        "api",
+        "refactor",
+        "testing",
+        "performance",
+        "security",
+        "documentation",
+        "content",
+        "frontend",
+        "seo"
+      ]
+    },
+    "architecture": {
+      "file": ".github/agents/architecture.agent.md",
+      "role": "specialist",
+      "expertise": ["system-design", "feature-architecture", "module-patterns"]
+    },
+    "component": {
+      "file": ".github/agents/component.agent.md",
+      "role": "specialist",
+      "expertise": ["react", "astro", "ui-components", "design-system"]
+    },
+    "api": {
+      "file": ".github/agents/api.agent.md",
+      "role": "specialist",
+      "expertise": ["rest-api", "validation", "error-handling"]
+    },
+    "refactor": {
+      "file": ".github/agents/refactor.agent.md",
+      "role": "specialist",
+      "expertise": ["code-quality", "refactoring", "code-smells"]
+    },
+    "testing": {
+      "file": ".github/agents/testing.agent.md",
+      "role": "specialist",
+      "expertise": ["unit-testing", "integration-testing", "e2e-testing"]
+    },
+    "performance": {
+      "file": ".github/agents/performance.agent.md",
+      "role": "specialist",
+      "expertise": ["optimization", "bundle-size", "core-web-vitals"]
+    },
+    "security": {
+      "file": ".github/agents/security.agent.md",
+      "role": "specialist",
+      "expertise": ["security-auditing", "owasp", "vulnerability-detection"]
+    },
+    "documentation": {
+      "file": ".github/agents/documentation.agent.md",
+      "role": "specialist",
+      "expertise": ["technical-writing", "jsdoc", "openapi"]
+    },
+    "content": {
+      "file": ".github/agents/content.agent.md",
+      "role": "specialist",
+      "expertise": ["content-creation", "markdown", "collections"]
+    },
+    "frontend": {
+      "file": ".github/agents/frontend.agent.md",
+      "role": "specialist",
+      "expertise": ["ui-development", "css", "animations"]
+    },
+    "seo": {
+      "file": ".github/agents/seo.agent.md",
+      "role": "specialist",
+      "expertise": ["seo-optimization", "meta-tags", "structured-data"]
+    }
+  },
+  "quality-gates": {
+    "min-anti-patterns": 3,
+    "min-examples": 3,
+    "required-sections": [
+      "frontmatter",
+      "anti-patterns",
+      "workflow",
+      "examples"
+    ]
+  }
+}
