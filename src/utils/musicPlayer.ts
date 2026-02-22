@@ -4,20 +4,20 @@
  */
 
 export function initializeMusicPlayers() {
-  const playButtons = document.querySelectorAll(".play-button");
+  const playButtons = document.querySelectorAll('.play-button');
 
   playButtons.forEach((button) => {
     // Initialize ARIA attributes
-    button.setAttribute("aria-pressed", "false");
+    button.setAttribute('aria-pressed', 'false');
 
-    button.addEventListener("click", () => {
-      const isPressed = button.getAttribute("aria-pressed") === "true";
+    button.addEventListener('click', () => {
+      const isPressed = button.getAttribute('aria-pressed') === 'true';
       const newState = !isPressed;
 
-      button.setAttribute("aria-pressed", String(newState));
+      button.setAttribute('aria-pressed', String(newState));
 
       // Update icon: play <-> pause
-      const svg = button.querySelector("svg");
+      const svg = button.querySelector('svg');
       if (!svg) return;
 
       if (newState) {
@@ -28,8 +28,9 @@ export function initializeMusicPlayers() {
           <rect x="13" y="8" width="2" height="8" fill="#041421" />
         `;
         button.setAttribute(
-          "aria-label",
-          button.getAttribute("aria-label")?.replace("Play", "Pause") || "Pause"
+          'aria-label',
+          button.getAttribute('aria-label')?.replace('Play', 'Pause') ||
+            'Pause',
         );
       } else {
         // Switch to play icon
@@ -38,8 +39,8 @@ export function initializeMusicPlayers() {
           <path d="M10 8L16 12L10 16V8Z" fill="#041421" />
         `;
         button.setAttribute(
-          "aria-label",
-          button.getAttribute("aria-label")?.replace("Pause", "Play") || "Play"
+          'aria-label',
+          button.getAttribute('aria-label')?.replace('Pause', 'Play') || 'Play',
         );
       }
     });

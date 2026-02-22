@@ -1,13 +1,13 @@
 // Centralized initializer for the main gallery (DinamycGallery)
-import { createGallerySlider } from "../../composables/useGallerySlider";
-import { createCategorySwitch } from "../../composables/useCategorySwitch";
-import { initializeMusicPlayers } from "../../utils/musicPlayer";
+import { createGallerySlider } from '../../composables/useGallerySlider';
+import { createCategorySwitch } from '../../composables/useCategorySwitch';
+import { initializeMusicPlayers } from '../../utils/musicPlayer';
 
 function initGaleria() {
-  const prevBtn = document.getElementById("prevBtn");
-  const nextBtn = document.getElementById("nextBtn");
-  const slider = document.getElementById("imageSlider");
-  const buttonsContainer = document.querySelector("[data-category-buttons]");
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const slider = document.getElementById('imageSlider');
+  const buttonsContainer = document.querySelector('[data-category-buttons]');
 
   if (!prevBtn || !nextBtn || !slider || !buttonsContainer) {
     // Not on this page or DOM changed
@@ -15,7 +15,9 @@ function initGaleria() {
   }
 
   const totalImages =
-    Number(slider.dataset.total) || slider.querySelectorAll(".gallery-item").length || 0;
+    Number(slider.dataset.total) ||
+    slider.querySelectorAll('.gallery-item').length ||
+    0;
 
   const gallerySlider = createGallerySlider(
     slider,
@@ -23,8 +25,8 @@ function initGaleria() {
     nextBtn as HTMLButtonElement,
     totalImages,
     {
-      viewportElement: slider.closest(".gallery-viewport") as HTMLElement,
-    }
+      viewportElement: slider.closest('.gallery-viewport') as HTMLElement,
+    },
   );
 
   const cleanupSlider = gallerySlider.initialize();
@@ -42,26 +44,26 @@ function initGaleria() {
           gallerySlider.updateSlider();
         }, 50);
 
-        if (category === "musica") {
+        if (category === 'musica') {
           setTimeout(initializeMusicPlayers, 100);
         }
       },
-    }
+    },
   );
 
-  const cleanupCategory = categorySwitch.initialize("arte");
+  const cleanupCategory = categorySwitch.initialize('arte');
 
   // Initialize music players on load
   initializeMusicPlayers();
 
-  window.addEventListener("beforeunload", () => {
+  window.addEventListener('beforeunload', () => {
     cleanupSlider();
     cleanupCategory();
   });
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initGaleria);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initGaleria);
 } else {
   initGaleria();
 }

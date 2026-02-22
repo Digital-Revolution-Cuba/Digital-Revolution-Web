@@ -88,14 +88,14 @@ Estilos centralizados con variables CSS:
 
 ```astro
 ---
-import Gallery from "../components/features/gallery/Gallery.astro";
-import { arteGallery, musicaGallery, fotografiaGallery } from "../data";
-import type { CategoryConfig } from "../types/gallery.types";
+import Gallery from '../components/features/gallery/Gallery.astro';
+import { arteGallery, musicaGallery, fotografiaGallery } from '../data';
+import type { CategoryConfig } from '../types/gallery.types';
 
 const galleryCategories: CategoryConfig[] = [
-  { id: "arte", label: "Arte", items: arteGallery },
-  { id: "musica", label: "Música", items: musicaGallery },
-  { id: "fotografia", label: "Fotografía", items: fotografiaGallery },
+  { id: 'arte', label: 'Arte', items: arteGallery },
+  { id: 'musica', label: 'Música', items: musicaGallery },
+  { id: 'fotografia', label: 'Fotografía', items: fotografiaGallery },
 ];
 ---
 
@@ -106,7 +106,7 @@ const galleryCategories: CategoryConfig[] = [
 
 ```astro
 ---
-import Button from "../components/ui/Button.astro";
+import Button from '../components/ui/Button.astro';
 ---
 
 <Button variant="primary" size="lg"> Click me </Button>

@@ -1,15 +1,18 @@
 ---
 interface Props {
-  direction: "prev" | "next";
+  direction: 'prev' | 'next';
   id: string;
   ariaLabel: string;
 }
 
 const { direction, id, ariaLabel } = Astro.props;
 
-const svgPath = direction === "prev" ? "M15.75 19.5 8.25 12l7.5-7.5" : "m8.25 4.5 7.5 7.5-7.5 7.5";
+const svgPath =
+  direction === 'prev'
+    ? 'M15.75 19.5 8.25 12l7.5-7.5'
+    : 'm8.25 4.5 7.5 7.5-7.5 7.5';
 
-const position = direction === "prev" ? "nav-btn-prev" : "nav-btn-next";
+const position = direction === 'prev' ? 'nav-btn-prev' : 'nav-btn-next';
 ---
 
 <button

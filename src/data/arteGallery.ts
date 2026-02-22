@@ -1,70 +1,60 @@
-import type { ArteGalleryItem } from "./types";
+import type { ArteGalleryItem } from './types';
 
-/**
- * Arte gallery data.
- *
- * Each entry represents an art piece in the "Arte" category.
- * Images are served from `public/` so paths start from the root.
- *
- * @example
- * // To change an image:
- * { image: '/images/gallery/arte/my-new-artwork.jpg', ... }
- */
-export const arteGallery: readonly ArteGalleryItem[] = [
+export const arteGallery: ArteGalleryItem[] = [
   {
-    type: "arte",
-    image: "/images/gallery/arte/arte-1.svg",
-    title: "Arte Digital 1",
-    artistName: "Gloria",
-    artistRole: "Ilustradora y Animadora 2D",
+    type: 'arte',
+    image: 'https://picsum.photos/seed/1/600/400',
+    title: 'Arte Digital 1',
+    artistName: 'Gloria',
+    artistRole: 'Ilustradora y Animadora 2D',
   },
   {
-    type: "arte",
-    image: "/images/gallery/arte/arte-2.svg",
-    title: "Arte Digital 2",
-    artistName: "Sofía Martínez",
-    artistRole: "Artista Digital",
+    type: 'arte',
+    image: 'https://picsum.photos/seed/2/600/400',
+    title: 'Arte Digital 2',
+    artistName: 'Sofía Martínez',
+    artistRole: 'Artista Digital',
   },
   {
-    type: "arte",
-    image: "/images/gallery/arte/arte-3.svg",
-    title: "Arte Digital 3",
-    artistName: "Carlos Ruiz",
-    artistRole: "Ilustrador Conceptual",
+    type: 'arte',
+    image: 'https://picsum.photos/seed/3/600/400',
+    title: 'Arte Digital 3',
+    artistName: 'Carlos Ruiz',
+    artistRole: 'Ilustrador Conceptual',
   },
   {
-    type: "arte",
-    image: "/images/gallery/arte/arte-4.svg",
-    title: "Arte Digital 4",
-    artistName: "Ana López",
-    artistRole: "Diseñadora Gráfica",
+    type: 'arte',
+    image: 'https://picsum.photos/seed/4/600/400',
+    title: 'Arte Digital 4',
+    artistName: 'Ana López',
+    artistRole: 'Diseñadora Gráfica',
   },
   {
-    type: "arte",
-    image: "/images/gallery/arte/arte-5.svg",
-    title: "Arte Digital 5",
-    artistName: "Miguel Torres",
-    artistRole: "Artista 3D",
+    type: 'arte',
+    image: 'https://picsum.photos/seed/5/600/400',
+    title: 'Arte Digital 5',
+    artistName: 'Miguel Torres',
+    artistRole: 'Artista 3D',
   },
   {
-    type: "arte",
-    image: "/images/gallery/arte/arte-6.svg",
-    title: "Arte Digital 6",
-    artistName: "Laura Sánchez",
-    artistRole: "Ilustradora Editorial",
+    type: 'arte',
+    image: 'https://picsum.photos/seed/6/600/400',
+    title: 'Arte Digital 6',
+    artistName: 'Laura Sánchez',
+    artistRole: 'Ilustradora Editorial',
   },
   {
-    type: "arte",
-    image: "/images/gallery/arte/arte-7.svg",
-    title: "Arte Digital 7",
-    artistName: "Diego Ramírez",
-    artistRole: "Character Designer",
+    type: 'arte',
+    image: 'https://picsum.photos/seed/7/600/400',
+    title: 'Arte Digital 7',
+    artistName: 'Diego Ramírez',
+    artistRole: 'Character Designer',
   },
   {
-    type: "arte",
-    image: "/images/gallery/arte/arte-8.svg",
-    title: "Arte Digital 8",
-    artistName: "Valentina Cruz",
-    artistRole: "Concept Artist",
+    type: 'arte',
+    image: 'https://picsum.photos/seed/8/600/400',
+    title: 'Arte Digital 8',
+    artistName: 'Valentina Cruz',
+    artistRole: 'Concept Artist',
   },
-] as const;
+];

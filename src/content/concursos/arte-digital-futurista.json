@@ -5,7 +5,7 @@
   "description": "Explora las posibilidades infinitas del arte digital. Crea obras que imaginen el futuro de la humanidad, la tecnología y la creatividad en la era digital.",
   "category": "arte-digital",
   "status": "activo",
-  "image": "/images/concursos/activos/arte-digital-futurista.svg",
+  "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80",
   "imageAlt": "Arte digital abstracto con colores vibrantes",
   "fechas": {
     "inicio": "2026-01-20T00:00:00.000Z",

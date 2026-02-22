@@ -13,7 +13,9 @@ export interface GalleryImage {
  * Fetch gallery images from API or static data
  * @param category Optional category filter
  */
-export async function fetchGalleryImages(category?: string): Promise<GalleryImage[]> {
+export async function fetchGalleryImages(
+  category?: string,
+): Promise<GalleryImage[]> {
   // TODO: Replace with actual API call when backend is ready
   // For now, return mock data or integrate with existing data sources
   return [];
@@ -22,9 +24,14 @@ export async function fetchGalleryImages(category?: string): Promise<GalleryImag
 /**
  * Filter images by author name
  */
-export function getImagesByAuthor(images: GalleryImage[], author: string): GalleryImage[] {
+export function getImagesByAuthor(
+  images: GalleryImage[],
+  author: string,
+): GalleryImage[] {
   if (!author.trim()) return images;
-  return images.filter((img) => img.author.toLowerCase().includes(author.toLowerCase()));
+  return images.filter((img) =>
+    img.author.toLowerCase().includes(author.toLowerCase()),
+  );
 }
 
 /**
@@ -40,7 +47,7 @@ export function getUniqueAuthors(images: GalleryImage[]): string[] {
 export function paginateImages(
   images: GalleryImage[],
   page: number,
-  itemsPerPage: number
+  itemsPerPage: number,
 ): GalleryImage[] {
   const start = page * itemsPerPage;
   const end = start + itemsPerPage;
@@ -53,7 +60,7 @@ export function paginateImages(
 export function hasMoreImages(
   totalImages: number,
   currentPage: number,
-  itemsPerPage: number
+  itemsPerPage: number,
 ): boolean {
   return (currentPage + 1) * itemsPerPage < totalImages;
 }

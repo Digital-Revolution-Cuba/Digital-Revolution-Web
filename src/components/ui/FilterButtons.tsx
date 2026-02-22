@@ -3,7 +3,10 @@
  * Accessible button group with active states
  */
 
-import type { ConcursoCategory, ConcursoStatus } from "../../types/concursos.types";
+import type {
+  ConcursoCategory,
+  ConcursoStatus,
+} from '../../types/concursos.types';
 
 interface FilterButtonsProps {
   categories: Array<{ value: ConcursoCategory; label: string }>;
@@ -29,7 +32,11 @@ export default function FilterButtons({
   return (
     <div className="filter-buttons">
       {/* Category Filters */}
-      <div className="filter-group" role="group" aria-label="Filtrar por categoría">
+      <div
+        className="filter-group"
+        role="group"
+        aria-label="Filtrar por categoría"
+      >
         <h3 className="filter-group-title">Categoría</h3>
         <div className="filter-buttons-list">
           {categories.map((category) => (
@@ -37,9 +44,11 @@ export default function FilterButtons({
               key={category.value}
               type="button"
               onClick={() =>
-                onCategoryChange(selectedCategory === category.value ? null : category.value)
+                onCategoryChange(
+                  selectedCategory === category.value ? null : category.value,
+                )
               }
-              className={`filter-button ${selectedCategory === category.value ? "active" : ""}`}
+              className={`filter-button ${selectedCategory === category.value ? 'active' : ''}`}
               aria-pressed={selectedCategory === category.value}
               aria-label={`Filtrar por categoría ${category.label}`}
             >
@@ -50,15 +59,23 @@ export default function FilterButtons({
       </div>
 
       {/* Status Filters */}
-      <div className="filter-group" role="group" aria-label="Filtrar por estado">
+      <div
+        className="filter-group"
+        role="group"
+        aria-label="Filtrar por estado"
+      >
         <h3 className="filter-group-title">Estado</h3>
         <div className="filter-buttons-list">
           {statuses.map((status) => (
             <button
               key={status.value}
               type="button"
-              onClick={() => onStatusChange(selectedStatus === status.value ? null : status.value)}
-              className={`filter-button ${selectedStatus === status.value ? "active" : ""}`}
+              onClick={() =>
+                onStatusChange(
+                  selectedStatus === status.value ? null : status.value,
+                )
+              }
+              className={`filter-button ${selectedStatus === status.value ? 'active' : ''}`}
               aria-pressed={selectedStatus === status.value}
               aria-label={`Filtrar por estado ${status.label}`}
             >

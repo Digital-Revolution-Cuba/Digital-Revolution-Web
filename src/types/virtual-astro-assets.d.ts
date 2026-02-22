@@ -1,2 +1,2 @@
-declare module "virtual:astro:assets/*";
-declare module "virtual:astro:assets/fonts/internal";
+declare module 'virtual:astro:assets/*';
+declare module 'virtual:astro:assets/fonts/internal';

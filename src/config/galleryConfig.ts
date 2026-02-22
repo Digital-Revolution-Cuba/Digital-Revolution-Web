@@ -11,8 +11,7 @@ export const GALLERY_CONFIG = {
   IMAGES_PER_PAGE: 4,
 
   // Gallery container dimensions
-  // 4 cards × 285px + 3 gaps × 16px (1rem) + 4px safety buffer = 1192px
-  CONTAINER_WIDTH: 1192,
+  CONTAINER_WIDTH: 1140,
 
   // Padding and spacing
   ITEM_PADDING_HORIZONTAL: 8,
@@ -36,32 +35,32 @@ export const GALLERY_CONFIG = {
  * CSS class names used throughout the gallery
  */
 export const GALLERY_CLASSES = {
-  GALLERY_ITEM: "gallery-item",
-  ARTE_ITEM: "arte-item",
-  MUSICA_ITEM: "musica-item",
-  FOTOGRAFIA_ITEM: "fotografia-item",
-  CATEGORY_BTN: "category-btn",
-  NAV_BTN: "nav-btn",
-  NAV_ARROW: "nav-arrow",
-  HIDING: "hiding",
-  ACTIVE: "active",
+  GALLERY_ITEM: 'gallery-item',
+  ARTE_ITEM: 'arte-item',
+  MUSICA_ITEM: 'musica-item',
+  FOTOGRAFIA_ITEM: 'fotografia-item',
+  CATEGORY_BTN: 'category-btn',
+  NAV_BTN: 'nav-btn',
+  NAV_ARROW: 'nav-arrow',
+  HIDING: 'hiding',
+  ACTIVE: 'active',
 } as const;
 
 /**
  * Data attributes used for element selection
  */
 export const DATA_ATTRIBUTES = {
-  CATEGORY: "data-category",
-  CATEGORY_BTN: "data-cat",
-  CATEGORY_BUTTONS_CONTAINER: "data-category-buttons",
+  CATEGORY: 'data-category',
+  CATEGORY_BTN: 'data-cat',
+  CATEGORY_BUTTONS_CONTAINER: 'data-category-buttons',
 } as const;
 
 /**
  * CSS custom properties (CSS variables)
  */
 export const CSS_VARIABLES = {
-  FLIP_SWAP_DURATION: "--flip-swap-duration",
-  CARD_TRANSITION_DURATION: "--card-transition-duration",
+  FLIP_SWAP_DURATION: '--flip-swap-duration',
+  CARD_TRANSITION_DURATION: '--card-transition-duration',
 } as const;
 
 /**
@@ -79,7 +78,7 @@ export const MASONRY_CONFIG = {
     TABLET: 3,
     DESKTOP: 5,
   },
-  GUTTER: "10px",
+  GUTTER: '10px',
 } as const;
 
 /**
@@ -88,11 +87,11 @@ export const MASONRY_CONFIG = {
  */
 export const MODAL_CONFIG = {
   Z_INDEX: 50,
-  BACKDROP_BLUR: "sm",
+  BACKDROP_BLUR: 'sm',
   ANIMATION_DURATION: 300, // ms
   OVERLAY_OPACITY: 0.8,
-  MAX_WIDTH: "90vw",
-  MAX_HEIGHT: "90vh",
+  MAX_WIDTH: '90vw',
+  MAX_HEIGHT: '90vh',
 } as const;
 
 /**
@@ -102,5 +101,5 @@ export const INFINITE_SCROLL_CONFIG = {
   INITIAL_ITEMS: 20,
   ITEMS_PER_PAGE: 10,
   THRESHOLD: 0.5, // IntersectionObserver threshold
-  ROOT_MARGIN: "100px", // Load before reaching bottom
+  ROOT_MARGIN: '100px', // Load before reaching bottom
 } as const;

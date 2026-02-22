@@ -6,19 +6,19 @@
 /**
  * Contest status enum
  */
-export type ConcursoStatus = "activo" | "proximo" | "finalizado" | "cerrado";
+export type ConcursoStatus = 'activo' | 'proximo' | 'finalizado' | 'cerrado';
 
 /**
  * Contest category types
  */
 export type ConcursoCategory =
-  | "fotografia"
-  | "musica"
-  | "arte-digital"
-  | "ilustracion"
-  | "diseno-grafico"
-  | "video"
-  | "escritura";
+  | 'fotografia'
+  | 'musica'
+  | 'arte-digital'
+  | 'ilustracion'
+  | 'diseno-grafico'
+  | 'video'
+  | 'escritura';
 
 /**
  * Prize structure for contests

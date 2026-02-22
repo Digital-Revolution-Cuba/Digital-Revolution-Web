@@ -5,7 +5,7 @@
   "description": "Captura la esencia de la ciudad en su máxima expresión. Participa en nuestro concurso de fotografía urbana y muestra tu visión única de los espacios que habitamos.",
   "category": "fotografia",
   "status": "activo",
-  "image": "/images/concursos/activos/fotografia-urbana-2026.svg",
+  "image": "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=800&q=80",
   "imageAlt": "Fotografía urbana de una ciudad al atardecer",
   "fechas": {
     "inicio": "2026-01-15T00:00:00.000Z",

@@ -4,7 +4,7 @@
  * This is a utility module, not for React hooks
  */
 
-import type { CategoryType, CategoryConfig } from "../../types/gallery.types";
+import type { CategoryType, CategoryConfig } from '../../types/gallery.types';
 
 export interface GalleryState {
   activeCategory: CategoryType;
@@ -44,7 +44,10 @@ export function createGalleryUtils(categories: CategoryConfig[]) {
   /**
    * Calculate max page index for current category
    */
-  function getMaxPageIndex(category: CategoryType, itemsPerPage: number): number {
+  function getMaxPageIndex(
+    category: CategoryType,
+    itemsPerPage: number,
+  ): number {
     const totalItems = getCategoryItemsCount(category);
     return Math.max(0, Math.ceil(totalItems / itemsPerPage) - 1);
   }
@@ -59,7 +62,11 @@ export function createGalleryUtils(categories: CategoryConfig[]) {
   /**
    * Check if navigation is at end
    */
-  function isAtEnd(currentIndex: number, category: CategoryType, itemsPerPage: number): boolean {
+  function isAtEnd(
+    currentIndex: number,
+    category: CategoryType,
+    itemsPerPage: number,
+  ): boolean {
     const maxIndex = getMaxPageIndex(category, itemsPerPage);
     return currentIndex >= maxIndex;
   }

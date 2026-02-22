@@ -3,26 +3,31 @@
  * React Island for client-side filtering and search functionality
  */
 
-import type { CollectionEntry } from "astro:content";
-import { useMemo, useState } from "react";
-import { CATEGORIES, CATEGORY_LABELS, STATUS_CONFIG, STATUSES } from "../../config/concursosConfig";
+import type { CollectionEntry } from 'astro:content';
+import { useMemo, useState } from 'react';
+import {
+  CATEGORIES,
+  CATEGORY_LABELS,
+  STATUS_CONFIG,
+  STATUSES,
+} from '../../config/concursosConfig';
 import {
   filterByCategory,
   filterBySearch,
   filterByStatus,
   formatDate,
   sortConcursos,
-} from "../../utils/concursosUtils";
-import EmptyState from "../ui/EmptyState";
-import FilterButtons from "../ui/FilterButtons";
-import SearchBar from "../ui/SearchBar";
+} from '../../utils/concursosUtils';
+import EmptyState from '../ui/EmptyState';
+import FilterButtons from '../ui/FilterButtons';
+import SearchBar from '../ui/SearchBar';
 
 interface Props {
-  concursos: CollectionEntry<"concursos">[];
+  concursos: CollectionEntry<'concursos'>[];
 }
 
 export default function ConcursosFiltersIsland({ concursos }: Props) {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
@@ -40,7 +45,7 @@ export default function ConcursosFiltersIsland({ concursos }: Props) {
   }, [concursos, searchQuery, selectedCategory, selectedStatus]);
 
   const handleClearFilters = () => {
-    setSearchQuery("");
+    setSearchQuery('');
     setSelectedCategory(null);
     setSelectedStatus(null);
   };
@@ -68,17 +73,28 @@ export default function ConcursosFiltersIsland({ concursos }: Props) {
         />
 
         {/* Results count */}
-        <div className="results-count" role="status" aria-live="polite" aria-atomic="true">
+        <div
+          className="results-count"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {filteredAndSortedConcursos.length > 0 ? (
             <p>
-              Mostrando <strong>{filteredAndSortedConcursos.length}</strong>{" "}
-              {filteredAndSortedConcursos.length === 1 ? "concurso" : "concursos"}
+              Mostrando <strong>{filteredAndSortedConcursos.length}</strong>{' '}
+              {filteredAndSortedConcursos.length === 1
+                ? 'concurso'
+                : 'concursos'}
             </p>
           ) : null}
         </div>
 
         {/* Contests Grid */}
-        <div className="concursos-grid" role="region" aria-label="Resultados de concursos">
+        <div
+          className="concursos-grid"
+          role="region"
+          aria-label="Resultados de concursos"
+        >
           {filteredAndSortedConcursos.length > 0 ? (
             filteredAndSortedConcursos.map((concurso) => {
               const statusInfo = STATUS_CONFIG[concurso.data.status];
@@ -86,9 +102,12 @@ export default function ConcursosFiltersIsland({ concursos }: Props) {
               return (
                 <article
                   key={concurso.data.id}
-                  className={`concurso-card ${concurso.data.featured ? "featured" : ""}`}
+                  className={`concurso-card ${concurso.data.featured ? 'featured' : ''}`}
                 >
-                  <a href={`/concursos/${concurso.data.slug}`} className="card-link">
+                  <a
+                    href={`/concursos/${concurso.data.slug}`}
+                    className="card-link"
+                  >
                     <div className="card-image-wrapper">
                       <img
                         src={concurso.data.image}
@@ -97,16 +116,24 @@ export default function ConcursosFiltersIsland({ concursos }: Props) {
                         loading="lazy"
                       />
                       <div className="card-overlay"></div>
-                      {concurso.data.featured && <span className="featured-badge">Destacado</span>}
-                      <span className={`status-badge ${statusInfo.class}`}>{statusInfo.label}</span>
+                      {concurso.data.featured && (
+                        <span className="featured-badge">Destacado</span>
+                      )}
+                      <span className={`status-badge ${statusInfo.class}`}>
+                        {statusInfo.label}
+                      </span>
                     </div>
 
                     <div className="card-content">
-                      <div className="card-category">{CATEGORY_LABELS[concurso.data.category]}</div>
+                      <div className="card-category">
+                        {CATEGORY_LABELS[concurso.data.category]}
+                      </div>
 
                       <h3 className="card-title">{concurso.data.title}</h3>
 
-                      <p className="card-description">{concurso.data.description}</p>
+                      <p className="card-description">
+                        {concurso.data.description}
+                      </p>
 
                       <div className="card-footer">
                         <div className="card-date">
@@ -126,7 +153,9 @@ export default function ConcursosFiltersIsland({ concursos }: Props) {
                               strokeLinejoin="round"
                             />
                           </svg>
-                          <span>Cierre: {formatDate(concurso.data.fechas.cierre)}</span>
+                          <span>
+                            Cierre: {formatDate(concurso.data.fechas.cierre)}
+                          </span>
                         </div>
 
                         <span className="card-cta">

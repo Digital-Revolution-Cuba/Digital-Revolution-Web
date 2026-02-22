@@ -3,16 +3,16 @@
  * Gallery Component
  * Main gallery container that orchestrates controls and slider
  */
-import type { CategoryConfig } from "../../../types/gallery.types";
-import GalleryControls from "./GalleryControls.astro";
-import GallerySlider from "./GallerySlider.astro";
+import type { CategoryConfig } from '../../../types/gallery.types';
+import GalleryControls from './GalleryControls.astro';
+import GallerySlider from './GallerySlider.astro';
 
 interface Props {
-  categories: readonly CategoryConfig[];
+  categories: CategoryConfig[];
   id?: string;
 }
 
-const { categories, id = "galeria" } = Astro.props;
+const { categories, id = 'galeria' } = Astro.props;
 ---
 
 <section id={id} class="gallery-section">
@@ -32,7 +32,7 @@ const { categories, id = "galeria" } = Astro.props;
     min-height: 80dvh;
     width: 100%;
     background: #030712;
-    overflow: clip;
+    overflow: hidden;
     padding: 4rem 1rem;
   }
 

@@ -1,22 +1,22 @@
-import { glob } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
+import { glob } from 'astro/loaders';
+import { defineCollection, z } from 'astro:content';
 
 /**
  * Talents Collection Schema
  * Defines the structure for talent profiles in the community
  */
 const talents = defineCollection({
-  loader: glob({ pattern: "**/*.json", base: "./src/content/talents" }),
+  loader: glob({ pattern: '**/*.json', base: './src/content/talents' }),
   schema: z.object({
     // Core Identity (Required for valid profiles)
     name: z.string(),
     role: z.string(),
-    image: z.string(),
+    image: z.string().url(),
 
     // Location & Community
     location: z.string().optional(),
     communityRole: z.string().optional(),
-    status: z.enum(["activo", "core", "colaborador"]).default("colaborador"),
+    status: z.enum(['activo', 'core', 'colaborador']).default('colaborador'),
 
     // Stats & Metrics
     rating: z.number().min(0).max(5).optional(),
@@ -35,7 +35,7 @@ const talents = defineCollection({
         z.object({
           title: z.string(),
           link: z.string().url().optional(),
-        })
+        }),
       )
       .default([]),
     externalLink: z.string().url().optional(),
@@ -50,7 +50,7 @@ const talents = defineCollection({
  * Defines the structure for contest entries in the community
  */
 const concursos = defineCollection({
-  loader: glob({ pattern: "**/*.json", base: "./src/content/concursos" }),
+  loader: glob({ pattern: '**/*.json', base: './src/content/concursos' }),
   schema: z.object({
     // Core Information
     id: z.string(),
@@ -60,15 +60,17 @@ const concursos = defineCollection({
 
     // Classification
     category: z.enum([
-      "fotografia",
-      "musica",
-      "arte-digital",
-      "ilustracion",
-      "diseno-grafico",
-      "video",
-      "escritura",
+      'fotografia',
+      'musica',
+      'arte-digital',
+      'ilustracion',
+      'diseno-grafico',
+      'video',
+      'escritura',
     ]),
-    status: z.enum(["activo", "proximo", "finalizado", "cerrado"]).default("activo"),
+    status: z
+      .enum(['activo', 'proximo', 'finalizado', 'cerrado'])
+      .default('activo'),
 
     // Visual
     image: z.string(),
@@ -87,13 +89,13 @@ const concursos = defineCollection({
         position: z.number(),
         prize: z.string(),
         value: z.string().optional(),
-      })
+      }),
     ),
     requisitos: z.array(
       z.object({
         id: z.string(),
         description: z.string(),
-      })
+      }),
     ),
 
     // Participation
@@ -113,7 +115,7 @@ const concursos = defineCollection({
  * Defines the structure for community collaborations with external partners
  */
 const colaboraciones = defineCollection({
-  loader: glob({ pattern: "**/*.json", base: "./src/content/colaboraciones" }),
+  loader: glob({ pattern: '**/*.json', base: './src/content/colaboraciones' }),
   schema: z.object({
     // Core Information
     id: z.string(),
@@ -123,9 +125,19 @@ const colaboraciones = defineCollection({
     descriptionLong: z.string().optional(),
 
     // Classification
-    status: z.enum(["activa", "finalizada", "pausada", "planificada"]).default("activa"),
+    status: z
+      .enum(['activa', 'finalizada', 'pausada', 'planificada'])
+      .default('activa'),
     areas: z.array(
-      z.enum(["arte", "musica", "tecnologia", "educacion", "contenido", "eventos", "investigacion"])
+      z.enum([
+        'arte',
+        'musica',
+        'tecnologia',
+        'educacion',
+        'contenido',
+        'eventos',
+        'investigacion',
+      ]),
     ),
 
     // Partner Information
@@ -153,7 +165,7 @@ const colaboraciones = defineCollection({
           name: z.string(),
           role: z.string(),
           avatar: z.string().optional(),
-        })
+        }),
       )
       .default([]),
     impacto: z
@@ -161,7 +173,7 @@ const colaboraciones = defineCollection({
         z.object({
           metric: z.string(),
           value: z.string(),
-        })
+        }),
       )
       .default([]),
     objetivos: z.array(z.string()).default([]),

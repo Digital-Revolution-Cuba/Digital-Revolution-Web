@@ -5,28 +5,27 @@
  */
 
 import type {
-  ArteGalleryItem,
   BaseGalleryItem,
-  CategoryConfig,
-  CategoryType,
+  ArteGalleryItem,
+  MusicGalleryItem,
   FotografiaGalleryItem,
   GalleryItem,
-  MusicGalleryItem,
-} from "../data/types";
+  CategoryType,
+  CategoryConfig,
+} from '../data/types';
 
 export type {
-  ArteGalleryItem,
   BaseGalleryItem,
-  CategoryConfig,
-  CategoryType,
+  ArteGalleryItem,
+  MusicGalleryItem,
   FotografiaGalleryItem,
   GalleryItem,
-  MusicGalleryItem,
+  CategoryType,
+  CategoryConfig,
 };
 
-/** Gallery configuration for the slider component */
 export interface GalleryConfig {
-  readonly categories: readonly CategoryConfig[];
-  readonly defaultCategory: CategoryType;
-  readonly visibleImages: number;
+  categories: CategoryConfig[];
+  defaultCategory: CategoryType;
+  visibleImages: number;
 }

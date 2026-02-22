@@ -1,27 +1,31 @@
 /**
  * Image Search Composable
- * Handles image filtering by creator name
+ * Handles image filtering by author
  */
 
-import { useMemo, useState } from "react";
-import type { GalleryItem } from "../../data/gallery";
+import { useMemo, useState } from 'react';
 
-export function useImageSearch(images: readonly GalleryItem[]) {
-  const [searchAuthor, setSearchAuthor] = useState("");
+interface ImageItem {
+  download_url: string;
+  author: string;
+}
+
+export function useImageSearch(images: ImageItem[]) {
+  const [searchAuthor, setSearchAuthor] = useState('');
 
   const filteredImages = useMemo(() => {
-    if (!searchAuthor.trim()) return [...images];
+    if (!searchAuthor.trim()) return images;
     return images.filter((img) =>
-      img.creator.name.toLowerCase().includes(searchAuthor.toLowerCase())
+      img.author.toLowerCase().includes(searchAuthor.toLowerCase()),
     );
   }, [images, searchAuthor]);
 
   const handleClearSearch = () => {
-    setSearchAuthor("");
+    setSearchAuthor('');
   };
 
   const uniqueAuthors = useMemo(() => {
-    return Array.from(new Set(images.map((img) => img.creator.name))).sort();
+    return Array.from(new Set(images.map((img) => img.author))).sort();
   }, [images]);
 
   return {

@@ -11,7 +11,7 @@
     "type": "Empresa",
     "website": "https://example.com/techhub"
   },
-  "image": "/images/colaboraciones/hackathon-innovacion-social.svg",
+  "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80",
   "imageAlt": "Equipo de desarrolladores trabajando en laptops durante un hackathon",
   "fechas": {
     "inicio": "2025-10-10T09:00:00.000Z",
@@ -58,6 +58,12 @@
   ],
   "externalLink": "https://example.com/hackathon-2025",
   "caseStudyLink": "https://example.com/hackathon-case-study",
-  "tags": ["hackathon", "desarrollo", "innovación", "emprendimiento", "networking"],
+  "tags": [
+    "hackathon",
+    "desarrollo",
+    "innovación",
+    "emprendimiento",
+    "networking"
+  ],
   "featured": false
 }

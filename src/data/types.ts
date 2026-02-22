@@ -1,43 +1,40 @@
 /**
- * Type definitions for gallery items.
- *
- * Follows TypeScript best practices:
- * - Readonly properties for immutable data
- * - Strict literal types for category discrimination
- * - Descriptive property names
+ * Type definitions for gallery items
  */
 
 export interface BaseGalleryItem {
-  readonly type: string;
-  /** Path to the image (relative to public/) */
-  readonly image: string;
-  readonly title: string;
+  type: string;
+  image: string;
+  title: string;
 }
 
 export interface ArteGalleryItem extends BaseGalleryItem {
-  readonly type: "arte";
-  readonly artistName: string;
-  readonly artistRole: string;
+  type: 'arte';
+  artistName: string;
+  artistRole: string;
 }
 
 export interface MusicGalleryItem extends BaseGalleryItem {
-  readonly type: "musica";
-  readonly artist: string;
-  readonly duration: string;
+  type: 'musica';
+  artist: string;
+  duration: string;
 }
 
 export interface FotografiaGalleryItem extends BaseGalleryItem {
-  readonly type: "fotografia";
-  readonly photographer?: string;
-  readonly date?: string;
+  type: 'fotografia';
+  photographer?: string;
+  date?: string;
 }
 
-export type GalleryItem = ArteGalleryItem | MusicGalleryItem | FotografiaGalleryItem;
+export type GalleryItem =
+  | ArteGalleryItem
+  | MusicGalleryItem
+  | FotografiaGalleryItem;
 
-export type CategoryType = "arte" | "musica" | "fotografia";
+export type CategoryType = 'arte' | 'musica' | 'fotografia';
 
 export interface CategoryConfig {
-  readonly id: CategoryType;
-  readonly label: string;
-  readonly items: readonly GalleryItem[];
+  id: CategoryType;
+  label: string;
+  items: GalleryItem[];
 }

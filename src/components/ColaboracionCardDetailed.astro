@@ -4,10 +4,10 @@
  * Tarjeta detallada para mostrar colaboraciones de la Content Collection
  * Usado en /colaboraciones/index.astro
  */
-import type { CollectionEntry } from "astro:content";
+import type { CollectionEntry } from 'astro:content';
 
 interface Props {
-  colaboracion: CollectionEntry<"colaboraciones">;
+  colaboracion: CollectionEntry<'colaboraciones'>;
 }
 
 const { colaboracion } = Astro.props;
@@ -15,43 +15,43 @@ const { data } = colaboracion;
 
 // Format date
 const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat("es-ES", {
-    month: "long",
-    year: "numeric",
+  return new Intl.DateTimeFormat('es-ES', {
+    month: 'long',
+    year: 'numeric',
   }).format(date);
 };
 
 // Status color mapping
 const statusColors: Record<typeof data.status, string> = {
-  activa: "var(--palette-accent-cyan)",
-  finalizada: "var(--palette-accent-purple)",
-  pausada: "var(--palette-accent-yellow)",
-  planificada: "var(--palette-accent-blue)",
+  activa: 'var(--palette-accent-cyan)',
+  finalizada: 'var(--palette-accent-purple)',
+  pausada: 'var(--palette-accent-yellow)',
+  planificada: 'var(--palette-accent-blue)',
 };
 
 const statusColor = statusColors[data.status];
 
 // Area labels
 const areaLabels: Record<string, string> = {
-  arte: "Arte",
-  musica: "Música",
-  tecnologia: "Tecnología",
-  educacion: "Educación",
-  contenido: "Contenido",
-  eventos: "Eventos",
-  investigacion: "Investigación",
+  arte: 'Arte',
+  musica: 'Música',
+  tecnologia: 'Tecnología',
+  educacion: 'Educación',
+  contenido: 'Contenido',
+  eventos: 'Eventos',
+  investigacion: 'Investigación',
 };
 
 // Status labels
 const statusLabels: Record<typeof data.status, string> = {
-  activa: "Activa",
-  finalizada: "Finalizada",
-  pausada: "Pausada",
-  planificada: "Planificada",
+  activa: 'Activa',
+  finalizada: 'Finalizada',
+  pausada: 'Pausada',
+  planificada: 'Planificada',
 };
 ---
 
-<article class={`colaboracion-card-detailed ${data.featured ? "featured" : ""}`}>
+<article class={`colaboracion-card-detailed ${data.featured ? 'featured' : ''}`}>
   <a href={`/colaboraciones/${data.slug}`} class="card-link">
     <div class="card-image-wrapper">
       <img src={data.image} alt={data.imageAlt} class="card-image" loading="lazy" />
@@ -86,10 +86,7 @@ const statusLabels: Record<typeof data.status, string> = {
             stroke="currentColor"
             stroke-width="2"
           >
-            <path
-              d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round"></path>
             <circle cx="9" cy="7" r="4"></circle>
             <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke-linecap="round"></path>
             <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round"></path>
@@ -105,7 +102,11 @@ const statusLabels: Record<typeof data.status, string> = {
 
       <div class="card-footer">
         <div class="areas-tags">
-          {data.areas.slice(0, 3).map((area) => <span class="area-tag">{areaLabels[area]}</span>)}
+          {
+            data.areas.slice(0, 3).map((area) => (
+              <span class="area-tag">{areaLabels[area]}</span>
+            ))
+          }
           {data.areas.length > 3 && <span class="area-tag-more">+{data.areas.length - 3}</span>}
         </div>
 
@@ -117,7 +118,8 @@ const statusLabels: Record<typeof data.status, string> = {
               stroke="currentColor"
               stroke-width="1.5"
               stroke-linecap="round"
-              stroke-linejoin="round"></path>
+              stroke-linejoin="round"
+            ></path>
           </svg>
         </span>
       </div>

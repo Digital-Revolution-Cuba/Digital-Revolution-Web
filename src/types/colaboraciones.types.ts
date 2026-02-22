@@ -6,24 +6,33 @@
 /**
  * Status of a collaboration
  */
-export type ColaboracionStatus = "activa" | "finalizada" | "pausada" | "planificada";
+export type ColaboracionStatus =
+  | 'activa'
+  | 'finalizada'
+  | 'pausada'
+  | 'planificada';
 
 /**
  * Area or category of collaboration
  */
 export type ColaboracionArea =
-  | "arte"
-  | "musica"
-  | "tecnologia"
-  | "educacion"
-  | "contenido"
-  | "eventos"
-  | "investigacion";
+  | 'arte'
+  | 'musica'
+  | 'tecnologia'
+  | 'educacion'
+  | 'contenido'
+  | 'eventos'
+  | 'investigacion';
 
 /**
  * Type of partner organization
  */
-export type PartnerType = "Empresa" | "ONG" | "Institución" | "Comunidad" | "Organización";
+export type PartnerType =
+  | 'Empresa'
+  | 'ONG'
+  | 'Institución'
+  | 'Comunidad'
+  | 'Organización';
 
 /**
  * Partner organization information
@@ -121,21 +130,21 @@ export interface ColaboracionCardData {
  * Category label mapping for areas
  */
 export const areaLabels: Record<ColaboracionArea, string> = {
-  arte: "Arte",
-  musica: "Música",
-  tecnologia: "Tecnología",
-  educacion: "Educación",
-  contenido: "Contenido",
-  eventos: "Eventos",
-  investigacion: "Investigación",
+  arte: 'Arte',
+  musica: 'Música',
+  tecnologia: 'Tecnología',
+  educacion: 'Educación',
+  contenido: 'Contenido',
+  eventos: 'Eventos',
+  investigacion: 'Investigación',
 };
 
 /**
  * Status label and styling configuration
  */
 export const statusLabels: Record<ColaboracionStatus, string> = {
-  activa: "Activa",
-  finalizada: "Finalizada",
-  pausada: "Pausada",
-  planificada: "Planificada",
+  activa: 'Activa',
+  finalizada: 'Finalizada',
+  pausada: 'Pausada',
+  planificada: 'Planificada',
 };

@@ -17,7 +17,7 @@ const { title, date, imageUrl, altText, ctaLink, ctaText } = Astro.props;
 ---
 
 <article
-  class="group bg-brand-dark flex w-full flex-col overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+  class="group bg-brand-dark flex w-full max-w-[320px] flex-col overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
 >
   <!-- Imagen -->
   <div class="relative h-40 overflow-hidden sm:h-48">
@@ -31,7 +31,9 @@ const { title, date, imageUrl, altText, ctaLink, ctaText } = Astro.props;
 
   <!-- Contenido -->
   <div class="flex flex-col gap-3 p-4">
-    <h3 class="line-clamp-2 text-base leading-snug font-semibold text-white sm:text-lg">
+    <h3
+      class="line-clamp-2 text-base leading-snug font-semibold text-white sm:text-lg"
+    >
       {title}
     </h3>
 
@@ -53,13 +55,3 @@ const { title, date, imageUrl, altText, ctaLink, ctaText } = Astro.props;
     </div>
   </div>
 </article>
-
-<style>
-  /* Ensure the card always fills its .card-item-concursos wrapper.
-     The wrapper controls the responsive width; the card must not cap itself. */
-  article {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-</style>

@@ -4,19 +4,21 @@
  */
 
 export function initJoinCommunityAnimations() {
-  if (typeof window === "undefined") return;
+  if (typeof window === 'undefined') return;
 
-  const animatedElements = document.querySelectorAll(".animate-in");
+  const animatedElements = document.querySelectorAll('.animate-in');
 
   if (animatedElements.length === 0) return;
 
   // Check if user prefers reduced motion
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  ).matches;
 
   if (prefersReducedMotion) {
     // Add is-visible immediately for reduced motion users
     animatedElements.forEach((el) => {
-      el.classList.add("is-visible");
+      el.classList.add('is-visible');
     });
     return;
   }
@@ -26,7 +28,7 @@ export function initJoinCommunityAnimations() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
+          entry.target.classList.add('is-visible');
           // Optional: unobserve after animation triggers
           observer.unobserve(entry.target);
         }
@@ -34,8 +36,8 @@ export function initJoinCommunityAnimations() {
     },
     {
       threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
-    }
+      rootMargin: '0px 0px -50px 0px',
+    },
   );
 
   // Observe all animated elements
@@ -45,9 +47,9 @@ export function initJoinCommunityAnimations() {
 }
 
 // Auto-initialize when DOM is ready
-if (typeof document !== "undefined") {
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initJoinCommunityAnimations);
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initJoinCommunityAnimations);
   } else {
     initJoinCommunityAnimations();
   }

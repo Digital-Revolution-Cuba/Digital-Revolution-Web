@@ -4,40 +4,44 @@
  * Main slider with navigation buttons and gallery items
  */
 import type {
-  ArteGalleryItem,
   CategoryConfig,
-  FotografiaGalleryItem,
   GalleryItem,
+  ArteGalleryItem,
   MusicGalleryItem,
-} from "../../../types/gallery.types";
-import FotografiaCard from "../../gallery/FotografiaCard.astro";
-import GalleryItemComponent from "../../gallery/GalleryItem.astro";
-import MusicCard from "../../gallery/MusicCard.astro";
-import NavigationButton from "../../gallery/NavigationButton.astro";
+  FotografiaGalleryItem,
+} from '../../../types/gallery.types';
+import GalleryItemComponent from '../../gallery/GalleryItem.astro';
+import MusicCard from '../../gallery/MusicCard.astro';
+import FotografiaCard from '../../gallery/FotografiaCard.astro';
+import NavigationButton from '../../gallery/NavigationButton.astro';
 
 interface Props {
-  categories: readonly CategoryConfig[];
+  categories: CategoryConfig[];
 }
 
 const { categories } = Astro.props;
 
 // Type guards
 function isArteItem(item: GalleryItem): item is ArteGalleryItem {
-  return item.type === "arte";
+  return item.type === 'arte';
 }
 
 function isMusicaItem(item: GalleryItem): item is MusicGalleryItem {
-  return item.type === "musica";
+  return item.type === 'musica';
 }
 
 function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
-  return item.type === "fotografia";
+  return item.type === 'fotografia';
 }
 ---
 
 <div class="gallery-outer-wrapper">
   <div class="gallery-inner-container">
-    <NavigationButton id="prevBtn" direction="prev" ariaLabel="Previous gallery page" />
+    <NavigationButton
+      id="prevBtn"
+      direction="prev"
+      ariaLabel="Previous gallery page"
+    />
 
     <div class="gallery-container">
       <div class="gallery-viewport">
@@ -45,18 +49,24 @@ function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
           {
             categories.map((category) =>
               category.items.map((item) => {
-                if (isArteItem(item)) return <GalleryItemComponent item={item} />;
+                if (isArteItem(item))
+                  return <GalleryItemComponent item={item} />;
                 if (isMusicaItem(item)) return <MusicCard item={item} />;
-                if (isFotografiaItem(item)) return <FotografiaCard item={item} />;
+                if (isFotografiaItem(item))
+                  return <FotografiaCard item={item} />;
                 return null;
-              })
+              }),
             )
           }
         </div>
       </div>
     </div>
 
-    <NavigationButton id="nextBtn" direction="next" ariaLabel="Next gallery page" />
+    <NavigationButton
+      id="nextBtn"
+      direction="next"
+      ariaLabel="Next gallery page"
+    />
   </div>
 </div>
 
@@ -90,7 +100,7 @@ function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
 
   .gallery-viewport {
     width: 100%;
-    overflow: visible;
+    overflow: hidden;
     position: relative;
     padding-bottom: 1.25rem;
     scrollbar-width: none;
@@ -148,12 +158,12 @@ function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
 
   @media (min-width: 1024px) {
     .gallery-inner-container {
-      max-width: 1280px;
+      max-width: 1240px;
     }
 
     .gallery-container {
-      width: calc(4 * 285px + 3 * 1rem + 4px);
-      max-width: calc(4 * 285px + 3 * 1rem + 4px);
+      width: 1140px;
+      max-width: 1140px;
     }
   }
 

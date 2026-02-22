@@ -1,15 +1,22 @@
 ---
-import { colaboracionesData } from "../data/colaboracionesData";
-import ColaboracionCard from "./ColaboracionCard.astro";
+import { colaboracionesData } from '../data/colaboracionesData';
+import ColaboracionCard from './ColaboracionCard.astro';
 
 const totalCards = colaboracionesData.length;
+const visibleCards = 3;
 ---
 
 <section id="colaboraciones" class="h-auto w-auto bg-gray-950">
   <div class="relative z-30 min-h-150 overflow-hidden pb-8">
-    <div class="second-clip absolute top-0 right-0 bg-orange-500" aria-hidden="true"></div>
+    <div
+      class="second-clip absolute top-0 right-0 bg-orange-500"
+      aria-hidden="true"
+    >
+    </div>
     <div class="general relative z-30 min-h-150 bg-teal-300">
-      <div class="flex flex-col items-start justify-between gap-8 pt-32 pr-10 pl-10">
+      <div
+        class="flex flex-col items-start justify-between gap-8 pt-32 pr-10 pl-10"
+      >
         <section class="colab-section">
           <div class="wrapper-colab">
             <div class="shape-back-colab"></div>
@@ -45,13 +52,15 @@ const totalCards = colaboracionesData.length;
               class="nav-arrow"
               aria-hidden="true"
             >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"
-              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"></path>
             </svg>
           </button>
 
           <!-- Cards viewport -->
-          <div class="cards-viewport" id="cardsViewportColab">
+          <div class="cards-viewport">
             <div
               id="cardSliderColab"
               class="cards-track"
@@ -92,8 +101,10 @@ const totalCards = colaboracionesData.length;
               class="nav-arrow"
               aria-hidden="true"
             >
-              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"
-              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
             </svg>
           </button>
         </div>
@@ -123,9 +134,9 @@ const totalCards = colaboracionesData.length;
   /* Soporte para clases Tailwind usadas en el HTML */
   .second-clip {
     clip-path: polygon(100% 0%, 0 100%, 100% 100%);
-    min-height: 37.5rem;
-    width: 100%;
-    max-width: 100%;
+    /* Usar altura controlada para evitar que sobresalga debajo del clip azul */
+    min-height: 37.5rem; /* Coincide con .background-clip-orange */
+    width: 125rem; /* Ajusta según el diseño */
     top: 0;
     right: 0;
     z-index: 1;
@@ -165,54 +176,135 @@ const totalCards = colaboracionesData.length;
     z-index: 2;
   }
 
+  /* Estilos legacy para compatibilidad (no usados actualmente) */
+  .colaboraciones-section {
+    width: 100%;
+    min-height: 80vh;
+    background: #030712; /* gray-950 */
+  }
+
+  .colaboraciones-background {
+    position: relative;
+    z-index: 30;
+    min-height: 37.5rem; /* h-150 = 600px */
+  }
+
+  .background-clip-orange {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-height: 37.5rem;
+    width: 125rem; /* w-2000 */
+    background: var(--color-accent-orange);
+    clip-path: polygon(100% 0%, 0 100%, 100% 100%);
+    z-index: 1;
+  }
+
+  .background-clip-teal {
+    position: relative;
+    z-index: 30;
+    background: #5eead4; /* teal-300 */
+    clip-path: polygon(0 0%, 100% 28%, 100% 100%, 0 100%);
+    min-height: 37.5rem;
+  }
+
+  /* ===================================
+     Header Section
+     =================================== */
+  .colaboraciones-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-xl) var(--space-md);
+    align-items: flex-start;
+  }
+
+  .colab-title-section {
+    width: 100%;
+  }
+
   .heading-colab {
     text-align: start;
     padding: 0;
     margin: 0;
   }
 
+  .btn-suggest {
+    padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+    min-height: var(--touch-target-comfortable);
+
+    background: var(--color-accent-blue);
+    border: none;
+    border-radius: 9999px;
+
+    color: white;
+    font-size: var(--text-base);
+    font-weight: 700;
+
+    box-shadow: 0 10px 25px rgba(25, 206, 238, 0.3);
+    cursor: pointer;
+
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-suggest:hover,
+  .btn-suggest:focus {
+    background: var(--color-accent-cyan);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(52, 223, 222, 0.4);
+  }
+
+  .btn-suggest:focus-visible {
+    outline: 2px solid var(--color-accent-cyan);
+    outline-offset: 2px;
+  }
+
   /* ===================================
-     Slider Section (Concursos-style)
+     Gallery Section con Container Queries
      =================================== */
   .colaboraciones-gallery-wrapper {
+    /* Mobile first: use container queries for component-level responsiveness */
+    container-type: inline-size;
+    container-name: colaboraciones;
     width: 100%;
-    padding: 1.5rem 0.8rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
+    padding: var(--space-md);
+
+    /* Layout variables (tweakable) */
+    --nav-w: 44px; /* base nav button width */
+    --gap: 0.75rem; /* base gap between cards */
+    --gutter: 1rem; /* horizontal padding inside wrapper */
   }
 
   .colaboraciones-navigation {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: var(--gap);
     width: 100%;
-    max-width: 1200px;
+    max-width: 100%;
+    margin: 0 auto;
   }
 
   .cards-viewport {
     flex: 1;
-    overflow: hidden;
     max-width: 100%;
+    overflow: hidden;
   }
 
   .cards-track {
     display: flex;
-    gap: 1rem;
+    gap: var(--gap);
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: max-content;
+    align-items: flex-start;
+    flex-wrap: nowrap; /* Never wrap — keep horizontal layout */
   }
 
-  /* Card wrapper — explicit width prevents w-full on card resolving
-     against an unsized flex parent. flex-shrink: 0 is also required
-     (default is 1, which allows shrinking below the declared width). */
   .card-item {
-    /* Mobile-first: nearly full viewport minus nav buttons + padding */
-    width: calc(100dvw - 9rem);
-    max-width: 300px;
-    min-width: 0;
-    flex-shrink: 0;
+    /* Allow cards to shrink if necessary but prefer specified width via clamp */
+    flex: 0 1 auto;
+    width: clamp(140px, 30vw, 280px);
+    box-sizing: border-box;
   }
 
   /* ===================================
@@ -223,9 +315,9 @@ const totalCards = colaboracionesData.length;
     align-items: center;
     justify-content: center;
 
-    min-width: 44px;
-    min-height: 44px;
-    padding: 0.5rem;
+    min-width: var(--touch-target-comfortable);
+    min-height: var(--touch-target-comfortable);
+    padding: 0.75rem;
 
     background: #030712;
     border: 2px solid transparent;
@@ -239,13 +331,13 @@ const totalCards = colaboracionesData.length;
 
   .nav-btn:hover,
   .nav-btn:focus {
-    background: var(--color-accent-cyan, #34dfde);
-    border-color: var(--color-accent-cyan, #34dfde);
+    background: var(--color-accent-cyan);
+    border-color: var(--color-accent-cyan);
     transform: scale(1.1);
   }
 
   .nav-btn:focus-visible {
-    outline: 2px solid var(--color-accent-cyan, #34dfde);
+    outline: 2px solid var(--color-accent-cyan);
     outline-offset: 4px;
   }
 
@@ -261,9 +353,9 @@ const totalCards = colaboracionesData.length;
   }
 
   .nav-arrow {
-    width: 1.25rem;
-    height: 1.25rem;
-    stroke: var(--color-accent-cyan, #34dfde);
+    width: 1.5rem;
+    height: 1.5rem;
+    stroke: var(--color-accent-cyan);
     transition: stroke 0.3s ease;
   }
 
@@ -274,6 +366,50 @@ const totalCards = colaboracionesData.length;
 
   .nav-btn:disabled .nav-arrow {
     stroke: rgba(70, 236, 213, 0.5);
+  }
+
+  /* ===================================
+     Container Query: Tiny mobile (very narrow screens)
+     =================================== */
+  @container colaboraciones (max-width: 420px) {
+    .colaboraciones-navigation {
+      gap: calc(var(--gap) * 0.75);
+    }
+    .nav-btn {
+      min-width: 36px;
+      min-height: 36px;
+    }
+    .cards-track {
+      gap: calc(var(--gap) * 0.75);
+    }
+    /* Cards get very compact but remain usable */
+    .card-item {
+      width: clamp(120px, 28vw, 220px);
+    }
+  }
+
+  /* ===================================
+     Container Query: Mobile
+     =================================== */
+  @container colaboraciones (min-width: 421px) and (max-width: 639px) {
+    .colaboraciones-navigation {
+      gap: calc(var(--gap) * 0.9);
+    }
+    .nav-btn {
+      min-width: 40px;
+      min-height: 40px;
+    }
+    .cards-track {
+      gap: var(--gap);
+    }
+    /* Try to fit 2 cards when space allows */
+    .card-item {
+      width: calc(
+        (100% - (2 * var(--nav-w)) - (1 * var(--gap)) - (2 * var(--gutter))) / 2
+      );
+      min-width: 140px;
+      max-width: 260px;
+    }
   }
 
   /* ===================================
@@ -304,38 +440,56 @@ const totalCards = colaboracionesData.length;
   }
 
   .pagination-dots-colab :global(.pagination-dot.active) {
-    background: var(--color-accent-orange, #f49624);
+    background: var(--color-accent-orange);
     opacity: 1;
   }
 
   /* ===================================
-     Responsive — mobile-first, expand outward
+     Container Query: Tablet
      =================================== */
-  @media (max-width: 640px) {
+  @container colaboraciones (min-width: 640px) and (max-width: 1023px) {
     .colaboraciones-navigation {
-      gap: 0.5rem;
+      gap: calc(var(--gap) * 1.15);
     }
     .nav-btn {
-      min-width: 36px;
-      min-height: 36px;
+      min-width: 48px;
+      min-height: 48px;
     }
     .cards-track {
-      gap: 1rem;
+      gap: 1.25rem;
     }
-  }
-
-  /* Tablet: 2 cards */
-  @media (min-width: 641px) and (max-width: 1023px) {
+    /* Attempt to fit 3 cards */
     .card-item {
-      width: calc((100dvw - 5rem) / 2);
+      width: calc(
+        (100% - (2 * var(--nav-w)) - (2 * 1.25rem) - (2 * var(--gutter))) / 3
+      );
+      min-width: 140px;
       max-width: 300px;
     }
   }
 
-  /* Desktop: fixed 300 px cards */
-  @media (min-width: 1024px) {
+  /* ===================================
+     Container Query: Desktop
+     =================================== */
+  @container colaboraciones (min-width: 1024px) {
+    .colaboraciones-navigation {
+      max-width: 1140px;
+      gap: 1.5rem;
+    }
+    .cards-track {
+      gap: 1.5rem;
+    }
+    /* Fit more cards; keep them readable */
     .card-item {
-      width: 300px;
+      width: clamp(
+        160px,
+        calc(
+          (100% - (2 * var(--nav-w)) - (4 * 1.5rem) - (2 * var(--gutter))) / 6
+        ),
+        320px
+      );
+      min-width: 160px;
+      max-width: 320px;
     }
   }
 
@@ -344,7 +498,8 @@ const totalCards = colaboracionesData.length;
      =================================== */
   @media (prefers-reduced-motion: reduce) {
     .cards-track,
-    .nav-btn {
+    .nav-btn,
+    .btn-suggest {
       transition: none;
     }
   }

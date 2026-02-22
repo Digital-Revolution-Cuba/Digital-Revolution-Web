@@ -1,6 +1,6 @@
 ---
-import Accordeon from "../components/AccordeonSlider.astro";
-import "../styles/glass-card.css";
+import Accordeon from '../components/AccordeonSlider.astro';
+import '../styles/glass-card.css';
 ---
 
 <section
@@ -15,13 +15,14 @@ import "../styles/glass-card.css";
         Descubre <br /> Talentos
       </h2>
       <p class="hero-description">
-        Encuentra y conecta con personas creativas para intercambiar ideas y colaborar en proyectos
-        innovadores. Explora eventos locales, talleres y conferencias donde puedas conocer a
-        individuos con intereses similares de diversas disciplinas.
+        Encuentra y conecta con personas creativas para intercambiar ideas y
+        colaborar en proyectos innovadores. Explora eventos locales, talleres y
+        conferencias donde puedas conocer a individuos con intereses similares
+        de diversas disciplinas.
       </p>
 
       <div class="mt-8 flex justify-start">
-        <a href="/talentos" class="hero-cta"> Explora Talentos </a>
+        <button class="hero-cta"> Explora Talentos </button>
       </div>
     </div>
 
@@ -42,7 +43,7 @@ import "../styles/glass-card.css";
   }
 
   .hero-title {
-    font-family: Impact, "Impact", "Arial Black", sans-serif;
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
     font-weight: bold;
     line-height: 0.95;
     letter-spacing: 0.02em;
@@ -57,7 +58,7 @@ import "../styles/glass-card.css";
   }
 
   .hero-description {
-    font-family: var(--font-barlow, "Barlow Semi Condensed", sans-serif);
+    font-family: var(--font-barlow, 'Barlow Semi Condensed', sans-serif);
     color: var(--color-text-secondary, #a0a0a0);
     margin-top: 1.5rem;
     line-height: 1.5;
@@ -65,6 +66,8 @@ import "../styles/glass-card.css";
     font-size: clamp(1rem, 0.9rem + 0.5vw, 1.375rem);
     max-width: 500px;
   }
+
+
 
   /* Desktop adjustments */
   @media (min-width: 1024px) {
@@ -115,13 +118,10 @@ import "../styles/glass-card.css";
 
     .hero-title {
       font-size: clamp(2.5rem, 8vw, 3.5rem);
-      transform: scaleX(1);
-      max-width: 100%;
     }
 
     .hero-description {
       font-size: clamp(0.9rem, 3.5vw, 1.125rem);
-      max-width: 100%;
     }
   }
 </style>

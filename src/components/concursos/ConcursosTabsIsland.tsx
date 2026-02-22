@@ -3,43 +3,49 @@
  * UNIQUE DESIGN: Tab-based filtering (not accordion, not sidebar)
  */
 
-import type { CollectionEntry } from "astro:content";
-import { useMemo, useState } from "react";
-import { CATEGORY_LABELS } from "../../config/concursosConfig";
-import type { ConcursoCategory } from "../../types/concursos.types";
-import { formatDate } from "../../utils/concursosUtils";
+import type { CollectionEntry } from 'astro:content';
+import { useMemo, useState } from 'react';
+import { CATEGORY_LABELS } from '../../config/concursosConfig';
+import type { ConcursoCategory } from '../../types/concursos.types';
+import { formatDate } from '../../utils/concursosUtils';
 
 interface Props {
-  activos: CollectionEntry<"concursos">[];
-  proximos: CollectionEntry<"concursos">[];
-  finalizados: CollectionEntry<"concursos">[];
+  activos: CollectionEntry<'concursos'>[];
+  proximos: CollectionEntry<'concursos'>[];
+  finalizados: CollectionEntry<'concursos'>[];
 }
 
-type TabType = "activos" | "proximos" | "finalizados";
+type TabType = 'activos' | 'proximos' | 'finalizados';
 
-export default function ConcursosTabsIsland({ activos, proximos, finalizados }: Props) {
-  const [activeTab, setActiveTab] = useState<TabType>("activos");
-  const [selectedCategory, setSelectedCategory] = useState<ConcursoCategory | "all">("all");
-  const [searchQuery, setSearchQuery] = useState("");
+export default function ConcursosTabsIsland({
+  activos,
+  proximos,
+  finalizados,
+}: Props) {
+  const [activeTab, setActiveTab] = useState<TabType>('activos');
+  const [selectedCategory, setSelectedCategory] = useState<
+    ConcursoCategory | 'all'
+  >('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Get current contests based on active tab
   const currentConcursos = useMemo(() => {
-    let contests: CollectionEntry<"concursos">[] = [];
+    let contests: CollectionEntry<'concursos'>[] = [];
 
     switch (activeTab) {
-      case "activos":
+      case 'activos':
         contests = activos;
         break;
-      case "proximos":
+      case 'proximos':
         contests = proximos;
         break;
-      case "finalizados":
+      case 'finalizados':
         contests = finalizados;
         break;
     }
 
     // Apply category filter
-    if (selectedCategory !== "all") {
+    if (selectedCategory !== 'all') {
       contests = contests.filter((c) => c.data.category === selectedCategory);
     }
 
@@ -49,59 +55,70 @@ export default function ConcursosTabsIsland({ activos, proximos, finalizados }: 
       contests = contests.filter(
         (c) =>
           c.data.title.toLowerCase().includes(query) ||
-          c.data.description.toLowerCase().includes(query)
+          c.data.description.toLowerCase().includes(query),
       );
     }
 
     return contests;
-  }, [activeTab, selectedCategory, searchQuery, activos, proximos, finalizados]);
+  }, [
+    activeTab,
+    selectedCategory,
+    searchQuery,
+    activos,
+    proximos,
+    finalizados,
+  ]);
 
   const tabConfig = [
     {
-      id: "activos" as TabType,
-      label: "Activos",
+      id: 'activos' as TabType,
+      label: 'Activos',
       count: activos.length,
-      color: "#9747ff",
+      color: '#9747ff',
     },
     {
-      id: "proximos" as TabType,
-      label: "Próximos",
+      id: 'proximos' as TabType,
+      label: 'Próximos',
       count: proximos.length,
-      color: "#34dfde",
+      color: '#34dfde',
     },
     {
-      id: "finalizados" as TabType,
-      label: "Finalizados",
+      id: 'finalizados' as TabType,
+      label: 'Finalizados',
       count: finalizados.length,
-      color: "#666",
+      color: '#666',
     },
   ];
 
-  const categories: Array<{ id: ConcursoCategory | "all"; label: string }> = [
-    { id: "all", label: "Todas" },
-    { id: "fotografia", label: CATEGORY_LABELS.fotografia },
-    { id: "musica", label: CATEGORY_LABELS.musica },
-    { id: "arte-digital", label: CATEGORY_LABELS["arte-digital"] },
-    { id: "video", label: CATEGORY_LABELS.video },
-    { id: "escritura", label: CATEGORY_LABELS.escritura },
+  const categories: Array<{ id: ConcursoCategory | 'all'; label: string }> = [
+    { id: 'all', label: 'Todas' },
+    { id: 'fotografia', label: CATEGORY_LABELS.fotografia },
+    { id: 'musica', label: CATEGORY_LABELS.musica },
+    { id: 'arte-digital', label: CATEGORY_LABELS['arte-digital'] },
+    { id: 'video', label: CATEGORY_LABELS.video },
+    { id: 'escritura', label: CATEGORY_LABELS.escritura },
   ];
 
   return (
     <section className="concursos-tabs-section" id="concursos-tabs">
       <div className="tabs-container">
         {/* TABS NAVIGATION */}
-        <div className="tabs-nav" role="tablist" aria-label="Filtrar concursos por estado">
+        <div
+          className="tabs-nav"
+          role="tablist"
+          aria-label="Filtrar concursos por estado"
+        >
           {tabConfig.map((tab) => (
             <button
               key={tab.id}
               role="tab"
               aria-selected={activeTab === tab.id}
               aria-controls={`panel-${tab.id}`}
-              className={`tab-button ${activeTab === tab.id ? "active" : ""}`}
+              className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => setActiveTab(tab.id)}
               style={
                 {
-                  "--tab-color": tab.color,
+                  '--tab-color': tab.color,
                 } as React.CSSProperties
               }
             >
@@ -137,7 +154,7 @@ export default function ConcursosTabsIsland({ activos, proximos, finalizados }: 
             />
             {searchQuery && (
               <button
-                onClick={() => setSearchQuery("")}
+                onClick={() => setSearchQuery('')}
                 className="search-clear"
                 aria-label="Limpiar búsqueda"
               >
@@ -161,7 +178,7 @@ export default function ConcursosTabsIsland({ activos, proximos, finalizados }: 
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`category-pill ${selectedCategory === cat.id ? "active" : ""}`}
+                className={`category-pill ${selectedCategory === cat.id ? 'active' : ''}`}
               >
                 {cat.label}
               </button>
@@ -180,7 +197,11 @@ export default function ConcursosTabsIsland({ activos, proximos, finalizados }: 
             {currentConcursos.length > 0 ? (
               <div className="concursos-masonry">
                 {currentConcursos.map((concurso, index) => (
-                  <ConcursoCard key={concurso.id} concurso={concurso} index={index} />
+                  <ConcursoCard
+                    key={concurso.id}
+                    concurso={concurso}
+                    index={index}
+                  />
                 ))}
               </div>
             ) : (
@@ -212,7 +233,7 @@ function ConcursoCard({
   concurso,
   index,
 }: {
-  concurso: CollectionEntry<"concursos">;
+  concurso: CollectionEntry<'concursos'>;
   index: number;
 }) {
   const { data } = concurso;
@@ -220,30 +241,38 @@ function ConcursoCard({
 
   // Ribbon colors by status
   const ribbonColors: Record<typeof data.status, string> = {
-    activo: "linear-gradient(135deg, #9747ff, #ff47d4)",
-    proximo: "linear-gradient(135deg, #34dfde, #19ceee)",
-    finalizado: "linear-gradient(135deg, #666, #888)",
-    cerrado: "linear-gradient(135deg, #444, #666)",
+    activo: 'linear-gradient(135deg, #9747ff, #ff47d4)',
+    proximo: 'linear-gradient(135deg, #34dfde, #19ceee)',
+    finalizado: 'linear-gradient(135deg, #666, #888)',
+    cerrado: 'linear-gradient(135deg, #444, #666)',
   };
 
   const statusLabels: Record<typeof data.status, string> = {
-    activo: "Activo",
-    proximo: "Próximo",
-    finalizado: "Finalizado",
-    cerrado: "Cerrado",
+    activo: 'Activo',
+    proximo: 'Próximo',
+    finalizado: 'Finalizado',
+    cerrado: 'Cerrado',
   };
 
   return (
     <article className={`concurso-card-masonry card-${index % 3}`}>
       <a href={`/concursos/${concurso.data.slug}`} className="card-link">
         {/* Angular Ribbon */}
-        <div className="card-ribbon" style={{ background: ribbonColors[data.status] }}>
+        <div
+          className="card-ribbon"
+          style={{ background: ribbonColors[data.status] }}
+        >
           {statusLabels[data.status]}
         </div>
 
         {/* Image */}
         <div className="card-image-container">
-          <img src={data.image} alt={data.imageAlt} className="card-image" loading="lazy" />
+          <img
+            src={data.image}
+            alt={data.imageAlt}
+            className="card-image"
+            loading="lazy"
+          />
           <div className="card-overlay"></div>
         </div>
 
@@ -270,7 +299,12 @@ function ConcursoCard({
             </div>
             {data.featured && (
               <div className="featured-badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
                 Destacado

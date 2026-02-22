@@ -1,23 +1,23 @@
 ---
 /**
  * DiagonalDivider Component
- *
+ * 
  * Creates a diagonal SVG divider between sections with customizable color
  */
 
 interface Props {
   color: string;
-  direction?: "down" | "up";
+  direction?: 'down' | 'up';
   className?: string;
 }
 
-const { color, direction = "down", className = "" } = Astro.props;
-const isUp = direction === "up";
+const { color, direction = 'down', className = '' } = Astro.props;
+const isUp = direction === 'up';
 ---
 
 <div class={`diagonal-divider ${className}`}>
   <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-    <polygon points={isUp ? "0,120 1200,0 1200,120" : "0,0 1200,120 0,120"} fill={color}></polygon>
+    <polygon points={isUp ? "0,120 1200,0 1200,120" : "0,0 1200,120 0,120"} fill={color} />
   </svg>
 </div>
 

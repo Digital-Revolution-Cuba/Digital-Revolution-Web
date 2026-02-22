@@ -3,8 +3,8 @@
  * Shared utilities for contest operations
  */
 
-import type { CollectionEntry } from "astro:content";
-import { STATUS_PRIORITY } from "../config/concursosConfig";
+import type { CollectionEntry } from 'astro:content';
+import { STATUS_PRIORITY } from '../config/concursosConfig';
 
 /**
  * Format a date to Spanish locale string
@@ -12,10 +12,10 @@ import { STATUS_PRIORITY } from "../config/concursosConfig";
  * @returns Formatted date string (e.g., "15 de febrero de 2026")
  */
 export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  return new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   }).format(new Date(date));
 }
 
@@ -25,8 +25,8 @@ export function formatDate(date: Date): string {
  * @returns Sorted array of contests
  */
 export function sortConcursos(
-  contests: CollectionEntry<"concursos">[]
-): CollectionEntry<"concursos">[] {
+  contests: CollectionEntry<'concursos'>[],
+): CollectionEntry<'concursos'>[] {
   return [...contests].sort((a, b) => {
     // Featured first
     if (a.data.featured && !b.data.featured) return -1;
@@ -45,9 +45,9 @@ export function sortConcursos(
  * @returns Filtered array of contests
  */
 export function filterBySearch(
-  contests: CollectionEntry<"concursos">[],
-  query: string
-): CollectionEntry<"concursos">[] {
+  contests: CollectionEntry<'concursos'>[],
+  query: string,
+): CollectionEntry<'concursos'>[] {
   if (!query) return contests;
 
   const lowerQuery = query.toLowerCase();
@@ -68,9 +68,9 @@ export function filterBySearch(
  * @returns Filtered array of contests
  */
 export function filterByCategory(
-  contests: CollectionEntry<"concursos">[],
-  category: string | null
-): CollectionEntry<"concursos">[] {
+  contests: CollectionEntry<'concursos'>[],
+  category: string | null,
+): CollectionEntry<'concursos'>[] {
   if (!category) return contests;
 
   return contests.filter((concurso) => concurso.data.category === category);
@@ -83,9 +83,9 @@ export function filterByCategory(
  * @returns Filtered array of contests
  */
 export function filterByStatus(
-  contests: CollectionEntry<"concursos">[],
-  status: string | null
-): CollectionEntry<"concursos">[] {
+  contests: CollectionEntry<'concursos'>[],
+  status: string | null,
+): CollectionEntry<'concursos'>[] {
   if (!status) return contests;
 
   return contests.filter((concurso) => concurso.data.status === status);
@@ -96,12 +96,14 @@ export function filterByStatus(
  * @param premios - Array of prize objects
  * @returns Total value in number
  */
-export function calcularValorPremios(premios: Array<{ value?: string }>): number {
+export function calcularValorPremios(
+  premios: Array<{ value?: string }>,
+): number {
   return premios.reduce((total, premio) => {
     if (!premio.value) return total;
     const match = premio.value.match(/\$?([\d,]+)/);
     if (match) {
-      return total + parseInt(match[1].replace(/,/g, ""), 10);
+      return total + parseInt(match[1].replace(/,/g, ''), 10);
     }
     return total;
   }, 0);
@@ -113,6 +115,6 @@ export function calcularValorPremios(premios: Array<{ value?: string }>): number
  * @returns Formatted string (e.g., "$15K+")
  */
 export function formatPrizeTotal(total: number): string {
-  if (total === 0) return "$15K+";
+  if (total === 0) return '$15K+';
   return `$${(total / 1000).toFixed(0)}K+`;
 }

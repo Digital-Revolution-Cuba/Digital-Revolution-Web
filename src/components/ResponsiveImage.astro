@@ -12,11 +12,11 @@ interface Props {
   widths?: number[];
   sizes?: string;
   aspectRatio?: string;
-  loading?: "lazy" | "eager";
-  decoding?: "async" | "sync" | "auto";
-  fetchpriority?: "high" | "low" | "auto";
+  loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
+  fetchpriority?: 'high' | 'low' | 'auto';
   class?: string;
-  objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
+  objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
   quality?: number;
 }
 
@@ -24,28 +24,28 @@ const {
   src,
   alt,
   widths = [320, 640, 768, 1024, 1280, 1536, 1920, 2560],
-  sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw",
-  aspectRatio = "16 / 9",
-  loading = "lazy",
-  decoding = "async",
-  fetchpriority = "auto",
-  class: className = "",
-  objectFit = "cover",
+  sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw',
+  aspectRatio = '16 / 9',
+  loading = 'lazy',
+  decoding = 'async',
+  fetchpriority = 'auto',
+  class: className = '',
+  objectFit = 'cover',
   quality = 80,
 } = Astro.props;
 
 // Handle both string URLs and ImageMetadata from imports
-const imageSrc = typeof src === "string" ? src : src.src;
+const imageSrc = typeof src === 'string' ? src : src.src;
 
 // Check if using Astro's image optimization (local images)
-const isOptimizedImage = typeof src !== "string";
+const isOptimizedImage = typeof src !== 'string';
 
 // Use actual image dimensions if available from metadata
-const imageWidth = typeof src !== "string" && src.width ? src.width : 800;
-const imageHeight = typeof src !== "string" && src.height ? src.height : 0;
+const imageWidth = typeof src !== 'string' && src.width ? src.width : 800;
+const imageHeight = typeof src !== 'string' && src.height ? src.height : 0;
 
 // Calculate dimensions for width/height attributes (helps CLS)
-const aspectParts = aspectRatio.split("/").map(Number);
+const aspectParts = aspectRatio.split('/').map(Number);
 const aspectValue = aspectParts[0] / aspectParts[1];
 const defaultWidth = imageWidth;
 const defaultHeight = imageHeight || Math.round(defaultWidth / aspectValue);
@@ -59,15 +59,15 @@ function generateSrcset(baseUrl: string, format: string): string {
         : `${baseUrl}?w=${w}&format=${format}&quality=${quality}`;
       return `${url} ${w}w`;
     })
-    .join(", ");
+    .join(', ');
 }
 
-const avifSrcset = generateSrcset(imageSrc, "avif");
-const webpSrcset = generateSrcset(imageSrc, "webp");
-const fallbackSrcset = generateSrcset(imageSrc, "jpg");
+const avifSrcset = generateSrcset(imageSrc, 'avif');
+const webpSrcset = generateSrcset(imageSrc, 'webp');
+const fallbackSrcset = generateSrcset(imageSrc, 'jpg');
 ---
 
-<picture class:list={["optimized-image-wrapper", className]}>
+<picture class:list={['optimized-image-wrapper', className]}>
   {
     isOptimizedImage ? (
       <Fragment>
@@ -187,10 +187,10 @@ const fallbackSrcset = generateSrcset(imageSrc, "jpg");
    * Precarga imágenes 100px antes de entrar al viewport
    */
   function initImageLoading() {
-    if (!("IntersectionObserver" in window)) {
+    if (!('IntersectionObserver' in window)) {
       // Fallback: cargar todas las imágenes inmediatamente
-      document.querySelectorAll(".optimized-image").forEach((img) => {
-        (img as HTMLImageElement).classList.add("loaded");
+      document.querySelectorAll('.optimized-image').forEach((img) => {
+        (img as HTMLImageElement).classList.add('loaded');
       });
       return;
     }
@@ -203,13 +203,13 @@ const fallbackSrcset = generateSrcset(imageSrc, "jpg");
 
             // Agregar clase loaded cuando la imagen esté cargada
             const handleLoad = () => {
-              img.classList.add("loaded");
+              img.classList.add('loaded');
             };
 
             if (img.complete) {
               handleLoad();
             } else {
-              img.addEventListener("load", handleLoad, { once: true });
+              img.addEventListener('load', handleLoad, { once: true });
             }
 
             // Dejar de observar esta imagen
@@ -218,27 +218,31 @@ const fallbackSrcset = generateSrcset(imageSrc, "jpg");
         });
       },
       {
-        rootMargin: "100px", // Pre-cargar 100px antes
+        rootMargin: '100px', // Pre-cargar 100px antes
         threshold: 0.01,
-      }
+      },
     );
 
     // Observar todas las imágenes lazy
-    document.querySelectorAll('.optimized-image[loading="lazy"]').forEach((img) => {
-      imageObserver.observe(img);
-    });
+    document
+      .querySelectorAll('.optimized-image[loading="lazy"]')
+      .forEach((img) => {
+        imageObserver.observe(img);
+      });
 
     // Para imágenes eager, cargarlas inmediatamente
-    document.querySelectorAll('.optimized-image[loading="eager"]').forEach((img) => {
-      const handleLoad = () => {
-        (img as HTMLImageElement).classList.add("loaded");
-      };
+    document
+      .querySelectorAll('.optimized-image[loading="eager"]')
+      .forEach((img) => {
+        const handleLoad = () => {
+          (img as HTMLImageElement).classList.add('loaded');
+        };
 
-      if ((img as HTMLImageElement).complete) {
-        handleLoad();
-      } else {
-        img.addEventListener("load", handleLoad, { once: true });
-      }
-    });
+        if ((img as HTMLImageElement).complete) {
+          handleLoad();
+        } else {
+          img.addEventListener('load', handleLoad, { once: true });
+        }
+      });
   }
 </script>

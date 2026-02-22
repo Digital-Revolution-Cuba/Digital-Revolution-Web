@@ -154,7 +154,7 @@
 window.responsiveTests.runAllTests();
 window.responsiveTests.auditTouchTargets();
 window.responsiveTests.testContainerQueries();
-window.responsiveTests.simulateDevice("iPhone 14");
+window.responsiveTests.simulateDevice('iPhone 14');
 window.responsiveTests.getWebVitals();
 window.responsiveTests.showBreakpointIndicator();
 ```
@@ -221,7 +221,7 @@ export function initializeHeader() {
 
 ```javascript
 // Intersection Observer con rootMargin
-rootMargin: "100px"; // Pre-carga 100px antes
+rootMargin: '100px'; // Pre-carga 100px antes
 ```
 
 ### 4. **Container Queries sobre Media Queries**

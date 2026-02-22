@@ -1,13 +1,11 @@
 ---
-import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import DiagonalDivider from "../../components/DiagonalDivider.astro";
-import CollaborationCard from "../../components/CollaborationCard.astro";
-
-export const prerender = true;
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import DiagonalDivider from '../../components/DiagonalDivider.astro';
+import CollaborationCard from '../../components/CollaborationCard.astro';
 
 // Get all colaboraciones from content collection
-const allColaboraciones = await getCollection("colaboraciones");
+const allColaboraciones = await getCollection('colaboraciones');
 
 // Sort: featured first, then by status (activa > planificada > pausada > finalizada)
 const colaboracionesOrdenadas = allColaboraciones.sort((a, b) => {
@@ -28,17 +26,17 @@ const colaboracionesOrdenadas = allColaboraciones.sort((a, b) => {
 
 // Separate active/planned from finished/paused
 const colaboracionesActivas = colaboracionesOrdenadas.filter(
-  (c) => c.data.status === "activa" || c.data.status === "planificada"
+  (c) => c.data.status === 'activa' || c.data.status === 'planificada',
 );
 const colaboracionesFinalizadas = colaboracionesOrdenadas.filter(
-  (c) => c.data.status === "finalizada" || c.data.status === "pausada"
+  (c) => c.data.status === 'finalizada' || c.data.status === 'pausada',
 );
 
 const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  return new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   }).format(date);
 };
 ---
@@ -53,12 +51,17 @@ const formatDate = (date: Date) => {
     <section class="collab-hero py-24 md:py-32">
       <div class="container mx-auto px-6">
         <div class="animate-fade-in max-w-4xl opacity-0">
-          <h1 class="mb-8 text-6xl leading-none font-black tracking-tighter text-white md:text-8xl">
+          <h1
+            class="mb-8 text-6xl leading-none font-black tracking-tighter text-white md:text-8xl"
+          >
             COLABORACIONES <span class="text-stroke-cyan">DESTACADAS</span>
           </h1>
-          <p class="max-w-2xl text-xl leading-relaxed font-light text-gray-400 md:text-2xl">
-            Descubre proyectos innovadores y únete a nuestra comunidad creativa. Explora
-            colaboraciones activas y pasadas que transforman ideas en realidad.
+          <p
+            class="max-w-2xl text-xl leading-relaxed font-light text-gray-400 md:text-2xl"
+          >
+            Descubre proyectos innovadores y únete a nuestra comunidad creativa.
+            Explora colaboraciones activas y pasadas que transforman ideas en
+            realidad.
           </p>
         </div>
       </div>
@@ -73,7 +76,9 @@ const formatDate = (date: Date) => {
         {/* Section Header */}
         <div class="mb-16">
           <div class="mb-4 flex items-center gap-4">
-            <h2 class="text-4xl font-black tracking-tight text-black uppercase md:text-6xl">
+            <h2
+              class="text-4xl font-black tracking-tight text-black uppercase md:text-6xl"
+            >
               Colaboraciones Activas
             </h2>
           </div>
@@ -94,7 +99,7 @@ const formatDate = (date: Date) => {
                   description={collab.data.description}
                   location={collab.data.partner.name}
                   date={formatDate(collab.data.fechas.inicio)}
-                  isActive={collab.data.status === "activa"}
+                  isActive={collab.data.status === 'activa'}
                   isFeatured={collab.data.featured}
                   tags={collab.data.tags}
                   slug={collab.data.slug}
@@ -122,7 +127,9 @@ const formatDate = (date: Date) => {
         >
           <div>
             <div class="mb-3 flex items-center gap-5">
-              <h2 class="text-4xl font-black tracking-tight text-white uppercase md:text-5xl">
+              <h2
+                class="text-4xl font-black tracking-tight text-white uppercase md:text-5xl"
+              >
                 Colaboraciones Finalizadas
               </h2>
             </div>
@@ -144,7 +151,10 @@ const formatDate = (date: Date) => {
         </button>
 
         {/* Expandable Grid */}
-        <div id="finished-grid" class="mt-12 hidden overflow-hidden transition-all duration-500">
+        <div
+          id="finished-grid"
+          class="mt-12 hidden overflow-hidden transition-all duration-500"
+        >
           {
             colaboracionesFinalizadas.length > 0 ? (
               <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
@@ -186,9 +196,12 @@ const formatDate = (date: Date) => {
         >
           ¿Quieres colaborar con nosotros?
         </h2>
-        <p class="mx-auto mb-12 max-w-2xl text-xl font-medium text-black/80 md:text-2xl">
-          Tenemos oportunidades emocionantes para creadores, desarrolladores, diseñadores y
-          emprendedores. Únete a nuestra comunidad y haz que tu idea sea realidad.
+        <p
+          class="mx-auto mb-12 max-w-2xl text-xl font-medium text-black/80 md:text-2xl"
+        >
+          Tenemos oportunidades emocionantes para creadores, desarrolladores,
+          diseñadores y emprendedores. Únete a nuestra comunidad y haz que tu
+          idea sea realidad.
         </p>
         <a
           href="/contacto"
@@ -202,20 +215,20 @@ const formatDate = (date: Date) => {
 </Layout>
 
 <script>
-  const toggleBtn = document.getElementById("toggle-finished");
-  const finishedGrid = document.getElementById("finished-grid");
-  const chevron = document.querySelector(".chevron") as HTMLElement | null;
+  const toggleBtn = document.getElementById('toggle-finished');
+  const finishedGrid = document.getElementById('finished-grid');
+  const chevron = document.querySelector('.chevron') as HTMLElement | null;
 
   if (toggleBtn && finishedGrid && chevron) {
-    toggleBtn.addEventListener("click", () => {
-      const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
 
-      toggleBtn.setAttribute("aria-expanded", (!isExpanded).toString());
-      finishedGrid.classList.toggle("hidden");
-      chevron.style.transform = isExpanded ? "rotate(0deg)" : "rotate(180deg)";
+      toggleBtn.setAttribute('aria-expanded', (!isExpanded).toString());
+      finishedGrid.classList.toggle('hidden');
+      chevron.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
       if (!isExpanded) {
-        finishedGrid.classList.add("animate-fade-in-up");
+        finishedGrid.classList.add('animate-fade-in-up');
       }
     });
   }
@@ -264,7 +277,15 @@ const formatDate = (date: Date) => {
 
   .collab-hero {
     background-image:
-      radial-gradient(circle at 80% 20%, rgba(52, 223, 222, 0.08), transparent 40%),
-      radial-gradient(circle at 20% 80%, rgba(151, 71, 255, 0.05), transparent 40%);
+      radial-gradient(
+        circle at 80% 20%,
+        rgba(52, 223, 222, 0.08),
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 20% 80%,
+        rgba(151, 71, 255, 0.05),
+        transparent 40%
+      );
   }
 </style>

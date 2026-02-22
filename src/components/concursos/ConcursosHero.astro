@@ -12,7 +12,8 @@ interface Props {
   totalCategories: number;
 }
 
-const { activeCount, totalParticipants, totalPrizes, totalCategories } = Astro.props;
+const { activeCount, totalParticipants, totalPrizes, totalCategories } =
+  Astro.props;
 ---
 
 <section class="concursos-hero" aria-labelledby="hero-heading">
@@ -30,8 +31,9 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } = Astro.p
           Concursos<br />Activos
         </h1>
         <p class="hero-description">
-          Participa en desafíos creativos diseñados para impulsar tu talento. Desde fotografía hasta
-          diseño digital, encuentra el concurso perfecto para destacar.
+          Participa en desafíos creativos diseñados para impulsar tu talento.
+          Desde fotografía hasta diseño digital, encuentra el concurso perfecto
+          para destacar.
         </p>
         <a href="#concursos-filters" class="hero-cta"> Explorar Concursos </a>
       </div>
@@ -43,7 +45,11 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } = Astro.p
       <div class="hero-cyan" aria-hidden="true"></div>
       <!-- Yellow section with stats (foreground layer with diagonal cutout) -->
       <div class="hero-yellow">
-        <div class="stats-row" role="group" aria-label="Estadísticas de concursos">
+        <div
+          class="stats-row"
+          role="group"
+          aria-label="Estadísticas de concursos"
+        >
           <div class="stat-block">
             <span class="stat-value">{activeCount}</span>
             <span class="stat-name">Activos</span>
@@ -91,7 +97,7 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } = Astro.p
   .hero-background-image {
     position: absolute;
     inset: 0;
-    background-image: url("../../assets/concursosBackgraund.png");
+    background-image: url('../../assets/concursosBackgraund.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -107,16 +113,21 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } = Astro.p
   .hero-dark {
     position: relative;
     min-height: clamp(250px, 20vw, 200px);
-    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 4vw, 3rem) clamp(5rem, 10vw, 10rem);
+    padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 4vw, 3rem)
+      clamp(5rem, 10vw, 10rem);
     z-index: 3;
   }
 
   /* Gradient overlay for hero-dark section */
   .hero-dark::before {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0, 16, 24, 0.75) 0%, rgba(0, 16, 24, 0.7) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(0, 16, 24, 0.75) 0%,
+      rgba(0, 16, 24, 0.7) 100%
+    );
     z-index: -1;
     pointer-events: none;
   }
@@ -126,7 +137,7 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } = Astro.p
   }
 
   .hero-title {
-    font-family: Impact, "Impact", "Arial Black", sans-serif;
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
     font-weight: bold;
     line-height: 0.95;
     letter-spacing: 0.02em;
@@ -140,7 +151,7 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } = Astro.p
   }
 
   .hero-description {
-    font-family: var(--font-barlow, "Barlow Semi Condensed", sans-serif);
+    font-family: var(--font-barlow, 'Barlow Semi Condensed', sans-serif);
     color: rgba(255, 255, 255, 0.9);
     line-height: 1.6;
     font-size: clamp(0.938rem, 2.5vw, 1.25rem);
@@ -179,10 +190,14 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } = Astro.p
 
   /* Gradient overlay for hero-cyan-blue section (same as hero-dark) */
   .hero-cyan-blue::before {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0, 16, 24, 0.75) 0%, rgba(0, 16, 24, 0.7) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(0, 16, 24, 0.75) 0%,
+      rgba(0, 16, 24, 0.7) 100%
+    );
     z-index: 0;
     pointer-events: none;
   }
@@ -200,7 +215,8 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } = Astro.p
   .hero-yellow {
     position: relative;
     background: var(--palette-accent-yellow, #ffc943);
-    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem) clamp(2rem, 4vw, 3rem);
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem)
+      clamp(2rem, 4vw, 3rem);
     clip-path: polygon(0 20%, 100% 0%, 100% 100%, 0% 100%);
     z-index: 2;
   }
@@ -227,7 +243,7 @@ const { activeCount, totalParticipants, totalPrizes, totalCategories } = Astro.p
   }
 
   .stat-value {
-    font-family: Impact, "Impact", "Arial Black", sans-serif;
+    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
     font-size: clamp(1.75rem, 5vw, 3.5rem);
     font-weight: bold;
     line-height: 1;
