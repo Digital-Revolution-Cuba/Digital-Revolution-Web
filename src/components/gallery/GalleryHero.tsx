@@ -1,5 +1,6 @@
 import { Camera, Music, Palette } from "lucide-react";
-import "../../styles/components/gallery.css";
+import "../../styles/components/gallery-carousel.css";
+import "../../styles/components/hero.css";
 export function HeroSection() {
   return (
     <section className="hero">
