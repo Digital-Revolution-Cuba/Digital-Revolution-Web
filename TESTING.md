@@ -30,7 +30,7 @@ window.responsiveTests.logViewportInfo();
 window.responsiveTests.showBreakpointIndicator();
 
 // Simular dispositivo específico
-const cleanup = window.responsiveTests.simulateDevice('iPhone 14');
+const cleanup = window.responsiveTests.simulateDevice("iPhone 14");
 // Para cerrar: cleanup()
 
 // Medir Core Web Vitals

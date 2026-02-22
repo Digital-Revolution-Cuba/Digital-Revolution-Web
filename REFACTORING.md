@@ -87,10 +87,10 @@ src/
 1. **Create data file** (`src/data/newCategory.ts`):
 
 ```typescript
-import type { BaseGalleryItem } from './types';
+import type { BaseGalleryItem } from "./types";
 
 export interface NewCategoryItem extends BaseGalleryItem {
-  type: 'newCategory';
+  type: "newCategory";
   // Add specific fields
 }
 
@@ -114,12 +114,12 @@ export type GalleryItem =
 4. **Update main gallery** (`src/components/DinamycGallery.astro`):
 
 ```ts
-import NewCategoryCard from './gallery/NewCategoryCard.astro';
-import { newCategoryGallery } from '../data';
+import NewCategoryCard from "./gallery/NewCategoryCard.astro";
+import { newCategoryGallery } from "../data";
 
 const categories: CategoryConfig[] = [
   // ... existing categories
-  { id: 'newCategory', label: 'New Category', items: newCategoryGallery },
+  { id: "newCategory", label: "New Category", items: newCategoryGallery },
 ];
 ```
 

@@ -3,7 +3,7 @@
  * Implements lazy loading with IntersectionObserver
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface UseInfiniteScrollOptions {
   initialItems: number;
@@ -12,16 +12,8 @@ interface UseInfiniteScrollOptions {
   rootMargin?: string;
 }
 
-export function useInfiniteScroll<T>(
-  allItems: T[],
-  options: UseInfiniteScrollOptions,
-) {
-  const {
-    initialItems,
-    itemsPerPage,
-    threshold = 0.5,
-    rootMargin = '100px',
-  } = options;
+export function useInfiniteScroll<T>(allItems: T[], options: UseInfiniteScrollOptions) {
+  const { initialItems, itemsPerPage, threshold = 0.5, rootMargin = "100px" } = options;
 
   const [visibleItems, setVisibleItems] = useState<T[]>([]);
   const [page, setPage] = useState(0);
@@ -72,7 +64,7 @@ export function useInfiniteScroll<T>(
           loadMore();
         }
       },
-      { threshold, rootMargin },
+      { threshold, rootMargin }
     );
 
     observer.observe(target);

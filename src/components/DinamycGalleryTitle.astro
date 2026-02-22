@@ -28,7 +28,7 @@
   }
   .azul {
     background-color: var(--color-accent-cyan);
-    background-image: url('../assets/concursosBackgraund.png');
+    background-image: url("../assets/concursosBackgraund.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -53,10 +53,12 @@
     bottom: 20px;
     right: 20px;
     padding: 0;
-    font-family: Impact, Charcoal, 'Arial Black', sans-serif;
-    font-size: 128px;
+    font-family: Impact, Charcoal, "Arial Black", sans-serif;
+    font-size: clamp(3rem, 10vw, 128px);
     line-height: 1.1;
     text-transform: uppercase;
+    max-width: calc(100% - 40px);
+    word-break: break-word;
   }
 
   .image-container {
@@ -84,6 +86,7 @@
     .azul {
       height: 80px;
       clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 85%);
+      background-attachment: scroll;
     }
     .amarillo {
       margin-top: -80px;

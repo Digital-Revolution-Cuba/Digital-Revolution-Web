@@ -3,20 +3,14 @@
  * Manages modal state and body scroll lock
  */
 
-import { useEffect, useState } from 'react';
-
-interface SelectedImage {
-  download_url: string;
-  author: string;
-}
+import { useEffect, useState } from "react";
+import type { GalleryItem } from "../../data/gallery";
 
 export function useGalleryModal() {
-  const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(
-    null,
-  );
+  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const openModal = (image: SelectedImage) => {
+  const openModal = (image: GalleryItem) => {
     setSelectedImage(image);
     setTimeout(() => setIsModalVisible(true), 10);
   };
@@ -29,14 +23,14 @@ export function useGalleryModal() {
   // Manage body scroll lock when modal is open
   useEffect(() => {
     if (selectedImage) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
 
     // Cleanup on unmount
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [selectedImage]);
 

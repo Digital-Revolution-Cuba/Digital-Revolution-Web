@@ -1,18 +1,18 @@
-@import './fonts.css';
-@import 'tailwindcss';
-@import './animations.css';
-@import './components/responsive-card.css';
-@import './components/adaptive-gallery.css';
-@import './components/fluid-typography.css';
+@import "./fonts.css";
+@import "tailwindcss";
+@import "./animations.css";
+@import "./components/responsive-card.css";
+@import "./components/adaptive-gallery.css";
+@import "./components/fluid-typography.css";
 
 /* ===========================
    Design tokens (theme)
    =========================== */
 @theme {
   /* Fonts */
-  --font-saira: 'Saira Stencil One', sans-serif;
-  --font-barlow: 'Barlow Semi Condensed', sans-serif;
-  --font-rubik: 'Rubik', sans-serif;
+  --font-saira: "Saira Stencil One", sans-serif;
+  --font-barlow: "Barlow Semi Condensed", sans-serif;
+  --font-rubik: "Rubik", sans-serif;
   --default-font-family: var(--font-rubik);
 
   /* ---------------------------
@@ -76,10 +76,8 @@
      --------------------------- */
   --shadow-text-sm: 0px 3px 0px rgba(0, 0, 0, var(--alpha-25, 0.25));
   --shadow-md: 0 8px 16px rgba(0, 0, 0, var(--alpha-40));
-  --shadow-accent-blue: 0 12px 30px
-    rgba(var(--color-accent-blue-rgb), var(--alpha-40));
-  --shadow-accent-orange: 0 8px 24px
-    rgba(var(--palette-accent-orange-rgb), var(--alpha-40));
+  --shadow-accent-blue: 0 12px 30px rgba(var(--color-accent-blue-rgb), var(--alpha-40));
+  --shadow-accent-orange: 0 8px 24px rgba(var(--palette-accent-orange-rgb), var(--alpha-40));
 
   /* ---------------------------
      Gradient helpers (reusable "shine" gradients)
@@ -185,7 +183,7 @@ body {
   /* DEPRECATED: Use .heading-lg instead */
   .heading-impact {
     /* Alias para compatibilidad - usar .heading-lg en nuevos componentes */
-    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-family: Impact, "Impact", "Arial Black", sans-serif;
     font-weight: 400;
     line-height: 1;
     letter-spacing: 0;
@@ -197,7 +195,7 @@ body {
   /* DEPRECATED: Use .heading-xl instead */
   .descubre-talentos {
     /* Alias para compatibilidad - usar .heading-xl en nuevos componentes */
-    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-family: Impact, "Impact", "Arial Black", sans-serif;
     font-weight: 400;
     line-height: 0.95;
     letter-spacing: -0.01em;
@@ -207,7 +205,7 @@ body {
   }
 
   .heading-colab {
-    font-family: Impact, 'Impact', 'Arial Black', sans-serif;
+    font-family: Impact, "Impact", "Arial Black", sans-serif;
     font-weight: 400;
     line-height: 0.95;
     letter-spacing: -0.01em;
@@ -217,7 +215,6 @@ body {
     /* Escala fluida: 36px → 96px */
     font-size: clamp(2.25rem, 1.5rem + 3.75vw, 6rem);
   }
-
 
   .hero-cta {
     background: var(--palette-brand-navy, #002b38);
@@ -236,7 +233,6 @@ body {
     color: var(--palette-brand-dark, #011822);
     box-shadow: 0 0 20px rgba(52, 223, 222, 0.4);
   }
-
 
   /* Centralized shine effect (aplicable a cualquier tarjeta .gallery-item) */
   .shine-effect {
@@ -291,11 +287,7 @@ body {
 
   /* Fotografía: overlay basado en color de marca (más fácil de mantener) */
   .fotografia-item .photo-overlay {
-    background: linear-gradient(
-      to top,
-      rgba(var(--palette-brand-dark-rgb), 0.95),
-      transparent
-    );
+    background: linear-gradient(to top, rgba(var(--palette-brand-dark-rgb), 0.95), transparent);
   }
 
   /* Join Our Community - Enhanced styles */
@@ -368,11 +360,7 @@ body {
     border-radius: 0.8rem;
     font-weight: 700;
     color: white;
-    background: linear-gradient(
-      90deg,
-      var(--color-accent-cyan),
-      var(--color-accent-purple)
-    );
+    background: linear-gradient(90deg, var(--color-accent-cyan), var(--color-accent-purple));
     box-shadow: 0 8px 20px rgba(var(--palette-accent-cyan-rgb), 0.18);
     cursor: pointer;
     overflow: hidden;
@@ -394,7 +382,7 @@ body {
   }
 
   .cta-btn::after {
-    content: '';
+    content: "";
     position: absolute;
     left: -60%;
     top: 0;
