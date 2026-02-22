@@ -1,7 +1,19 @@
-/* Centralized animation styles for the gallery */
+/**
+ * Centralized Animation System
+ * All shared animation timing, keyframes, and transition utilities.
+ * Component-specific animations should be namespaced (e.g., hero-slideUp).
+ *
+ * Timing tokens are defined in global.css @theme:
+ *   --flip-swap-duration, --card-transition-duration,
+ *   --ease-smooth, --duration-fast, --duration-normal, --duration-slow
+ */
 
-/* Button swap animations */
-/* Button swap animations: FLIP used instead of keyframe move classes. */
+/* ==================================================
+   Gallery Button States
+   ================================================== */
+.category-btn {
+  backface-visibility: hidden;
+}
 
 .category-btn:disabled {
   opacity: 0.6;
@@ -9,39 +21,134 @@
   pointer-events: none;
 }
 
-/* Hint the engine we'll animate transforms for smoothness (used by FLIP). */
-.category-btn {
-  backface-visibility: hidden;
-}
-
-/* Animation timing variables shared between CSS and JS.
-   - --flip-swap-duration: duration used for button flip/swap visuals (example: 90ms)
-   - --card-transition-duration: duration used by card transitions (defaulted to the previous JS fallback 160ms)
-   Change these values to update animations globally; JS reads --card-transition-duration to avoid magic numbers.
-*/
-:root {
-  --flip-swap-duration: 70ms;
-  --card-transition-duration: 100ms; /* reducido para animar más rápido */
-}
-
-/* Example usage so those vars are actually applied in CSS */
-.absolute.top-0.left-0.z-20 {
-  transition: transform var(--flip-swap-duration) ease;
-}
-
+/* ==================================================
+   Card Transitions (gallery cards)
+   ================================================== */
 .music-card {
   transition:
     transform var(--card-transition-duration) ease,
     box-shadow var(--card-transition-duration) ease;
 }
 
-/* Card transition: use shared timing variable */
 .gallery-item {
   transition:
     opacity var(--card-transition-duration) ease,
     transform var(--card-transition-duration) ease;
 }
+
 .gallery-item.hiding {
   opacity: 0;
   transform: translateY(6px) scale(0.995);
+}
+
+/* ==================================================
+   Shared Keyframes
+   These are used across multiple components.
+   Component-specific animations live in their own files.
+   ================================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInSimple {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 5px rgba(var(--palette-accent-cyan-rgb), 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(var(--palette-accent-cyan-rgb), 0.6));
+  }
+}
+
+/* ==================================================
+   Utility Classes
+   ================================================== */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* ==================================================
+   Reduced Motion
+   ================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-item,
+  .music-card {
+    transition: none;
+  }
 }
