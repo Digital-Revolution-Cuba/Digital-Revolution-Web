@@ -86,18 +86,7 @@
   outline-offset: 2px;
 }
 
-/* Screen reader only class */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
+/* Screen reader only — uses Tailwind's built-in sr-only utility.\n   Class kept for backward compat with React JSX className=\"sr-only\" */
 
 /* Filter Buttons Styles */
 .filter-buttons {
