@@ -1,6 +1,7 @@
 ---
 import ColaboracionesDestacadas from "../components/ColaboracionesDestacadas.astro";
 import ColaboracionesDestacadasTitle from "../components/ColaboracionesDestacadasTitle.astro";
+import JoinOurCommunityFooter from "../components/JoinOurCommunityFooter.astro";
 import Concursos from "../components/Concursos.astro";
 import DinamycGalleryTitle from "../components/DinamycGalleryTitle.astro";
 import Gallery from "../components/features/gallery/Gallery.astro";
@@ -9,8 +10,6 @@ import Hero from "../components/Hero.astro";
 import { arteGallery, fotografiaGallery, musicaGallery } from "../data";
 import Layout from "../layouts/Layout.astro";
 import type { CategoryConfig } from "../types/gallery.types";
-
-export const prerender = true;
 
 // Gallery configuration
 const galleryCategories: CategoryConfig[] = [
@@ -31,6 +30,7 @@ const galleryCategories: CategoryConfig[] = [
   <Gallery categories={galleryCategories} />
   <ColaboracionesDestacadasTitle />
   <ColaboracionesDestacadas />
+  <JoinOurCommunityFooter />
   <Footer />
   <script>
     import "../client/initializers/colaboraciones.ts";
