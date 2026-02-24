@@ -37,12 +37,12 @@ const { title, date, imageUrl, altText, ctaLink, ctaText } = Astro.props;
 
     <div class="mt-auto flex items-start justify-between gap-2">
       <!-- Fecha -->
-      <span class="text-accent-orange bg-accent-orange/20 rounded-lg p-2 text-xs">
+      <span class="text-accent-orange bg-accent-orange/20 rounded-lg p-2 text-center text-xs">
         {date}
       </span>
 
       <!-- CTA -->
-      <a href={ctaLink} class="btn-primary px-4">
+      <a href={ctaLink} class="btn-primary px-4 text-center">
         {ctaText}
       </a>
     </div>
