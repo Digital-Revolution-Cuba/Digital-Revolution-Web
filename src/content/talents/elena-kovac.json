@@ -1,0 +1,24 @@
+{
+  "name": "Elena Kovac",
+  "role": "Arquitecta de Sistemas Cloud",
+  "location": "Berlín, Alemania",
+  "image": "/images/talents/profiles/elena-kovac.svg",
+  "communityRole": "Core Maintainer e Infraestructura",
+  "status": "core",
+  "rating": 4.8,
+  "followers": 8900,
+  "views": 32000,
+  "tags": ["Cloud", "DevOps", "Security"],
+  "skills": ["Kubernetes", "Rust", "AWS", "Terraform"],
+  "focusArea": "Backend",
+  "currentFocus": "Migrando la arquitectura de la comunidad a nodos descentralizados para mayor resiliencia.",
+  "recentActivity": [
+    {
+      "title": "Optimización de Latencia en API Global",
+      "link": "https://github.com/rd/core"
+    },
+    { "title": "Workshop: Rust para Mortales" }
+  ],
+  "externalLink": "https://github.com/elenakovac",
+  "featured": true
+}

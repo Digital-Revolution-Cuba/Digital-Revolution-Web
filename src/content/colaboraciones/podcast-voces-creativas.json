@@ -1,0 +1,61 @@
+{
+  "id": "collab-podcast-voces-creativas",
+  "slug": "podcast-voces-creativas",
+  "title": "Voces Creativas: Podcast de la Comunidad",
+  "description": "Serie de podcast que documenta historias, procesos creativos y desafíos de artistas, músicos y creadores cubanos, producida en colaboración con Medios Alternativos.",
+  "descriptionLong": "Voces Creativas es un proyecto de periodismo cultural y narrativa sonora que da voz a la diversidad de talentos de la comunidad Digital Revolution. Cada episodio explora el viaje personal y profesional de creadores cubanos, sus técnicas, inspiraciones y el impacto social de su trabajo. Con producción de alta calidad y distribución en plataformas globales, buscamos amplificar estas historias más allá de las fronteras nacionales.",
+  "status": "activa",
+  "areas": ["contenido", "musica", "educacion"],
+  "partner": {
+    "name": "Medios Alternativos Cuba",
+    "type": "Comunidad",
+    "website": "https://example.com/mediosalternativos"
+  },
+  "image": "/images/colaboraciones/podcast-voces-creativas.svg",
+  "imageAlt": "Micrófono profesional en estudio de podcast con auriculares",
+  "fechas": {
+    "inicio": "2025-01-10T00:00:00.000Z"
+  },
+  "participants": [
+    {
+      "name": "Claudia Morales",
+      "role": "Productora y Host"
+    },
+    {
+      "name": "Rafael Díaz",
+      "role": "Editor de Audio"
+    },
+    {
+      "name": "Isabel Fernández",
+      "role": "Investigadora"
+    }
+  ],
+  "impacto": [
+    {
+      "metric": "Episodios Publicados",
+      "value": "32"
+    },
+    {
+      "metric": "Descargas Totales",
+      "value": "45,000+"
+    },
+    {
+      "metric": "Artistas Entrevistados",
+      "value": "28"
+    },
+    {
+      "metric": "Países de Audiencia",
+      "value": "42"
+    }
+  ],
+  "objetivos": [
+    "Publicar 50 episodios durante el primer año",
+    "Alcanzar 100,000 descargas en plataformas de podcast",
+    "Crear una comunidad activa de oyentes comprometidos",
+    "Generar oportunidades de colaboración para los entrevistados",
+    "Documentar el panorama creativo cubano contemporáneo"
+  ],
+  "externalLink": "https://example.com/voces-creativas",
+  "tags": ["podcast", "entrevistas", "cultura", "storytelling", "audio"],
+  "featured": false
+}

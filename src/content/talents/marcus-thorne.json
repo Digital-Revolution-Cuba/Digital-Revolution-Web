@@ -1,0 +1,24 @@
+{
+  "name": "Marcus Thorne",
+  "role": "Estratega de Ecosistemas Web3",
+  "location": "San Francisco, USA",
+  "image": "/images/talents/profiles/marcus-thorne.svg",
+  "communityRole": "Growth Lead",
+  "status": "activo",
+  "rating": 4.6,
+  "followers": 11200,
+  "views": 38900,
+  "tags": ["Web3", "Strategy", "Governance"],
+  "skills": ["Solidity", "Game Theory", "Project Management"],
+  "focusArea": "Gestión",
+  "currentFocus": "Diseñando el nuevo modelo de gobernanza participativa para los colaboradores de la red.",
+  "recentActivity": [
+    {
+      "title": "Whitepaper: Incentivos en Redes Digitales",
+      "link": "https://mirror.xyz/marcus"
+    },
+    { "title": "Lanzamiento del Token de Comunidad" }
+  ],
+  "externalLink": "https://linkedin.com/in/marcusthorne",
+  "featured": false
+}

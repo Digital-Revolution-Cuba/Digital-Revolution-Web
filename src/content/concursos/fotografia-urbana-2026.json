@@ -1,0 +1,60 @@
+{
+  "id": "concurso-fotografia-urbana-2026",
+  "slug": "fotografia-urbana-2026",
+  "title": "Concurso de Fotografía Urbana 2026",
+  "description": "Captura la esencia de la ciudad en su máxima expresión. Participa en nuestro concurso de fotografía urbana y muestra tu visión única de los espacios que habitamos.",
+  "category": "fotografia",
+  "status": "activo",
+  "image": "/images/concursos/activos/fotografia-urbana-2026.svg",
+  "imageAlt": "Fotografía urbana de una ciudad al atardecer",
+  "fechas": {
+    "inicio": "2026-01-15T00:00:00.000Z",
+    "cierre": "2026-03-15T23:59:59.000Z",
+    "resultados": "2026-03-30T18:00:00.000Z"
+  },
+  "premios": [
+    {
+      "position": 1,
+      "prize": "Cámara profesional Canon EOS R6",
+      "value": "$2,500 USD"
+    },
+    {
+      "position": 2,
+      "prize": "Lente Canon RF 24-105mm f/4",
+      "value": "$1,200 USD"
+    },
+    {
+      "position": 3,
+      "prize": "Kit de iluminación profesional",
+      "value": "$600 USD"
+    }
+  ],
+  "requisitos": [
+    {
+      "id": "req-1",
+      "description": "Fotografía original tomada dentro del período del concurso"
+    },
+    {
+      "id": "req-2",
+      "description": "Resolución mínima de 3000x2000 píxeles"
+    },
+    {
+      "id": "req-3",
+      "description": "Formato JPEG o PNG, máximo 10MB"
+    },
+    {
+      "id": "req-4",
+      "description": "Tema: Arquitectura, vida urbana o paisajes citadinos"
+    },
+    {
+      "id": "req-5",
+      "description": "Máximo 3 fotografías por participante"
+    }
+  ],
+  "participationLink": "https://forms.digitalrevolution.com/fotografia-urbana",
+  "maxParticipants": 500,
+  "currentParticipants": 127,
+  "organizer": "Digital Revolution Community",
+  "tags": ["fotografía", "urbano", "arquitectura", "ciudad"],
+  "featured": true
+}
