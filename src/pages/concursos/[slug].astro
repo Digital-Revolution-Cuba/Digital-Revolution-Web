@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import StructuredData from "../../components/seo/StructuredData.astro";
 import Layout from "../../layouts/Layout.astro";
 
 export const prerender = true;
@@ -70,19 +71,42 @@ const currentStatus = statusConfig[data.status];
   title={`${data.title} — Concursos Digital Revolution`}
   description={data.description}
   image={data.image}
+  ogType="article"
+  ogImageType="concurso"
+  ogTag={categoryLabels[data.category] ?? data.category}
 >
+  <StructuredData
+    type="event"
+    title={data.title}
+    description={data.description}
+    image={data.image}
+    tags={data.tags}
+    eventStartDate={data.fechas.inicio}
+    eventEndDate={data.fechas.cierre}
+    eventOrganizer={data.organizer ?? "Digital Revolution Web"}
+    eventStatus={data.status === "activo"
+      ? "scheduled"
+      : data.status === "finalizado"
+        ? "cancelled"
+        : "scheduled"}
+    breadcrumbs={[
+      { name: "Inicio", url: "/" },
+      { name: "Concursos", url: "/concursos" },
+      { name: data.title, url: `/concursos/${data.slug}` },
+    ]}
+  />
   <div class="concurso-detail-page">
     <!-- Hero Section with Background -->
     <section class="hero-section">
       <div class="hero-background">
-        <img src={data.image} alt={data.imageAlt} class="hero-bg-image" />
+        <img src={data.image} alt={data.imageAlt} class="hero-bg-image" fetchpriority="high" />
         <div class="hero-overlay"></div>
       </div>
 
       <div class="hero-content-wrapper">
         <div class="hero-content">
           <!-- Breadcrumb -->
-          <nav class="breadcrumb">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Inicio</a>
             <span class="separator">/</span>
             <a href="/concursos">Concursos</a>
