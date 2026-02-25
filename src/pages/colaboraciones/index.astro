@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import StructuredData from "../../components/seo/StructuredData.astro";
 import DiagonalDivider from "../../components/DiagonalDivider.astro";
 import CollaborationCard from "../../components/CollaborationCard.astro";
 
@@ -45,9 +46,24 @@ const formatDate = (date: Date) => {
 
 <Layout
   title="Colaboraciones — Digital Revolution Web"
-  description="Descubre las colaboraciones y alianzas de la comunidad Digital Revolution con organizaciones, empresas y proyectos que impulsan el talento creativo."
-  image="/og-colaboraciones.jpg"
+  description="Descubre las colaboraciones y alianzas de la comunidad Digital Revolution Cuba con organizaciones, empresas y proyectos que impulsan el talento creativo."
+  ogType="website"
+  ogImageType="colaboraciones"
 >
+  <StructuredData
+    type="collection"
+    title="Colaboraciones — Digital Revolution Web"
+    description="Colaboraciones y alianzas de la comunidad Digital Revolution Cuba."
+    collectionItems={allColaboraciones.map((c) => ({
+      name: c.data.title,
+      url: `/colaboraciones/${c.data.slug}`,
+      image: c.data.image,
+    }))}
+    breadcrumbs={[
+      { name: "Inicio", url: "/" },
+      { name: "Colaboraciones", url: "/colaboraciones" },
+    ]}
+  />
   <div class="collab-page-container">
     {/* Section 1: Header/Intro - Dark Background */}
     <section class="collab-hero py-24 md:py-32">
