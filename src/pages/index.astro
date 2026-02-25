@@ -11,6 +11,8 @@ import { arteGallery, fotografiaGallery, musicaGallery } from "../data";
 import Layout from "../layouts/Layout.astro";
 import type { CategoryConfig } from "../types/gallery.types";
 
+export const prerender = true;
+
 // Gallery configuration
 const galleryCategories: CategoryConfig[] = [
   { id: "arte", label: "Arte", items: arteGallery },
@@ -20,9 +22,10 @@ const galleryCategories: CategoryConfig[] = [
 ---
 
 <Layout
-  title="Inicio — Digital Revolution Web | Comunidad de Talentos"
-  description="Descubre y conecta con creadores en arte, música, desarrollo y escritura. Explora talento y proyectos destacados en nuestra comunidad."
-  image="/og-home.jpg"
+  title="Digital Revolution Web — Comunidad de Talentos Creativos de Cuba"
+  description="Descubre y conecta con creadores en arte, música, desarrollo y escritura en Cuba. Explora talento, concursos creativos, colaboraciones y proyectos destacados en nuestra comunidad."
+  ogType="website"
+  ogImageType="default"
 >
   <Hero />
   <Concursos />
