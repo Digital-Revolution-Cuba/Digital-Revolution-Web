@@ -33,17 +33,17 @@ const { data } = entry;
 const {
   name = "Talento Anónimo",
   role = "Miembro de la Comunidad",
-  location = "",
-  image = "/placeholder.jpg",
+  location,
+  image,
   communityRole = role,
   status = "colaborador",
-  rating = 0,
-  followers = 0,
-  views = 0,
+  rating,
+  followers,
+  views,
   skills = [],
   currentFocus = "",
   recentActivity = [],
-  externalLink = "",
+  externalLink,
   featured = false,
 } = data;
 
@@ -101,7 +101,7 @@ const formatStat = (num: number) => {
             {
               status && (
                 <span
-                  class={`rounded-full border px-3 py-1 text-xs font-bold tracking-[0.2em] uppercase ${statusStyles[status as keyof typeof statusStyles]}`}
+                  class={`font-roboto rounded-full border px-3 py-1 text-xs tracking-[0.2em] uppercase ${statusStyles[status as keyof typeof statusStyles]}`}
                 >
                   {status}
                 </span>
@@ -109,20 +109,21 @@ const formatStat = (num: number) => {
             }
           </div>
 
-          <h1 class="mb-2 text-3xl leading-none font-bold">
+          <h1 class="font-impact mb-2 text-2xl leading-none">
             {name}
           </h1>
 
           <div
-            class="flex flex-col gap-2 tracking-wide text-white/50 uppercase md:flex-row md:items-center md:gap-6"
+            class="flex flex-col flex-wrap gap-2 tracking-wide text-white/50 md:flex-row md:items-center md:gap-6"
           >
             <p class="text-lg">
               {communityRole || role}
             </p>
             {
               location && (
-                <span class="flex items-center justify-center gap-1 text-sm lowercase italic md:justify-start">
+                <span class="flex items-center justify-center gap-2 text-xs capitalize italic md:justify-start">
                   <svg
+                    class="size-4"
                     width="14"
                     height="14"
                     viewBox="0 0 24 24"
@@ -159,9 +160,11 @@ const formatStat = (num: number) => {
                       <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                       <circle cx="12" cy="12" r="3" />
                     </svg>{" "}
-                    Views
+                    Vistas
                   </span>
-                  <span class="text-xl font-bold text-white/90">{formatStat(views)}</span>
+                  <span class="font-impact text-xl tracking-wide text-white/90">
+                    {formatStat(views)}
+                  </span>
                 </div>
               )
             }
@@ -184,9 +187,11 @@ const formatStat = (num: number) => {
                       <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
                       <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                     </svg>{" "}
-                    Followers
+                    Seguidores
                   </span>
-                  <span class="text-xl font-bold text-white/90">{formatStat(followers)}</span>
+                  <span class="font-impact text-xl tracking-wide text-white/90">
+                    {formatStat(followers)}
+                  </span>
                 </div>
               )
             }
@@ -206,9 +211,9 @@ const formatStat = (num: number) => {
                     >
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                     </svg>{" "}
-                    Rating
+                    Calificación
                   </span>
-                  <span class="text-accent-yellow text-xl font-bold">{rating}</span>
+                  <span class="text-accent-yellow font-impact text-xl tracking-wide">{rating}</span>
                 </div>
               )
             }
@@ -224,7 +229,7 @@ const formatStat = (num: number) => {
                 <span class="bg-accent-orange/50 h-px w-8" />
                 Enfoque Actual
               </h2>
-              <p class="pl-11 text-base leading-relaxed">{currentFocus}</p>
+              <p class="text-base leading-relaxed md:pl-11">{currentFocus}</p>
             </section>
           )
         }
@@ -236,7 +241,7 @@ const formatStat = (num: number) => {
                 <span class="bg-accent-cyan/50 h-px w-8" />
                 Capacidades
               </h2>
-              <div class="flex flex-wrap gap-x-6 gap-y-2 pl-11">
+              <div class="flex flex-wrap gap-x-6 gap-y-2 md:pl-11">
                 {skills.map((skill: string) => (
                   <span class="cursor-default font-mono text-base opacity-70 transition-colors hover:text-white">
                     {skill}
@@ -255,17 +260,19 @@ const formatStat = (num: number) => {
                 Participaciones Recientes
               </h2>
 
-              <div class="grid grid-cols-1 gap-4 pl-11 md:grid-cols-2">
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:pl-11">
                 {recentActivity.map((act: { title: string; link?: string }) => (
-                  <div class="group hover:border-accent-purple relative border-l border-white/10 bg-white/[0.02] p-4 transition-all">
-                    <h3 class="mb-1 text-sm font-bold">{act.title}</h3>
-                    <p class="text-xs tracking-wider text-gray-400 uppercase italic">
-                      Proyecto Relevante
-                    </p>
+                  <div class="group hover:border-accent-purple relative flex items-center justify-between gap-1 border-l border-white/10 bg-white/[0.02] p-4 transition-all">
+                    <div>
+                      <h3 class="mb-1 text-sm font-bold">{act.title}</h3>
+                      <p class="text-xs tracking-wider text-gray-400 uppercase italic">
+                        Proyecto Relevante
+                      </p>
+                    </div>
                     {act.link && (
                       <a
                         href={act.link}
-                        class="group-hover:text-accent-purple absolute top-4 right-4 text-white/20 transition-colors"
+                        class="group-hover:text-accent-purple bg-brand-background-global rounded-full p-1 text-white/20 transition-colors"
                       >
                         <svg
                           width="20"
