@@ -1,29 +1,102 @@
 ---
-import { ClientRouter } from "astro:transitions"; // Da error los sliders con esto puesto
+// import { ClientRouter } from "astro:transitions"; // Da error los sliders con esto puesto
 
 import Header from "../components/Header.astro";
 import "../styles/global.css";
 
+/** og:type values — https://ogp.me/#types */
+type OgType = "website" | "article" | "profile";
+
+/**
+ * Page-type token for the OG image generator endpoint.
+ * Maps to colour accents and layout variants in /og/[...route].png.ts
+ */
+type OgImageType =
+  | "default"
+  | "concurso"
+  | "concursos"
+  | "colaboracion"
+  | "colaboraciones"
+  | "perfil"
+  | "talentos"
+  | "galeria";
+
 interface Props {
   title?: string;
   description?: string;
+  /**
+   * Optional static image path (e.g. a hero photo for detail pages).
+   * When provided it is passed to the OG endpoint as the `image` param
+   * so it gets composited into the generated card.
+   * If omitted the endpoint renders a pure-branded card.
+   */
   image?: string;
+  /** og:type — defaults to "website" for listing/index pages */
+  ogType?: OgType;
+  /** Visual variant & accent colour for the auto-generated OG card */
+  ogImageType?: OgImageType;
+  /** Small badge label rendered inside the OG card (e.g. category or role) */
+  ogTag?: string;
+  /** Optional: override robots meta (e.g. "noindex, nofollow" for 404) */
+  robots?: string;
 }
 
+const BASE = (Astro.site ?? new URL("https://digitalrevolutioncuba.vercel.app/"))
+  .toString()
+  .replace(/\/$/, "");
+
 const {
-  title = "Digital Revolution Web | Comunidad de Talentos",
+  title = "Digital Revolution Web | Comunidad de Talentos Creativos de Cuba",
   description = "La plataforma oficial de la comunidad de talentos de Cuba. Descubre y conecta con creadores en arte, música, desarrollo y escritura.",
-  image = "/favicon.svg",
+  image,
+  ogType = "website",
+  ogImageType = "default",
+  ogTag = "",
+  robots = "index, follow",
 } = Astro.props;
 
-const canonicalURL = new URL(
-  Astro.url.pathname,
-  Astro.site || "https://digital-revolution-web.vercel.app/"
-);
-const absImage = new URL(
-  image,
-  Astro.site || "https://digital-revolution-web.vercel.app/"
-).toString();
+const canonicalURL = new URL(Astro.url.pathname, BASE + "/");
+
+// Build the dynamic OG image URL pointing to our satori-powered endpoint
+const ogParams = new URLSearchParams({
+  title,
+  description,
+  type: ogImageType,
+  ...(ogTag ? { tag: ogTag } : {}),
+  ...(image ? { image } : {}),
+});
+const absOgImage = `${BASE}/og/card.png?${ogParams.toString()}`;
+
+// ── JSON-LD schemas (built in frontmatter to avoid broken template literals) ──
+const siteUrl = BASE + "/";
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Digital Revolution Web",
+  url: siteUrl,
+  description: "La plataforma oficial de la comunidad de talentos creativos de Cuba.",
+  inLanguage: "es",
+};
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Digital Revolution Web",
+  url: siteUrl,
+  logo: `${BASE}/favicon/favicon-96x96.png`,
+  sameAs: [
+    "https://www.instagram.com/revoluciondigital2025",
+    "https://github.com/organizations/Digital-Revolution-Cuba",
+    "https://discord.gg/wYDQNFzt",
+    "https://wa.me/5363145190",
+  ],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer service",
+    url: "https://wa.me/5363145190",
+    availableLanguage: ["es"],
+  },
+};
 ---
 
 <!doctype html>
@@ -34,6 +107,9 @@ const absImage = new URL(
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalURL} />
 
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="shortcut icon" href="/favicon/favicon.ico" />
@@ -41,56 +117,51 @@ const absImage = new URL(
     <meta name="apple-mobile-web-app-title" content="Digital Revolution Web" />
     <link rel="manifest" href="/favicon/site.webmanifest" />
 
+    <!-- Font Preloads (critical above-the-fold fonts) -->
+    <link
+      rel="preload"
+      href="/fonts/inter-variable-font-slnt-wght.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
     <!-- Primary Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
 
+    <!-- Theme colour (browser chrome + PWA) -->
+    <meta name="theme-color" content="#0a0a0f" />
+
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Digital Revolution Web" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={absImage} />
-    <meta property="og:locale" content="es_ES" />
-    <!-- Recommended OG image dimensions: 1200x630 -->
+    <meta property="og:image" content={absOgImage} />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:locale" content="es_CU" />
+    <!-- OG image dimensions: 1200x630 (generated by satori endpoint) -->
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
 
-    <!-- Twitter -->
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@drwebcuba" />
     <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={absImage} />
+    <meta name="twitter:image" content={absOgImage} />
+    <meta name="twitter:image:alt" content={title} />
     <meta name="twitter:creator" content="@drwebcuba" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={robots} />
 
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Digital Revolution Web",
-        "url": "${(Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}",
-        "image": "${absImage}",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "${(Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      }
-    </script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Digital Revolution Web",
-        "url": "${(Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}",
-        "logo": "${new URL('/favicon.svg', Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}",
-        "sameAs": ["https://twitter.com/digitalrev", "https://instagram.com/digitalrev"]
-      }
-    </script>
+    <!-- JSON-LD Structured Data (built in frontmatter — no broken template literals) -->
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   </head>
   <body>
     <Header />
