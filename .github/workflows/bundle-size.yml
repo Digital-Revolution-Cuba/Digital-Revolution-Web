@@ -10,6 +10,10 @@ on:
       - 'astro.config.mjs'
       - 'package.json'
       - 'pnpm-lock.yaml'
+    
+permissions:
+  pull-requests: write
+  issues: write
 
 concurrency:
   group: bundle-size-${{ github.event.pull_request.number }}
