@@ -1,4 +1,5 @@
 ---
+import StructuredData from "../../components/seo/StructuredData.astro";
 import TalentsSearch from "../../components/talents/TalentsSearch.astro";
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/components/talents.css";
@@ -7,9 +8,19 @@ export const prerender = true;
 ---
 
 <Layout
-  title="Talentos — Digital Revolution Web"
-  description="Explora la comunidad de talentos: artistas, músicos, desarrolladores y más. Encuentra colaboradores y oportunidades."
-  image="/og-talentos.jpg"
+  title="Talentos Creativos de Cuba — Digital Revolution Web"
+  description="Explora la comunidad de talentos creativos de Cuba: artistas, músicos, desarrolladores y más. Encuentra colaboradores y oportunidades en Digital Revolution."
+  ogType="website"
+  ogImageType="talentos"
 >
+  <StructuredData
+    type="collection"
+    title="Talentos Creativos de Cuba"
+    description="Comunidad de talentos creativos de Cuba en Digital Revolution Web."
+    breadcrumbs={[
+      { name: "Inicio", url: "/" },
+      { name: "Talentos", url: "/talentos" },
+    ]}
+  />
   <TalentsSearch />
 </Layout>
