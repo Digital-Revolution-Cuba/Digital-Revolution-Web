@@ -140,9 +140,9 @@ const absImage = image.startsWith("http") ? image : new URL(image, SITE_URL + "/
     <script>
       import "../client/initializers/join-community.ts";
     </script>
+    <slot />
   </body>
 </html>
-<slot />
 
 <style>
   html,
