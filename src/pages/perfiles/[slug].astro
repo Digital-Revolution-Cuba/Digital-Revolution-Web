@@ -59,8 +59,8 @@ const formatStat = (num: number) => {
 ---
 
 <Layout title={name ? `${name} — Perfil Profesional` : "Perfil de Talento"}>
-  <main class="selection:bg-accent-cyan/30 mt-[8rem] px-(--space-md) py-(--space-xl)">
-    <article class="mx-auto max-w-(--container-md)">
+  <main class="selection:bg-accent-cyan/30 mt-32 px-4 py-8">
+    <article class="mx-auto max-w-2xl">
       <header
         class="mb-(--space-xl) flex flex-col items-center gap-(--space-lg) md:flex-row md:items-start"
       >
@@ -193,7 +193,7 @@ const formatStat = (num: number) => {
             {
               rating && (
                 <div class="flex flex-col items-center md:items-start">
-                  <span class="text-accent-yellow flex items-center gap-1 text-xs tracking-tighter text-white/30 uppercase">
+                  <span class="text-accent-yellow flex items-center gap-1 text-xs tracking-tighter uppercase">
                     <svg
                       width="12"
                       height="12"
@@ -257,7 +257,7 @@ const formatStat = (num: number) => {
 
               <div class="grid grid-cols-1 gap-4 pl-11 md:grid-cols-2">
                 {recentActivity.map((act: { title: string; link?: string }) => (
-                  <div class="group hover:border-accent-purple relative border-l border-white/10 bg-white/[0.02] p-4 transition-all">
+                  <div class="group hover:border-accent-purple relative border-l border-white/10 bg-white/2 p-4 transition-all">
                     <h3 class="mb-1 text-sm font-bold">{act.title}</h3>
                     <p class="text-xs tracking-wider text-gray-400 uppercase italic">
                       Proyecto Relevante
@@ -295,7 +295,7 @@ const formatStat = (num: number) => {
           <footer class="mt-(--space-xl) flex justify-center pt-(--space-lg)">
             <a
               href={externalLink}
-              class="cta-btn !px-12 !py-4 text-center text-sm tracking-[0.2em] uppercase"
+              class="cta-btn px-12! py-4! text-center text-sm tracking-[0.2em] uppercase"
             >
               Contactar Profesional
             </a>
