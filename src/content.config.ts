@@ -13,6 +13,11 @@ const talents = defineCollection({
     role: z.string(),
     image: z.string(),
 
+    // SEO Fields
+    seoDescription: z.string().optional(),
+    imageAlt: z.string().optional(),
+    updatedAt: z.coerce.date().optional(),
+
     // Location & Community
     location: z.string().optional(),
     communityRole: z.string().optional(),
@@ -105,6 +110,7 @@ const concursos = defineCollection({
     organizer: z.string().optional(),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
+    updatedAt: z.coerce.date().optional(),
   }),
 });
 
@@ -174,6 +180,7 @@ const colaboraciones = defineCollection({
     // Additional metadata
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
+    updatedAt: z.coerce.date().optional(),
   }),
 });
 

@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry } from "astro:content";
+import StructuredData from "../../components/seo/StructuredData.astro";
 import Layout from "../../layouts/Layout.astro";
 
 export const prerender = true;
@@ -58,7 +59,29 @@ const formatStat = (num: number) => {
 };
 ---
 
-<Layout title={name ? `${name} — Perfil Profesional` : "Perfil de Talento"}>
+<Layout
+  title={name ? `${name} — Perfil Profesional` : "Perfil de Talento"}
+  description={currentFocus
+    ? `${name} — ${currentFocus}`
+    : `Perfil profesional de ${name} en Digital Revolution Web.`}
+  image={image !== "/placeholder.jpg" ? image : undefined}
+  ogType="profile"
+  ogImageType="perfil"
+  ogTag={role}
+>
+  <StructuredData
+    type="profile"
+    title={name}
+    description={currentFocus || `Perfil profesional de ${name} en Digital Revolution Web.`}
+    image={image !== "/placeholder.jpg" ? image : undefined}
+    personRole={role}
+    personSkills={skills}
+    breadcrumbs={[
+      { name: "Inicio", url: "/" },
+      { name: "Talentos", url: "/talentos" },
+      { name: name, url: `/perfiles/${slug}` },
+    ]}
+  />
   <main class="selection:bg-accent-cyan/30 mt-[8rem] px-(--space-md) py-(--space-xl)">
     <article class="mx-auto max-w-(--container-md)">
       <header
@@ -69,8 +92,9 @@ const formatStat = (num: number) => {
             image && (
               <img
                 src={image}
-                alt={name}
+                alt={`Foto de perfil de ${name}, ${role}`}
                 class="size-32 rounded-full border border-white/10 object-cover shadow-xl transition-all duration-500 md:size-56"
+                fetchpriority="high"
               />
             )
           }

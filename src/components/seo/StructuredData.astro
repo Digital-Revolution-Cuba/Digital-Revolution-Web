@@ -1,0 +1,238 @@
+---
+/**
+ * StructuredData.astro
+ * Generates contextual JSON-LD structured data based on page type.
+ * Supports: BreadcrumbList, Article, Event, Person/ProfilePage, CollectionPage
+ */
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface Props {
+  /**
+   * Page type determines which JSON-LD schemas to generate.
+   * - "article": For colaboracion/concurso detail pages → Article + BreadcrumbList
+   * - "event": For concurso detail pages → Event + BreadcrumbList
+   * - "profile": For talent/perfil detail pages → Person + ProfilePage + BreadcrumbList
+   * - "collection": For listing/index pages → CollectionPage + BreadcrumbList
+   * - "breadcrumb": Only BreadcrumbList
+   */
+  type: "article" | "event" | "profile" | "collection" | "breadcrumb";
+
+  /** Page title */
+  title?: string;
+
+  /** Page description */
+  description?: string;
+
+  /** Main image URL */
+  image?: string;
+
+  /** Image alt text */
+  imageAlt?: string;
+
+  /** Breadcrumb items (ordered). Each { name, url } */
+  breadcrumbs?: BreadcrumbItem[];
+
+  /** Date published (ISO string or Date) */
+  datePublished?: Date | string;
+
+  /** Date modified (ISO string or Date) */
+  dateModified?: Date | string;
+
+  /** Author name */
+  author?: string;
+
+  /** Tags/keywords */
+  tags?: string[];
+
+  // Event-specific
+  /** Event start date */
+  eventStartDate?: Date | string;
+  /** Event end date */
+  eventEndDate?: Date | string;
+  /** Event location or "Online" */
+  eventLocation?: string;
+  /** Event organizer name */
+  eventOrganizer?: string;
+  /** Event status: scheduled, cancelled, postponed */
+  eventStatus?: "scheduled" | "cancelled" | "postponed";
+
+  // Profile-specific
+  /** Person's role/job title */
+  personRole?: string;
+  /** Person's skills */
+  personSkills?: string[];
+
+  // Collection-specific
+  /** Items in the collection (for CollectionPage) */
+  collectionItems?: Array<{ name: string; url: string; image?: string }>;
+}
+
+const BASE = (Astro.site ?? new URL("https://digitalrevolutioncuba.vercel.app/"))
+  .toString()
+  .replace(/\/$/, "");
+
+const {
+  type,
+  title = "",
+  description = "",
+  image,
+  breadcrumbs = [],
+  datePublished,
+  dateModified,
+  author = "Digital Revolution Web",
+  tags = [],
+  eventStartDate,
+  eventEndDate,
+  eventLocation = "Online",
+  eventOrganizer = "Digital Revolution Web",
+  eventStatus = "scheduled",
+  personRole,
+  personSkills = [],
+  collectionItems = [],
+} = Astro.props;
+
+// Helper: format date to ISO string
+const toISO = (d: Date | string | undefined) => {
+  if (!d) return undefined;
+  return d instanceof Date ? d.toISOString() : new Date(d).toISOString();
+};
+
+// ── BreadcrumbList ──
+const breadcrumbSchema =
+  breadcrumbs.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumbs.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.name,
+          item: item.url.startsWith("http") ? item.url : `${BASE}${item.url}`,
+        })),
+      }
+    : null;
+
+// ── Article (for colaboraciones/concursos detail pages) ──
+const articleSchema =
+  type === "article"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: title,
+        description,
+        ...(image ? { image: image.startsWith("http") ? image : `${BASE}${image}` } : {}),
+        datePublished: toISO(datePublished),
+        dateModified: toISO(dateModified) ?? toISO(datePublished),
+        author: {
+          "@type": "Organization",
+          name: author,
+          url: `${BASE}/`,
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "Digital Revolution Web",
+          url: `${BASE}/`,
+          logo: {
+            "@type": "ImageObject",
+            url: `${BASE}/favicon/favicon-96x96.png`,
+          },
+        },
+        ...(tags.length > 0 ? { keywords: tags.join(", ") } : {}),
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": Astro.url.href,
+        },
+      }
+    : null;
+
+// ── Event (for concursos) ──
+const eventStatusMap: Record<string, string> = {
+  scheduled: "https://schema.org/EventScheduled",
+  cancelled: "https://schema.org/EventCancelled",
+  postponed: "https://schema.org/EventPostponed",
+};
+
+const eventSchema =
+  type === "event"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        name: title,
+        description,
+        ...(image ? { image: image.startsWith("http") ? image : `${BASE}${image}` } : {}),
+        startDate: toISO(eventStartDate),
+        endDate: toISO(eventEndDate),
+        eventStatus: eventStatusMap[eventStatus] ?? eventStatusMap.scheduled,
+        eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+        location: {
+          "@type": "VirtualLocation",
+          url: `${BASE}/concursos/`,
+        },
+        organizer: {
+          "@type": "Organization",
+          name: eventOrganizer,
+          url: `${BASE}/`,
+        },
+        ...(tags.length > 0 ? { keywords: tags.join(", ") } : {}),
+      }
+    : null;
+
+// ── Person + ProfilePage (for talent profiles) ──
+const personSchema =
+  type === "profile"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        mainEntity: {
+          "@type": "Person",
+          name: title,
+          ...(description ? { description } : {}),
+          ...(image ? { image: image.startsWith("http") ? image : `${BASE}${image}` } : {}),
+          ...(personRole ? { jobTitle: personRole } : {}),
+          ...(personSkills.length > 0 ? { knowsAbout: personSkills } : {}),
+          url: Astro.url.href,
+        },
+      }
+    : null;
+
+// ── CollectionPage (for listing pages) ──
+const collectionSchema =
+  type === "collection"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        name: title,
+        description,
+        url: Astro.url.href,
+        ...(collectionItems.length > 0
+          ? {
+              mainEntity: {
+                "@type": "ItemList",
+                numberOfItems: collectionItems.length,
+                itemListElement: collectionItems.map((item, index) => ({
+                  "@type": "ListItem",
+                  position: index + 1,
+                  name: item.name,
+                  url: item.url.startsWith("http") ? item.url : `${BASE}${item.url}`,
+                })),
+              },
+            }
+          : {}),
+      }
+    : null;
+
+// Collect all non-null schemas
+const schemas = [
+  breadcrumbSchema,
+  articleSchema,
+  eventSchema,
+  personSchema,
+  collectionSchema,
+].filter(Boolean);
+---
+
+{schemas.map((schema) => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}

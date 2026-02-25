@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
+import StructuredData from "../../components/seo/StructuredData.astro";
 import Layout from "../../layouts/Layout.astro";
 
 export const prerender = true;
@@ -81,11 +82,29 @@ const statusColor = statusColors[data.status];
   title={`${data.title} — Colaboraciones Digital Revolution`}
   description={data.description}
   image={data.image}
+  ogType="article"
+  ogImageType="colaboracion"
+  ogTag={areaLabelsMap[data.areas?.[0] ?? ""] ?? ""}
 >
+  <StructuredData
+    type="article"
+    title={data.title}
+    description={data.description}
+    image={data.image}
+    tags={data.tags}
+    datePublished={data.fechas.inicio}
+    dateModified={data.updatedAt ?? data.fechas.inicio}
+    author={data.partner.name}
+    breadcrumbs={[
+      { name: "Inicio", url: "/" },
+      { name: "Colaboraciones", url: "/colaboraciones" },
+      { name: data.title, url: `/colaboraciones/${data.slug}` },
+    ]}
+  />
   <div class="colaboracion-detail-page">
     <section class="hero-section">
       <div class="hero-background">
-        <img src={data.image} alt={data.imageAlt} class="hero-bg-image" />
+        <img src={data.image} alt={data.imageAlt} class="hero-bg-image" fetchpriority="high" />
         <div class="hero-overlay"></div>
       </div>
 

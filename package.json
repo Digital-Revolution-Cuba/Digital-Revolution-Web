@@ -20,7 +20,9 @@
   "dependencies": {
     "@astrojs/check": "^0.9.6",
     "@astrojs/react": "^4.4.2",
+    "@astrojs/sitemap": "^3.7.0",
     "@astrojs/vercel": "^9.0.4",
+    "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
@@ -34,6 +36,7 @@
     "react-dom": "^19.2.3",
     "react-measure": "^2.5.2",
     "react-responsive-masonry": "^2.7.1",
+    "satori": "^0.19.2",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
