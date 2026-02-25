@@ -1,0 +1,45 @@
+{
+  "name": "Joan Matias Dominguez",
+  "role": "Desarrollador Frontend | Full-Stack",
+  "image": "https://github.com/joanmat117.png",
+  "location": "Matanzas, Cuba",
+  "communityRole": "Desarrollador Frontend",
+  "status": "activo",
+  "tags": ["React", "Next.js", "Astro", "TypeScript", "Full-Stack"],
+  "skills": [
+    "Arquitectura Escalable",
+    "Optimización de Performance",
+    "Desarrollo Full-Stack",
+    "Diseño Responsivo",
+    "SEO & Accesibilidad",
+    "Testing",
+    "React",
+    "Next.js",
+    "Astro",
+    "TypeScript",
+    "Node.js",
+    "NestJS",
+    "Vitest"
+  ],
+  "focusArea": "Desarrollo Frontend & Full-Stack",
+  "currentFocus": "Construyendo aplicaciones web de alto rendimiento con React, Next.js y Astro. Especializado en optimización de performance, SEO y experiencia del usuario.",
+  "recentActivity": [
+    {
+      "title": "Propiedades Aburrá - Estimador de precios inmobiliarios con ML",
+      "link": "https://github.com/joanmat117/propiedades-aburra-frontend"
+    },
+    {
+      "title": "Energía Ideal - Plataforma de noticias",
+      "link": "https://github.com/joanmat117/energia-ideal"
+    },
+    {
+      "title": "Chatbot Room - Plataforma de IA con Google Gemini",
+      "link": "https://github.com/joanmat117/chatbot-room"
+    },
+    {
+      "title": "Online Bible - Aplicación web con Next.js y Redux",
+      "link": "https://github.com/joanmat117/online-bible"
+    }
+  ],
+  "externalLink": "https://linkedin.com/in/joanmat"
+}
