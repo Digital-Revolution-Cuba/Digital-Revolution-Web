@@ -13,6 +13,11 @@ on:
         required: false
         default: ''
 
+permissions:
+  contents: read
+  checks: write
+  statuses: write
+
 concurrency:
   group: lighthouse-${{ github.sha }}
   cancel-in-progress: true
