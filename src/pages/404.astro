@@ -1,0 +1,76 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+export const prerender = true;
+---
+
+<Layout
+  title="404 — Página no encontrada | Digital Revolution Web"
+  description="La página que buscas no existe o ha sido movida. Vuelve al inicio para explorar la comunidad."
+>
+  <main class="error-page">
+    <div class="error-container">
+      <span class="error-code">404</span>
+      <h1 class="error-title">Página no encontrada</h1>
+      <p class="error-description">La página que buscas no existe, ha sido movida o eliminada.</p>
+      <a href="/" class="error-link"> ← Volver al inicio </a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .error-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .error-container {
+    max-width: 480px;
+  }
+
+  .error-code {
+    display: block;
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.04em;
+  }
+
+  .error-title {
+    margin-top: 0.5rem;
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .error-description {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #a1a1aa;
+    line-height: 1.6;
+  }
+
+  .error-link {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .error-link:hover {
+    opacity: 0.85;
+  }
+</style>
