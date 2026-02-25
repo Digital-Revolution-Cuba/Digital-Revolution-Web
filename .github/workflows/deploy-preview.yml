@@ -8,6 +8,12 @@ on:
   pull_request:
     branches: [main, develop]
 
+# Permisos explícitos requeridos para repositorios de organización
+permissions:
+  contents: read
+  pull-requests: write
+  statuses: write
+
 concurrency:
   group: deploy-preview-${{ github.event.pull_request.number }}
   cancel-in-progress: true # cancela previews anteriores del mismo PR
@@ -112,8 +118,30 @@ jobs:
       - name: Comment preview URL on PR
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const url = '${{ steps.deploy.outputs.url }}';
+            const sha = '${{ github.sha }}';
+            const shortSha = sha.substring(0, 7);
+            const branch = '${{ github.head_ref }}';
+            const actor = '${{ github.actor }}';
+            const runUrl = `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
+
+            const body = [
+              `## 🚀 Preview Deployment`,
+              ``,
+              `| | |`,
+              `|---|---|`,
+              `| **✅ Status** | Ready |`,
+              `| **🔗 URL** | [${url}](${url}) |`,
+              `| **🌿 Branch** | \`${branch}\` |`,
+              `| **📝 Commit** | [\`${shortSha}\`](https://github.com/${{ github.repository }}/commit/${sha}) |`,
+              `| **👤 Author** | @${actor} |`,
+              `| **🔧 Workflow** | [View run](${runUrl}) |`,
+              ``,
+              `> _Last updated: ${new Date().toUTCString()}_`,
+            ].join('\n');
+
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -124,17 +152,15 @@ jobs:
               (c) => c.user.type === 'Bot' && c.body.includes('Preview Deployment')
             );
 
-            const body = `## 🔍 Preview Deployment\n\n| Status | URL |\n|--------|-----|\n| ✅ Ready | [${url}](${url}) |\n\n> Commit: \`${{ github.sha }}\``;
-
             if (botComment) {
-              github.rest.issues.updateComment({
+              await github.rest.issues.updateComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 comment_id: botComment.id,
                 body,
               });
             } else {
-              github.rest.issues.createComment({
+              await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
