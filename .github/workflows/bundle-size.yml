@@ -95,8 +95,11 @@ jobs:
           fi
 
       - name: Comment bundle stats on PR
+        # Fork PRs don't grant write access to GITHUB_TOKEN — skip silently
+        if: github.event.pull_request.head.repo.full_name == github.repository
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const totalKb = '${{ steps.pr-size.outputs.kb }}';
             const jsKb    = '${{ steps.js-size.outputs.kb }}';
