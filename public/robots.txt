@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://digital-revolution-web.vercel.app/sitemap.xml
-# Crawl-delay can be added if your host needs it
-# Crawl-delay: 10
+
+Sitemap: https://digital-revolution-cuba.vercel.app/sitemap-index.xml

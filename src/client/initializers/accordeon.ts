@@ -66,7 +66,7 @@ function initAccordeon(): void {
   // ─── State ───────────────────────────────────────────────
   let currentPageIndex = 0;
   let isAnimating = false;
-  let autoRotateTimer: ReturnType<typeof setInterval> | null = null;
+  let autoRotateTimer: number | null = null;
 
   // Touch tracking for drag-vs-tap detection
   let touchStartX = 0;
@@ -124,7 +124,7 @@ function initAccordeon(): void {
   // ─── Auto-rotation ──────────────────────────────────────
   function startAutoRotate(): void {
     stopAutoRotate();
-    autoRotateTimer = setInterval(() => {
+    autoRotateTimer = window.setInterval(() => {
       if (!isAnimating) {
         const nextIndex = (currentPageIndex + 1) % totalPages;
         goToPage(nextIndex);
