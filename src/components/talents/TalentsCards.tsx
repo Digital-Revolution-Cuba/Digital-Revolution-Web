@@ -208,7 +208,7 @@ export default function TalentSearch({ initialTalents, categories }: Props) {
           {isLoading ? (
             <div className="animate-pulse text-cyan-400">Cargando más talentos...</div>
           ) : (
-            <button className="button-cta">Ver Más Talentos</button>
+            <button className="btn-primary">Ver Más Talentos</button>
           )}
         </div>
       )}

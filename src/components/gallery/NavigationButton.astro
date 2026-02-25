@@ -14,7 +14,7 @@ const position = direction === "prev" ? "nav-btn-prev" : "nav-btn-next";
 
 <button
   id={id}
-  class={`nav-btn ${position} absolute top-1/2 z-30 -translate-y-1/2 transform rounded-full p-3 shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50`}
+  class={`nav-btn ${position} absolute top-1/2 z-30 -translate-y-1/2 transform rounded-full p-[0.5rem] shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50`}
   aria-label={ariaLabel}
   type="button"
 >
@@ -24,7 +24,7 @@ const position = direction === "prev" ? "nav-btn-prev" : "nav-btn-next";
     viewBox="0 0 24 24"
     stroke-width="2.5"
     stroke="currentColor"
-    class="nav-arrow h-6 w-6"
+    class="nav-arrow size-6"
     aria-hidden="true"
   >
     <path stroke-linecap="round" stroke-linejoin="round" d={svgPath}></path>

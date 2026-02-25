@@ -75,8 +75,8 @@
 .section-title {
   font-family: "Impact", "Arial Black", sans-serif;
   font-size: 2.5rem;
-  font-weight: 700;
   font-style: italic;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
