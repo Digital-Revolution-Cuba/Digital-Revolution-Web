@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions"; // Da error los sliders con esto puesto
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 import Header from "../components/Header.astro";
 import "../styles/global.css";
@@ -104,6 +105,7 @@ const absImage = new URL(
       import "../client/initializers/join-community.ts";
     </script>
     <slot />
+    <SpeedInsights />
   </body>
 </html>
 
