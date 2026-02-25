@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import ConcursosCTA from "../../components/concursos/ConcursosCTA.astro";
 import ConcursosFiltersIsland from "../../components/concursos/ConcursosFiltersIsland.tsx";
 import ConcursosHero from "../../components/concursos/ConcursosHero.astro";
+import StructuredData from "../../components/seo/StructuredData.astro";
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/components/concursos.css";
 
@@ -21,10 +22,25 @@ const totalCategories = [...new Set(allConcursos.map((c) => c.data.category))].l
 ---
 
 <Layout
-  title="Concursos — Digital Revolution Web"
-  description="Participa en concursos creativos de la comunidad Digital Revolution. Convocatorias de fotografía, música, arte digital y más."
-  image="/og-concursos.jpg"
+  title="Concursos Creativos — Digital Revolution Web"
+  description="Participa en concursos creativos de la comunidad Digital Revolution Cuba. Convocatorias de fotografía, música, arte digital, ilustración y más."
+  ogType="website"
+  ogImageType="concursos"
 >
+  <StructuredData
+    type="collection"
+    title="Concursos Creativos — Digital Revolution Web"
+    description="Concursos creativos de la comunidad Digital Revolution Cuba."
+    collectionItems={allConcursos.map((c) => ({
+      name: c.data.title,
+      url: `/concursos/${c.data.slug}`,
+      image: c.data.image,
+    }))}
+    breadcrumbs={[
+      { name: "Inicio", url: "/" },
+      { name: "Concursos", url: "/concursos" },
+    ]}
+  />
   <div class="concursos-page">
     <!-- Hero Section -->
     <ConcursosHero
