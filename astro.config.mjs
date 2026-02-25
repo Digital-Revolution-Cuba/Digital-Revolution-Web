@@ -26,7 +26,6 @@ export default defineConfig({
   build: {
     inlineStylesheets: "auto", // Inline CSS pequeño (<4KB) para eliminar render-blocking
     assets: "_astro",
-    concurrency: 2,
   },
 
   // ── Servidor de desarrollo ────────────────────────────────────────────────
