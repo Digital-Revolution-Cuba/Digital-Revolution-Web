@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions"; // Da error los sliders con esto puesto
 import SpeedInsights from "@vercel/speed-insights/astro";
+import Analytics from "@vercel/analytics/astro";
 
 import Header from "../components/Header.astro";
 import "../styles/global.css";
@@ -66,6 +67,9 @@ const absImage = new URL(
     <meta name="twitter:image" content={absImage} />
     <meta name="twitter:creator" content="@drwebcuba" />
     <meta name="robots" content="index, follow" />
+
+    <!-- Vercel Analytics -->
+    <Analytics />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
