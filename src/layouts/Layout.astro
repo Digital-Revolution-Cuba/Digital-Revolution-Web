@@ -1,6 +1,6 @@
 ---
-import { ClientRouter } from "astro:transitions"; // Da error los sliders con esto puesto
 import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
 import Header from "../components/Header.astro";
 import "../styles/global.css";
 
@@ -8,89 +8,126 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  /** Sobreescribe el tipo OG (default: "website") */
+  ogType?: string;
+  /** Indica si es un artículo para agregar article: tags */
+  publishedDate?: string;
 }
+
+const SITE_URL =
+  Astro.site?.toString().replace(/\/$/, "") ?? "https://digital-revolution-cuba.vercel.app";
 
 const {
   title = "Digital Revolution Web | Comunidad de Talentos",
   description = "La plataforma oficial de la comunidad de talentos de Cuba. Descubre y conecta con creadores en arte, música, desarrollo y escritura.",
-  image = "/favicon.svg",
+  image = "/images/og/og-home.jpg",
+  ogType = "website",
+  publishedDate,
 } = Astro.props;
 
-const canonicalURL = new URL(
-  Astro.url.pathname,
-  Astro.site || "https://digital-revolution-web.vercel.app/"
-);
-const absImage = new URL(
-  image,
-  Astro.site || "https://digital-revolution-web.vercel.app/"
-).toString();
+const canonicalURL = new URL(Astro.url.pathname, SITE_URL + "/");
+const absImage = image.startsWith("http") ? image : new URL(image, SITE_URL + "/").toString();
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- Favicon -->
+    <!-- ── Rendimiento: conexión anticipada ─────────────────────────────── -->
+    <link rel="preconnect" href="https://digital-revolution-cuba.vercel.app" />
+    <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
+    <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
+
+    <!-- ── Favicon ───────────────────────────────────────────────────────── -->
     <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="shortcut icon" href="/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Digital Revolution Web" />
     <link rel="manifest" href="/favicon/site.webmanifest" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="msapplication-TileColor" content="#0a0a0a" />
 
-    <!-- Primary Meta Tags -->
+    <!-- ── SEO primario ──────────────────────────────────────────────────── -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <meta name="author" content="Digital Revolution Web" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <!-- ── Open Graph / Facebook ─────────────────────────────────────────── -->
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={absImage} />
-    <meta property="og:locale" content="es_ES" />
-    <!-- Recommended OG image dimensions: 1200x630 -->
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Digital Revolution Web" />
+    {publishedDate && <meta property="article:published_time" content={publishedDate} />}
 
-    <!-- Twitter -->
+    <!-- ── Twitter Card ──────────────────────────────────────────────────── -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absImage} />
     <meta name="twitter:creator" content="@drwebcuba" />
-    <meta name="robots" content="index, follow" />
+    <meta name="twitter:site" content="@drwebcuba" />
 
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-      {
+    <!-- ── JSON-LD: WebSite ───────────────────────────────────────────────── -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Digital Revolution Web",
-        "url": "${(Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}",
-        "image": "${absImage}",
-        "potentialAction": {
+        name: "Digital Revolution Web",
+        url: SITE_URL + "/",
+        description: "La plataforma oficial de la comunidad de talentos de Cuba.",
+        image: absImage,
+        inLanguage: "es",
+        potentialAction: {
           "@type": "SearchAction",
-          "target": "${(Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      }
-    </script>
-    <script type="application/ld+json">
-      {
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: SITE_URL + "/search?q={search_term_string}",
+          },
+          "query-input": "required name=search_term_string",
+        },
+      })}
+    />
+
+    <!-- ── JSON-LD: Organization ─────────────────────────────────────────── -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "Digital Revolution Web",
-        "url": "${(Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}",
-        "logo": "${new URL('/favicon.svg', Astro.site || 'https://digital-revolution-web.vercel.app/').toString()}",
-        "sameAs": ["https://twitter.com/digitalrev", "https://instagram.com/digitalrev"]
-      }
-    </script>
+        name: "Digital Revolution Web",
+        url: SITE_URL + "/",
+        logo: {
+          "@type": "ImageObject",
+          url: SITE_URL + "/favicon/favicon-96x96.png",
+          width: 96,
+          height: 96,
+        },
+        sameAs: ["https://twitter.com/drwebcuba", "https://instagram.com/digitalrevolutionweb"],
+      })}
+    />
+
+    <!-- ── Vercel Analytics + Speed Insights ─────────────────────────────── -->
+    <Analytics />
+    <SpeedInsights />
   </head>
   <body>
     <Header />
@@ -103,9 +140,9 @@ const absImage = new URL(
     <script>
       import "../client/initializers/join-community.ts";
     </script>
-    <slot />
   </body>
 </html>
+<slot />
 
 <style>
   html,
