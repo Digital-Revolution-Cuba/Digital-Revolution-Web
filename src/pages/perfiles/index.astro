@@ -4,8 +4,16 @@ import Layout from "../../layouts/Layout.astro";
 export const prerender = true;
 ---
 
-<Layout>
-  <h1 class="page-title">Pagina de Perfiles</h1>
+<Layout
+  title="Perfiles de la Comunidad — Digital Revolution Web"
+  description="Explora los perfiles de la comunidad Digital Revolution. Artistas, músicos, desarrolladores y creadores de Cuba conectados en una plataforma."
+  ogType="website"
+  ogImageType="perfil"
+>
+  <h1 class="page-title">Perfiles de la Comunidad</h1>
+  <p class="page-description">
+    Próximamente podrás explorar los perfiles de todos los miembros de nuestra comunidad.
+  </p>
 </Layout>
 
 <style>
@@ -13,5 +21,14 @@ export const prerender = true;
     text-align: center;
     margin-top: 200px;
     font-size: 30px;
+    color: #fff;
+  }
+
+  .page-description {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.125rem;
+    max-width: 500px;
+    margin: 1rem auto;
   }
 </style>
