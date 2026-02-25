@@ -143,6 +143,8 @@ export default defineConfig({
             return item;
           }
         },
+        // Fallback chunk: include all other URLs with default priority
+        others: (item) => item,
       },
     }),
 
