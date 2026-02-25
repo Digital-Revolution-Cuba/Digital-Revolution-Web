@@ -1,6 +1,7 @@
 ---
 import { GalleryGrid } from "../../components/gallery/GalleryGrid";
 import { HeroSection } from "../../components/gallery/GalleryHero";
+import StructuredData from "../../components/seo/StructuredData.astro";
 import { galleryItems } from "../../data/gallery";
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/global.css";
@@ -9,10 +10,20 @@ export const prerender = true;
 ---
 
 <Layout
-  title="Galería — Digital Revolution Web"
-  description="Galería de trabajos y proyectos de la comunidad. Fotografías, música y arte visual de talentos locales."
-  image="/og-galeria.jpg"
+  title="Galería de Arte y Fotografía — Digital Revolution Web"
+  description="Galería de trabajos y proyectos creativos de la comunidad Digital Revolution Cuba. Fotografías, música y arte visual de talentos locales."
+  ogType="website"
+  ogImageType="galeria"
 >
+  <StructuredData
+    type="collection"
+    title="Galería de Arte y Fotografía"
+    description="Galería de proyectos creativos de la comunidad Digital Revolution Cuba."
+    breadcrumbs={[
+      { name: "Inicio", url: "/" },
+      { name: "Galería", url: "/galeria" },
+    ]}
+  />
   <HeroSection client:only="react" />
   <GalleryGrid client:only="react" images={galleryItems} />
 </Layout>
