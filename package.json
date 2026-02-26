@@ -4,6 +4,8 @@
   "version": "0.0.1",
   "packageManager": "pnpm@10.24.0",
   "scripts": {
+    "postinstall": "pnpm storage:seed",
+    "storage:seed": "tsx scripts/storage-seed.ts",
     "dev": "astro dev",
     "start": "node ./dist/server/entry.mjs",
     "build": "astro build",
