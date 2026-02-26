@@ -1,0 +1,34 @@
+{
+  "name": "Evian Fernández",
+  "role": "Founder & Growth Strategist",
+  "location": "Cuba",
+  "image": "/images/talents/profiles/evian-fernandez.avif",
+  "communityRole": "Growth Leader",
+  "status": "activo",
+  "rating": 4.7,
+  "followers": 0,
+  "views": 0,
+  "tags": ["Growth", "Branding", "Estrategia Digital", "Marketing", "Negocios"],
+  "skills": [
+    "Growth Strategy",
+    "Desarrollo de Marca",
+    "Marketing Digital",
+    "Estrategia Comercial",
+    "Posicionamiento de Negocios"
+  ],
+  "focusArea": "Crecimiento y Marca Personal",
+  "currentFocus": "Escalando Evian Growth como una marca enfocada en estrategia, posicionamiento y crecimiento de negocios digitales.",
+  "recentActivity": [
+    {
+      "title": "Fundación y desarrollo de la marca Evian Growth"
+    },
+    {
+      "title": "Asesoría estratégica para marcas emergentes"
+    }
+  ],
+  "externalLink": "https://evian-growth.com",
+  "contact": {
+    "phone": "+53 56595366"
+  },
+  "featured": false
+}
