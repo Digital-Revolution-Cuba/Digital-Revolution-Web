@@ -1,0 +1,53 @@
+{
+  "name": "SYS: Zero",
+  "role": "Artista Visual & Productor Musical",
+  "location": "Cuba",
+  "image": "/images/talents/profiles/sys-zero.avif",
+  "communityRole": "Artista Creativo",
+  "status": "activo",
+  "rating": 4.9,
+  "followers": 7000,
+  "views": 2000000,
+  "tags": [
+    "Arte Digital",
+    "Diseño de Personajes",
+    "Fanart",
+    "Videojuegos",
+    "Soundtracks",
+    "SFX",
+    "Marketing Visual"
+  ],
+  "skills": [
+    "Ilustración Digital",
+    "Concept Art",
+    "Diseño de Escenarios",
+    "Diseño Gráfico",
+    "Producción Musical",
+    "Creación de Soundtracks",
+    "Efectos de Sonido (SFX)",
+    "Diseño de Interfaces",
+    "Edición de Manga"
+  ],
+  "focusArea": "Arte y Producción Multimedia",
+  "currentFocus": "Desarrollo de proyectos creativos enfocados en videojuegos, ilustración digital y producción de soundtracks originales.",
+  "recentActivity": [
+    {
+      "title": "Creación del Juego de Mesa AL MAGICAL (2025)"
+    },
+    {
+      "title": "Top 15 de 12000 en SUPERCELLMAKE 2022"
+    },
+    {
+      "title": "Finalista SUPERCELLMAKE 2022"
+    },
+    {
+      "title": "EP 'Like A~Azure Memory' (2024)"
+    }
+  ],
+  "externalLink": "https://www.instagram.com/zerakumu_illust",
+  "contact": {
+    "email": "zerakumu.illust@gmail.com",
+    "phone": "+53 50461035"
+  },
+  "featured": true
+}

@@ -1,0 +1,42 @@
+{
+  "name": "Alejandro Modnoize",
+  "role": "Productor Musical",
+  "location": "Santa Clara, Villa Clara, Cuba",
+  "image": "/images/talents/profiles/alejandro-modnoize.avif",
+  "communityRole": "Music Producer",
+  "status": "activo",
+  "rating": 4.9,
+  "followers": 0,
+  "views": 0,
+  "tags": [
+    "Producción Musical",
+    "Música Urbana",
+    "Pop",
+    "Electrónica",
+    "Música Latina",
+    "Experimental"
+  ],
+  "skills": [
+    "Producción Musical",
+    "Dirección Artística",
+    "Arreglos y Composición",
+    "Mezcla",
+    "Desarrollo de Sonido",
+    "Colaboración con Artistas"
+  ],
+  "focusArea": "Producción y Desarrollo Musical",
+  "currentFocus": "Producción de proyectos musicales en el ámbito urbano y expansión hacia géneros como pop, electrónica y música experimental independiente.",
+  "recentActivity": [
+    {
+      "title": "Producción de artistas del género urbano"
+    },
+    {
+      "title": "Desarrollo de proyectos en música pop y electrónica"
+    },
+    {
+      "title": "Exploración sonora en música latina y experimental"
+    }
+  ],
+  "externalLink": "https://modnoize.com",
+  "featured": false
+}
