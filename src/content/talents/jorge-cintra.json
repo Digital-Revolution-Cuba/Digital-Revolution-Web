@@ -1,0 +1,47 @@
+{
+  "name": "Jorge Cintra",
+  "role": "Unreal Developer, UX Designer & Team Lead",
+  "location": "Cuba",
+  "image": "/images/talents/profiles/cintra.avif",
+  "communityRole": "Tech Lead",
+  "status": "activo",
+  "rating": 4.9,
+  "followers": 0,
+  "views": 0,
+  "tags": [
+    "Unreal Engine",
+    "VFX",
+    "MetaSound",
+    "UX Design",
+    "Scrum",
+    "Frontend Development",
+    "Game Development"
+  ],
+  "skills": [
+    "Desarrollo en Unreal Engine",
+    "VFX en Tiempo Real",
+    "MetaSound",
+    "Diseño de Experiencia de Usuario (UX)",
+    "Liderazgo de Equipos Ágiles",
+    "Metodología Scrum",
+    "Desarrollo Frontend"
+  ],
+  "focusArea": "Desarrollo Interactivo y Liderazgo Técnico",
+  "currentFocus": "Creación de experiencias interactivas en Unreal Engine combinando VFX, MetaSound y diseño UX, liderando equipos bajo metodologías ágiles.",
+  "recentActivity": [
+    {
+      "title": "Desarrollo de sistemas VFX y audio interactivo en Unreal"
+    },
+    {
+      "title": "Coordinación de equipos como Team Lead certificado por Scrum Master Academy"
+    },
+    {
+      "title": "Desarrollo de interfaces y experiencias frontend"
+    }
+  ],
+  "externalLink": "https://www.linkedin.com/in/jorge-cintra-ux-developer/",
+  "contact": {
+    "phone": "+53 55884292"
+  },
+  "featured": false
+}
