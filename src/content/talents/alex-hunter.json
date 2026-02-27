@@ -1,0 +1,58 @@
+{
+  "name": "Alex Hunter",
+  "role": "Diseñador de Comunicación Visual & Concept Artist",
+  "location": "La Habana, Cuba",
+  "image": "/images/talents/profiles/alex-hunter.avif",
+  "communityRole": "Diseñador Visual",
+  "status": "activo",
+  "rating": 4.9,
+  "followers": 0,
+  "views": 0,
+  "tags": [
+    "Diseño de Identidad",
+    "Ilustración",
+    "Concept Art",
+    "Diseño Web",
+    "Diseño Editorial",
+    "Animación",
+    "Videojuegos",
+    "Exposiciones Colectivas"
+  ],
+  "skills": [
+    "Ilustración Digital y Tradicional",
+    "Diseño de Identidad Visual",
+    "Diseño Editorial",
+    "Diseño Web y UX/UI",
+    "Concept Art y Character Design",
+    "Animación y Motion Graphics",
+    "Blender",
+    "Adobe Illustrator",
+    "Photoshop",
+    "InDesign",
+    "After Effects",
+    "Premiere",
+    "Figma"
+  ],
+  "focusArea": "Diseño de Comunicación Visual y Desarrollo Creativo",
+  "currentFocus": "Desarrollo de proyectos de identidad visual, ilustración y concept art aplicados a diseño gráfico, videojuegos y proyectos audiovisuales.",
+  "recentActivity": [
+    {
+      "title": "Diseño de Identidad Visual del Centro de Sistemas Complejos (Universidad de La Habana, 2022)"
+    },
+    {
+      "title": "Participación en la Bienal de La Habana 2021 – Exposición Colectiva Estado de Espíritu"
+    },
+    {
+      "title": "Diseño de Identidad Visual del COURAGE Film Festival (2021)"
+    },
+    {
+      "title": "Ilustraciones para la revista Upsalón (2023)"
+    },
+    {
+      "title": "Trabajo editorial con la agencia española Bizbooster (2023-2024)"
+    }
+  ],
+  "externalLink": "https://www.behance.net/alexhunter",
+  "contact": {},
+  "featured": false
+}

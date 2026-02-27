@@ -1,0 +1,37 @@
+{
+  "name": "Anthony from Zero Point",
+  "role": "Animador",
+  "location": "Cuba",
+  "image": "/images/talents/profiles/anthony-animador.avif",
+  "communityRole": "Miembro",
+  "status": "activo",
+  "rating": 4.7,
+  "followers": 0,
+  "views": 0,
+  "tags": [
+    "modelado",
+    "animacion3d",
+    "iluminacion",
+    "texturizado",
+    "composicion",
+    "blender"
+  ],
+  "skills": [
+    "animación 2d",
+    "animación 3d",
+    "modelado 3d",
+    "iluminación",
+    "composición",
+    "texturizado"
+  ],
+  "focusArea": "Animación 3D",
+  "currentFocus": "Inside: Cortometraje indie enfocado en la alineación y el impacto psicologico",
+  "recentActivity": [
+    {
+      "Orígenes": "LoneWolf - Orígenes III",
+      "https://youtu.be/gXGXYzyX_O0": "URL opcional"
+    }
+  ],
+  "externalLink": "https://www.instagram.com/zero.point.studio?igsh=cTRjYTQ1YTMzM3Z1",
+  "featured": true
+}

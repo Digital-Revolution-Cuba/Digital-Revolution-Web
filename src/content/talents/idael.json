@@ -1,0 +1,41 @@
+{
+  "name": "Idael",
+  "role": "Artista Musical, Modelo Fashion & Lifestyle Artist",
+  "location": "Cuba",
+  "image": "/images/talents/profiles/idael.avif",
+  "communityRole": "Artista & Fashion Creator",
+  "status": "activo",
+  "rating": 4.7,
+  "followers": 0,
+  "views": 0,
+  "tags": [
+    "Música",
+    "Fashion",
+    "Lifestyle",
+    "Modelaje",
+    "Marca Personal",
+    "Arte"
+  ],
+  "skills": [
+    "Interpretación Musical",
+    "Performance Escénica",
+    "Modelaje Fashion",
+    "Creación de Contenido Lifestyle",
+    "Desarrollo de Marca Personal"
+  ],
+  "focusArea": "Música y Proyección de Imagen",
+  "currentFocus": "Desarrollo de proyectos musicales y consolidación de marca personal en el ámbito fashion y lifestyle.",
+  "recentActivity": [
+    {
+      "title": "Participación en proyectos musicales y sesiones de modelaje"
+    },
+    {
+      "title": "Creación de contenido artístico y lifestyle"
+    }
+  ],
+  "externalLink": "https://www.instagram.com/idael_music/",
+  "contact": {
+    "phone": "+53 58467557"
+  },
+  "featured": false
+}

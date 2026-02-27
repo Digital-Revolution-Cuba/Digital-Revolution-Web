@@ -1,0 +1,23 @@
+{
+  "name": "Yulien Linares Rayo",
+  "role": "Animador 3D",
+  "location": "Cuba",
+  "image": "/images/talents/profiles/yulien-linares.avif",
+  "communityRole": "Admin",
+  "status": "inactivo",
+  "rating": 4.5,
+  "followers": 49,
+  "views": 500,
+  "tags": ["3D", "Animador"],
+  "skills": ["Generalista", "Lobo solitario"],
+  "focusArea": " Trabajar solo",
+  "currentFocus": "Animadors Icaic",
+  "recentActivity": [
+    {
+      "title": "NightFallGalaxy",
+      "url": "https://youtube.com/@nightfallgalaxy?si=NBX8GWI0oq5TPCP3"
+    }
+  ],
+  "externalLink": "https://youtube.com/@nightfallgalaxy?si=NBX8GWI0oq5TPCP3",
+  "featured": true
+}
