@@ -83,13 +83,7 @@ const navLinks = [
             <a href="/galeria" class="text-text-secondary hover:text-accent-cyan text-lg">Galeria</a
             >
           </li>
-          <!--
-          <li>
-            <a href="/perfiles" class="text-text-secondary hover:text-accent-cyan text-lg"
-              >Perfiles</a
-            >
-            </li>
-            -->
+
           <li>
             <a href="/colaboraciones" class="text-text-secondary hover:text-accent-cyan text-lg"
               >Colaboraciones</a
@@ -386,5 +380,115 @@ const navLinks = [
   }
 </style>
 
-<!-- Header behaviour is initialized from a centralized client initializer: -->
-<!-- <script type="module" src="/src/client/initializers/header.ts"></script> -->
+<script is:inline>
+  (function () {
+    // Cleanup prev listeners before re-init (safe for Astro page transitions)
+    if (window.__headerCleanup) {
+      window.__headerCleanup();
+      window.__headerCleanup = null;
+    }
+
+    var menuToggle = document.getElementById("menu-toggle");
+    var mobileMenu = document.getElementById("mobile-menu");
+    var header = document.getElementById("main-header");
+
+    if (!menuToggle || !mobileMenu || !header) return;
+
+    // ─── Mobile menu toggle ─────────────────────────────────────────────────
+    function toggleMenu(forceClose) {
+      var isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+      var shouldClose = forceClose === true || isExpanded;
+
+      menuToggle.setAttribute("aria-expanded", String(!shouldClose));
+      mobileMenu.setAttribute("aria-hidden", String(shouldClose));
+
+      if (shouldClose) {
+        mobileMenu.classList.remove(
+          "opacity-100",
+          "visible",
+          "translate-y-0",
+          "pointer-events-auto"
+        );
+        mobileMenu.classList.add("opacity-0", "invisible", "-translate-y-4", "pointer-events-none");
+        document.body.style.overflow = "";
+      } else {
+        mobileMenu.classList.remove(
+          "opacity-0",
+          "invisible",
+          "-translate-y-4",
+          "pointer-events-none"
+        );
+        mobileMenu.classList.add("opacity-100", "visible", "translate-y-0", "pointer-events-auto");
+        document.body.style.overflow = "hidden";
+      }
+    }
+
+    function onMenuToggleClick() {
+      toggleMenu();
+    }
+    menuToggle.addEventListener("click", onMenuToggleClick);
+
+    // Close on mobile-nav-link click
+    var mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
+    mobileNavLinks.forEach(function (link) {
+      link.addEventListener("click", function () {
+        toggleMenu(true);
+      });
+    });
+
+    // Close on Escape
+    function onKeydown(e) {
+      if (e.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
+        toggleMenu(true);
+        menuToggle.focus();
+      }
+    }
+    document.addEventListener("keydown", onKeydown);
+
+    // Close on click outside
+    function onClickOutside(e) {
+      if (!header.contains(e.target)) toggleMenu(true);
+    }
+    document.addEventListener("click", onClickOutside);
+
+    // Close on backdrop click
+    mobileMenu.addEventListener("click", function (e) {
+      if (e.target === mobileMenu) toggleMenu(true);
+    });
+
+    // ─── Hide/show header on scroll ─────────────────────────────────────────
+    var lastScrollY = window.scrollY;
+    var ticking = false;
+
+    function updateHeader() {
+      var currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down — hide header
+        header.style.transform = "translateY(-150%)";
+        if (menuToggle.getAttribute("aria-expanded") === "true") toggleMenu(true);
+      } else {
+        // Scrolling up — show header
+        header.style.transform = "translateY(0)";
+      }
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // ─── Expose cleanup for page transitions ────────────────────────────────
+    window.__headerCleanup = function () {
+      menuToggle.removeEventListener("click", onMenuToggleClick);
+      document.removeEventListener("keydown", onKeydown);
+      document.removeEventListener("click", onClickOutside);
+      window.removeEventListener("scroll", onScroll);
+      document.body.style.overflow = "";
+    };
+  })();
+</script>
