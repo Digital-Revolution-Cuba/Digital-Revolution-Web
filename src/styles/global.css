@@ -207,9 +207,14 @@ html,
 body {
   background-color: var(--color-brand-background-global);
   color: #fff;
-  overflow-x: hidden;
   font-family: var(--default-font-family);
   @apply [&::-webkit-scrollbar-track]:bg-brand-dark [&::-webkit-scrollbar-thumb]:bg-accent-orange [&::-webkit-scrollbar]:hidden [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:md:block [&::-webkit-scrollbar-thumb]:cursor-pointer [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-none;
+}
+
+/* overflow-x only on body — applying it to html creates a new scroll
+   container that breaks position:sticky and keeps window.scrollY at 0 */
+body {
+  overflow-x: hidden;
 }
 
 /* ===========================
