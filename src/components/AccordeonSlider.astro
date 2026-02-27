@@ -57,7 +57,7 @@ function isEvenPosition(positionInPage: number): boolean {
             const globalIndex = pageIndex * cardsPerPage + posInPage;
             return (
               <div
-                class={`acordeon-item group relative transform transition-all duration-500 ${
+                class={`acordeon-item group relative transform cursor-pointer transition-all duration-500 ${
                   even
                     ? "origin-left -translate-y-7 skew-y-18 hover:translate-y-14 hover:-skew-y-18"
                     : "origin-right -skew-y-25 hover:translate-y-24 hover:skew-y-25"
@@ -80,7 +80,7 @@ function isEvenPosition(positionInPage: number): boolean {
                       height="340"
                       loading={pageIndex === 0 ? "eager" : "lazy"}
                       decoding="async"
-                      class={`h-full w-full border border-white object-cover shadow-2xl ${
+                      class={`h-full w-full border border-white/30 object-cover shadow-2xl ${
                         even
                           ? "rounded-4xl rounded-tr-2xl rounded-bl-2xl"
                           : "rounded-4xl rounded-tl-2xl rounded-br-2xl"
@@ -90,7 +90,7 @@ function isEvenPosition(positionInPage: number): boolean {
 
                   {/* Back face — text label */}
                   <div
-                    class={`flip-back bg-brand-navy absolute inset-0 flex h-full w-full rotate-y-180 items-center justify-center border border-white shadow-2xl backface-hidden ${
+                    class={`flip-back bg-brand-navy font-roboto absolute inset-0 flex h-full w-full rotate-y-180 items-center justify-center border border-white/30 px-2 text-center shadow-2xl backface-hidden ${
                       even
                         ? "rounded-4xl rounded-tr-2xl rounded-bl-2xl"
                         : "rounded-4xl rounded-tl-2xl rounded-br-2xl"

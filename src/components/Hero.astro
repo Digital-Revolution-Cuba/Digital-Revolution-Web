@@ -1,6 +1,45 @@
 ---
 import Accordeon from "../components/AccordeonSlider.astro";
 import "../styles/glass-card.css";
+
+const sliderCards = [
+  {
+    id: 1,
+    image: "/images/talents/avatars/superiom-ex.avif",
+    alt: "Anthoan Linea - Desarrollador de Software",
+    backText: "Desarrollador de Software",
+  },
+  {
+    id: 2,
+    image: "/images/talents/avatars/ansoni.avif",
+    alt: "Anthony Garcia - Desarrollador de Software y Machine Learning",
+    backText: "Desarrollador de Software y Machine Learning",
+  },
+  {
+    id: 3,
+    image: "/images/talents/avatars/rodny.avif",
+    alt: "Rodny Estrada - Desarrollador de Software",
+    backText: "Desarrollador de Software",
+  },
+  {
+    id: 4,
+    image: "/images/talents/avatars/alex-hunter.avif",
+    alt: "Alex - Diseñadora Gráfica",
+    backText: "Diseñadora Gráfica",
+  },
+  {
+    id: 5,
+    image: "/images/talents/avatars/marcos.avif",
+    alt: "Marcos - Artista Creativo",
+    backText: "Artista Creativo",
+  },
+  {
+    id: 6,
+    image: "/images/talents/avatars/evian-fernandez.avif",
+    alt: "Evian Fernández - Growth Leader",
+    backText: "Growth Leader",
+  },
+];
 ---
 
 <section
@@ -27,7 +66,7 @@ import "../styles/glass-card.css";
 
     <!-- Right content - Accordeon -->
     <div class="hero-accordeon flex w-full justify-center md:w-1/2">
-      <Accordeon />
+      <Accordeon cards={sliderCards} />
     </div>
   </div>
 </section>
