@@ -1,3 +1,7 @@
+/**
+ * NOTE: The content folder is pulled from a remote branch using `pnpm storage:seed`
+ * See: https://github.com/Digital-Revolution-Cuba/Digital-Revolution-Web/pull/172
+ */
 import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 

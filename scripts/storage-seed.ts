@@ -2,10 +2,9 @@ import { createWriteStream, promises as fs } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
 import { pipeline } from "stream/promises";
-import { createReadStream } from "fs";
 import * as https from "https";
 import * as dotenv from "dotenv";
-import * as unzipper from "unzipper";
+import AdmZip from "adm-zip";
 
 dotenv.config();
 
@@ -14,7 +13,7 @@ const url =
   "https://github.com/Digital-Revolution-Cuba/Digital-Revolution-Web/archive/refs/heads/seed-storage.zip";
 
 /**
- *
+ * Descarga un archivo desde una URL
  */
 const download = (fileUrl: string, dest: string) =>
   new Promise<void>((resolvePromise, reject) => {
@@ -34,7 +33,7 @@ const download = (fileUrl: string, dest: string) =>
           return download(response.headers.location, dest).then(resolvePromise).catch(reject);
         }
         if (response.statusCode !== 200) {
-          return reject(new Error(`Download failed with status ${response.statusCode}`));
+          return reject(new Error(`descarga fallida con estado ${response.statusCode}`));
         }
 
         const contentLength = parseInt(response.headers["content-length"] || "0", 10);
@@ -68,7 +67,7 @@ const download = (fileUrl: string, dest: string) =>
   });
 
 /**
- *
+ * Copia recursivamente archivos y directorios
  */
 const copyRecursive = async (src: string, dest: string) => {
   const stat = await fs.stat(src);
@@ -110,12 +109,11 @@ const main = async () => {
 
   await download(url, tempZip);
 
-  await fs.mkdir(extractDir, { recursive: true });
   console.log("extrayendo archivos");
-
-  await createReadStream(tempZip)
-    .pipe(unzipper.Extract({ path: extractDir }))
-    .promise();
+  
+  // Usando adm-zip en lugar de unzipper
+  const zip = new AdmZip(tempZip);
+  zip.extractAllTo(extractDir, true);
 
   const contentDir = join(
     extractDir,
@@ -128,6 +126,7 @@ const main = async () => {
     await copyRecursive(fullPath, resolve(process.cwd(), entry));
   }
 
+  // Limpieza de archivos temporales
   await fs.rm(tempZip, { force: true });
   await fs.rm(extractDir, { recursive: true, force: true });
 };
