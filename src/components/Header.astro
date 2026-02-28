@@ -42,26 +42,16 @@ const navLinks = [
 
     <!-- Navegación Desktop -->
     <nav class="hidden items-center gap-8 lg:flex">
-      <a
-        href="/concursos"
-        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
-        >Concursos</a
-      >
-      <a
-        href="/galeria"
-        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
-        >Galeria</a
-      >
-      <a
-        href="/perfiles"
-        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
-        >Perfiles</a
-      >
-      <a
-        href="/colaboraciones"
-        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
-        >Colaboraciones</a
-      >
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+          >
+            {link.label}
+          </a>
+        ))
+      }
       <a href="/talentos" class="btn-primary"> Descubre Talentos </a>
     </nav>
 
@@ -74,28 +64,19 @@ const navLinks = [
       <!-- Tus links y botón aquí -->
       <nav aria-label="Navegación móvil">
         <ul class="flex flex-col items-center gap-6">
-          <li>
-            <a href="/concursos" class="text-text-secondary hover:text-accent-cyan text-lg"
-              >Concursos</a
-            >
-          </li>
-          <li>
-            <a href="/galeria" class="text-text-secondary hover:text-accent-cyan text-lg">Galeria</a
-            >
-          </li>
-
-          <li>
-            <a href="/colaboraciones" class="text-text-secondary hover:text-accent-cyan text-lg"
-              >Colaboraciones</a
-            >
-          </li>
+          {
+            navLinks.map((link) => (
+              <li>
+                <a href={link.href} class="text-text-secondary hover:text-accent-cyan text-lg">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+          <a href="/talentos" class="btn-primary w-full py-4 text-center text-xl">
+            Descubre Talentos
+          </a>
         </ul>
-        <a
-          href="/talentos"
-          class="bg-brand-navy text-accent-orange hover:bg-accent-cyan hover:text-brand-dark mt-8 block w-full max-w-xs rounded-lg px-8 py-4 text-center text-lg font-semibold transition-all"
-        >
-          Descubre Talentos
-        </a>
       </nav>
     </div>
   </div>
