@@ -116,14 +116,14 @@ export function initializeHeader(): () => void {
     if (elements.header) {
       // Ocultar header al hacer scroll hacia abajo
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        elements.header.style.transform = "translateX(-50%) translateY(-150%)";
+        elements.header.style.transform = "translateY(-150%)";
 
         // Cerrar menú móvil si está abierto
         if (elements.menuToggle!.getAttribute("aria-expanded") === "true") {
           toggleMenu(true);
         }
       } else {
-        elements.header.style.transform = "translateX(-50%) translateY(0)";
+        elements.header.style.transform = "translateY(0)";
       }
     }
 
