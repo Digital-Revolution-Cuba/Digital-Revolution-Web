@@ -66,8 +66,8 @@ const formatDate = (date: Date) => {
   />
   <div class="collab-page-container">
     {/* Section 1: Header/Intro - Dark Background */}
-    <section class="collab-hero py-24 md:py-32">
-      <div class="container mx-auto px-6">
+    <section class="collab-hero">
+      <div class="container mx-auto px-6 py-24 md:py-32">
         <div class="animate-fade-in flex max-w-4xl flex-col gap-6 opacity-0">
           <h1 class="hero-title">
             Colaboraciones <br /><span class="text-stroke-cyan">Destacadas</span>
@@ -78,10 +78,9 @@ const formatDate = (date: Date) => {
           </p>
         </div>
       </div>
+      {/* Divider 1: Cyan */}
+      <DiagonalDivider color="#34dfde" direction="down" />
     </section>
-
-    {/* Divider 1: Cyan */}
-    <DiagonalDivider color="#34dfde" direction="down" />
 
     {/* Section 2: Active Collaborations - Cyan Background */}
     <section class="collab-section-active bg-accent-cyan py-24">
