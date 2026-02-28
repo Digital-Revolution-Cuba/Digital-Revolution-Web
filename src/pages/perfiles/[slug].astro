@@ -83,7 +83,7 @@ const formatStat = (num: number) => {
     ]}
   />
   <main class="selection:bg-accent-cyan/30 mt-[8rem] px-(--space-md) py-(--space-xl)">
-    <article class="mx-auto max-w-(--container-md)">
+    <article class="mx-auto max-w-(--container-lg)">
       <header
         class="mb-(--space-xl) flex flex-col items-center gap-(--space-lg) md:flex-row md:items-start"
       >
@@ -125,7 +125,7 @@ const formatStat = (num: number) => {
             {
               status && (
                 <span
-                  class={`font-roboto rounded-full border px-3 py-1 text-xs tracking-[0.2em] uppercase ${statusStyles[status as keyof typeof statusStyles]}`}
+                  class={`rounded-full border px-3 py-1 text-sm font-bold capitalize ${statusStyles[status as keyof typeof statusStyles]}`}
                 >
                   {status}
                 </span>
@@ -244,12 +244,11 @@ const formatStat = (num: number) => {
           </div>
         </div>
       </header>
-
-      <div class="grid grid-cols-1 gap-(--space-lg) md:grid-cols-12">
+      <div class="flex flex-col items-center justify-start gap-10">
         {
           currentFocus && (
-            <section class="space-y-4 text-gray-300 md:col-span-7">
-              <h2 class="text-accent-orange flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase">
+            <section class="space-y-4 text-gray-300">
+              <h2 class="text-accent-orange heading-section">
                 <span class="bg-accent-orange/50 h-px w-8" />
                 Enfoque Actual
               </h2>
@@ -260,14 +259,14 @@ const formatStat = (num: number) => {
 
         {
           skills.length > 0 && (
-            <section class="space-y-4 text-gray-300 md:col-span-5">
-              <h2 class="text-accent-cyan flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase">
+            <section class="space-y-4 text-gray-300">
+              <h2 class="text-accent-cyan heading-section">
                 <span class="bg-accent-cyan/50 h-px w-8" />
                 Capacidades
               </h2>
-              <div class="flex flex-wrap gap-x-6 gap-y-2 md:pl-11">
+              <div class="flex flex-wrap items-start justify-start gap-2 md:pl-11">
                 {skills.map((skill: string) => (
-                  <span class="cursor-default font-mono text-base opacity-70 transition-colors hover:text-white">
+                  <span class="bg-brand-dark w-fit cursor-default rounded-lg p-1 px-2 text-base font-medium shadow transition-colors">
                     {skill}
                   </span>
                 ))}
@@ -278,8 +277,8 @@ const formatStat = (num: number) => {
 
         {
           recentActivity.length > 0 && (
-            <section class="space-y-6 pt-(--space-md) md:col-span-12">
-              <h2 class="text-accent-purple flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase">
+            <section class="space-y-6">
+              <h2 class="text-accent-purple heading-section">
                 <span class="bg-accent-purple/50 h-px w-8" />
                 Participaciones Recientes
               </h2>
@@ -320,14 +319,10 @@ const formatStat = (num: number) => {
           )
         }
       </div>
-
       {
         externalLink && (
           <footer class="mt-(--space-xl) flex justify-center pt-(--space-lg)">
-            <a
-              href={externalLink}
-              class="cta-btn !px-12 !py-4 text-center text-sm tracking-[0.2em] uppercase"
-            >
+            <a href={externalLink} class="cta-btn !px-12 !py-4 text-center text-xl">
               Contactar Profesional
             </a>
           </footer>
@@ -336,3 +331,11 @@ const formatStat = (num: number) => {
     </article>
   </main>
 </Layout>
+
+<style>
+  @import "tailwindcss";
+
+  .heading-section {
+    @apply flex items-center gap-3 text-lg font-extrabold;
+  }
+</style>
