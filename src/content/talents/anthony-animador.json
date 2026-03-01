@@ -28,8 +28,11 @@
   "currentFocus": "Inside: Cortometraje indie enfocado en la alineación y el impacto psicologico",
   "recentActivity": [
     {
-      "Orígenes": "LoneWolf - Orígenes III",
-      "https://youtu.be/gXGXYzyX_O0": "URL opcional"
+      title: "Orígenes: LoneWolf - Orígenes III"
+    },
+    {
+      title: New Project ,
+      link: "https://youtu.be/gXGXYzyX_O0"
     }
   ],
   "externalLink": "https://www.instagram.com/zero.point.studio?igsh=cTRjYTQ1YTMzM3Z1",
