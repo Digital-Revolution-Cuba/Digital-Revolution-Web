@@ -2,8 +2,24 @@ import { useState, useMemo } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Measure from "react-measure";
 import { InputSearchGallery } from "./InputSearchGallery";
-import { X } from "lucide-react";
 import type { GalleryItem } from "../../data/gallery";
+
+const XIcon = ({ className }: { className: string }) => (
+  <svg
+    className={className}
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M18 6 6 18" />
+    <path d="m6 6 12 12" />
+  </svg>
+);
 
 interface SelectedImage {
   download_url: string;
@@ -128,7 +144,7 @@ export function GalleryGrid({ images }: { images: readonly GalleryItem[] }) {
                 onClick={closeModal}
                 className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-colors duration-200 hover:bg-white/20"
               >
-                <X className="h-6 w-6 text-white" />
+                <XIcon className="h-6 w-6 text-white" />
               </button>
             </div>
 
