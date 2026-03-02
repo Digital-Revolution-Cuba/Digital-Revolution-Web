@@ -42,22 +42,16 @@ const navLinks = [
 
     <!-- Navegación Desktop -->
     <nav class="hidden items-center gap-8 lg:flex">
-      <a
-        href="/concursos"
-        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
-        >Concursos</a
-      >
-      <a
-        href="/galeria"
-        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
-        >Galeria</a
-      >
-      <a
-        href="/colaboraciones"
-        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
-        >Colaboraciones</a
-      >
-      <a href="/talentos" class="btn-primary"> Descubre Talentos </a>
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+          >
+            {link.label}
+          </a>
+        ))
+      }
     </nav>
 
     <!-- Menú Móvil (Desplegable) -->
