@@ -1,7 +1,8 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "pnpm run build",
   "devCommand": "pnpm run dev",
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --prod=false --ignore-scripts",
   "framework": "astro",
   "outputDirectory": "./dist",
   "headers": [
