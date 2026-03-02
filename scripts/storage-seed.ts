@@ -110,7 +110,7 @@ const main = async () => {
   await download(url, tempZip);
 
   console.log("extrayendo archivos");
-  
+
   // Usando adm-zip en lugar de unzipper
   const zip = new AdmZip(tempZip);
   zip.extractAllTo(extractDir, true);
@@ -119,11 +119,28 @@ const main = async () => {
     extractDir,
     (await fs.readdir(extractDir))[0] // entrar a la carpeta del zip
   );
-  const entries = await fs.readdir(contentDir);
-  for (const entry of entries) {
-    if (entry === "README.md") continue;
-    const fullPath = join(contentDir, entry);
-    await copyRecursive(fullPath, resolve(process.cwd(), entry));
+
+  // Leer el archivo seed.json
+  const seedJsonPath = join(contentDir, "seed.json");
+  const seedJsonContent = await fs.readFile(seedJsonPath, "utf-8");
+  const includeConfig = JSON.parse(seedJsonContent);
+  let foldersToCopy: string[] = includeConfig.include;
+
+  console.log("-> Get seed.json:", foldersToCopy);
+
+  for (const folder of foldersToCopy) {
+    const fullPath = join(contentDir, folder);
+
+    try {
+      const stat = await fs.stat(fullPath);
+
+      if (stat.isDirectory()) console.log(`Copiando carpeta: ${folder}`);
+      else console.log(`Copiando archivo: ${folder}`);
+
+      await copyRecursive(fullPath, resolve(process.cwd(), folder));
+    } catch (error) {
+      console.error(`Error al procesar ${folder}:`, error);
+    }
   }
 
   // Limpieza de archivos temporales
