@@ -1,0 +1,5 @@
+{
+  "$schema": "https://rodnye.github.io/json-schemas/schemas/storage-seed/v2.json",
+  "include": ["src/content/**/*.json", "public/images/**/*"],
+  "exclude": ["**/*.md", "**/.gitkeep"]
+}
