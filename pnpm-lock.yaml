@@ -93,6 +93,9 @@ importers:
       dotenv:
         specifier: ^17.3.1
         version: 17.3.1
+      fast-glob:
+        specifier: ^3.3.3
+        version: 3.3.3
       husky:
         specifier: ^9.1.7
         version: 9.1.7
