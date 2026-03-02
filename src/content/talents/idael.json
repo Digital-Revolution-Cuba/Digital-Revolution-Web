@@ -8,7 +8,14 @@
   "rating": 4.7,
   "followers": 0,
   "views": 0,
-  "tags": ["Música", "Fashion", "Lifestyle", "Modelaje", "Marca Personal", "Arte"],
+  "tags": [
+    "Música",
+    "Fashion",
+    "Lifestyle",
+    "Modelaje",
+    "Marca Personal",
+    "Arte"
+  ],
   "skills": [
     "Interpretación Musical",
     "Performance Escénica",
