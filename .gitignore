@@ -39,5 +39,3 @@ CHANGELOG_RELEASE.md
 # Ignorar imágenes y assets generados por el script de seed/local
 # Estos archivos se generan localmente con `pnpm i`/seed-storage y no deben
 # subirse a `main` ni contaminar PRs.
-public
-src/content/
