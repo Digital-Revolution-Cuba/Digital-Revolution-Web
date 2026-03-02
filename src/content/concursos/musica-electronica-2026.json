@@ -1,0 +1,60 @@
+{
+  "id": "concurso-musica-electronica-2026",
+  "slug": "musica-electronica-2026",
+  "title": "Concurso de Música Electrónica",
+  "description": "Demuestra tu talento como productor musical. Crea un track original de música electrónica y compite por increíbles premios y la oportunidad de ser escuchado por profesionales de la industria.",
+  "category": "musica",
+  "status": "proximo",
+  "image": "/images/concursos/activos/musica-electronica-2026.svg",
+  "imageAlt": "Productor de música electrónica en su estudio",
+  "fechas": {
+    "inicio": "2026-02-01T00:00:00.000Z",
+    "cierre": "2026-04-30T23:59:59.000Z",
+    "resultados": "2026-05-15T20:00:00.000Z"
+  },
+  "premios": [
+    {
+      "position": 1,
+      "prize": "Controlador Native Instruments Maschine+",
+      "value": "$1,400 USD"
+    },
+    {
+      "position": 2,
+      "prize": "Plugin Bundle completo Waves",
+      "value": "$800 USD"
+    },
+    {
+      "position": 3,
+      "prize": "Audífonos profesionales Beyerdynamic DT 1990 Pro",
+      "value": "$550 USD"
+    }
+  ],
+  "requisitos": [
+    {
+      "id": "req-1",
+      "description": "Track original de música electrónica (cualquier subgénero)"
+    },
+    {
+      "id": "req-2",
+      "description": "Duración: entre 3 y 6 minutos"
+    },
+    {
+      "id": "req-3",
+      "description": "Formato: WAV o FLAC, 44.1kHz/24-bit mínimo"
+    },
+    {
+      "id": "req-4",
+      "description": "Masterizado y listo para distribución"
+    },
+    {
+      "id": "req-5",
+      "description": "Una sola entrada por participante"
+    }
+  ],
+  "participationLink": "https://forms.digitalrevolution.com/musica-electronica",
+  "maxParticipants": 200,
+  "currentParticipants": 0,
+  "organizer": "Digital Revolution Community",
+  "tags": ["música", "electrónica", "producción", "DJ"],
+  "featured": false
+}

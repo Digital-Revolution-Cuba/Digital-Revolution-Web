@@ -1,7 +1,0 @@
-/**
- * Gallery Styles � Barrel file (backward compat)
- * This file re-exports the split modules so existing imports don't break.
- * Prefer importing hero.css and gallery-carousel.css directly.
- */
-@import "./hero.css";
-@import "./gallery-carousel.css";
