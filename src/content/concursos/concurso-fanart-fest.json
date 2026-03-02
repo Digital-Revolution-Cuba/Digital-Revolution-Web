@@ -1,0 +1,40 @@
+{
+  "id": " ",
+  "slug": "fanart-fest",
+  "title": "FanArt Fest",
+  "description": "Una tarde llena de arte, creatividad y talento. Expo de fanarts, venta de obras exclusivas, dibujos en vivo por pedido, charlas relámpago con artistas, taller express de dibujo y mural colaborativo Cuba Pop.",
+  "category": "arte-digital",
+  "status": "finalizado",
+  "image": "/images/concursos/anteriores/FanartFest.avif",
+  "imageAlt": "FanArt Fest - Centro Cultural La Cobija, 29 de marzo 2025",
+  "fechas": {
+    "inicio": "2025-03-29T13:00:00.000Z",
+    "cierre": "2025-03-29T17:00:00.000Z",
+    "resultados": "2025-03-29T17:00:00.000Z"
+  },
+  "premios": [
+    {
+      "position": 1,
+      "prize": "Exposición y venta de obras exclusivas"
+    }
+  ],
+  "requisitos": [
+    {
+      "id": "req-1",
+      "description": "Entrada gratuita al evento"
+    },
+    {
+      "id": "req-2",
+      "description": "Participar en el mural colaborativo Cuba Pop"
+    },
+    {
+      "id": "req-3",
+      "description": "Usar el hashtag oficial #FanArtFestCuba en redes sociales"
+    }
+  ],
+  "currentParticipants": 0,
+  "organizer": "Digital Revolution Community",
+  "tags": ["fanart", "arte", "exposición", "Cuba Pop", "dibujo en vivo"],
+  "featured": false,
+  "updatedAt": "2025-03-29T00:00:00.000Z"
+}
