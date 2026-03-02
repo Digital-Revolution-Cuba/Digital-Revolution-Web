@@ -1,0 +1,305 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import StructuredData from "../../components/seo/StructuredData.astro";
+import DiagonalDivider from "../../components/DiagonalDivider.astro";
+import CollaborationCard from "../../components/CollaborationCard.astro";
+
+export const prerender = true;
+
+// Get all colaboraciones from content collection
+const allColaboraciones = await getCollection("colaboraciones");
+
+// Sort: featured first, then by status (activa > planificada > pausada > finalizada)
+const colaboracionesOrdenadas = allColaboraciones.sort((a, b) => {
+  // Featured first
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+
+  // Then by status priority
+  const statusPriority: Record<string, number> = {
+    activa: 1,
+    planificada: 2,
+    pausada: 3,
+    finalizada: 4,
+  };
+
+  return statusPriority[a.data.status] - statusPriority[b.data.status];
+});
+
+// Separate active/planned from finished/paused
+const colaboracionesActivas = colaboracionesOrdenadas.filter(
+  (c) => c.data.status === "activa" || c.data.status === "planificada"
+);
+const colaboracionesFinalizadas = colaboracionesOrdenadas.filter(
+  (c) => c.data.status === "finalizada" || c.data.status === "pausada"
+);
+
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(date);
+};
+---
+
+<Layout
+  title="Colaboraciones — Digital Revolution Web"
+  description="Descubre las colaboraciones y alianzas de la comunidad Digital Revolution Cuba con organizaciones, empresas y proyectos que impulsan el talento creativo."
+  ogType="website"
+  ogImageType="colaboraciones"
+>
+  <StructuredData
+    type="collection"
+    title="Colaboraciones — Digital Revolution Web"
+    description="Colaboraciones y alianzas de la comunidad Digital Revolution Cuba."
+    collectionItems={allColaboraciones.map((c) => ({
+      name: c.data.title,
+      url: `/colaboraciones/${c.data.slug}`,
+      image: c.data.image,
+    }))}
+    breadcrumbs={[
+      { name: "Inicio", url: "/" },
+      { name: "Colaboraciones", url: "/colaboraciones" },
+    ]}
+  />
+  <div class="collab-page-container">
+    {/* Section 1: Header/Intro - Dark Background */}
+    <section class="collab-hero">
+      <div class="container mx-auto px-6 py-24 md:py-32">
+        <div class="animate-fade-in flex max-w-4xl flex-col gap-6 opacity-0">
+          <h1 class="hero-title">
+            Colaboraciones <br /><span class="text-stroke-cyan">Destacadas</span>
+          </h1>
+          <p class="hero-description">
+            Descubre proyectos innovadores y únete a nuestra comunidad creativa. Explora
+            colaboraciones activas y pasadas que transforman ideas en realidad.
+          </p>
+        </div>
+      </div>
+      {/* Divider 1: Cyan */}
+      <DiagonalDivider color="#34dfde" direction="down" />
+    </section>
+
+    {/* Section 2: Active Collaborations - Cyan Background */}
+    <section class="collab-section-active bg-accent-cyan py-24">
+      <div class="container mx-auto px-6">
+        {/* Section Header */}
+        <div class="mb-16">
+          <h2 class="font-impact! text-2xl text-black">Colaboraciones Activas</h2>
+          <p class="text-md text-black/70!">Proyectos en curso donde puedes participar ahora</p>
+        </div>
+
+        {/* Grid Layout */}
+        {
+          colaboracionesActivas.length > 0 ? (
+            <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+              {colaboracionesActivas.map((collab) => (
+                <CollaborationCard
+                  id={collab.id}
+                  image={collab.data.image}
+                  title={collab.data.title}
+                  description={collab.data.description}
+                  location={collab.data.partner.name}
+                  date={formatDate(collab.data.fechas.inicio)}
+                  isActive={collab.data.status === "activa"}
+                  isFeatured={collab.data.featured}
+                  tags={collab.data.tags}
+                  slug={collab.data.slug}
+                />
+              ))}
+            </div>
+          ) : (
+            <div class="rounded-3xl border-2 border-dashed border-black/10 bg-black/5 py-20 text-center">
+              <p class="text-xl font-bold text-black/60">
+                No hay colaboraciones activas en este momento.
+              </p>
+            </div>
+          )
+        }
+      </div>
+    </section>
+
+    {/* Section 3: Finished Collaborations - Dark Background */}
+    <section class="collab-section-finished bg-brand-background-global py-24">
+      <div class="container mx-auto px-3">
+        <button
+          id="toggle-finished"
+          class="group bg-brand-navy/50 hover:bg-brand-navy flex w-full items-center justify-between rounded-3xl border border-white/5 p-5 text-left transition-all duration-500 md:p-8"
+          aria-expanded="false"
+        >
+          <div>
+            <h2 class="font-impact! text-2xl text-white">Colaboraciones Finalizadas</h2>
+            <p class="text-md text-gray-400">
+              Proyectos completados que inspiraron a nuestra comunidad
+            </p>
+          </div>
+          <svg
+            class="chevron group-hover:text-accent-purple h-10 w-10 text-gray-500 transition-transform duration-500"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </button>
+
+        {/* Expandable Grid */}
+        <div id="finished-grid" class="mt-12 hidden overflow-hidden transition-all duration-500">
+          {
+            colaboracionesFinalizadas.length > 0 ? (
+              <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+                {colaboracionesFinalizadas.map((collab) => (
+                  <CollaborationCard
+                    id={collab.id}
+                    image={collab.data.image}
+                    title={collab.data.title}
+                    description={collab.data.description}
+                    location={collab.data.partner.name}
+                    date={formatDate(collab.data.fechas.inicio)}
+                    isActive={false}
+                    isFeatured={collab.data.featured}
+                    tags={collab.data.tags}
+                    slug={collab.data.slug}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div class="rounded-3xl border border-white/10 bg-white/5 py-20 text-center">
+                <p class="text-xl font-medium text-gray-500">
+                  No hay colaboraciones finalizadas aún.
+                </p>
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* Divider 3: Orange */}
+    <DiagonalDivider color="#f49624" direction="down" />
+
+    {/* Section 4: CTA - Orange Background */}
+    <section class="collab-cta bg-accent-orange px-6 py-32">
+      <div class="container mx-auto flex max-w-3xl flex-col gap-4 md:items-center md:text-center">
+        <h2 class="font-impact! text-2xl font-black text-black">
+          ¿Quieres colaborar con nosotros?
+        </h2>
+        <p class="text-md font-normal text-black/70">
+          Tenemos oportunidades emocionantes para creadores, desarrolladores, diseñadores y
+          emprendedores. Únete a nuestra comunidad y haz que tu idea sea realidad.
+        </p>
+        <a href="/contacto" class="btn-primary w-fit"> Proponer Colaboración </a>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<script>
+  const toggleBtn = document.getElementById("toggle-finished");
+  const finishedGrid = document.getElementById("finished-grid");
+  const chevron = document.querySelector(".chevron") as HTMLElement | null;
+
+  if (toggleBtn && finishedGrid && chevron) {
+    toggleBtn.addEventListener("click", () => {
+      const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+
+      toggleBtn.setAttribute("aria-expanded", (!isExpanded).toString());
+      finishedGrid.classList.toggle("hidden");
+      chevron.style.transform = isExpanded ? "rotate(0deg)" : "rotate(180deg)";
+
+      if (!isExpanded) {
+        finishedGrid.classList.add("animate-fade-in-up");
+      }
+    });
+  }
+</script>
+
+<style>
+  .hero-title {
+    font-family: "Impact", "Arial Black", sans-serif;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--color-text-primary, #ffffff);
+    /* Fluid scale: controlled range 48px - 80px */
+    font-size: clamp(3rem, 2rem + 4vw, 5rem);
+    text-shadow: 0px 4px 4px #00000040;
+    display: inline-block;
+    transform: scaleX(1.15);
+    transform-origin: left;
+  }
+
+  .hero-description {
+    color: var(--color-text-secondary, #a0a0a0);
+    line-height: 1.5;
+    /* Fluid text size */
+    font-size: clamp(1rem, 0.6rem + 0.5vw, 1.375rem);
+    max-width: 500px;
+  }
+
+  .collab-page-container {
+    background: #001018;
+    overflow-x: hidden;
+  }
+
+  .text-stroke-cyan {
+    -webkit-text-stroke: 1.5px #34dfde;
+    color: transparent;
+    font-family: "Impact";
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+
+  .collab-hero {
+    background-image:
+      radial-gradient(circle at 80% 20%, rgba(52, 223, 222, 0.08), transparent 40%),
+      radial-gradient(circle at 20% 80%, rgba(151, 71, 255, 0.05), transparent 40%);
+  }
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: clamp(3.5rem, 3rem + 2vw, 5rem);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 3.5rem);
+    }
+
+    .hero-description {
+      font-size: clamp(0.9rem, 3.5vw, 1.125rem);
+    }
+  }
+</style>

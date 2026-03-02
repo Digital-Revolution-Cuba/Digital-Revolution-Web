@@ -8,14 +8,7 @@
   "rating": 4.7,
   "followers": 0,
   "views": 0,
-  "tags": [
-    "modelado",
-    "animacion3d",
-    "iluminacion",
-    "texturizado",
-    "composicion",
-    "blender"
-  ],
+  "tags": ["modelado", "animacion3d", "iluminacion", "texturizado", "composicion", "blender"],
   "skills": [
     "animación 2d",
     "animación 3d",
@@ -31,7 +24,7 @@
       "title": "Orígenes: LoneWolf - Orígenes III"
     },
     {
-      "title": "New Project" ,
+      "title": "New Project",
       "link": "https://youtu.be/gXGXYzyX_O0"
     }
   ],

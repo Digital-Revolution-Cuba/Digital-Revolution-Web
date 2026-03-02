@@ -1,0 +1,485 @@
+/**
+ * Talents Section Styles
+ * Scoped component variables mapped to global design tokens.
+ * Uses --t- prefix to avoid conflicts with global CSS custom properties.
+ */
+
+/* Scoped tokens for talents section */
+.talents-section {
+  --t-background: var(--color-brand-background-global);
+  --t-foreground: var(--color-text-primary);
+  --t-card: var(--palette-brand-dark);
+  --t-card-foreground: var(--color-text-primary);
+  --t-primary: var(--color-accent-cyan);
+  --t-primary-foreground: var(--color-brand-background-global);
+  --t-secondary: #223439;
+  --t-secondary-foreground: var(--color-text-primary);
+  --t-muted: hsl(195, 20%, 20%);
+  --t-muted-foreground: var(--color-text-muted);
+  --t-accent: var(--color-accent-orange);
+  --t-accent-foreground: var(--color-brand-background-global);
+  --t-border: hsl(195, 20%, 20%);
+  --t-radius: var(--radius-md);
+
+  /* Layout */
+  padding: 5rem 0;
+}
+
+.button-cta {
+  background: var(--palette-brand-navy, #002b38);
+  color: var(--palette-accent-orange, #f49624);
+  border: 2px solid var(--palette-accent-cyan, #34dfde);
+  border-radius: 0.5rem;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-cta:hover {
+  background: var(--palette-accent-cyan, #34dfde);
+  color: var(--palette-brand-dark, #011822);
+  box-shadow: 0 0 20px rgba(52, 223, 222, 0.4);
+}
+
+/* ===== Utilities ===== */
+/* .container removed — use Tailwind's built-in container utility
+   or .talents-container for talents-specific max-width */
+.talents-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .talents-container {
+    padding: 0 2rem;
+  }
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(
+    135deg,
+    var(--t-primary, var(--color-accent-cyan)),
+    hsl(185, 70%, 55%)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animations: fadeIn and .animate-fade-in are centralized in animations.css */
+
+/* ===== Section Styles ===== */
+.section-title {
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-size: 2.5rem;
+  font-style: italic;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-title {
+    font-size: 3.75rem;
+  }
+}
+
+.section-title-light {
+  color: var(--t-foreground);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .section-header {
+    margin-bottom: 4rem;
+  }
+}
+
+.section-description {
+  color: var(--t-muted-foreground);
+  font-size: 1.125rem;
+  max-width: 42rem;
+  margin: 1rem auto 0;
+}
+
+@media (min-width: 768px) {
+  .talents-section {
+    padding: 8rem 0;
+  }
+}
+
+.talents-search-bar {
+  position: relative;
+  max-width: 48rem;
+  margin: 0 auto 2rem;
+}
+
+.talents-search-bar .search-icon {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+  color: var(--t-muted-foreground);
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.talents-search-input {
+  width: 100%;
+  padding: 1rem 3.5rem;
+  border-radius: 1rem;
+  background: var(--t-secondary);
+  border: 2px solid transparent;
+  color: var(--t-foreground);
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.talents-search-input::placeholder {
+  color: var(--t-muted-foreground);
+}
+
+.talents-search-input:focus {
+  outline: none;
+  border-color: var(--t-primary);
+  box-shadow: 0 0 30px rgba(20, 184, 166, 0.3);
+}
+
+.filter-btn {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  background: var(--t-muted);
+  color: var(--t-muted-foreground);
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.talents-search-bar .search-icon svg,
+.talents-search-bar .filter-btn svg {
+  display: block;
+  vertical-align: middle;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--t-primary);
+  color: var(--t-primary-foreground);
+}
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+.filter-pill {
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+  border-radius: 9999px;
+  font-weight: 500;
+  border: 2px solid;
+  transition: all 0.3s;
+}
+
+.filter-pill-active {
+  background: var(--t-accent);
+  color: var(--t-accent-foreground);
+  border-color: var(--t-accent);
+}
+
+.filter-pill-inactive {
+  background: transparent;
+  color: var(--t-accent);
+  border-color: rgba(249, 115, 22, 0.5);
+}
+
+.filter-pill-inactive:hover {
+  border-color: var(--t-accent);
+}
+
+.talents-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.results-count {
+  color: var(--t-muted-foreground);
+}
+
+.results-count span {
+  color: var(--t-foreground);
+  font-weight: 600;
+}
+
+.sort-dropdown {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+  color: var(--t-muted-foreground);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .sort-dropdown {
+    display: flex;
+  }
+}
+
+.sort-dropdown select {
+  background: var(--t-secondary);
+  color: var(--t-foreground);
+  border: 1px solid var(--t-border);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.sort-dropdown select:focus {
+  outline: none;
+  border-color: var(--t-primary);
+}
+
+.talents-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .talents-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .talents-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .talents-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== Talent Card ===== */
+.talent-card {
+  background: var(--t-card);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.talent-card:hover {
+  transform: scale3d(1.05, 1.05, 1);
+}
+
+.talent-card-image {
+  position: relative;
+  aspect-ratio: 4/5;
+  height: 400px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.talent-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s;
+}
+
+.talent-card:hover .talent-card-image img {
+  transform: scale3d(1.1, 1.1, 1);
+}
+
+.talent-card-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--t-background), rgba(0, 0, 0, 0.2), transparent);
+}
+
+.featured-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(249, 115, 22, 0.9);
+  color: var(--t-accent-foreground);
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  z-index: 5;
+}
+
+.talent-card-content {
+  padding: 1.25rem;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.talent-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.talent-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--t-foreground);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.talent-role {
+  color: var(--t-primary);
+  font-size: 0.875rem;
+}
+
+.talent-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  margin-top: 0.25rem;
+}
+
+.talent-rating svg {
+  color: #fbbf24;
+}
+
+.talent-rating > span:first-of-type {
+  color: #fbbf24;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.talent-rating .rating-label {
+  color: var(--t-muted-foreground);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.talent-location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--t-muted-foreground);
+  font-size: 0.875rem;
+}
+
+.talent-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(20, 184, 166, 0.2);
+  color: var(--t-primary);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+.talent-footer {
+  padding: 1.25rem;
+  margin-top: auto;
+}
+
+/* Aggressive CTA Button */
+.cta-profile-btn {
+  display: flex;
+  margin-top: auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--t-primary), hsl(185, 70%, 55%));
+  color: var(--t-primary-foreground);
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+  border: 2px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  min-height: 48px;
+}
+
+.cta-profile-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(20, 184, 166, 0.5);
+  background: linear-gradient(135deg, hsl(185, 70%, 55%), var(--t-primary));
+}
+
+.cta-profile-btn:focus-visible {
+  outline: 3px solid var(--t-primary);
+  outline-offset: 3px;
+}
+
+.cta-profile-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.4);
+}
+
+.cta-profile-btn svg {
+  transition: transform 0.3s;
+}
+
+.cta-profile-btn:hover svg {
+  transform: translateX(4px);
+}
+
+.load-more {
+  text-align: center;
+  margin-top: 3rem;
+}

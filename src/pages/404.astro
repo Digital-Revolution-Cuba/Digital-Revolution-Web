@@ -1,0 +1,122 @@
+---
+import Footer from "../components/Footer.astro";
+import Layout from "../layouts/Layout.astro";
+
+export const prerender = true;
+---
+
+<Layout
+  title="Página no encontrada — Digital Revolution Web"
+  description="La página que buscas no existe o ha sido movida. Vuelve al inicio para encontrar lo que necesitas."
+  robots="noindex, nofollow"
+>
+  <main class="error-page">
+    <div class="error-content">
+      <span class="error-code">404</span>
+      <h1 class="error-title">Página no encontrada</h1>
+      <p class="error-description">
+        Lo sentimos, la página que buscas no existe o ha sido movida. Puedes volver al inicio o
+        explorar otras secciones.
+      </p>
+      <div class="error-actions">
+        <a href="/" class="cta-button primary">Volver al inicio</a>
+        <a href="/concursos" class="cta-button secondary">Ver concursos</a>
+        <a href="/colaboraciones" class="cta-button secondary">Ver colaboraciones</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .error-page {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--palette-background, #0a0a0f);
+  }
+
+  .error-content {
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .error-code {
+    font-size: clamp(6rem, 15vw, 12rem);
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(
+      135deg,
+      var(--color-accent-cyan, #34dfde),
+      var(--color-accent-purple, #a855f7)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .error-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 1rem;
+  }
+
+  .error-description {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin: 0 0 2.5rem;
+  }
+
+  .error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+  }
+
+  .cta-button.primary {
+    background: linear-gradient(
+      135deg,
+      var(--color-accent-cyan, #34dfde),
+      var(--color-accent-blue, #3b82f6)
+    );
+    color: var(--color-brand-dark, #0a0a0f);
+    box-shadow: 0 8px 20px rgba(52, 223, 222, 0.3);
+  }
+
+  .cta-button.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(52, 223, 222, 0.4);
+  }
+
+  .cta-button.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .cta-button.secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+</style>
