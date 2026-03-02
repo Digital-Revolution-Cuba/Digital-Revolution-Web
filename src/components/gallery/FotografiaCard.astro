@@ -1,0 +1,195 @@
+---
+import type { FotografiaGalleryItem } from "../../data/types";
+
+interface Props {
+  item: FotografiaGalleryItem;
+}
+
+const { item } = Astro.props;
+---
+
+<div
+  class="gallery-item fotografia-item relative shrink-0 overflow-hidden rounded-[25px]"
+  style="width: 285px; padding-left: 8px; padding-right: 8px; display: none;"
+  data-category="fotografia"
+>
+  <div class="photo-card h-110 w-full rounded-[25px]">
+    <img
+      src={item.image}
+      alt={`${item.title}${item.photographer ? ` by ${item.photographer}` : ""}`}
+      width="285"
+      height="380"
+      class="photo-image h-full w-full rounded-[25px] object-cover shadow-md transition duration-300"
+      loading="lazy"
+    />
+    <div class="photo-overlay">
+      <div class="photo-info">
+        <h3 class="photo-title">{item.title}</h3>
+        {item.photographer && <p class="photo-photographer">{item.photographer}</p>}
+        {item.date && <p class="photo-date">{item.date}</p>}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Ensure sizing includes borders/padding */
+  .gallery-item {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .photo-card {
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .photo-image {
+    filter: brightness(0.95);
+    transition:
+      filter 0.3s,
+      transform 0.3s;
+  }
+
+  .photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+      to top,
+      rgba(4, 20, 33, 0.95) 0%,
+      rgba(4, 20, 33, 0.8) 70%,
+      transparent 100%
+    );
+    padding: 14px 16px;
+    min-height: 72px;
+    display: flex;
+    /* position content slightly above the very bottom so names are visible */
+    align-items: flex-start;
+    justify-content: flex-end;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.28s ease,
+      transform 0.28s ease;
+    pointer-events: none;
+  }
+
+  .gallery-item:hover .photo-overlay {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .gallery-item:hover .photo-image {
+    filter: brightness(1);
+    transform: scale(1.05);
+  }
+
+  .photo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    /* keep text compact and visible inside overlay */
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .photo-title {
+    color: #ffffff;
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    line-height: 1.3;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .photo-photographer {
+    color: #f49624;
+    font-size: 0.95rem;
+    margin: 0 0 4px 0;
+    font-weight: 500;
+  }
+
+  .photo-date {
+    color: #a0a0a0;
+    font-size: 0.875rem;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  /* Responsive sizing - solo ajustar contenedor */
+  /* nav offset = 120px; gap between cards = 1rem (16px) */
+  @media (max-width: 640px) {
+    .gallery-item {
+      width: calc(100dvw - 120px) !important;
+      max-width: 285px !important;
+    }
+    .photo-card {
+      height: 380px;
+    }
+    .photo-title {
+      font-size: 1rem;
+    }
+    .photo-photographer {
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+    /* 2 cards: (available - 1 gap) / 2 */
+    .gallery-item {
+      width: calc((100dvw - 120px - 1rem) / 2) !important;
+      max-width: 285px !important;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1023px) {
+    /* 3 cards: (available - 2 gaps) / 3 */
+    .gallery-item {
+      width: calc((100dvw - 120px - 2rem) / 3) !important;
+      max-width: 285px !important;
+    }
+  }
+
+  /* Landscape phones (e.g. 390×852 rotated → 852×390): 3 cards */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .gallery-item {
+      width: calc((100dvw - 120px - 2rem) / 3) !important;
+      max-width: 285px !important;
+    }
+    .photo-card {
+      height: 260px;
+    }
+    .photo-title {
+      font-size: 0.875rem;
+    }
+    .photo-photographer {
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-item {
+      width: 285px !important;
+    }
+  }
+
+  /* Ensure cards don't clip their own outlines/content even when not hovered */
+  .gallery-item.fotografia-item,
+  .gallery-item.musica-item {
+    overflow: visible !important;
+  }
+
+  /* Lift hovered card above siblings to avoid overlap/clipping */
+  .gallery-item:hover {
+    z-index: 40;
+  }
+</style>
