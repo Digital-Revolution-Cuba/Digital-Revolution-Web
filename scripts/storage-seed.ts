@@ -8,12 +8,6 @@ import AdmZip from "adm-zip";
 
 dotenv.config();
 
-// Skip seeding in CI environments (Vercel, GitHub Actions, etc.)
-if (process.env.CI || process.env.VERCEL) {
-  console.log("Skipping storage seed in CI/Vercel environment.");
-  process.exit(0);
-}
-
 const url =
   process.env.SEED_STORAGE_URL ||
   "https://github.com/Digital-Revolution-Cuba/Digital-Revolution-Web/archive/refs/heads/seed-storage.zip";
