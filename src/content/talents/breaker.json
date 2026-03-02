@@ -1,0 +1,50 @@
+{
+  "name": "Breaker",
+  "role": "Cybersecurity Specialist (Red Team / Blue Team)",
+  "location": "Latinoamérica",
+  "image": "/images/talents/profiles/breaker.avif",
+  "communityRole": "Security Researcher",
+  "status": "activo",
+  "rating": 4.9,
+  "followers": 0,
+  "views": 0,
+  "tags": [
+    "Cybersecurity",
+    "Red Team",
+    "Blue Team",
+    "AppSec",
+    "Linux",
+    "Forense Digital",
+    "Pentesting"
+  ],
+  "skills": [
+    "Pruebas de Penetración (Web, Red interna, Wireless)",
+    "Análisis de Vulnerabilidades",
+    "Análisis Forense Digital (RAM, Discos, Tráfico de Red)",
+    "Respuesta a Incidentes",
+    "Análisis de Malware",
+    "C",
+    "Ruby",
+    "Bash",
+    "Ruby on Rails",
+    "Administración Avanzada de Linux",
+    "Redes",
+    "Virtualización y Hardening"
+  ],
+  "focusArea": "Ciberseguridad y Seguridad de Aplicaciones",
+  "currentFocus": "Fortalecimiento de infraestructuras mediante pruebas ofensivas, análisis forense y desarrollo seguro orientado a la mitigación de vulnerabilidades.",
+  "recentActivity": [
+    {
+      "title": "Investigaciones y pruebas de penetración en entornos controlados"
+    },
+    {
+      "title": "Análisis forense y respuesta ante incidentes de seguridad"
+    },
+    {
+      "title": "Desarrollo y revisión de aplicaciones con enfoque AppSec"
+    }
+  ],
+  "externalLink": "https://breakertws.is-a.dev",
+  "github": "https://github.com/BreakerTWS",
+  "featured": false
+}
