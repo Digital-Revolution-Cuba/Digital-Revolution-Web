@@ -1,0 +1,341 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import StructuredData from "../../components/seo/StructuredData.astro";
+import Layout from "../../layouts/Layout.astro";
+
+export const prerender = true;
+
+// Type utilities for stronger typing
+export async function getStaticPaths() {
+  const talents = await getCollection("talents");
+  // Return only params - fetch entry per-page with getEntry() for better typing
+  return talents.map((entry) => ({
+    params: { slug: entry.id },
+  }));
+}
+
+// Fetch entry per-page using getEntry() - stronger typing, no props serialization
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect("/talentos");
+}
+
+const entry = await getEntry("talents", slug);
+
+// Handle missing entry with proper error handling
+if (!entry) {
+  return Astro.redirect("/talentos");
+}
+
+const { data } = entry;
+
+// Type-safe destructuring with safe defaults
+const {
+  name = "Talento Anónimo",
+  role = "Miembro de la Comunidad",
+  location,
+  image,
+  communityRole = role,
+  status = "colaborador",
+  rating,
+  followers,
+  views,
+  skills = [],
+  currentFocus = "",
+  recentActivity = [],
+  externalLink,
+  featured = false,
+} = data;
+
+const statusStyles = {
+  core: "text-(--color-accent-yellow) border-(--color-accent-yellow)/30",
+  activo: "text-(--color-accent-cyan) border-(--color-accent-cyan)/30",
+  colaborador: "text-(--color-accent-purple) border-(--color-accent-purple)/30",
+};
+
+const formatStat = (num: number) => {
+  return num >= 1000 ? (num / 1000).toFixed(1) + "k" : num;
+};
+---
+
+<Layout
+  title={name ? `${name} — Perfil Profesional` : "Perfil de Talento"}
+  description={currentFocus
+    ? `${name} — ${currentFocus}`
+    : `Perfil profesional de ${name} en Digital Revolution Web.`}
+  image={image !== "/placeholder.jpg" ? image : undefined}
+  ogType="profile"
+  ogImageType="perfil"
+  ogTag={role}
+>
+  <StructuredData
+    type="profile"
+    title={name}
+    description={currentFocus || `Perfil profesional de ${name} en Digital Revolution Web.`}
+    image={image !== "/placeholder.jpg" ? image : undefined}
+    personRole={role}
+    personSkills={skills}
+    breadcrumbs={[
+      { name: "Inicio", url: "/" },
+      { name: "Talentos", url: "/talentos" },
+      { name: name, url: `/perfiles/${slug}` },
+    ]}
+  />
+  <main class="selection:bg-accent-cyan/30 mt-[8rem] px-(--space-md) py-(--space-xl)">
+    <article class="mx-auto max-w-(--container-lg)">
+      <header
+        class="mb-(--space-xl) flex flex-col items-center gap-(--space-lg) md:flex-row md:items-start"
+      >
+        <div class="relative">
+          {
+            image && (
+              <img
+                src={image}
+                alt={`Foto de perfil de ${name}, ${role}`}
+                class="size-32 rounded-full border border-white/10 object-cover shadow-xl transition-all duration-500 md:size-56"
+                fetchpriority="high"
+              />
+            )
+          }
+          {
+            featured && (
+              <div class="bg-accent-yellow border-brand-dark absolute -top-2 -right-2 rounded-full border p-2 shadow-lg">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-brand-dark"
+                >
+                  <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z" />
+                  <path d="M5 21h14" />
+                </svg>
+              </div>
+            )
+          }
+        </div>
+
+        <div class="flex-1 pt-2 text-center md:text-left">
+          <div class="mb-4 flex flex-wrap justify-center gap-3 md:justify-start">
+            {
+              status && (
+                <span
+                  class={`rounded-full border px-3 py-1 text-sm font-bold capitalize ${statusStyles[status as keyof typeof statusStyles]}`}
+                >
+                  {status}
+                </span>
+              )
+            }
+          </div>
+
+          <h1 class="font-impact mb-2 text-2xl leading-none">
+            {name}
+          </h1>
+
+          <div
+            class="flex flex-col flex-wrap gap-2 tracking-wide text-white/50 md:flex-row md:items-center md:gap-6"
+          >
+            <p class="text-lg">
+              {communityRole || role}
+            </p>
+            {
+              location && (
+                <span class="flex items-center justify-center gap-2 text-xs capitalize italic md:justify-start">
+                  <svg
+                    class="size-4"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>{" "}
+                  {location}
+                </span>
+              )
+            }
+          </div>
+
+          <div class="mt-8 flex justify-center gap-8 py-4 md:justify-start">
+            {
+              views && (
+                <div class="flex flex-col items-center md:items-start">
+                  <span class="flex items-center gap-1 text-xs tracking-tighter text-white/30 uppercase">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>{" "}
+                    Vistas
+                  </span>
+                  <span class="font-impact text-xl tracking-wide text-white/90">
+                    {formatStat(views)}
+                  </span>
+                </div>
+              )
+            }
+            {
+              followers && (
+                <div class="flex flex-col items-center md:items-start">
+                  <span class="flex items-center gap-1 text-xs tracking-tighter text-white/30 uppercase">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>{" "}
+                    Seguidores
+                  </span>
+                  <span class="font-impact text-xl tracking-wide text-white/90">
+                    {formatStat(followers)}
+                  </span>
+                </div>
+              )
+            }
+            {
+              rating && (
+                <div class="flex flex-col items-center md:items-start">
+                  <span class="text-accent-yellow flex items-center gap-1 text-xs tracking-tighter text-white/30 uppercase">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>{" "}
+                    Calificación
+                  </span>
+                  <span class="text-accent-yellow font-impact text-xl tracking-wide">{rating}</span>
+                </div>
+              )
+            }
+          </div>
+        </div>
+      </header>
+      <div class="flex flex-col items-center justify-start gap-10">
+        {
+          currentFocus && (
+            <section class="space-y-4 text-gray-300">
+              <h2 class="text-accent-orange heading-section">
+                <span class="bg-accent-orange/50 h-px w-8" />
+                Enfoque Actual
+              </h2>
+              <p class="text-base leading-relaxed md:pl-11">{currentFocus}</p>
+            </section>
+          )
+        }
+
+        {
+          skills.length > 0 && (
+            <section class="space-y-4 text-gray-300">
+              <h2 class="text-accent-cyan heading-section">
+                <span class="bg-accent-cyan/50 h-px w-8" />
+                Capacidades
+              </h2>
+              <div class="flex flex-wrap items-start justify-start gap-2 md:pl-11">
+                {skills.map((skill: string) => (
+                  <span class="bg-brand-dark w-fit cursor-default rounded-lg p-1 px-2 text-base font-medium shadow transition-colors">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        {
+          recentActivity.length > 0 && (
+            <section class="space-y-6">
+              <h2 class="text-accent-purple heading-section">
+                <span class="bg-accent-purple/50 h-px w-8" />
+                Participaciones Recientes
+              </h2>
+
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:pl-11">
+                {recentActivity.map((act: { title: string; link?: string }) => (
+                  <div class="group hover:border-accent-purple relative flex items-center justify-between gap-1 border-l border-white/10 bg-white/[0.02] p-4 transition-all">
+                    <div>
+                      <h3 class="mb-1 text-sm font-bold">{act.title}</h3>
+                      <p class="text-xs tracking-wider text-gray-400 uppercase italic">
+                        Proyecto Relevante
+                      </p>
+                    </div>
+                    {act.link && (
+                      <a
+                        href={act.link}
+                        class="group-hover:text-accent-purple bg-brand-background-global rounded-full p-1 text-white/20 transition-colors"
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M7 7h10v10" />
+                          <path d="M7 17 17 7" />
+                        </svg>
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )
+        }
+      </div>
+      {
+        externalLink && (
+          <footer class="mt-(--space-xl) flex justify-center pt-(--space-lg)">
+            <a href={externalLink} class="cta-btn !px-12 !py-4 text-center text-xl">
+              Contactar Profesional
+            </a>
+          </footer>
+        )
+      }
+    </article>
+  </main>
+</Layout>
+
+<style>
+  @import "tailwindcss";
+
+  .heading-section {
+    @apply flex items-center gap-3 text-lg font-extrabold;
+  }
+</style>

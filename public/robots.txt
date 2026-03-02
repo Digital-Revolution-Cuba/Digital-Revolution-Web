@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://digitalrevolutioncuba.vercel.app/sitemap-index.xml

@@ -1,0 +1,67 @@
+---
+import { getCollection } from "astro:content";
+import ConcursosCTA from "../../components/concursos/ConcursosCTA.astro";
+import ConcursosFiltersIsland from "../../components/concursos/ConcursosFiltersIsland.tsx";
+import ConcursosHero from "../../components/concursos/ConcursosHero.astro";
+import StructuredData from "../../components/seo/StructuredData.astro";
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/components/concursos.css";
+
+export const prerender = true;
+
+// Get all contests from the collection
+const allConcursos = await getCollection("concursos");
+
+// Calculate statistics
+const activeCount = allConcursos.filter((c) => c.data.status === "activo").length;
+const totalParticipants = allConcursos.reduce(
+  (acc, c) => acc + (c.data.currentParticipants || 0),
+  0
+);
+const totalCategories = [...new Set(allConcursos.map((c) => c.data.category))].length;
+---
+
+<Layout
+  title="Concursos Creativos — Digital Revolution Web"
+  description="Participa en concursos creativos de la comunidad Digital Revolution Cuba. Convocatorias de fotografía, música, arte digital, ilustración y más."
+  ogType="website"
+  ogImageType="concursos"
+>
+  <StructuredData
+    type="collection"
+    title="Concursos Creativos — Digital Revolution Web"
+    description="Concursos creativos de la comunidad Digital Revolution Cuba."
+    collectionItems={allConcursos.map((c) => ({
+      name: c.data.title,
+      url: `/concursos/${c.data.slug}`,
+      image: c.data.image,
+    }))}
+    breadcrumbs={[
+      { name: "Inicio", url: "/" },
+      { name: "Concursos", url: "/concursos" },
+    ]}
+  />
+  <div class="concursos-page">
+    <!-- Hero Section -->
+    <ConcursosHero
+      activeCount={activeCount}
+      totalParticipants={totalParticipants}
+      totalPrizes="$15K+"
+      totalCategories={totalCategories}
+    />
+
+    <!-- Filters & Grid Section with Search -->
+    <ConcursosFiltersIsland client:load concursos={allConcursos} />
+
+    <!-- CTA Section -->
+    <ConcursosCTA />
+  </div>
+</Layout>
+
+<style>
+  .concursos-page {
+    min-height: 100vh;
+    background: var(--palette-background);
+    overflow-x: hidden;
+  }
+</style>

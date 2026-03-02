@@ -1,0 +1,489 @@
+---
+import logo from "../assets/LogoRevolucionDigital.svg";
+import RevolucionDigitalText from "../assets/RevolucionDigital.svg";
+
+const navLinks = [
+  { href: "/concursos", label: "Concursos" },
+  { href: "/galeria", label: "Galeria" },
+  { href: "/perfiles", label: "Perfiles" },
+  { href: "/colaboraciones", label: "Colaboraciones" },
+];
+---
+
+<header id="main-header" class="header-wrapper" role="banner">
+  <div class="header-container">
+    <!-- Logo -->
+
+    <a href="/" class="header-logo" aria-label="Ir al inicio">
+      <img src={logo.src} alt="" width="60" height="60" class="logo-icon" aria-hidden="true" />
+      <img
+        src={RevolucionDigitalText.src}
+        alt="Revolución Digital"
+        width="180"
+        height="40"
+        class="logo-text"
+      />
+    </a>
+
+    <!-- Botón Menú Móvil (Hamburguesa) -->
+    <button
+      id="menu-toggle"
+      class="text-text-secondary hover:text-accent-cyan focus:outline-none lg:hidden"
+      aria-label="Abrir menú"
+    >
+      <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <!-- Navegación Desktop -->
+    <nav class="hidden items-center gap-8 lg:flex">
+      <a
+        href="/concursos"
+        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+        >Concursos</a
+      >
+      <a
+        href="/galeria"
+        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+        >Galeria</a
+      >
+      <a
+        href="/colaboraciones"
+        class="text-text-secondary hover:text-accent-cyan text-base font-normal transition-colors duration-300"
+        >Colaboraciones</a
+      >
+      <a href="/talentos" class="btn-primary"> Descubre Talentos </a>
+    </nav>
+
+    <!-- Menú Móvil (Desplegable) -->
+    <div
+      id="mobile-menu"
+      class="bg-brand-dark pointer-events-none invisible absolute top-full right-0 left-0 mt-4 w-full -translate-y-4 rounded-2xl p-6 opacity-0 shadow-2xl transition-all duration-300 ease-out lg:hidden"
+      aria-hidden="true"
+    >
+      <!-- Tus links y botón aquí -->
+      <nav aria-label="Navegación móvil">
+        <ul class="flex flex-col items-center gap-6">
+          <li>
+            <a href="/concursos" class="text-text-secondary hover:text-accent-cyan text-lg"
+              >Concursos</a
+            >
+          </li>
+          <li>
+            <a href="/galeria" class="text-text-secondary hover:text-accent-cyan text-lg">Galeria</a
+            >
+          </li>
+
+          <li>
+            <a href="/colaboraciones" class="text-text-secondary hover:text-accent-cyan text-lg"
+              >Colaboraciones</a
+            >
+          </li>
+        </ul>
+        <a
+          href="/talentos"
+          class="bg-brand-navy text-accent-orange hover:bg-accent-cyan hover:text-brand-dark mt-8 block w-full max-w-xs rounded-lg px-8 py-4 text-center text-lg font-semibold transition-all"
+        >
+          Descubre Talentos
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header-wrapper {
+    --header-height: clamp(60px, 8vw, 80px);
+    --header-padding-x: clamp(1rem, 3vw, 2.5rem);
+    --header-radius: clamp(1.5rem, 3vw, 2.5rem);
+    --header-top: clamp(1rem, 2vw, 2rem);
+
+    position: sticky;
+    top: var(--header-top);
+    z-index: 50;
+    width: min(95%, 1450px);
+    margin: auto;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+    padding-inline: var(--header-padding-x);
+    background: var(--color-brand-dark);
+    border-radius: var(--header-radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Logo */
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 1.5vw, 0.75rem);
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    height: clamp(36px, 6vw, 50px);
+    width: auto;
+  }
+
+  .logo-text {
+    height: clamp(32px, 5vw, 48px);
+    width: auto;
+    display: none;
+  }
+
+  /* Menu Toggle */
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-accent-cyan);
+    transition: color 0.3s ease;
+  }
+
+  .menu-toggle:focus-visible {
+    outline: 2px solid var(--color-accent-cyan);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+
+  .menu-icon {
+    width: 28px;
+    height: 28px;
+    stroke: currentColor;
+    fill: none;
+  }
+
+  .menu-icon-close {
+    display: none;
+  }
+
+  .menu-toggle[aria-expanded="true"] .menu-icon-open {
+    display: none;
+  }
+
+  .menu-toggle[aria-expanded="true"] .menu-icon-close {
+    display: block;
+  }
+
+  /* Desktop Navigation - Hidden on mobile */
+  .header-nav {
+    display: none;
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    right: 0;
+    background: var(--color-brand-dark);
+    border-radius: 1.5rem;
+    padding: var(--space-md);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .mobile-menu[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mobile-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    padding: var(--space-sm);
+    font-size: var(--text-lg);
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border-radius: 0.75rem;
+    min-height: var(--touch-target-comfortable);
+    transition:
+      color 0.3s ease,
+      background 0.3s ease;
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link:focus {
+    color: var(--color-accent-cyan);
+    background: rgba(52, 223, 222, 0.1);
+  }
+
+  .mobile-nav-cta {
+    width: 100%;
+    margin-top: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    min-height: var(--touch-target-comfortable);
+    background: var(--color-brand-navy);
+    border: 2px solid var(--color-accent-cyan);
+    border-radius: 0.75rem;
+    color: var(--color-accent-orange);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-nav-cta:hover,
+  .mobile-nav-cta:focus {
+    background: var(--color-accent-cyan);
+    color: var(--color-brand-dark);
+  }
+
+  /* ===========================
+     Tablet Breakpoint (768px+)
+     =========================== */
+  @media (min-width: 768px) {
+    .logo-text {
+      display: block;
+    }
+  }
+
+  /* ===========================
+     Desktop Breakpoint (1024px+)
+     =========================== */
+  @media (min-width: 1024px) {
+    .menu-toggle {
+      display: none;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .nav-list {
+      display: flex;
+      align-items: center;
+      gap: clamp(1rem, 2vw, 2rem);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 0.5rem 0;
+      font-size: var(--text-base);
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--color-accent-cyan);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus {
+      color: var(--color-accent-cyan);
+    }
+
+    .nav-link:hover::after,
+    .nav-link:focus::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: clamp(0.5rem, 1vw, 0.625rem) clamp(1rem, 2vw, 1.5rem);
+      background: var(--color-brand-navy);
+      border: 1px solid var(--color-brand-navy);
+      border-radius: 0.5rem;
+      color: var(--color-accent-orange);
+      font-size: var(--text-base);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover,
+    .nav-cta:focus {
+      background: var(--color-accent-cyan);
+      color: var(--color-brand-dark);
+      box-shadow: 0 0 15px rgba(52, 223, 222, 0.4);
+    }
+  }
+
+  /* ===========================
+     Large Desktop (1280px+)
+     =========================== */
+  @media (min-width: 1280px) {
+    .header-nav {
+      gap: 2.5rem;
+    }
+
+    .nav-list {
+      gap: 2rem;
+    }
+  }
+
+  /* ===========================
+     Reduced Motion
+     =========================== */
+  @media (prefers-reduced-motion: reduce) {
+    .header-wrapper,
+    .mobile-menu,
+    .nav-link::after,
+    .mobile-nav-link,
+    .nav-cta,
+    .mobile-nav-cta {
+      transition: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // Cleanup prev listeners before re-init (safe for Astro page transitions)
+    if (window.__headerCleanup) {
+      window.__headerCleanup();
+      window.__headerCleanup = null;
+    }
+
+    var menuToggle = document.getElementById("menu-toggle");
+    var mobileMenu = document.getElementById("mobile-menu");
+    var header = document.getElementById("main-header");
+
+    if (!menuToggle || !mobileMenu || !header) return;
+
+    // ─── Mobile menu toggle ─────────────────────────────────────────────────
+    function toggleMenu(forceClose) {
+      var isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+      var shouldClose = forceClose === true || isExpanded;
+
+      menuToggle.setAttribute("aria-expanded", String(!shouldClose));
+      mobileMenu.setAttribute("aria-hidden", String(shouldClose));
+
+      if (shouldClose) {
+        mobileMenu.classList.remove(
+          "opacity-100",
+          "visible",
+          "translate-y-0",
+          "pointer-events-auto"
+        );
+        mobileMenu.classList.add("opacity-0", "invisible", "-translate-y-4", "pointer-events-none");
+        document.body.style.overflow = "";
+      } else {
+        mobileMenu.classList.remove(
+          "opacity-0",
+          "invisible",
+          "-translate-y-4",
+          "pointer-events-none"
+        );
+        mobileMenu.classList.add("opacity-100", "visible", "translate-y-0", "pointer-events-auto");
+        document.body.style.overflow = "hidden";
+      }
+    }
+
+    function onMenuToggleClick() {
+      toggleMenu();
+    }
+    menuToggle.addEventListener("click", onMenuToggleClick);
+
+    // Close on mobile-nav-link click
+    var mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
+    mobileNavLinks.forEach(function (link) {
+      link.addEventListener("click", function () {
+        toggleMenu(true);
+      });
+    });
+
+    // Close on Escape
+    function onKeydown(e) {
+      if (e.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
+        toggleMenu(true);
+        menuToggle.focus();
+      }
+    }
+    document.addEventListener("keydown", onKeydown);
+
+    // Close on click outside
+    function onClickOutside(e) {
+      if (!header.contains(e.target)) toggleMenu(true);
+    }
+    document.addEventListener("click", onClickOutside);
+
+    // Close on backdrop click
+    mobileMenu.addEventListener("click", function (e) {
+      if (e.target === mobileMenu) toggleMenu(true);
+    });
+
+    // ─── Hide/show header on scroll ─────────────────────────────────────────
+    var lastScrollY = window.scrollY;
+    var ticking = false;
+
+    function updateHeader() {
+      var currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down — hide header
+        header.style.transform = "translateY(-150%)";
+        if (menuToggle.getAttribute("aria-expanded") === "true") toggleMenu(true);
+      } else {
+        // Scrolling up — show header
+        header.style.transform = "translateY(0)";
+      }
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // ─── Expose cleanup for page transitions ────────────────────────────────
+    window.__headerCleanup = function () {
+      menuToggle.removeEventListener("click", onMenuToggleClick);
+      document.removeEventListener("keydown", onKeydown);
+      document.removeEventListener("click", onClickOutside);
+      window.removeEventListener("scroll", onScroll);
+      document.body.style.overflow = "";
+    };
+  })();
+</script>

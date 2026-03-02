@@ -1,0 +1,83 @@
+---
+interface Props {
+  direction: "prev" | "next";
+  id: string;
+  ariaLabel: string;
+}
+
+const { direction, id, ariaLabel } = Astro.props;
+
+const svgPath = direction === "prev" ? "M15.75 19.5 8.25 12l7.5-7.5" : "m8.25 4.5 7.5 7.5-7.5 7.5";
+
+const position = direction === "prev" ? "nav-btn-prev" : "nav-btn-next";
+---
+
+<button
+  id={id}
+  class={`nav-btn ${position} absolute top-1/2 z-30 -translate-y-1/2 transform rounded-full p-[0.5rem] shadow-lg transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50`}
+  aria-label={ariaLabel}
+  type="button"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="2.5"
+    stroke="currentColor"
+    class="nav-arrow size-6"
+    aria-hidden="true"
+  >
+    <path stroke-linecap="round" stroke-linejoin="round" d={svgPath}></path>
+  </svg>
+</button>
+
+<style>
+  .nav-btn {
+    background: #f4962433;
+    transition: background 0.2s;
+  }
+
+  .nav-arrow {
+    stroke: #f49624;
+    transition: stroke 0.2s;
+  }
+
+  .nav-btn:hover,
+  .nav-btn:focus-visible {
+    background: #f49624;
+  }
+
+  .nav-btn:hover .nav-arrow,
+  .nav-btn:focus-visible .nav-arrow {
+    stroke: #041421;
+  }
+
+  .nav-btn:focus-visible {
+    outline: 2px solid #f49624;
+    outline-offset: 2px;
+  }
+
+  /* Mobile and tablets: arrows inside, next to gallery */
+  .nav-btn-prev {
+    position: relative;
+    left: 0;
+  }
+
+  .nav-btn-next {
+    position: relative;
+    right: 0;
+  }
+
+  /* Desktop: arrows outside container (original design) */
+  @media (min-width: 1024px) {
+    .nav-btn-prev {
+      position: absolute;
+      left: -50px;
+    }
+
+    .nav-btn-next {
+      position: absolute;
+      right: -50px;
+    }
+  }
+</style>

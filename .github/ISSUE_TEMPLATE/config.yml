@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: 💬 Discusiones generales
+    url: https://github.com/Digital-Revolution-Cuba/Digital-Revolution-Web/discussions
+    about: Para preguntas, ideas o conversaciones generales sobre el proyecto.
+  - name: 🔒 Reporte de seguridad privado
+    url: https://github.com/Digital-Revolution-Cuba/Digital-Revolution-Web/security/advisories/new
+    about: Para reportar vulnerabilidades de forma privada y responsable.
