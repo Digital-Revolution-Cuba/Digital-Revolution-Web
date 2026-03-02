@@ -186,10 +186,10 @@ const formatDate = (date: Date) => {
     {/* Section 4: CTA - Orange Background */}
     <section class="collab-cta bg-accent-orange px-6 py-32">
       <div class="container mx-auto flex max-w-3xl flex-col gap-4 md:items-center md:text-center">
-        <h2 class="font-impact! text-2xl text-[var(--color-brand-dark)]">
+        <h2 class="font-impact! text-2xl font-black text-black">
           ¿Quieres colaborar con nosotros?
         </h2>
-        <p class="text-md font-normal text-[var(--color-brand-dark)]/70">
+        <p class="text-md font-normal text-black/70">
           Tenemos oportunidades emocionantes para creadores, desarrolladores, diseñadores y
           emprendedores. Únete a nuestra comunidad y haz que tu idea sea realidad.
         </p>
@@ -247,7 +247,8 @@ const formatDate = (date: Date) => {
   }
 
   .text-stroke-cyan {
-    color: #34dfde;
+    -webkit-text-stroke: 1.5px #34dfde;
+    color: transparent;
     font-family: "Impact";
   }
 
