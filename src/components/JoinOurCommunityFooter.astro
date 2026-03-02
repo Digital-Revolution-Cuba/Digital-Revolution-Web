@@ -1,14 +1,14 @@
 ---
-import image0 from "../assets/footer-images/image.webp";
-import image1 from "../assets/footer-images/image (1).webp";
-import image2 from "../assets/footer-images/image (2).webp";
-import image3 from "../assets/footer-images/image (3).webp";
-import image4 from "../assets/footer-images/image (4).webp";
-import image5 from "../assets/footer-images/image (5).webp";
+import top1 from "../assets/join-our-community-images/top-1.webp";
+import top2 from "../assets/join-our-community-images/top-2.webp";
+import top3 from "../assets/join-our-community-images/top-3.webp";
+import bottom1 from "../assets/join-our-community-images/bottom-1.webp";
+import bottom2 from "../assets/join-our-community-images/bottom-2.webp";
+import bottom3 from "../assets/join-our-community-images/bottom-3.webp";
 
 const footerImages = {
-  top: [image0, image1, image2],
-  bottom: [image3, image5, image4],
+  top: [top1, top2, top3],
+  bottom: [bottom1, bottom2, bottom3],
 };
 ---
 
@@ -79,6 +79,34 @@ const footerImages = {
     margin: 0 auto;
     align-items: center;
     justify-items: center;
+  }
+
+  .footer-image-wrapper {
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+  }
+
+  .footer-image-wrapper--top:nth-child(1) {
+    mask-image: url("../assets/join-our-community-masks/mask-top-1.webp");
+  }
+
+  .footer-image-wrapper--top:nth-child(2) {
+    mask-image: url("../assets/join-our-community-masks/mask-top-2.webp");
+  }
+
+  .footer-image-wrapper--top:nth-child(3) {
+    mask-image: url("../assets/join-our-community-masks/mask-top-3.webp");
+  }
+
+  .footer-image-wrapper--bottom:nth-child(5) {
+    mask-image: url("../assets/join-our-community-masks/mask-bottom-1.webp");
+  }
+  .footer-image-wrapper--bottom:nth-child(6) {
+    mask-image: url("../assets/join-our-community-masks/mask-bottom-2.webp");
+  }
+  .footer-image-wrapper--bottom:nth-child(7) {
+    mask-image: url("../assets/join-our-community-masks/mask-bottom-3.webp");
   }
 
   /* Mobile: flex-like flow - top row, center (in flow), bottom row */
@@ -173,7 +201,7 @@ const footerImages = {
   .footer-image {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
   }
 
