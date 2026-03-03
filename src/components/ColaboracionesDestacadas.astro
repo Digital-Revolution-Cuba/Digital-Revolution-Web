@@ -1,8 +1,11 @@
 ---
-import { colaboracionesData } from "../data/colaboracionesData";
+import { getCollection } from "astro:content";
 import ColaboracionCard from "./ColaboracionCard.astro";
 
-const totalCards = colaboracionesData.length;
+const allColabs = await getCollection("colaboraciones");
+const activeColabs = allColabs.filter((c) => c.data.status === "activa");
+const totalCards = activeColabs.length;
+const useSlider = totalCards > 0;
 ---
 
 <section id="colaboraciones" class="h-auto w-auto bg-gray-950">
@@ -24,82 +27,119 @@ const totalCards = colaboracionesData.length;
       </div>
 
       <!-- Gallery with Container Queries -->
-      <div class="colaboraciones-gallery-wrapper">
-        <div class="colaboraciones-navigation">
-          <!-- Previous button -->
-          <button
-            id="prevBtnColab"
-            type="button"
-            class="nav-btn nav-btn-prev"
-            aria-label="Colaboraciones anteriores"
-          >
+      {
+        activeColabs.length === 0 ? (
+          <div class="colabs-empty-state">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="2.5"
+              stroke-width="1.5"
               stroke="currentColor"
-              class="nav-arrow"
+              class="empty-icon-colab"
               aria-hidden="true"
             >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"
-              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
+              />
             </svg>
-          </button>
-
-          <!-- Cards viewport -->
-          <div class="cards-viewport" id="cardsViewportColab">
-            <div
-              id="cardSliderColab"
-              class="cards-track"
-              role="list"
-              aria-label="Lista de colaboraciones destacadas"
-              data-total={totalCards}
-            >
-              {
-                colaboracionesData.map((colab) => (
-                  <div class="card-item" role="listitem">
-                    <ColaboracionCard
-                      title={colab.title}
-                      description={colab.description}
-                      imageUrl={colab.imageUrl}
-                      altText={colab.altText}
-                      ctaLink={colab.ctaLink}
-                      ctaText={colab.ctaText}
-                    />
-                  </div>
-                ))
-              }
-            </div>
+            <p class="empty-title-colab">No hay colaboraciones activas en este momento</p>
+            <p class="empty-subtitle-colab">Pronto anunciaremos nuevas colaboraciones.</p>
           </div>
+        ) : useSlider ? (
+          <div class="colaboraciones-gallery-wrapper">
+            <div class="colaboraciones-navigation">
+              <button
+                id="prevBtnColab"
+                type="button"
+                class="nav-btn nav-btn-prev"
+                aria-label="Colaboraciones anteriores"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="currentColor"
+                  class="nav-arrow"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 19.5 8.25 12l7.5-7.5"
+                  />
+                </svg>
+              </button>
 
-          <!-- Next button -->
-          <button
-            id="nextBtnColab"
-            type="button"
-            class="nav-btn nav-btn-next"
-            aria-label="Colaboraciones siguientes"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="2.5"
-              stroke="currentColor"
-              class="nav-arrow"
-              aria-hidden="true"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"
-              ></path>
-            </svg>
-          </button>
-        </div>
+              <div class="cards-viewport" id="cardsViewportColab">
+                <div
+                  id="cardSliderColab"
+                  class="cards-track"
+                  role="list"
+                  aria-label="Lista de colaboraciones destacadas"
+                  data-total={totalCards}
+                >
+                  {activeColabs.map((colab) => (
+                    <div class="card-item" role="listitem">
+                      <ColaboracionCard
+                        title={colab.data.title}
+                        description={colab.data.description}
+                        imageUrl={colab.data.image}
+                        altText={colab.data.imageAlt}
+                        ctaLink={colab.data.externalLink || `/colaboraciones/${colab.data.slug}`}
+                        ctaText="Ver Más"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-        <!-- Pagination dots -->
-        <div class="pagination-dots-colab" id="paginationColab">
-          <!-- Dots will be generated by JS -->
-        </div>
-      </div>
+              <button
+                id="nextBtnColab"
+                type="button"
+                class="nav-btn nav-btn-next"
+                aria-label="Colaboraciones siguientes"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="currentColor"
+                  class="nav-arrow"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div class="pagination-dots-colab" id="paginationColab" />
+          </div>
+        ) : (
+          <div class="colabs-grid">
+            {activeColabs.map((colab) => (
+              <div class="colabs-grid-item">
+                <ColaboracionCard
+                  title={colab.data.title}
+                  description={colab.data.description}
+                  imageUrl={colab.data.image}
+                  altText={colab.data.imageAlt}
+                  ctaLink={colab.data.externalLink || `/colaboraciones/${colab.data.slug}`}
+                  ctaText="Ver Más"
+                />
+              </div>
+            ))}
+          </div>
+        )
+      }
     </div>
   </div>
 </section>
@@ -132,6 +172,61 @@ const totalCards = colaboracionesData.length;
   .general {
     clip-path: polygon(0 0%, 100% 28%, 100% 100%, 0 100%);
     padding-bottom: 2rem; /* Espacio adicional al final */
+  }
+
+  /* ── Empty state ─────────────────────────────────── */
+  .colabs-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    gap: 0.75rem;
+  }
+
+  .empty-icon-colab {
+    width: 3rem;
+    height: 3rem;
+    stroke: var(--palette-brand-dark, #011822);
+    opacity: 0.6;
+  }
+
+  .empty-title-colab {
+    font-family: "Roboto", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--palette-brand-dark, #011822);
+  }
+
+  .empty-subtitle-colab {
+    font-family: "Roboto", sans-serif;
+    font-size: 0.95rem;
+    color: var(--palette-brand-dark, #011822);
+    opacity: 0.8;
+  }
+
+  /* ── Grid (≤ 3 cards) ────────────────────────────── */
+  .colabs-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1.5rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .colabs-grid-item {
+    width: 300px;
+    max-width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    .colabs-grid-item {
+      width: 100%;
+      max-width: 300px;
+    }
   }
 
   /* Estilos para el título de colaboraciones */
