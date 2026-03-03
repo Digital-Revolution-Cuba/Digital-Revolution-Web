@@ -1,0 +1,75 @@
+{
+  "name": "Nightmare",
+  "role": "Desarrollador Full Stack, Analista de Datos",
+  "location": "San Miguel del Padron, La Habana, Cuba",
+  "image": "/images/talents/profiles/ariel.avif",
+  "communityRole": "Full Stack Developer & Data Analyst",
+  "status": "activo",
+  "rating": 4.9,
+  "followers": 3,
+  "views": 34,
+  "tags": [
+    "Desarrollo Full Stack",
+    "Análisis de Datos",
+    "Interfaces Modernas",
+    "Automatización",
+    "E-commerce",
+    "Herramientas Personalizadas",
+    "JavaScript",
+    "TypeScript",
+    "Nextjs"
+  ],
+  "skills": [
+    "TypeScript",
+    "JavaScript",
+    "PHP",
+    "Astro",
+    "Vue",
+    "Nuxtjs",
+    "Laravel",
+    "Node.js",
+    "Express.js",
+    "React",
+    "Next.js",
+    "Nestjs",
+    "Nestjs",
+    "CSS",
+    "HTML",
+    "REST APIs",
+    "Git",
+    "GitHub",
+    "Python",
+    "Analisis de Datos",
+    "Power Bi",
+    "Spotfire",
+    "R",
+    "Frontend Development",
+    "Backend Development",
+    "Full Stack Development"
+  ],
+  "focusArea": "Desarrollo Web y Análisis de Datos",
+  "currentFocus": "Producción de soluciones tecnológicas escalables, automatización de procesos y análisis de datos para entornos corporativos e internacionales.",
+  "recentActivity": [
+    {
+      "title": "Analista de Datos en SierraCol Energy",
+      "link": "https://sierracolenergy.com"
+    },
+    {
+      "title": "Desarrollo del e-commerce Pardus Colombia para EcoRiders",
+      "link": "https://bicicletasparduscolombia.com"
+    },
+    {
+      "title": "Participación en el Proyecto Java Colombia de Bicicletas",
+      "link": "https://bicicletasjavacolombia.com"
+    },
+    {
+      "title": "Trabajo en la ONU, sección de análisis y desarrollo en Kenia"
+    },
+    {
+      "title": "Creación de reproductor de música Pulse Music",
+      "link": "https://github.com/The-Pulse-Proyect/pulse"
+    }
+  ],
+  "externalLink": "mailto:fajardoariel435@gmail.com",
+  "featured": true
+}
