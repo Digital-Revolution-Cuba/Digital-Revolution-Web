@@ -1,8 +1,16 @@
 ---
-import { concursosData } from "../data/concursosData";
+import { getCollection } from "astro:content";
 import ConcursoCard from "./ConcursoCard.astro";
 
-const totalCards = concursosData.length;
+const allConcursos = await getCollection("concursos");
+const activeConcursos = allConcursos.filter((c) => c.data.status === "activo");
+const totalCards = activeConcursos.length;
+const useSlider = totalCards > 3;
+
+/** Format closing date for display */
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("es-ES", { day: "numeric", month: "long" });
+}
 ---
 
 <section id="concursos" class="bg-brand-backgroundGlobal h-auto w-auto">
@@ -12,83 +20,122 @@ const totalCards = concursosData.length;
       Concursos <br /> Activos
     </h2>
 
-    <!-- Slider container -->
-    <div class="concursos-slider-wrapper">
-      <div class="concursos-navigation">
-        <!-- Previous button -->
-        <button
-          id="prevBtnConcursos"
-          type="button"
-          class="nav-btn-concursos nav-btn-prev"
-          aria-label="Concursos anteriores"
-        >
+    {
+      activeConcursos.length === 0 ? (
+        <div class="concursos-empty-state">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="2.5"
+            stroke-width="1.5"
             stroke="currentColor"
-            class="nav-arrow-concursos"
+            class="empty-icon"
             aria-hidden="true"
           >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"
-            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M16.5 18.75h-9m9 0a3 3 0 0 1 3 3h-15a3 3 0 0 1 3-3m9 0v-4.5A3.375 3.375 0 0 0 13.125 10.875h-2.25A3.375 3.375 0 0 0 7.5 14.25v4.5m9-9V6a3 3 0 0 0-3-3h-3a3 3 0 0 0-3 3v3.75"
+            />
           </svg>
-        </button>
-
-        <!-- Cards viewport -->
-        <div class="cards-viewport-concursos">
-          <div
-            id="cardSliderConcursos"
-            class="cards-track-concursos"
-            role="list"
-            aria-label="Lista de concursos activos"
-            data-total={totalCards}
-          >
-            {
-              concursosData.map((concurso) => (
-                <div class="card-item-concursos" role="listitem">
-                  <ConcursoCard
-                    title={concurso.title}
-                    date={concurso.date}
-                    imageUrl={concurso.imageUrl}
-                    altText={concurso.altText}
-                    ctaLink={concurso.ctaLink}
-                    ctaText={concurso.ctaText}
-                  />
-                </div>
-              ))
-            }
-          </div>
+          <p class="empty-title">No hay concursos activos en este momento</p>
+          <p class="empty-subtitle">Vuelve pronto para nuevas convocatorias creativas.</p>
+          <a href="/concursos" class="btn-primary mt-4 px-6">
+            Ver todos los concursos
+          </a>
         </div>
+      ) : useSlider ? (
+        <div class="concursos-slider-wrapper">
+          <div class="concursos-navigation">
+            <button
+              id="prevBtnConcursos"
+              type="button"
+              class="nav-btn-concursos nav-btn-prev"
+              aria-label="Concursos anteriores"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2.5"
+                stroke="currentColor"
+                class="nav-arrow-concursos"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 19.5 8.25 12l7.5-7.5"
+                />
+              </svg>
+            </button>
 
-        <!-- Next button -->
-        <button
-          id="nextBtnConcursos"
-          type="button"
-          class="nav-btn-concursos nav-btn-next"
-          aria-label="Concursos siguientes"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2.5"
-            stroke="currentColor"
-            class="nav-arrow-concursos"
-            aria-hidden="true"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"
-            ></path>
-          </svg>
-        </button>
-      </div>
+            <div class="cards-viewport-concursos">
+              <div
+                id="cardSliderConcursos"
+                class="cards-track-concursos"
+                role="list"
+                aria-label="Lista de concursos activos"
+                data-total={totalCards}
+              >
+                {activeConcursos.map((concurso) => (
+                  <div class="card-item-concursos" role="listitem">
+                    <ConcursoCard
+                      title={concurso.data.title}
+                      date={formatDate(concurso.data.fechas.cierre)}
+                      imageUrl={concurso.data.image}
+                      altText={concurso.data.imageAlt}
+                      ctaLink={`/concursos/${concurso.data.slug}`}
+                      ctaText="Ver Más"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
 
-      <!-- Pagination dots -->
-      <div class="pagination-dots-concursos" id="paginationConcursos">
-        <!-- Dots will be generated by JS -->
-      </div>
-    </div>
+            <button
+              id="nextBtnConcursos"
+              type="button"
+              class="nav-btn-concursos nav-btn-next"
+              aria-label="Concursos siguientes"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2.5"
+                stroke="currentColor"
+                class="nav-arrow-concursos"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="pagination-dots-concursos" id="paginationConcursos" />
+        </div>
+      ) : (
+        <div class="concursos-grid">
+          {activeConcursos.map((concurso) => (
+            <div class="concursos-grid-item">
+              <ConcursoCard
+                title={concurso.data.title}
+                date={formatDate(concurso.data.fechas.cierre)}
+                imageUrl={concurso.data.image}
+                altText={concurso.data.imageAlt}
+                ctaLink={`/concursos/${concurso.data.slug}`}
+                ctaText="Ver Más"
+              />
+            </div>
+          ))}
+        </div>
+      )
+    }
   </div>
 </section>
 
@@ -105,6 +152,60 @@ const totalCards = concursosData.length;
   @media (max-width: 768px) {
     .general {
       background-attachment: scroll;
+    }
+  }
+
+  .concursos-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    gap: 0.75rem;
+  }
+
+  .empty-icon {
+    width: 3rem;
+    height: 3rem;
+    stroke: var(--palette-brand-dark, #011822);
+    opacity: 0.6;
+  }
+
+  .empty-title {
+    font-family: "Roboto", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--palette-brand-dark, #011822);
+  }
+
+  .empty-subtitle {
+    font-family: "Roboto", sans-serif;
+    font-size: 0.95rem;
+    color: var(--palette-brand-dark, #011822);
+    opacity: 0.8;
+  }
+
+  /* ── Grid (≤ 3 cards) ────────────────────────────── */
+  .concursos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1.5rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .concursos-grid-item {
+    width: 300px;
+    max-width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    .concursos-grid-item {
+      width: 100%;
+      max-width: 300px;
     }
   }
 
