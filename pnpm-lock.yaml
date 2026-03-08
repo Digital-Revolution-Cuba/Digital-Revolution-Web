@@ -48,8 +48,8 @@ importers:
         specifier: ^0.563.0
         version: 0.563.0(react@19.2.4)
       nanostores:
-        specifier: ^1.1.0
-        version: 1.1.0
+        specifier: ^1.1.1
+        version: 1.1.1
       react:
         specifier: ^19.2.3
         version: 19.2.4
@@ -2380,8 +2380,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  nanostores@1.1.0:
-    resolution: {integrity: sha512-yJBmDJr18xy47dbNVlHcgdPrulSn1nhSE6Ns9vTG+Nx9VPT6iV1MD6aQFp/t52zpf82FhLLTXAXr30NuCnxvwA==}
+  nanostores@1.1.1:
+    resolution: {integrity: sha512-EYJqS25r2iBeTtGQCHidXl1VfZ1jXM7Q04zXJOrMlxVVmD0ptxJaNux92n1mJ7c5lN3zTq12MhH/8x59nP+qmg==}
     engines: {node: ^20.0.0 || >=22.0.0}
 
   neotraverse@0.6.18:
@@ -5844,7 +5844,7 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  nanostores@1.1.0: {}
+  nanostores@1.1.1: {}
 
   neotraverse@0.6.18: {}
 
