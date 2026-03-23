@@ -14,6 +14,9 @@ function initGaleria() {
     return;
   }
 
+  // Parse per-category item counts for grid/slider switching
+  const categoryCounts: Record<string, number> = JSON.parse(slider.dataset.categoryCounts || "{}");
+
   const totalImages =
     Number(slider.dataset.total) || slider.querySelectorAll(".gallery-item").length || 0;
 
@@ -29,6 +32,15 @@ function initGaleria() {
 
   const cleanupSlider = gallerySlider.initialize();
 
+  function applyGridMode(category: string) {
+    const count = categoryCounts[category] ?? 999;
+    const isGrid = count <= 3;
+
+    slider!.classList.toggle("gallery-grid-mode", isGrid);
+    (prevBtn as HTMLElement).style.display = isGrid ? "none" : "";
+    (nextBtn as HTMLElement).style.display = isGrid ? "none" : "";
+  }
+
   const categorySwitch = createCategorySwitch(
     buttonsContainer as HTMLElement,
     () => {
@@ -37,6 +49,8 @@ function initGaleria() {
     },
     {
       onCategoryChange: (category: string) => {
+        applyGridMode(category);
+
         // Update slider for new category item count
         setTimeout(() => {
           gallerySlider.updateSlider();
@@ -50,6 +64,8 @@ function initGaleria() {
   );
 
   const cleanupCategory = categorySwitch.initialize("arte");
+
+  applyGridMode("arte");
 
   // Initialize music players on load
   initializeMusicPlayers();

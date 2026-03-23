@@ -21,6 +21,8 @@ interface Props {
 
 const { categories } = Astro.props;
 
+const categoryCounts = Object.fromEntries(categories.map((c) => [c.id, c.items.length]));
+
 // Type guards
 function isArteItem(item: GalleryItem): item is ArteGalleryItem {
   return item.type === "arte";
@@ -41,7 +43,11 @@ function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
 
     <div class="gallery-container">
       <div class="gallery-viewport">
-        <div id="imageSlider" class="gallery-track">
+        <div
+          id="imageSlider"
+          class="gallery-track"
+          data-category-counts={JSON.stringify(categoryCounts)}
+        >
           {
             categories.map((category) =>
               category.items.map((item) => {
@@ -123,6 +129,14 @@ function isFotografiaItem(item: GalleryItem): item is FotografiaGalleryItem {
     /* Allow the yellow shadow to be visible below and to the right */
     padding-bottom: 0.6rem;
     padding-right: 0.6rem;
+  }
+
+  .gallery-track.gallery-grid-mode {
+    flex-wrap: wrap;
+    justify-content: center;
+    transform: none;
+    will-change: auto;
+    transition: none;
   }
 
   .gallery-container::before,
