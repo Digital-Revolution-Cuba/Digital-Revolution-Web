@@ -44,21 +44,6 @@ const TYPE_ACCENT: Record<string, string> = {
 };
 
 // ─── Font loader (cached per cold start) ─────────────────────────────────────
-let fontRegular: ArrayBuffer | null = null;
-let fontBold: ArrayBuffer | null = null;
-
-async function loadFonts(origin: string) {
-  if (fontRegular && fontBold) return { fontRegular, fontBold };
-
-  const [reg, bold] = await Promise.all([
-    fetch(new URL("/fonts/roboto-regular.woff2", origin)).then((r) => r.arrayBuffer()),
-    fetch(new URL("/fonts/roboto-bold.woff2", origin)).then((r) => r.arrayBuffer()),
-  ]);
-
-  fontRegular = reg;
-  fontBold = bold;
-  return { fontRegular, fontBold };
-}
 
 // ─── SVG template ────────────────────────────────────────────────────────────
 function buildTemplate(opts: {
@@ -374,7 +359,6 @@ export const GET: APIRoute = async ({ url, request }) => {
   const origin = new URL(request.url).origin;
 
   // Load fonts
-  const { fontRegular: reg, fontBold: bold } = await loadFonts(origin);
 
   // Optionally fetch hero image and convert to data URL
   let heroImageDataUrl: string | undefined;
@@ -416,13 +400,13 @@ export const GET: APIRoute = async ({ url, request }) => {
     fonts: [
       {
         name: "Roboto",
-        data: reg!,
+        data: null!,
         weight: 400,
         style: "normal",
       },
       {
         name: "Roboto",
-        data: bold!,
+        data: null!,
         weight: 700,
         style: "normal",
       },

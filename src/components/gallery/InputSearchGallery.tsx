@@ -12,7 +12,7 @@ export function InputSearchGallery({
   images: readonly GalleryItem[];
   searchAuthor: string;
   setSearchAuthor: (author: string) => void;
-  filteredImages: GalleryItem[];
+  filteredImages: readonly GalleryItem[];
   handleClearSearch: () => void;
 }) {
   const uniqueAuthors = useMemo(() => {

@@ -38,7 +38,7 @@ export function HeroSection() {
           </div>
 
           {/* Right */}
-          <div className="hero__right">
+          <div className="hero__right top-20 mt-20 sm:mt-0 md:top-40">
             <div className="hero__media">
               {/* Main */}
               <div className="hero__media-main">
