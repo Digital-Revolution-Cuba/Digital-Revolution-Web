@@ -3,28 +3,37 @@
   "role": "Animador",
   "location": "Cuba",
   "image": "/images/talents/profiles/anthony-animador.avif",
-  "communityRole": "Miembro",
+  "communityRole": "Admin",
   "status": "activo",
   "rating": 4.7,
-  "followers": 0,
-  "views": 0,
-  "tags": ["modelado", "animacion3d", "iluminacion", "texturizado", "composicion", "blender"],
+  "followers": 461,
+  "views": 51858,
+  "tags": [
+    "modelado",
+    "animacion3d",
+    "iluminacion",
+    "texturizado",
+    "composicion",
+    "blender"
+  ],
   "skills": [
-    "animación 2d",
-    "animación 3d",
-    "modelado 3d",
-    "iluminación",
-    "composición",
-    "texturizado"
+    "Animación 2d",
+    "Animación 3d",
+    "Modelado 3d",
+    "Iluminación",
+    "Composición",
+    "Guion",
+    "Texturizado"
   ],
   "focusArea": "Animación 3D",
-  "currentFocus": "Inside: Cortometraje indie enfocado en la alineación y el impacto psicologico",
+  "currentFocus": "Inside: Cortometraje indie desarrollado en Blender por una sola persona enfocado en la alineación y el impacto psicologico",
   "recentActivity": [
     {
-      "title": "Orígenes: LoneWolf - Orígenes III"
+      "Orígenes": "LoneWolf - Orígenes III",
+      "link": "https://youtu.be/gXGXYzyX_O0"
     },
     {
-      "title": "New Project",
+      "title": "LoneWolf - Orígenes II",
       "link": "https://youtu.be/gXGXYzyX_O0"
     }
   ],
