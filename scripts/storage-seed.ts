@@ -1,142 +1,120 @@
-import { createWriteStream, promises as fs } from "fs";
-import { tmpdir } from "os";
-import { join, resolve, dirname } from "path";
-import { pipeline } from "stream/promises";
-import * as https from "https";
+/**!
+ * Script based on: 
+ * https://github.com/rodnye/literary-blog/blob/master/scripts/blog-sync.ts
+ * 
+ * !!Note: Modifications to this file will be tested and updated from there
+ */
+
 import * as dotenv from "dotenv";
-import AdmZip from "adm-zip";
 import glob from "fast-glob";
+import simpleGit, { CheckRepoActions } from "simple-git";
+import { join, resolve, dirname } from "node:path";
+import { access, appendFile, copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 
 dotenv.config();
 
 const url =
   process.env.SEED_STORAGE_URL ||
-  "https://github.com/Digital-Revolution-Cuba/Digital-Revolution-Web/archive/refs/heads/seed-storage.zip";
+  "https://github.com/Digital-Revolution-Cuba/Digital-Revolution-Web/tree/seed-storage";
 
 /**
- * Descarga un archivo desde una URL
+ * Parses download URL to extract owner, repo and branch.
+ * Expected format: https://github.com/<owner>/<repo>/tree/<branch>
  */
-const download = (fileUrl: string, dest: string) =>
-  new Promise<void>((resolvePromise, reject) => {
-    console.log("iniciando descarga");
+function parseGitHubUrl(rawUrl: string) {
+  const url = new URL(rawUrl);
+  const routes = url.pathname.split("/").slice(1);
+  const owner = routes[0];
+  const repo = routes[1];
 
-    let lastLoggedProgress = 0;
+  if (routes[2] !== "tree" || !routes[3]) throw new Error("Expected a branch name after /tree/...");
+  const branch = routes[3];
 
-    https
-      .get(fileUrl, (response) => {
-        if (
-          response.statusCode &&
-          response.statusCode >= 300 &&
-          response.statusCode < 400 &&
-          response.headers.location
-        ) {
-          console.log("redirigiendo");
-          return download(response.headers.location, dest).then(resolvePromise).catch(reject);
-        }
-        if (response.statusCode !== 200) {
-          return reject(new Error(`descarga fallida con estado ${response.statusCode}`));
-        }
-
-        const contentLength = parseInt(response.headers["content-length"] || "0", 10);
-        let downloadedBytes = 0;
-
-        response.on("data", (chunk) => {
-          downloadedBytes += chunk.length;
-
-          if (contentLength > 0) {
-            const progress = (downloadedBytes / contentLength) * 100;
-            const progressStep = Math.floor(progress / 20) * 20;
-
-            if (progressStep > lastLoggedProgress && progressStep <= 100) {
-              lastLoggedProgress = progressStep;
-              const downloadedMB = (downloadedBytes / (1024 * 1024)).toFixed(1);
-              const totalMB = (contentLength / (1024 * 1024)).toFixed(1);
-              console.log(`${progressStep}% - ${downloadedMB}mb de ${totalMB}mb`);
-            }
-          }
-        });
-
-        const fileStream = createWriteStream(dest);
-        pipeline(response, fileStream)
-          .then(() => {
-            console.log("descarga completada");
-            resolvePromise();
-          })
-          .catch(reject);
-      })
-      .on("error", reject);
-  });
+  const repoUrl = `https://github.com/${owner}/${repo}.git`;
+  return { repoUrl, branch };
+}
 
 /**
- * asegura que un archivo exista (lo crea vacío si no existe)
+ * Ensures an updated clone of the repository exists in cacheDir.
+ */
+async function ensureRepoClone(repoUrl: string, branch: string, cacheDir: string) {
+  await mkdir(cacheDir, { recursive: true });
+  const git = simpleGit(cacheDir);
+
+  const isRepo = await git.checkIsRepo(CheckRepoActions.IS_REPO_ROOT);
+  if (!isRepo) {
+    console.log(`Cloning repository ${repoUrl} (branch ${branch}) into ${cacheDir}`);
+    await git.clone(repoUrl, cacheDir, ["--branch", branch, "--depth", "1"]);
+  } else {
+    console.log(`Updating existing repository in ${cacheDir}`);
+    await git.fetch("origin", branch);
+    await git.reset(["--hard", `origin/${branch}`]);
+  }
+}
+
+/**
+ *
  */
 const ensureGitignore = async (filePath: string) => {
   try {
-    await fs.access(filePath);
+    await access(filePath);
   } catch {
-    await fs.writeFile(filePath, ".gitignore\n");
+    await writeFile(filePath, ".gitignore\n");
   }
 };
 
 /**
- * add una entrada al .gitignore si no existe ya
+ * Adds an entry to .gitignore if it doesn't already exist
  */
 const appendToGitignore = async (dir: string, entry: string) => {
   const gitignorePath = join(dir, ".gitignore");
 
   await ensureGitignore(gitignorePath);
-
-  await fs.appendFile(gitignorePath, `${entry}\n`);
-  console.log(`  → Agregado "${entry}" a ${gitignorePath}`);
+  if (!(await readFile(gitignorePath, "utf8")).includes("\n" + entry)) {
+    await appendFile(gitignorePath, `${entry}\n`);
+    console.log(`  → Added "${entry}" to ${gitignorePath}`);
+  }
 };
 
 const main = async () => {
-  console.log("iniciando proceso");
-  const tempZip = join(tmpdir(), `seed-storage-${Date.now()}.zip`);
-  const extractDir = join(tmpdir(), `seed-storage-${Date.now()}`);
+  console.log("Starting process");
 
-  await download(url, tempZip);
+  const { repoUrl, branch } = parseGitHubUrl(url);
+  const cacheDir = join(process.cwd(), ".cache", "blog-sync");
 
-  console.log("extrayendo archivos");
+  // Get updated clone
+  await ensureRepoClone(repoUrl, branch, cacheDir);
 
-  const zip = new AdmZip(tempZip);
-  zip.extractAllTo(extractDir, true);
-
-  const contentDir = join(
-    extractDir,
-    (await fs.readdir(extractDir))[0] // entrar a la carpeta del zip
-  );
-
-  // Leer el archivo copy.json
-  const seedJsonPath = join(contentDir, "copy.json");
-  const seedJsonContent = await fs.readFile(seedJsonPath, "utf-8");
+  // Read copy.json
+  const seedJsonPath = join(cacheDir, "copy.json");
+  const seedJsonContent = await readFile(seedJsonPath, "utf-8");
   const config = JSON.parse(seedJsonContent);
 
+  //copy files according to include/exclude
   const filesToCopy = await glob(config.include || [], {
-    cwd: contentDir,
+    cwd: cacheDir,
     ignore: config.exclude || [],
     dot: true,
   });
 
   for (const relativePath of filesToCopy) {
-    const src = join(contentDir, relativePath);
+    const src = join(cacheDir, relativePath);
     const dest = resolve(process.cwd(), relativePath);
     const destDir = dirname(dest);
     const fileName = relativePath.split("/").pop()!;
 
-    console.log(`Copiando: ${relativePath}`);
+    console.log(`Copying: ${relativePath}`);
 
-    await fs.mkdir(destDir, { recursive: true });
-    await fs.copyFile(src, dest);
+    await mkdir(destDir, { recursive: true });
+    await copyFile(src, dest);
     await appendToGitignore(destDir, fileName);
   }
 
-  await fs.rm(tempZip, { force: true });
-  await fs.rm(extractDir, { recursive: true, force: true });
+  console.log(`Process completed (cache saved in ${cacheDir} :)`);
 };
 
 main()
-  .then(() => console.log("proceso finalizado"))
+  .then(() => console.log("Process completed :D"))
   .catch((err) => {
     console.error(err);
     process.exit(1);
