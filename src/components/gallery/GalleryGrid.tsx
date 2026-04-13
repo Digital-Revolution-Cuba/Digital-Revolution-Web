@@ -53,11 +53,11 @@ export function GalleryGrid({ images }: Gallery) {
       {/* Responsive CSS Grid — uses CSS media queries instead of window.innerWidth */}
       {filteredImages.length > 0 ? (
         <>
-          <div className="gallery-masonry-grid">
+          <div className="gallery-masonry">
             {visibleItems.map((img) => (
               <div
                 key={img.id}
-                className="group w-full cursor-pointer overflow-hidden rounded-lg"
+                className="gallery-image group w-full cursor-pointer overflow-hidden rounded-lg"
                 onClick={() => openModal(img)}
               >
                 <div className="relative overflow-hidden">
