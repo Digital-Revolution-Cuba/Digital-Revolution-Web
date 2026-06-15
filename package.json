@@ -39,7 +39,7 @@
     "react-measure": "^2.5.2",
     "react-responsive-masonry": "^2.7.1",
     "satori": "^0.19.2",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.1",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   },
